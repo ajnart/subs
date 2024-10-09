@@ -10,8 +10,10 @@
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
     "dev": "next dev",
-    "lint": "next lint",
-    "start": "next start"
+    "start": "next start",
+    "lint": "biome lint",
+    "format": "biome format",
+    "ci": "biome ci"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
@@ -71,6 +73,7 @@
     "zustand": "^5.0.0-rc.2"
   },
   "devDependencies": {
+    "@biomejs/biome": "1.9.3",
     "@types/eslint": "^8.56.10",
     "@types/node": "^20.14.10",
     "@types/react": "^18.3.3",
@@ -78,12 +81,8 @@
     "@typescript-eslint/eslint-plugin": "^8.1.0",
     "@typescript-eslint/parser": "^8.1.0",
     "drizzle-kit": "^0.24.0",
-    "eslint": "^8.57.0",
-    "eslint-config-next": "^14.2.4",
     "eslint-plugin-drizzle": "^0.2.3",
     "postcss": "^8.4.39",
-    "prettier": "^3.3.2",
-    "prettier-plugin-tailwindcss": "^0.6.5",
     "tailwindcss": "^3.4.3",
     "typescript": "^5.5.3"
   },
