@@ -1,68 +1,40 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "756fc02e-26c2-466d-89fa-fc59bb8412e4",
+  "id": "e567ecbc-08a3-4c75-86b3-b6be7c283370",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
-    "shawty_subscription": {
-      "name": "shawty_subscription",
+    "subs_kv_store": {
+      "name": "subs_kv_store",
       "columns": {
-        "id": {
-          "name": "id",
-          "type": "integer",
+        "key": {
+          "name": "key",
+          "type": "text",
           "primaryKey": true,
           "notNull": true,
-          "autoincrement": true
+          "autoincrement": false
         },
-        "name": {
-          "name": "name",
-          "type": "text(256)",
+        "value": {
+          "name": "value",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
-        },
-        "url": {
-          "name": "url",
-          "type": "text(2048)",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "price": {
-          "name": "price",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "icon": {
-          "name": "icon",
-          "type": "text(2048)",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false,
-          "default": "(unixepoch())"
         },
         "updated_at": {
           "name": "updated_at",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(unixepoch())"
         }
       },
       "indexes": {
-        "name_idx": {
-          "name": "name_idx",
+        "key_idx": {
+          "name": "key_idx",
           "columns": [
-            "name"
+            "key"
           ],
           "isUnique": false
         }
