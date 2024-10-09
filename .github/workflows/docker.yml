@@ -34,6 +34,9 @@ jobs:
 
       - uses: pnpm/action-setup@v4
         name: Install pnpm
+        with:
+          version: 9
+          run_install: false
 
       - name: Install Node.js
         uses: actions/setup-node@v4
@@ -54,6 +57,8 @@ jobs:
           # If source files changed but packages didn't, rebuild from a prior cache.
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
+
+      - run: pnpm install
 
       - run: pnpm run build
 
