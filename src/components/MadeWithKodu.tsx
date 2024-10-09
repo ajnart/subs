@@ -15,7 +15,7 @@ export default function Component() {
 
 	return (
 		<Link
-			href="https://www.kodu.ai"
+			href="https://www.kodu.ai/l/extension-coder"
 			target="_blank"
 			rel="noopener noreferrer"
 			className={`fixed bottom-4 right-4 flex items-center bg-white rounded-full shadow-lg p-2 pr-4 space-x-2 transition-all duration-500 ease-in-out overflow-hidden cursor-pointer hover:scale-105 ${
