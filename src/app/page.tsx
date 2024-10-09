@@ -54,8 +54,76 @@ export default function Component() {
 					<h1 className="text-4xl font-bold text-white">
 						Monthly Subscriptions Tracker
 					</h1>
+					<Dialog>
+						<DialogTrigger asChild>
+							<Button className="bg-blue-600 hover:bg-blue-700 text-white">
+								<PlusCircle className="mr-2 h-5 w-5" />
+								Add Subscription
+							</Button>
+						</DialogTrigger>
+						<DialogContent className="sm:max-w-[425px] bg-gray-800 text-gray-100">
+							<DialogHeader>
+								<DialogTitle className="text-white">
+									Add New Subscription
+								</DialogTitle>
+								<DialogDescription className="text-gray-400">
+									Enter the details for your new subscription.
+								</DialogDescription>
+							</DialogHeader>
+
+							<form onSubmit={handleAddSubscription} className="grid gap-4 py-4">
+								<div className="grid grid-cols-4 items-center gap-4">
+									<Label htmlFor="name" className="text-right text-gray-300">
+										Name
+									</Label>
+									<Input
+										id="name"
+										name="name"
+										className="col-span-3 bg-gray-700 text-white"
+										required
+									/>
+								</div>
+								<div className="grid grid-cols-4 items-center gap-4">
+									<Label htmlFor="url" className="text-right text-gray-300">
+										URL
+									</Label>
+									<Input
+										id="url"
+										name="url"
+										type="url"
+										className="col-span-3 bg-gray-700 text-white"
+										required
+									/>
+								</div>
+								<div className="grid grid-cols-4 items-center gap-4">
+									<Label htmlFor="price" className="text-right text-gray-300">
+										Price
+									</Label>
+									<Input
+										id="price"
+										name="price"
+										type="number"
+										step="0.01"
+										className="col-span-3 bg-gray-700 text-white"
+										required
+									/>
+								</div>
+								<DialogFooter>
+									<Button
+										type="submit"
+										className="bg-blue-600 hover:bg-blue-700 text-white"
+									>
+										Add Subscription
+									</Button>
+								</DialogFooter>
+							</form>
+						</DialogContent>
+					</Dialog>
 				</div>
 				<InstructionsPopup popupKey="show-instructions" />
+				<div className="mt-8 mb-8 text-3xl font-semibold text-white text-center">
+					Total Monthly: ${totalMonthly.toFixed(2)}
+				</div>
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 					{subscriptions.map((subscription) => (
 						<SubscriptionItem
@@ -65,76 +133,6 @@ export default function Component() {
 						/>
 					))}
 				</div>
-
-				<div className="mt-16 text-3xl font-semibold text-white">
-					Total Monthly: ${totalMonthly.toFixed(2)}
-				</div>
-
-				<Dialog>
-					<DialogTrigger asChild>
-						<Button className="mt-10 bg-blue-600 hover:bg-blue-700 text-white">
-							<PlusCircle className="mr-2 h-5 w-5" />
-							Add Subscription
-						</Button>
-					</DialogTrigger>
-					<DialogContent className="sm:max-w-[425px] bg-gray-800 text-gray-100">
-						<DialogHeader>
-							<DialogTitle className="text-white">
-								Add New Subscription
-							</DialogTitle>
-							<DialogDescription className="text-gray-400">
-								Enter the details for your new subscription.
-							</DialogDescription>
-						</DialogHeader>
-
-						<form onSubmit={handleAddSubscription} className="grid gap-4 py-4">
-							<div className="grid grid-cols-4 items-center gap-4">
-								<Label htmlFor="name" className="text-right text-gray-300">
-									Name
-								</Label>
-								<Input
-									id="name"
-									name="name"
-									className="col-span-3 bg-gray-700 text-white"
-									required
-								/>
-							</div>
-							<div className="grid grid-cols-4 items-center gap-4">
-								<Label htmlFor="url" className="text-right text-gray-300">
-									URL
-								</Label>
-								<Input
-									id="url"
-									name="url"
-									type="url"
-									className="col-span-3 bg-gray-700 text-white"
-									required
-								/>
-							</div>
-							<div className="grid grid-cols-4 items-center gap-4">
-								<Label htmlFor="price" className="text-right text-gray-300">
-									Price
-								</Label>
-								<Input
-									id="price"
-									name="price"
-									type="number"
-									step="0.01"
-									className="col-span-3 bg-gray-700 text-white"
-									required
-								/>
-							</div>
-							<DialogFooter>
-								<Button
-									type="submit"
-									className="bg-blue-600 hover:bg-blue-700 text-white"
-								>
-									Add Subscription
-								</Button>
-							</DialogFooter>
-						</form>
-					</DialogContent>
-				</Dialog>
 			</div>
 			{/* <MadeWithKodu /> */}
 		</div>
