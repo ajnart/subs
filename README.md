@@ -1,10 +1,18 @@
 # Subs - Simplistic Open Source Subscription Cost Tracker
 
-![CleanShot 2024-10-09 at 20 00 27](https://github.com/user-attachments/assets/ffb88333-6c4d-46c9-9ca7-49602106e5f1)
+## This repo is a little special 
+> [!NOTE]
+> I am building my own coding assistant extension called [kodu.ai](https://www.kodu.ai/l/extension-coder), the goal is to help people build their ideas with little to no preivous coding experience. This repository comes from an idea I have had in the back of my mind for a while, I built it in less than 2 hours using Kodu and it has helped me improve the extension. I thought the idea was nice so I shared it and a lot of you liked it, so I decided to open-soure the code.
+
+I'd **love** for this repo to be a collaborative effort between enthousiasts of the self-hosted community, my goal with Kodu is to enable anyone to make modifications and improvements to tools they use on a daily basis. If you would like to try to improve this repository by using an LLM/Code assistant feel free to do so, I have a lot to learn from testimonials. If you have some spare time and want to give it a try, visit the [ai-tagged issues](https://github.com/ajnart/subs/issues?q=sort%3Aupdated-desc+is%3Aissue+is%3Aopen+label%3Aai) . They are issues that could be added by anyone, even someone with 0 coding experience. 
+
 
 ## Introduction
 
-Hey everyone! Following the feedback from my [previous post](https://www.reddit.com/r/selfhosted/comments/1fvqrlr/i_made_a_simple_selfhosted_subscriptions_costs/), I'm excited to announce that Subs Tracker is now open-source and hosted on my own website. You can check out the demo here: [subs.ajnart.fr](https://subs.ajnart.fr)
+Hey everyone! Following the feedback from my [previous post](https://www.reddit.com/r/selfhosted/comments/1fvqrlr/i_made_a_simple_selfhosted_subscriptions_costs/), I'm excited to announce that Subs Tracker is now open-source and hosted on my own website. 
+
+### Demo
+You can check out the demo here: [subs.ajnart.fr](https://subs.ajnart.fr)
 
 ## What's New?
 
@@ -40,6 +48,10 @@ For those curious about the technology behind Subs Tracker:
 ## Contributing
 
 We welcome contributions! Feel free to submit issues or pull requests if you have ideas for improvements or have found any bugs.
+
+## Demo GIF
+
+![CleanShot 2024-10-09 at 20 00 27](https://github.com/user-attachments/assets/ffb88333-6c4d-46c9-9ca7-49602106e5f1)
 
 ## License
 
