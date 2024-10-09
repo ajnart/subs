@@ -1,29 +1,46 @@
-# Create T3 App
+# Subs Tracker - Open Source Subscription Cost Tracker
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+## Introduction
 
-## What's next? How do I make an app with this?
+Hey everyone! Following the feedback from my [previous post](https://www.reddit.com/r/selfhosted/comments/1fvqrlr/i_made_a_simple_selfhosted_subscriptions_costs/), I'm excited to announce that Subs Tracker is now open-source and hosted on my own website. You can check out the demo here: [subs.ajnart.fr](https://subs.ajnart.fr)
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+## What's New?
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+- **Improved UI/UX**: We've given the app a facelift, making it more visually appealing and user-friendly.
+- **Client-Side Data Storage**: Your data is now stored directly in your browser, eliminating the need for self-hosting.
+- **Edit Functionality**: You can now easily edit your existing subscriptions.
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+## Features
 
-## Learn More
+- Add, edit, and remove subscriptions
+- Automatic favicon fetching for easy visual identification
+- Total monthly cost calculation
+- Responsive design for both desktop and mobile use
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+## Tech Stack
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+For those curious about the technology behind Subs Tracker:
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+- **Frontend Framework**: Next.js and React
+- **UI Components**: Shadcn UI
+- **State Management**: Zustand
+- **Development Tools**: GitHub Copilot and Kodu AI code extension
 
-## How do I deploy this?
+## Getting Started
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+1. Clone the repository
+2. Install dependencies with `npm install`
+3. Run the development server with `npm run dev`
+4. Open [http://localhost:3000](http://localhost:3000) in your browser
+
+## Contributing
+
+We welcome contributions! Feel free to submit issues or pull requests if you have ideas for improvements or have found any bugs.
+
+## License
+
+This project is open-source and available under the MIT License.
+
+---
+
+Thank you for your interest and support! We hope Subs Tracker helps you keep better track of your subscription costs. Happy tracking!
