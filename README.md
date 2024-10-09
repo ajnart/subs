@@ -37,6 +37,13 @@ For those curious about the technology behind Subs Tracker:
 4. Run the development server with `npm run dev`
 5. Open [http://localhost:3000](http://localhost:3000) in your browser
 
+## Docker:
+
+1. Clone the repository
+    1. Optional: Update the SQLLite database file setting in `.env.example`
+2. Build docker container: `docker build -t subs:latest .`
+3. Run docker container: `docker run -p 3000:3000 subs:latest`
+
 ## Contributing
 
 We welcome contributions! Feel free to submit issues or pull requests if you have ideas for improvements or have found any bugs.
