@@ -1,4 +1,6 @@
-# Subs Tracker - Open Source Subscription Cost Tracker
+# Subs - Simplistic Open Source Subscription Cost Tracker 
+
+![CleanShot 2024-10-09 at 20 00 27](https://github.com/user-attachments/assets/ffb88333-6c4d-46c9-9ca7-49602106e5f1)
 
 ## Introduction
 
