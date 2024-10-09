@@ -16,6 +16,7 @@ import { PlusCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 import InstructionsPopup from "~/components/InstructionsPopup";
 import MadeWithKodu from "~/components/MadeWithKodu";
+import { env } from "~/env";
 import { useSubscriptionStore } from "~/lib/subscriptionStore";
 
 interface Subscription {
@@ -27,11 +28,16 @@ interface Subscription {
 }
 
 export default function Component() {
-	const { subscriptions, addSubscription, removeSubscription, editSubscription } =
-		useSubscriptionStore();
+	const {
+		subscriptions,
+		addSubscription,
+		removeSubscription,
+		editSubscription,
+	} = useSubscriptionStore();
 	const [mounted, setMounted] = useState(false);
 	const [isOpen, setIsOpen] = useState(false);
-	const [editingSubscription, setEditingSubscription] = useState<Subscription | null>(null);
+	const [editingSubscription, setEditingSubscription] =
+		useState<Subscription | null>(null);
 
 	useEffect(() => {
 		setMounted(true);
@@ -77,7 +83,10 @@ export default function Component() {
 					</h1>
 					<Dialog open={isOpen} onOpenChange={setIsOpen}>
 						<DialogTrigger asChild>
-							<Button className="bg-blue-600 hover:bg-blue-700 text-white" onClick={() => setEditingSubscription(null)}>
+							<Button
+								className="bg-blue-600 hover:bg-blue-700 text-white"
+								onClick={() => setEditingSubscription(null)}
+							>
 								<PlusCircle className="mr-2 h-5 w-5" />
 								Add Subscription
 							</Button>
@@ -85,10 +94,14 @@ export default function Component() {
 						<DialogContent className="sm:max-w-[425px] bg-gray-800 text-gray-100">
 							<DialogHeader>
 								<DialogTitle className="text-white">
-									{editingSubscription ? "Edit Subscription" : "Add New Subscription"}
+									{editingSubscription
+										? "Edit Subscription"
+										: "Add New Subscription"}
 								</DialogTitle>
 								<DialogDescription className="text-gray-400">
-									{editingSubscription ? "Edit the details of your subscription." : "Enter the details for your new subscription."}
+									{editingSubscription
+										? "Edit the details of your subscription."
+										: "Enter the details for your new subscription."}
 								</DialogDescription>
 							</DialogHeader>
 
@@ -136,7 +149,9 @@ export default function Component() {
 									type="submit"
 									className="w-full bg-blue-600 hover:bg-blue-700 text-white mt-4"
 								>
-									{editingSubscription ? "Update Subscription" : "Add Subscription"}
+									{editingSubscription
+										? "Update Subscription"
+										: "Add Subscription"}
 								</Button>
 							</form>
 						</DialogContent>
@@ -157,6 +172,7 @@ export default function Component() {
 					))}
 				</div>
 			</div>
+			{env.NEXT_PUBLIC_SHOW_KODU === "true" && <MadeWithKodu />}
 		</div>
 	);
 }
