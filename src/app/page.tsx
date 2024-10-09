@@ -1,7 +1,5 @@
 "use client";
 
-import { useEffect, useState } from 'react';
-import Logo from "@/components/Logo";
 import SubscriptionItem from "@/components/SubscriptionItem";
 import { Button } from "@/components/ui/button";
 import {
@@ -16,12 +14,13 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { PlusCircle } from "lucide-react";
-import MadeWithKodu from "~/components/MadeWithKodu";
+import { useEffect, useState } from "react";
+import InstructionsPopup from "~/components/InstructionsPopup";
 import { useSubscriptionStore } from "~/lib/subscriptionStore";
-import InstructionsPopup from '~/components/InstructionsPopup';
 
 export default function Component() {
-	const { subscriptions, addSubscription, removeSubscription } = useSubscriptionStore();
+	const { subscriptions, addSubscription, removeSubscription } =
+		useSubscriptionStore();
 	const [mounted, setMounted] = useState(false);
 
 	useEffect(() => {
@@ -35,7 +34,7 @@ export default function Component() {
 		const formData = new FormData(event.currentTarget);
 		const name = formData.get("name") as string;
 		const url = formData.get("url") as string;
-		const price = parseFloat(formData.get("price") as string);
+		const price = Number.parseFloat(formData.get("price") as string);
 		const icon = `https://www.google.com/s2/favicons?domain=${new URL(url).hostname}`;
 
 		if (name && url && price) {
@@ -52,12 +51,18 @@ export default function Component() {
 		<div className="min-h-screen bg-gray-900 text-gray-100">
 			<div className="container mx-auto p-8 max-w-7xl">
 				<div className="flex justify-between items-center mb-12">
-					<h1 className="text-4xl font-bold text-white">Monthly Subscriptions Tracker</h1>
+					<h1 className="text-4xl font-bold text-white">
+						Monthly Subscriptions Tracker
+					</h1>
 				</div>
 				<InstructionsPopup popupKey="show-instructions" />
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 					{subscriptions.map((subscription) => (
-						<SubscriptionItem key={subscription.id} subscription={subscription} onRemove={removeSubscription} />
+						<SubscriptionItem
+							key={subscription.id}
+							subscription={subscription}
+							onRemove={removeSubscription}
+						/>
 					))}
 				</div>
 
@@ -74,7 +79,9 @@ export default function Component() {
 					</DialogTrigger>
 					<DialogContent className="sm:max-w-[425px] bg-gray-800 text-gray-100">
 						<DialogHeader>
-							<DialogTitle className="text-white">Add New Subscription</DialogTitle>
+							<DialogTitle className="text-white">
+								Add New Subscription
+							</DialogTitle>
 							<DialogDescription className="text-gray-400">
 								Enter the details for your new subscription.
 							</DialogDescription>
@@ -85,28 +92,51 @@ export default function Component() {
 								<Label htmlFor="name" className="text-right text-gray-300">
 									Name
 								</Label>
-								<Input id="name" name="name" className="col-span-3 bg-gray-700 text-white" required />
+								<Input
+									id="name"
+									name="name"
+									className="col-span-3 bg-gray-700 text-white"
+									required
+								/>
 							</div>
 							<div className="grid grid-cols-4 items-center gap-4">
 								<Label htmlFor="url" className="text-right text-gray-300">
 									URL
 								</Label>
-								<Input id="url" name="url" type="url" className="col-span-3 bg-gray-700 text-white" required />
+								<Input
+									id="url"
+									name="url"
+									type="url"
+									className="col-span-3 bg-gray-700 text-white"
+									required
+								/>
 							</div>
 							<div className="grid grid-cols-4 items-center gap-4">
 								<Label htmlFor="price" className="text-right text-gray-300">
 									Price
 								</Label>
-								<Input id="price" name="price" type="number" step="0.01" className="col-span-3 bg-gray-700 text-white" required />
+								<Input
+									id="price"
+									name="price"
+									type="number"
+									step="0.01"
+									className="col-span-3 bg-gray-700 text-white"
+									required
+								/>
 							</div>
 							<DialogFooter>
-								<Button type="submit" className="bg-blue-600 hover:bg-blue-700 text-white">Add Subscription</Button>
+								<Button
+									type="submit"
+									className="bg-blue-600 hover:bg-blue-700 text-white"
+								>
+									Add Subscription
+								</Button>
 							</DialogFooter>
 						</form>
 					</DialogContent>
 				</Dialog>
 			</div>
-			<MadeWithKodu />
+			{/* <MadeWithKodu /> */}
 		</div>
 	);
 }
