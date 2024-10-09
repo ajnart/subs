@@ -1,6 +1,6 @@
 {
   "name": "subs",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "author": {
     "name": "ajanrt",
     "email": "thomas@ajnart.dev"
@@ -63,7 +63,6 @@
     "next": "^14.2.4",
     "next-themes": "^0.3.0",
     "react": "^18.3.1",
-    "react-day-picker": "8.10.1",
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.53.0",
     "react-markdown": "^9.0.1",
@@ -78,7 +77,6 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.3",
-    "@types/eslint": "^8.56.10",
     "@types/node": "^20.14.10",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
