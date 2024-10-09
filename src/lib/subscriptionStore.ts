@@ -56,13 +56,17 @@ const defaultSubscriptions: Subscription[] = [
 ];
 
 const getStorage = () => {
-  if (typeof window === 'undefined' || env.NEXT_PUBLIC_USE_SQLITE !== 'true') {
+  if (typeof window === 'undefined') {
     // Return a dummy storage for SSR
     return {
       getItem: () => Promise.resolve(null),
       setItem: () => Promise.resolve(),
       removeItem: () => Promise.resolve(),
     };
+  }
+
+  if (env.NEXT_PUBLIC_USE_SQLITE === 'false') {
+    return localStorage;
   }
 
   return {
