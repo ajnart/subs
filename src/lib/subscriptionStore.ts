@@ -1,105 +1,102 @@
-import { create } from "zustand";
-import { createJSONStorage, persist } from "zustand/middleware";
-import { env } from "~/env";
+import { create } from 'zustand'
+import { createJSONStorage, persist } from 'zustand/middleware'
+import { env } from '~/env'
 
 interface Subscription {
-  id: number;
-  name: string;
-  url: string;
-  price: number;
-  icon: string;
+  id: number
+  name: string
+  url: string
+  price: number
+  icon: string
 }
 
 interface SubscriptionStore {
-  subscriptions: Subscription[];
-  addSubscription: (subscription: Omit<Subscription, "id">) => void;
-  removeSubscription: (id: number) => void;
-  editSubscription: (
-    id: number,
-    updatedSubscription: Omit<Subscription, "id">,
-  ) => void;
+  subscriptions: Subscription[]
+  addSubscription: (subscription: Omit<Subscription, 'id'>) => void
+  removeSubscription: (id: number) => void
+  editSubscription: (id: number, updatedSubscription: Omit<Subscription, 'id'>) => void
 }
 
 const defaultSubscriptions: Subscription[] = [
   {
     id: 1,
-    name: "Netflix",
-    url: "https://www.netflix.com",
+    name: 'Netflix',
+    url: 'https://www.netflix.com',
     price: 15.99,
-    icon: "https://www.google.com/s2/favicons?domain=netflix.com",
+    icon: 'https://www.google.com/s2/favicons?domain=netflix.com',
   },
   {
     id: 2,
-    name: "Google One",
-    url: "https://one.google.com",
+    name: 'Google One',
+    url: 'https://one.google.com',
     price: 1.99,
-    icon: "https://www.google.com/s2/favicons?domain=google.com",
+    icon: 'https://www.google.com/s2/favicons?domain=google.com',
   },
   {
     id: 3,
-    name: "Amazon Prime",
-    url: "https://www.amazon.com/prime",
+    name: 'Amazon Prime',
+    url: 'https://www.amazon.com/prime',
     price: 14.99,
-    icon: "https://www.google.com/s2/favicons?domain=amazon.com",
+    icon: 'https://www.google.com/s2/favicons?domain=amazon.com',
   },
   {
     id: 4,
-    name: "Spotify",
-    url: "https://www.spotify.com",
+    name: 'Spotify',
+    url: 'https://www.spotify.com',
     price: 9.99,
-    icon: "https://www.google.com/s2/favicons?domain=spotify.com",
+    icon: 'https://www.google.com/s2/favicons?domain=spotify.com',
   },
   {
     id: 5,
-    name: "YouTube Premium",
-    url: "https://onlyfans.com/",
+    name: 'YouTube Premium',
+    url: 'https://onlyfans.com/',
     price: 69.99,
-    icon: "https://www.google.com/s2/favicons?domain=onlyfans.com",
+    icon: 'https://www.google.com/s2/favicons?domain=onlyfans.com',
   },
-];
+]
 
 const getStorage = () => {
-  if (env.NEXT_PUBLIC_USE_SQLITE === "true") {
+  if (env.NEXT_PUBLIC_USE_SQLITE === 'true') {
     return {
       getItem: async (name: string): Promise<string | null> => {
         try {
-          const response = await fetch(`/api/kv/${name}`);
+          const response = await fetch(`/api/kv/${name}`)
           if (response.ok) {
-            const data = await response.json();
-            return JSON.stringify(data.value);
+            const data = await response.json()
+            return JSON.stringify(data.value)
           }
-          return null;
+          return null
         } catch (error) {
-          console.error("Error fetching from KV store:", error);
-          return null;
+          console.error('Error fetching from KV store:', error)
+          return null
         }
       },
       setItem: async (name: string, value: string): Promise<void> => {
         try {
           await fetch(`/api/kv/${name}`, {
-            method: "PUT",
+            method: 'PUT',
             headers: {
-              "Content-Type": "application/json",
+              'Content-Type': 'application/json',
             },
             body: JSON.stringify({ value: JSON.parse(value) }),
-          });
+          })
         } catch (error) {
-          console.error("Error setting item in KV store:", error);
+          console.error('Error setting item in KV store:', error)
         }
       },
       removeItem: async (name: string): Promise<void> => {
         try {
           await fetch(`/api/kv/${name}`, {
-            method: "DELETE",
-          });
+            method: 'DELETE',
+          })
         } catch (error) {
-          console.error("Error removing item from KV store:", error);
+          console.error('Error removing item from KV store:', error)
         }
       },
-    };
+    }
   }
-  return localStorage;
-};
+  return localStorage
+}
 
 export const useSubscriptionStore = create<SubscriptionStore>()(
   persist(
@@ -107,29 +104,22 @@ export const useSubscriptionStore = create<SubscriptionStore>()(
       subscriptions: defaultSubscriptions,
       addSubscription: (newSubscription) =>
         set((state) => ({
-          subscriptions: [
-            ...state.subscriptions,
-            { ...newSubscription, id: Date.now() },
-          ],
+          subscriptions: [...state.subscriptions, { ...newSubscription, id: Date.now() }],
         })),
       removeSubscription: (id) =>
         set((state) => ({
-          subscriptions: state.subscriptions.filter(
-            (subscription) => subscription.id !== id,
-          ),
+          subscriptions: state.subscriptions.filter((subscription) => subscription.id !== id),
         })),
       editSubscription: (id, updatedSubscription) =>
         set((state) => ({
           subscriptions: state.subscriptions.map((subscription) =>
-            subscription.id === id
-              ? { ...subscription, ...updatedSubscription }
-              : subscription,
+            subscription.id === id ? { ...subscription, ...updatedSubscription } : subscription,
           ),
         })),
     }),
     {
-      name: "subscription-storage",
+      name: 'subscription-storage',
       storage: createJSONStorage(getStorage),
     },
   ),
-);
+)

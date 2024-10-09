@@ -1,11 +1,11 @@
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { BookOpen, X } from "lucide-react";
-import { useEffect, useState } from "react";
-import ReactMarkdown from "react-markdown";
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { BookOpen, X } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import ReactMarkdown from 'react-markdown'
 
 interface InstructionsPopupProps {
-	popupKey: string;
+  popupKey: string
 }
 
 const defaultContent = `
@@ -37,51 +37,47 @@ This application helps you manage and track your subscriptions easily.
    - The application automatically calculates and displays your total monthly subscription costs.
 
 Note: This popup and website **both** uses *localStorage to remember* if you've dismissed it. **This allows persistence of the data without using a database**
-`;
+`
 
-export default function InstructionsPopup({
-	popupKey,
-}: InstructionsPopupProps) {
-	const [isVisible, setIsVisible] = useState(true);
+export default function InstructionsPopup({ popupKey }: InstructionsPopupProps) {
+  const [isVisible, setIsVisible] = useState(true)
 
-	useEffect(() => {
-		const dismissed = localStorage.getItem(popupKey);
-		if (dismissed) {
-			setIsVisible(false);
-		}
-	}, [popupKey]);
+  useEffect(() => {
+    const dismissed = localStorage.getItem(popupKey)
+    if (dismissed) {
+      setIsVisible(false)
+    }
+  }, [popupKey])
 
-	const handleDismiss = () => {
-		setIsVisible(false);
-		localStorage.setItem(popupKey, "true");
-	};
+  const handleDismiss = () => {
+    setIsVisible(false)
+    localStorage.setItem(popupKey, 'true')
+  }
 
-	if (!isVisible) return null;
+  if (!isVisible) return null
 
-	return (
-		<Card className="w-full mb-6 max-w-full border border-gray-200 shadow-lg bg-gray-50 dark:bg-gray-800">
-			<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 border-b border-gray-200 dark:border-gray-700">
-				<div className="flex items-center space-x-2">
-					<BookOpen className="h-6 w-6 text-blue-500 dark:text-blue-400" />
-					<CardTitle className="text-xl font-bold text-gray-800 dark:text-gray-200">
-						Instructions
-					</CardTitle>
-				</div>
-				<Button
-					variant="ghost"
-					size="icon"
-					className="h-8 w-8 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
-					onClick={handleDismiss}
-					aria-label="Dismiss instructions"
-				>
-					<X className="h-6 w-6" />
-				</Button>
-			</CardHeader>
-			<CardContent className="pt-4">
-				<div className="prose prose-sm max-w-none text-gray-600 dark:text-gray-300 prose-headings:text-gray-800 dark:prose-headings:text-gray-200 prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-strong:text-gray-700 dark:prose-strong:text-gray-300">
-					<ReactMarkdown>{defaultContent}</ReactMarkdown>
-				</div>
-			</CardContent>
-		</Card>
-	);
+  return (
+    <Card className="w-full mb-6 max-w-full border border-gray-200 shadow-lg bg-gray-50 dark:bg-gray-800">
+      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 border-b border-gray-200 dark:border-gray-700">
+        <div className="flex items-center space-x-2">
+          <BookOpen className="h-6 w-6 text-blue-500 dark:text-blue-400" />
+          <CardTitle className="text-xl font-bold text-gray-800 dark:text-gray-200">Instructions</CardTitle>
+        </div>
+        <Button
+          variant="ghost"
+          size="icon"
+          className="h-8 w-8 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+          onClick={handleDismiss}
+          aria-label="Dismiss instructions"
+        >
+          <X className="h-6 w-6" />
+        </Button>
+      </CardHeader>
+      <CardContent className="pt-4">
+        <div className="prose prose-sm max-w-none text-gray-600 dark:text-gray-300 prose-headings:text-gray-800 dark:prose-headings:text-gray-200 prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-strong:text-gray-700 dark:prose-strong:text-gray-300">
+          <ReactMarkdown>{defaultContent}</ReactMarkdown>
+        </div>
+      </CardContent>
+    </Card>
+  )
 }
