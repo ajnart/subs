@@ -101,7 +101,7 @@ export default function Component() {
 										name="name"
 										className="col-span-3 bg-gray-700 text-white"
 										required
-										defaultValue={editingSubscription?.name || ""}
+										defaultValue={editingSubscription?.name ?? ""}
 									/>
 								</div>
 								<div className="grid grid-cols-4 items-center gap-4">
@@ -114,7 +114,7 @@ export default function Component() {
 										type="url"
 										className="col-span-3 bg-gray-700 text-white"
 										required
-										defaultValue={editingSubscription?.url || ""}
+										defaultValue={editingSubscription?.url ?? ""}
 									/>
 								</div>
 								<div className="grid grid-cols-4 items-center gap-4">
@@ -128,7 +128,7 @@ export default function Component() {
 										step="0.01"
 										className="col-span-3 bg-gray-700 text-white"
 										required
-										defaultValue={editingSubscription?.price || ""}
+										defaultValue={editingSubscription?.price ?? ""}
 									/>
 								</div>
 								<Button
