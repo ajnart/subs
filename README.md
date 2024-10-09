@@ -1,4 +1,4 @@
-# Subs - Simplistic Open Source Subscription Cost Tracker 
+# Subs - Simplistic Open Source Subscription Cost Tracker
 
 ![CleanShot 2024-10-09 at 20 00 27](https://github.com/user-attachments/assets/ffb88333-6c4d-46c9-9ca7-49602106e5f1)
 
@@ -32,8 +32,10 @@ For those curious about the technology behind Subs Tracker:
 
 1. Clone the repository
 2. Install dependencies with `npm install`
-3. Run the development server with `npm run dev`
-4. Open [http://localhost:3000](http://localhost:3000) in your browser
+3. Copy the example env var file with `copy .env.example .env`
+    1. Optional: Update the SQLLite database file setting in `.env`
+4. Run the development server with `npm run dev`
+5. Open [http://localhost:3000](http://localhost:3000) in your browser
 
 ## Contributing
 
