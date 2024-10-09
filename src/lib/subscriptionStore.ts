@@ -13,6 +13,7 @@ interface SubscriptionStore {
 	subscriptions: Subscription[];
 	addSubscription: (subscription: Omit<Subscription, "id">) => void;
 	removeSubscription: (id: number) => void;
+	editSubscription: (id: number, updatedSubscription: Omit<Subscription, "id">) => void;
 }
 
 const defaultSubscriptions: Subscription[] = [
@@ -68,6 +69,14 @@ export const useSubscriptionStore = create<SubscriptionStore>()(
 				set((state) => ({
 					subscriptions: state.subscriptions.filter(
 						(subscription) => subscription.id !== id,
+					),
+				})),
+			editSubscription: (id, updatedSubscription) =>
+				set((state) => ({
+					subscriptions: state.subscriptions.map((subscription) =>
+						subscription.id === id
+							? { ...subscription, ...updatedSubscription }
+							: subscription
 					),
 				})),
 		}),

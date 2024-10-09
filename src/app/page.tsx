@@ -6,7 +6,6 @@ import {
 	Dialog,
 	DialogContent,
 	DialogDescription,
-	DialogFooter,
 	DialogHeader,
 	DialogTitle,
 	DialogTrigger,
@@ -18,10 +17,20 @@ import { useEffect, useState } from "react";
 import InstructionsPopup from "~/components/InstructionsPopup";
 import { useSubscriptionStore } from "~/lib/subscriptionStore";
 
+interface Subscription {
+	id: number;
+	name: string;
+	url: string;
+	price: number;
+	icon: string;
+}
+
 export default function Component() {
-	const { subscriptions, addSubscription, removeSubscription } =
+	const { subscriptions, addSubscription, removeSubscription, editSubscription } =
 		useSubscriptionStore();
 	const [mounted, setMounted] = useState(false);
+	const [isOpen, setIsOpen] = useState(false);
+	const [editingSubscription, setEditingSubscription] = useState<Subscription | null>(null);
 
 	useEffect(() => {
 		setMounted(true);
@@ -29,18 +38,29 @@ export default function Component() {
 
 	const totalMonthly = subscriptions.reduce((sum, sub) => sum + sub.price, 0);
 
-	const handleAddSubscription = (event: React.FormEvent<HTMLFormElement>) => {
+	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		const formData = new FormData(event.currentTarget);
 		const name = formData.get("name") as string;
 		const url = formData.get("url") as string;
 		const price = Number.parseFloat(formData.get("price") as string);
-		const icon = `https://www.google.com/s2/favicons?domain=${new URL(url).hostname}`;
+		const icon = `https://www.google.com/s2/favicons?domain=${new URL(url).hostname}&sz=64`;
 
 		if (name && url && price) {
-			addSubscription({ name, url, price, icon });
+			if (editingSubscription) {
+				editSubscription(editingSubscription.id, { name, url, price, icon });
+			} else {
+				addSubscription({ name, url, price, icon });
+			}
+			setIsOpen(false);
+			setEditingSubscription(null);
 			(event.target as HTMLFormElement).reset();
 		}
+	};
+
+	const handleEdit = (subscription: Subscription) => {
+		setEditingSubscription(subscription);
+		setIsOpen(true);
 	};
 
 	if (!mounted) {
@@ -54,9 +74,9 @@ export default function Component() {
 					<h1 className="text-4xl font-bold text-white">
 						Monthly Subscriptions Tracker
 					</h1>
-					<Dialog>
+					<Dialog open={isOpen} onOpenChange={setIsOpen}>
 						<DialogTrigger asChild>
-							<Button className="bg-blue-600 hover:bg-blue-700 text-white">
+							<Button className="bg-blue-600 hover:bg-blue-700 text-white" onClick={() => setEditingSubscription(null)}>
 								<PlusCircle className="mr-2 h-5 w-5" />
 								Add Subscription
 							</Button>
@@ -64,14 +84,14 @@ export default function Component() {
 						<DialogContent className="sm:max-w-[425px] bg-gray-800 text-gray-100">
 							<DialogHeader>
 								<DialogTitle className="text-white">
-									Add New Subscription
+									{editingSubscription ? "Edit Subscription" : "Add New Subscription"}
 								</DialogTitle>
 								<DialogDescription className="text-gray-400">
-									Enter the details for your new subscription.
+									{editingSubscription ? "Edit the details of your subscription." : "Enter the details for your new subscription."}
 								</DialogDescription>
 							</DialogHeader>
 
-							<form onSubmit={handleAddSubscription} className="grid gap-4 py-4">
+							<form onSubmit={handleSubmit} className="grid gap-4 py-4">
 								<div className="grid grid-cols-4 items-center gap-4">
 									<Label htmlFor="name" className="text-right text-gray-300">
 										Name
@@ -81,6 +101,7 @@ export default function Component() {
 										name="name"
 										className="col-span-3 bg-gray-700 text-white"
 										required
+										defaultValue={editingSubscription?.name || ""}
 									/>
 								</div>
 								<div className="grid grid-cols-4 items-center gap-4">
@@ -93,6 +114,7 @@ export default function Component() {
 										type="url"
 										className="col-span-3 bg-gray-700 text-white"
 										required
+										defaultValue={editingSubscription?.url || ""}
 									/>
 								</div>
 								<div className="grid grid-cols-4 items-center gap-4">
@@ -106,16 +128,15 @@ export default function Component() {
 										step="0.01"
 										className="col-span-3 bg-gray-700 text-white"
 										required
+										defaultValue={editingSubscription?.price || ""}
 									/>
 								</div>
-								<DialogFooter>
-									<Button
-										type="submit"
-										className="bg-blue-600 hover:bg-blue-700 text-white"
-									>
-										Add Subscription
-									</Button>
-								</DialogFooter>
+								<Button
+									type="submit"
+									className="w-full bg-blue-600 hover:bg-blue-700 text-white mt-4"
+								>
+									{editingSubscription ? "Update Subscription" : "Add Subscription"}
+								</Button>
 							</form>
 						</DialogContent>
 					</Dialog>
@@ -130,6 +151,7 @@ export default function Component() {
 							key={subscription.id}
 							subscription={subscription}
 							onRemove={removeSubscription}
+							onEdit={handleEdit}
 						/>
 					))}
 				</div>

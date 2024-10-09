@@ -1,5 +1,5 @@
 "use client";
-import { Trash2 } from "lucide-react";
+import { Edit2, Trash2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import type React from "react";
@@ -15,11 +15,13 @@ interface Subscription {
 interface SubscriptionItemProps {
 	subscription: Subscription;
 	onRemove: (id: number) => void;
+	onEdit: (subscription: Subscription) => void;
 }
 
 const SubscriptionItem: React.FC<SubscriptionItemProps> = ({
 	subscription,
 	onRemove,
+	onEdit,
 }) => {
 	return (
 		<div className="relative group">
@@ -49,16 +51,30 @@ const SubscriptionItem: React.FC<SubscriptionItemProps> = ({
 						<span className="text-sm text-blue-400 hover:underline">
 							Visit site
 						</span>
-						<button
-							onClick={(e) => {
-								e.preventDefault();
-								e.stopPropagation();
-								onRemove(subscription.id);
-							}}
-							className="text-red-400 hover:text-red-600 transition-colors duration-200"
-						>
-							<Trash2 className="h-5 w-5" />
-						</button>
+						<div className="flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+							<button
+                type="button"
+								onClick={(e) => {
+									e.preventDefault();
+									e.stopPropagation();
+									onEdit(subscription);
+								}}
+								className="text-yellow-400 hover:text-yellow-600 transition-colors duration-200"
+							>
+								<Edit2 className="h-5 w-5" />
+							</button>
+							<button
+                type="button"
+								onClick={(e) => {
+									e.preventDefault();
+									e.stopPropagation();
+									onRemove(subscription.id);
+								}}
+								className="text-red-400 hover:text-red-600 transition-colors duration-200"
+							>
+								<Trash2 className="h-5 w-5" />
+							</button>
+						</div>
 					</div>
 				</div>
 			</Link>
