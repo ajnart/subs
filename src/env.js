@@ -18,7 +18,7 @@ export const env = createEnv({
    */
   client: {
     NEXT_PUBLIC_SHOW_KODU: z.enum(['true', 'false']).default('false'),
-    NEXT_PUBLIC_USE_SQLITE: z.enum(['true', 'false']).default('false'),
+    NEXT_PUBLIC_USE_SQLITE: z.enum(['true', 'false']).default('true'),
   },
 
   /**
