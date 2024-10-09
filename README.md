@@ -36,18 +36,20 @@ For those curious about the technology behind Subs Tracker:
 - **State Management**: Zustand
 - **Development Tools**: GitHub Copilot and Kodu AI code extension
 
-## Getting Started
+## Docker setup 
+> [!NOTE]
+> Docker setup work in progress at the moment. Feel free to contribute to the project and help me finish it.
+
+## Development Setup / Installation
 
 1. Clone the repository
-2. Install dependencies with `npm install`
+2. Install dependencies with `pnpm i` (install it [here](https://pnpm.io/cli/install))
 3. Copy the example env var file with `copy .env.example .env`
     1. Optional: Update the SQLLite database file setting in `.env`
-4. Run the development server with `npm run dev`
+		2. Optional: Set `NEXT_PUBLIC_USE_SQLITE` to `false` to use localstorage instead of SQLLite (will persist data in the browser)
+4. Push the database schema with `pnpm run db:push` (not needed if you are using localstorage)
+4. Run the development server with `pnpm run dev`
 5. Open [http://localhost:3000](http://localhost:3000) in your browser
-
-## Contributing
-
-We welcome contributions! Feel free to submit issues or pull requests if you have ideas for improvements or have found any bugs.
 
 ## Demo GIF
 
