@@ -1,15 +1,24 @@
-FROM node
+#FROM node:slim AS base
+FROM node:slim
 
-RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
+RUN mkdir /home/node/app &&\
+    mkdir /home/node/pnpm &&\
+    chown -R node:node \
+      /home/node/app \
+      /home/node/pnpm
+
 WORKDIR /home/node/app
-COPY package*.json ./
+
+ENV PNPM_HOME="/home/node/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable
+COPY --chown=node:node . .
 
 USER node
-COPY --chown=node:node . .
-RUN cp .env.example .env &&\
-    npm install
-#RUN npm run build
+
+RUN cp .env.example .env
+
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install
 
 EXPOSE 3000
-
-ENTRYPOINT ["npm", "run", "dev"]
+CMD [ "pnpm", "run", "dev" ]
