@@ -130,7 +130,7 @@ export const useSubscriptionStore = create<SubscriptionStore>()(
     {
       name: 'subscription-storage',
       storage: createJSONStorage(getStorage),
-      skipHydration: true,
+      skipHydration: false,
     }
   )
 );
