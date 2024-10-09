@@ -18,6 +18,7 @@ import { Label } from "@/components/ui/label";
 import { PlusCircle } from "lucide-react";
 import MadeWithKodu from "~/components/MadeWithKodu";
 import { useSubscriptionStore } from "~/lib/subscriptionStore";
+import InstructionsPopup from '~/components/InstructionsPopup';
 
 export default function Component() {
 	const { subscriptions, addSubscription, removeSubscription } = useSubscriptionStore();
@@ -51,9 +52,9 @@ export default function Component() {
 		<div className="min-h-screen bg-gray-900 text-gray-100">
 			<div className="container mx-auto p-8 max-w-7xl">
 				<div className="flex justify-between items-center mb-12">
-					<Logo />
-					<h1 className="text-4xl font-bold text-white">Monthly Subscriptions</h1>
+					<h1 className="text-4xl font-bold text-white">Monthly Subscriptions Tracker</h1>
 				</div>
+				<InstructionsPopup popupKey="show-instructions" />
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 					{subscriptions.map((subscription) => (
 						<SubscriptionItem key={subscription.id} subscription={subscription} onRemove={removeSubscription} />
