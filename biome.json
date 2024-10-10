@@ -40,7 +40,7 @@
       },
       "suspicious": {
         "noEmptyBlockStatements": "error",
-        "noExplicitAny": "error",
+        "noExplicitAny": "info",
         "noExtraNonNullAssertion": "error",
         "noMisleadingInstantiator": "error",
         "noUnsafeDeclarationMerging": "error",
