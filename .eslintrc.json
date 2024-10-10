@@ -1,0 +1,7 @@
+{
+  "extends": "next",
+  "ignorePatterns": ["./src/components/ui/**"],
+  "rules": {
+    "@typescript-eslint/no-explicit-any": "off"
+  }
+}
