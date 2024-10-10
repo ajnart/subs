@@ -40,6 +40,30 @@ For those curious about the technology behind Subs Tracker:
 > [!NOTE]
 > Docker setup work in progress at the moment. Feel free to contribute to the project and help me finish it.
 
+Add your user yo docker group:
+```bash
+sudo usermod -aG docker $USER
+```
+
+Clone this repository:
+```bash
+git clone https://github.com/ajnart/subs.git
+```
+Change directory 
+```bash
+cd subs
+```
+Build the image. You can choose another name for the container:
+```bash
+docker build -t subs .
+```
+start the container:
+```bash
+docker run -p 3000:3000 subs
+```
+you're done.
+Please note that building can take a long time, on my server it took nearly 20 minutes.
+
 ## Development Setup / Installation
 
 1. Clone the repository
