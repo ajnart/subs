@@ -59,7 +59,7 @@ docker build -t subs .
 ```
 start the container:
 ```bash
-docker run -p 3000:3000 subs
+docker run -d -p 3000:3000 subs
 ```
 you're done.
 Please note that building can take a long time, on my server it took nearly 20 minutes.
