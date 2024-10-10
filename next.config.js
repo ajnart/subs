@@ -11,6 +11,9 @@ const config = {
 		remotePatterns: [
 			{
 				hostname: "www.google.com",
+			},
+			{
+				hostname: "api.microlink.io",
 			}
 		],
 	}

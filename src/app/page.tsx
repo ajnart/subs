@@ -10,9 +10,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
+import { FloatingDock } from '@/components/ui/floating-dock'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { LinkPreview } from '@/components/ui/link-preview'
 import { PlusCircle } from 'lucide-react'
+import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import InstructionsPopup from '~/components/InstructionsPopup'
 import MadeWithKodu from '~/components/MadeWithKodu'
@@ -63,6 +66,12 @@ export default function Component() {
     setEditingSubscription(subscription)
     setIsOpen(true)
   }
+
+  const dockItems = subscriptions.map((sub) => ({
+    title: sub.name,
+    icon: <Image src={sub.icon} width={64} height={64} alt={`${sub.name} icon`} />,
+    href: sub.url,
+  }))
 
   if (!mounted) {
     return null // Return null on initial render to avoid hydration mismatch
@@ -143,18 +152,20 @@ export default function Component() {
         <div className="mt-8 mb-8 text-3xl font-semibold text-white text-center">
           Total Monthly: ${totalMonthly.toFixed(2)}
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {subscriptions.map((subscription) => (
-            <SubscriptionItem
-              key={subscription.id}
-              subscription={subscription}
-              onRemove={removeSubscription}
-              onEdit={handleEdit}
-            />
+            <LinkPreview key={subscription.id} url={subscription.url}>
+              <SubscriptionItem subscription={subscription} onRemove={removeSubscription} onEdit={handleEdit} />
+            </LinkPreview>
           ))}
         </div>
       </div>
       {env.NEXT_PUBLIC_SHOW_KODU === 'true' && <MadeWithKodu />}
+      <FloatingDock
+        items={dockItems}
+        desktopClassName="fixed bottom-4 left-1/2 transform -translate-x-1/2"
+        mobileClassName="fixed bottom-4 right-4"
+      />
     </div>
   )
 }
