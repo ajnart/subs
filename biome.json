@@ -1,14 +1,10 @@
 {
   "$schema": "https://biomejs.dev/schemas/1.9.0/schema.json",
-  "vcs": {
-    "enabled": false,
-    "clientKind": "git",
-    "useIgnoreFile": false
-  },
+  "vcs": { "enabled": false, "clientKind": "git", "useIgnoreFile": false },
   "files": {
     "ignoreUnknown": false,
-    "include": ["src"],
-    "ignore": [".next", "node_modules", "./src/components/ui"]
+    "ignore": [".next", "node_modules", "./src/components/ui"],
+    "include": ["src"]
   },
   "formatter": {
     "enabled": true,
@@ -19,9 +15,7 @@
     "lineWidth": 120,
     "attributePosition": "auto"
   },
-  "organizeImports": {
-    "enabled": true
-  },
+  "organizeImports": { "enabled": true },
   "linter": {
     "enabled": true,
     "rules": {
@@ -32,8 +26,8 @@
         "useOptionalChain": "error"
       },
       "correctness": {
-        "noUnusedVariables": "off",
         "noUnusedImports": "info",
+        "noUnusedVariables": "off",
         "useArrayLiterals": "off"
       },
       "style": {
@@ -53,7 +47,8 @@
         "useAwait": "off",
         "useNamespaceKeyword": "error"
       }
-    }
+    },
+    "ignore": ["node_modules/*", ".next/*", "out/*", "src/components/ui/**"]
   },
   "javascript": {
     "formatter": {
@@ -108,6 +103,39 @@
           "correctness": {
             "noConstAssign": "off",
             "noGlobalObjectCalls": "off",
+            "noInvalidConstructorSuper": "off",
+            "noNewSymbol": "off",
+            "noSetterReturn": "off",
+            "noUndeclaredVariables": "off",
+            "noUnreachable": "off",
+            "noUnreachableSuper": "off"
+          },
+          "style": {
+            "noArguments": "error",
+            "noVar": "error",
+            "useConst": "error"
+          },
+          "suspicious": {
+            "noDuplicateClassMembers": "off",
+            "noDuplicateObjectKeys": "off",
+            "noDuplicateParameters": "off",
+            "noFunctionAssign": "off",
+            "noImportAssign": "off",
+            "noRedeclare": "off",
+            "noUnsafeNegation": "off",
+            "useGetterReturn": "off"
+          }
+        }
+      }
+    },
+    {
+      "include": ["*.ts", "*.tsx", "*.mts", "*.cts"],
+      "linter": {
+        "rules": {
+          "correctness": {
+            "noConstAssign": "off",
+            "noGlobalObjectCalls": "off",
+            "noInvalidBuiltinInstantiation": "off",
             "noInvalidConstructorSuper": "off",
             "noNewSymbol": "off",
             "noSetterReturn": "off",
