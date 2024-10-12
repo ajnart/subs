@@ -46,7 +46,7 @@ For those curious about the technology behind Subs Tracker:
 2. Install dependencies with `pnpm i` (install it [here](https://pnpm.io/cli/install))
 3. Copy the example env var file with `copy .env.example .env`
     1. Optional: Update the SQLLite database file setting in `.env`
-		2. Optional: Set `NEXT_PUBLIC_USE_SQLITE` to `false` to use localstorage instead of SQLLite (will persist data in the browser)
+		2. Optional: Set `NEXT_PUBLIC_USE_SQLITE` to `false` to use localstorage  instead of SQLLite (will persist data in the browser)
 4. Push the database schema with `pnpm run db:push` (not needed if you are using localstorage)
 4. Run the development server with `pnpm run dev`
 5. Open [http://localhost:3000](http://localhost:3000) in your browser

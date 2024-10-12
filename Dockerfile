@@ -1,44 +1,45 @@
-# Base stage for shared settings
-FROM node:20-alpine AS base
-RUN apk add --no-cache libc6-compat
-RUN corepack enable && corepack prepare pnpm@latest --activate
-ENV PNPM_HOME=/usr/local/bin
-ENV PATH=$PATH:$PNPM_HOME
+FROM node:20-slim AS base
+
+# set for base and all layer that inherit from it
+ENV NODE_ENV=production
+
+# Install all node_modules, including dev dependencies
+FROM base AS deps
+
 WORKDIR /app
 
-# Dependencies stage
-FROM base AS deps
-COPY package.json pnpm-lock.yaml* ./
-RUN pnpm install --frozen-lockfile
+ADD package.json ./
+RUN npm install
 
-# Builder stage
-FROM base AS builder
-COPY --from=deps /app/node_modules ./node_modules
-COPY . .
-RUN pnpm run build
+# Setup production node_modules
+FROM base AS production-deps
 
-# Runner stage
-FROM base AS runner
-ENV NODE_ENV=production
-ENV NEXT_TELEMETRY_DISABLED=1
+WORKDIR /app
 
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
+COPY --from=deps /app/node_modules /app/node_modules
+ADD package.json ./
 
-COPY --from=builder /app/public ./public
+# Build the app
+FROM base AS build
 
-# Set the correct permission for prerender cache
-RUN mkdir .next
-RUN chown nextjs:nodejs .next
+WORKDIR /app
 
-# Automatically leverage output traces to reduce image size
-COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+COPY --from=deps /app/node_modules /app/node_modules
 
-USER nextjs
+ADD . .
+RUN npm run build
 
-EXPOSE 3000
-ENV PORT=3000
-ENV HOSTNAME="0.0.0.0"
+# Finally, build the production image with minimal footprint
+FROM base
 
-CMD ["node", "server.js"]
+ENV PORT="8080"
+
+WORKDIR /app
+
+COPY --from=production-deps /app/node_modules /app/node_modules
+
+COPY --from=build /app/build /app/build
+COPY --from=build /app/public /app/public
+COPY --from=build /app/package.json /app/package.json
+
+CMD ["npm", "run", "start"]

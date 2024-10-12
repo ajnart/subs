@@ -4,7 +4,7 @@
   "files": {
     "ignoreUnknown": false,
     "ignore": [".next", "node_modules", "./src/components/ui"],
-    "include": ["src"]
+    "include": ["app"]
   },
   "formatter": {
     "enabled": true,
@@ -21,14 +21,40 @@
     "rules": {
       "recommended": false,
       "complexity": {
+        "noExtraBooleanCast": "error",
+        "noMultipleSpacesInRegularExpressionLiterals": "error",
+        "noUselessCatch": "error",
         "noUselessTypeConstraint": "error",
+        "noWith": "error",
         "useLiteralKeys": "error",
         "useOptionalChain": "error"
       },
       "correctness": {
+        "noConstAssign": "error",
+        "noConstantCondition": "error",
+        "noEmptyCharacterClassInRegex": "error",
+        "noEmptyPattern": "error",
+        "noGlobalObjectCalls": "error",
+        "noInnerDeclarations": "error",
+        "noInvalidConstructorSuper": "error",
+        "noNewSymbol": "error",
+        "noNonoctalDecimalEscape": "error",
+        "noPrecisionLoss": "error",
+        "noSelfAssign": "error",
+        "noSetterReturn": "error",
+        "noSwitchDeclarations": "error",
+        "noUndeclaredVariables": "error",
+        "noUnreachable": "error",
+        "noUnreachableSuper": "error",
+        "noUnsafeFinally": "error",
+        "noUnsafeOptionalChaining": "error",
         "noUnusedImports": "info",
+        "noUnusedLabels": "error",
         "noUnusedVariables": "off",
-        "useArrayLiterals": "off"
+        "useArrayLiterals": "off",
+        "useIsNan": "error",
+        "useValidForDirection": "error",
+        "useYield": "error"
       },
       "style": {
         "noInferrableTypes": "error",
@@ -39,13 +65,36 @@
         "useShorthandFunctionType": "error"
       },
       "suspicious": {
+        "noAssignInExpressions": "error",
+        "noAsyncPromiseExecutor": "error",
+        "noCatchAssign": "error",
+        "noClassAssign": "error",
+        "noCompareNegZero": "error",
+        "noControlCharactersInRegex": "error",
+        "noDebugger": "error",
+        "noDuplicateCase": "error",
+        "noDuplicateClassMembers": "error",
+        "noDuplicateObjectKeys": "error",
+        "noDuplicateParameters": "error",
         "noEmptyBlockStatements": "error",
         "noExplicitAny": "info",
         "noExtraNonNullAssertion": "error",
+        "noFallthroughSwitchClause": "error",
+        "noFunctionAssign": "error",
+        "noGlobalAssign": "error",
+        "noImportAssign": "error",
+        "noMisleadingCharacterClass": "error",
         "noMisleadingInstantiator": "error",
+        "noPrototypeBuiltins": "error",
+        "noRedeclare": "error",
+        "noShadowRestrictedNames": "error",
+        "noSparseArray": "error",
         "noUnsafeDeclarationMerging": "error",
+        "noUnsafeNegation": "error",
         "useAwait": "off",
-        "useNamespaceKeyword": "error"
+        "useGetterReturn": "error",
+        "useNamespaceKeyword": "error",
+        "useValidTypeof": "error"
       }
     },
     "ignore": ["node_modules/*", ".next/*", "out/*", "src/components/ui/**"]
@@ -160,6 +209,51 @@
           }
         }
       }
-    }
+    },
+    {
+      "include": ["**/*.{js,jsx,ts,tsx}"],
+      "linter": {
+        "rules": {
+          "a11y": {
+            "noAccessKey": "warn",
+            "noAriaUnsupportedElements": "warn",
+            "noDistractingElements": "warn",
+            "noHeaderScope": "warn",
+            "noRedundantRoles": "warn",
+            "useAltText": "warn",
+            "useAnchorContent": "warn",
+            "useAriaPropsForRole": "warn",
+            "useFocusableInteractive": "off",
+            "useHeadingContent": "warn",
+            "useHtmlLang": "warn",
+            "useIframeTitle": "warn",
+            "useKeyWithClickEvents": "off",
+            "useKeyWithMouseEvents": "off",
+            "useMediaCaption": "off",
+            "useValidAnchor": "warn",
+            "useValidAriaProps": "warn",
+            "useValidAriaValues": "warn"
+          },
+          "correctness": { "useJsxKeyInIterable": "warn" },
+          "suspicious": { "noDuplicateJsxProps": "warn" }
+        }
+      }
+    },
+    {
+      "include": ["**/*.{ts,tsx}"],
+      "linter": {
+        "rules": {
+          "complexity": { "noBannedTypes": "warn" },
+          "correctness": { "noUnusedVariables": "off" },
+          "style": { "noInferrableTypes": "off", "noNonNullAssertion": "off" },
+          "suspicious": {
+            "noEmptyBlockStatements": "off",
+            "noEmptyInterface": "off",
+            "noExplicitAny": "warn"
+          }
+        }
+      }
+    },
+    { "include": [".eslintrc.cjs"] }
   ]
 }

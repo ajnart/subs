@@ -1,43 +1,20 @@
 {
+  "include": ["remix.env.d.ts", "**/*.ts", "**/*.tsx"],
   "compilerOptions": {
-    /* Base Options: */
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "target": "ESNext",
-    "allowJs": true,
-    "resolveJsonModule": true,
-    "moduleDetection": "force",
+    "lib": ["DOM", "DOM.Iterable", "ES2019"],
     "isolatedModules": true,
-
-    /* Strictness */
+    "esModuleInterop": true,
+    "jsx": "react-jsx",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "target": "ES2019",
     "strict": true,
-    "noUncheckedIndexedAccess": true,
-    "checkJs": true,
-
-    /* Bundled projects */
-    "lib": ["dom", "dom.iterable", "ES2022"],
-    "noEmit": true,
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
-    "jsx": "preserve",
-    "plugins": [{ "name": "next" }],
-    "incremental": true,
-
-    /* Path Aliases */
+    "allowJs": true,
+    "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "paths": {
-      "~/*": ["./src/*"],
-      "@/components/*": ["./src/components/*"],
-    }
-  },
-  "include": [
-    ".eslintrc.cjs",
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    "**/*.cjs",
-    "**/*.js",
-    ".next/types/**/*.ts"
-  ],
-  "exclude": ["node_modules"]
+      "~/*": ["./app/*"]
+    },
+    "noEmit": true
+  }
 }
