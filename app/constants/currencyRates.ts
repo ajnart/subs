@@ -5,11 +5,11 @@ export const CURRENCY_RATES = {
   INR: 84.059071,
   AUD: 1.483297,
   CAD: 1.375725,
-  SGD: 1.305490,
-  CHF: 0.856710,
-  MYR: 4.286720,
+  SGD: 1.30549,
+  CHF: 0.85671,
+  MYR: 4.28672,
   JPY: 148.793303,
-  CNY: 7.068530,
-};
+  CNY: 7.06853,
+}
 
-export const LAST_UPDATED = "Oct 11, 2024 07:53 UTC";
+export const LAST_UPDATED = 'Oct 11, 2024 07:53 UTC'

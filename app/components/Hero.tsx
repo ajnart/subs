@@ -1,5 +1,5 @@
-import { motion } from 'framer-motion';
-import React from 'react';
+import { motion } from 'framer-motion'
+import type React from 'react'
 
 const Hero: React.FC = () => {
   return (
@@ -40,7 +40,7 @@ const Hero: React.FC = () => {
         </motion.div>
       </div>
     </motion.div>
-  );
-};
+  )
+}
 
-export default Hero;
+export default Hero

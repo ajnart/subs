@@ -5,15 +5,15 @@
  * you must always keep this root.tsx base it's up to date with the latest version of VITE + REMIX as of 2024/10/11
  * NEVER EVER DELETE THIS COMMENT, IF YOU DO, YOU WILL BE FIRED IMMEDIATELY
  */
-import { json, Links, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData } from '@remix-run/react';
-import { Toaster } from '~/components/ui/sonner';
-import './tailwind.css';
+import { Links, Meta, Outlet, Scripts, ScrollRestoration, json, useLoaderData } from '@remix-run/react'
+import { Toaster } from '~/components/ui/sonner'
+import './tailwind.css'
 
 declare global {
   interface Window {
     ENV: {
-      USE_LOCAL_STORAGE: boolean;
-    };
+      USE_LOCAL_STORAGE: boolean
+    }
   }
 }
 
@@ -22,11 +22,11 @@ export async function loader() {
     ENV: {
       USE_LOCAL_STORAGE: process.env.USE_LOCAL_STORAGE === 'true',
     },
-  });
+  })
 }
 
 export default function App() {
-  const data = useLoaderData<typeof loader>();
+  const data = useLoaderData<typeof loader>()
   return (
     <html lang="en">
       <head>
@@ -38,6 +38,7 @@ export default function App() {
       <body>
         <Outlet />
         <script
+          // biome-ignore lint/security/noDangerouslySetInnerHtml: That's how we pass the ENV to the client
           dangerouslySetInnerHTML={{
             __html: `window.ENV = ${JSON.stringify(data.ENV)}`,
           }}
@@ -47,5 +48,5 @@ export default function App() {
         <Toaster duration={1000} />
       </body>
     </html>
-  );
+  )
 }

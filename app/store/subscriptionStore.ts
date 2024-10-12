@@ -1,25 +1,25 @@
-import { create } from 'zustand';
-import { createJSONStorage, persist } from 'zustand/middleware';
+import { create } from 'zustand'
+import { createJSONStorage, persist } from 'zustand/middleware'
 
 export interface Subscription {
-  id: string;
-  name: string;
-  price: number;
-  currency: string;
-  domain: string;
+  id: string
+  name: string
+  price: number
+  currency: string
+  domain: string
 }
 
 interface SubscriptionStore {
-  subscriptions: Subscription[];
-  addSubscription: (subscription: Omit<Subscription, 'id'>) => void;
-  editSubscription: (id: string, updatedSubscription: Omit<Subscription, 'id'>) => void;
-  deleteSubscription: (id: string) => void;
-  exportSubscriptions: () => string;
-  importSubscriptions: (data: string) => void;
+  subscriptions: Subscription[]
+  addSubscription: (subscription: Omit<Subscription, 'id'>) => void
+  editSubscription: (id: string, updatedSubscription: Omit<Subscription, 'id'>) => void
+  deleteSubscription: (id: string) => void
+  exportSubscriptions: () => string
+  importSubscriptions: (data: string) => void
 }
 
 function useGetStorage() {
-  return localStorage;
+  return localStorage
 }
 
 const defaultSubscriptions: Subscription[] = [
@@ -34,7 +34,7 @@ const defaultSubscriptions: Subscription[] = [
   { id: '9', name: 'Adobe Creative Cloud', price: 52.99, currency: 'EUR', domain: 'adobe.com' },
   { id: '10', name: 'Microsoft 365', price: 6.99, currency: 'EUR', domain: 'microsoft.com' },
   // { id: '11', name: 'Onlyfans', price: 55.99, currency: 'USD', domain: 'onlyfans.com' },
-];
+]
 
 const useSubscriptionStore = create<SubscriptionStore>()(
   persist(
@@ -43,29 +43,29 @@ const useSubscriptionStore = create<SubscriptionStore>()(
       addSubscription: (subscription) => {
         set((state) => ({
           subscriptions: [...state.subscriptions, { ...subscription, id: Date.now().toString() }],
-        }));
+        }))
       },
       editSubscription: (id, updatedSubscription) => {
         set((state) => ({
           subscriptions: state.subscriptions.map((sub) => (sub.id === id ? { ...sub, ...updatedSubscription } : sub)),
-        }));
+        }))
       },
       deleteSubscription: (id) => {
         set((state) => ({
           subscriptions: state.subscriptions.filter((sub) => sub.id !== id),
-        }));
+        }))
       },
       exportSubscriptions: () => {
-        return JSON.stringify(get().subscriptions);
+        return JSON.stringify(get().subscriptions)
       },
       importSubscriptions: (data) => {
         try {
-          const parsedData = JSON.parse(data);
+          const parsedData = JSON.parse(data)
           if (Array.isArray(parsedData)) {
-            set({ subscriptions: parsedData as Subscription[] });
+            set({ subscriptions: parsedData as Subscription[] })
           }
         } catch (error) {
-          console.error('Failed to import subscriptions:', error);
+          console.error('Failed to import subscriptions:', error)
         }
       },
     }),
@@ -73,8 +73,8 @@ const useSubscriptionStore = create<SubscriptionStore>()(
       name: 'subscription-storage',
       skipHydration: false,
       storage: createJSONStorage(useGetStorage),
-    }
-  )
-);
+    },
+  ),
+)
 
-export default useSubscriptionStore;
+export default useSubscriptionStore

@@ -1,39 +1,45 @@
-import React, { useEffect, useState } from 'react';
-import { Button } from '~/components/ui/button';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '~/components/ui/dialog';
-import { Input } from '~/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '~/components/ui/select';
-import { useToast } from '~/components/ui/use-toast';
-import { CURRENCY_RATES } from '~/constants/currencyRates';
-import type { Subscription } from '~/store/subscriptionStore';
+import type React from 'react'
+import { useEffect, useState } from 'react'
+import { Button } from '~/components/ui/button'
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '~/components/ui/dialog'
+import { Input } from '~/components/ui/input'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '~/components/ui/select'
+import { useToast } from '~/components/ui/use-toast'
+import { CURRENCY_RATES } from '~/constants/currencyRates'
+import type { Subscription } from '~/store/subscriptionStore'
 
 interface AddSubscriptionModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  onSave: (subscription: Omit<Subscription, 'id'>) => void;
-  editingSubscription: Subscription | null;
+  isOpen: boolean
+  onClose: () => void
+  onSave: (subscription: Omit<Subscription, 'id'>) => void
+  editingSubscription: Subscription | null
 }
 
-const AddSubscriptionModal: React.FC<AddSubscriptionModalProps> = ({ isOpen, onClose, onSave, editingSubscription }) => {
-  const [name, setName] = useState('');
-  const [price, setPrice] = useState('');
-  const [currency, setCurrency] = useState('USD');
-  const [domain, setDomain] = useState('');
-  const { toast } = useToast();
+const AddSubscriptionModal: React.FC<AddSubscriptionModalProps> = ({
+  isOpen,
+  onClose,
+  onSave,
+  editingSubscription,
+}) => {
+  const [name, setName] = useState('')
+  const [price, setPrice] = useState('')
+  const [currency, setCurrency] = useState('USD')
+  const [domain, setDomain] = useState('')
+  const { toast } = useToast()
 
   useEffect(() => {
     if (editingSubscription) {
-      setName(editingSubscription.name);
-      setPrice(editingSubscription.price.toString());
-      setCurrency(editingSubscription.currency);
-      setDomain(editingSubscription.domain);
+      setName(editingSubscription.name)
+      setPrice(editingSubscription.price.toString())
+      setCurrency(editingSubscription.currency)
+      setDomain(editingSubscription.domain)
     } else {
-      setName('');
-      setPrice('');
-      setCurrency('USD');
-      setDomain('');
+      setName('')
+      setPrice('')
+      setCurrency('USD')
+      setDomain('')
     }
-  }, [editingSubscription]);
+  }, [editingSubscription])
 
   const handleSave = () => {
     if (!name || !price || !domain) {
@@ -41,18 +47,18 @@ const AddSubscriptionModal: React.FC<AddSubscriptionModalProps> = ({ isOpen, onC
         title: 'Error',
         description: 'Please fill in all fields.',
         variant: 'destructive',
-      });
-      return;
+      })
+      return
     }
 
-    const priceValue = parseFloat(price);
-    if (isNaN(priceValue) || priceValue <= 0) {
+    const priceValue = Number.parseFloat(price)
+    if (Number.isNaN(priceValue) || priceValue <= 0) {
       toast({
         title: 'Error',
         description: 'Please enter a valid price.',
         variant: 'destructive',
-      });
-      return;
+      })
+      return
     }
 
     onSave({
@@ -60,9 +66,9 @@ const AddSubscriptionModal: React.FC<AddSubscriptionModalProps> = ({ isOpen, onC
       price: priceValue,
       currency,
       domain,
-    });
-    onClose();
-  };
+    })
+    onClose()
+  }
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -90,7 +96,7 @@ const AddSubscriptionModal: React.FC<AddSubscriptionModalProps> = ({ isOpen, onC
         </div>
       </DialogContent>
     </Dialog>
-  );
-};
+  )
+}
 
-export default AddSubscriptionModal;
+export default AddSubscriptionModal

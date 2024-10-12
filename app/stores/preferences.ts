@@ -14,6 +14,6 @@ export const usePreferencesStore = create<PreferencesStore>()(
     }),
     {
       name: 'currency-storage',
-    }
-  )
+    },
+  ),
 )

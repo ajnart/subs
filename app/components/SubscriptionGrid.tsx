@@ -1,28 +1,24 @@
-import { AnimatePresence, motion } from 'framer-motion';
-import React from 'react';
-import type { Subscription } from '~/store/subscriptionStore';
-import SubscriptionCard from './SubscriptionCard';
+import { AnimatePresence, motion } from 'framer-motion'
+import type React from 'react'
+import type { Subscription } from '~/store/subscriptionStore'
+import SubscriptionCard from './SubscriptionCard'
 
 interface SubscriptionGridProps {
-  subscriptions: Subscription[];
-  onEditSubscription: (id: string) => void;
-  onDeleteSubscription: (id: string) => void;
+  subscriptions: Subscription[]
+  onEditSubscription: (id: string) => void
+  onDeleteSubscription: (id: string) => void
 }
 
-const SubscriptionGrid: React.FC<SubscriptionGridProps> = ({ 
-  subscriptions, 
+const SubscriptionGrid: React.FC<SubscriptionGridProps> = ({
+  subscriptions,
   onEditSubscription,
-  onDeleteSubscription
+  onDeleteSubscription,
 }) => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
       <AnimatePresence>
         {subscriptions.map((subscription) => (
-          <motion.div
-            key={subscription.id}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.3 }}
-          >
+          <motion.div key={subscription.id} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.3 }}>
             <SubscriptionCard
               subscription={subscription}
               onEdit={() => onEditSubscription(subscription.id)}
@@ -37,7 +33,7 @@ const SubscriptionGrid: React.FC<SubscriptionGridProps> = ({
         </div>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default SubscriptionGrid;
+export default SubscriptionGrid

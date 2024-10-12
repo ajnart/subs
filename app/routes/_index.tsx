@@ -1,6 +1,7 @@
-import { type MetaFunction } from '@remix-run/node'
+import type { MetaFunction } from '@remix-run/node'
 import { Download, Upload } from 'lucide-react'
-import React, { useEffect, useState } from 'react'
+import type React from 'react'
+import { useState } from 'react'
 import { toast } from 'sonner'
 import AddSubscriptionModal from '~/components/AddSubscriptionModal'
 import DeleteConfirmationDialog from '~/components/DeleteConfirmationDialog'
@@ -10,8 +11,8 @@ import SearchBar from '~/components/SearchBar'
 import SubscriptionGrid from '~/components/SubscriptionGrid'
 import Summary from '~/components/Summary'
 import { Button } from '~/components/ui/button'
-import useSubscriptionStore, { Subscription } from '~/store/subscriptionStore'
 import { CURRENCY_RATES } from '~/constants/currencyRates'
+import useSubscriptionStore, { type Subscription } from '~/store/subscriptionStore'
 
 export const meta: MetaFunction = () => {
   return [{ title: 'Subs - Subscription Tracker' }, { name: 'description', content: 'Easily track your subscriptions' }]
@@ -31,8 +32,6 @@ export default function Index() {
     exportSubscriptions,
     importSubscriptions,
   } = useSubscriptionStore()
-
-  useEffect(() => {}, [subscriptions])
 
   const handleAddSubscription = () => {
     setEditingSubscription(null)

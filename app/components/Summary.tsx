@@ -1,26 +1,26 @@
-import React from 'react';
-import { NumberTicker } from '~/components/number-ticker';
-import { Card, CardContent } from '~/components/ui/card';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '~/components/ui/select';
-import { CURRENCY_RATES } from '~/constants/currencyRates';
-import { usePreferencesStore } from '~/stores/preferences';
+import type React from 'react'
+import { NumberTicker } from '~/components/number-ticker'
+import { Card, CardContent } from '~/components/ui/card'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '~/components/ui/select'
+import type { CURRENCY_RATES } from '~/constants/currencyRates'
+import { usePreferencesStore } from '~/stores/preferences'
 
 interface SummaryProps {
-  totals: { [key: string]: number };
-  currencyRates: typeof CURRENCY_RATES;
+  totals: { [key: string]: number }
+  currencyRates: typeof CURRENCY_RATES
 }
 
 const Summary: React.FC<SummaryProps> = ({ totals, currencyRates }) => {
-  const { selectedCurrency, setSelectedCurrency } = usePreferencesStore();
+  const { selectedCurrency, setSelectedCurrency } = usePreferencesStore()
 
   const calculateTotal = () => {
     const totalUSD = Object.entries(totals).reduce((acc, [currency, amount]) => {
-      return acc + amount / currencyRates[currency as keyof typeof currencyRates];
-    }, 0);
-    return totalUSD * currencyRates[selectedCurrency as keyof typeof currencyRates];
-  };
+      return acc + amount / currencyRates[currency as keyof typeof currencyRates]
+    }, 0)
+    return totalUSD * currencyRates[selectedCurrency as keyof typeof currencyRates]
+  }
 
-  const convertedTotal = calculateTotal();
+  const convertedTotal = calculateTotal()
 
   return (
     <Card className="mb-6 bg-white shadow-lg">
@@ -60,7 +60,7 @@ const Summary: React.FC<SummaryProps> = ({ totals, currencyRates }) => {
         </div>
       </CardContent>
     </Card>
-  );
-};
+  )
+}
 
-export default Summary;
+export default Summary

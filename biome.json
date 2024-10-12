@@ -3,7 +3,7 @@
   "vcs": { "enabled": true, "clientKind": "git", "useIgnoreFile": true },
   "files": {
     "ignoreUnknown": false,
-    "ignore": [".next", "node_modules", "./app/components/ui"],
+    "ignore": [".next", "node_modules", "./app/components/ui/*"],
     "include": ["./app/*"]
   },
   "formatter": {
@@ -118,6 +118,7 @@
           },
           "style": {
             "noArguments": "error",
+            "noParameterAssign": "off",
             "noVar": "error",
             "useConst": "error"
           }

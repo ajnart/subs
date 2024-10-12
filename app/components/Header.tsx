@@ -1,9 +1,9 @@
-import { PlusCircle } from 'lucide-react';
-import React from 'react';
-import { Button } from '~/components/ui/button';
+import { PlusCircle } from 'lucide-react'
+import type React from 'react'
+import { Button } from '~/components/ui/button'
 
 interface HeaderProps {
-  onAddSubscription: () => void;
+  onAddSubscription: () => void
 }
 
 const Header: React.FC<HeaderProps> = ({ onAddSubscription }) => {
@@ -20,7 +20,7 @@ const Header: React.FC<HeaderProps> = ({ onAddSubscription }) => {
         </Button>
       </div>
     </header>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header

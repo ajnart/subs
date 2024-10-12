@@ -1,4 +1,4 @@
-import React from 'react';
+import type React from 'react'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -8,13 +8,13 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from '~/components/ui/alert-dialog';
+} from '~/components/ui/alert-dialog'
 
 interface DeleteConfirmationDialogProps {
-  isOpen: boolean;
-  onClose: () => void;
-  onConfirm: () => void;
-  subscriptionName: string;
+  isOpen: boolean
+  onClose: () => void
+  onConfirm: () => void
+  subscriptionName: string
 }
 
 const DeleteConfirmationDialog: React.FC<DeleteConfirmationDialogProps> = ({
@@ -29,8 +29,8 @@ const DeleteConfirmationDialog: React.FC<DeleteConfirmationDialogProps> = ({
         <AlertDialogHeader>
           <AlertDialogTitle>Are you sure?</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete the subscription
-            for {subscriptionName} from your account.
+            This action cannot be undone. This will permanently delete the subscription for {subscriptionName} from your
+            account.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
@@ -39,7 +39,7 @@ const DeleteConfirmationDialog: React.FC<DeleteConfirmationDialogProps> = ({
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
-  );
-};
+  )
+}
 
-export default DeleteConfirmationDialog;
+export default DeleteConfirmationDialog

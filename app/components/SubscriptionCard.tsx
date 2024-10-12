@@ -1,20 +1,20 @@
-import React from 'react';
-import { Card, CardContent } from '~/components/ui/card';
-import { Button } from '~/components/ui/button';
-import { motion } from 'framer-motion';
-import { LinkPreview } from '~/components/ui/link-preview';
-import { Edit, Trash2 } from 'lucide-react';
-import type { Subscription } from '~/store/subscriptionStore';
+import { motion } from 'framer-motion'
+import { Edit, Trash2 } from 'lucide-react'
+import type React from 'react'
+import { Button } from '~/components/ui/button'
+import { Card, CardContent } from '~/components/ui/card'
+import { LinkPreview } from '~/components/ui/link-preview'
+import type { Subscription } from '~/store/subscriptionStore'
 
 interface SubscriptionCardProps {
-  subscription: Subscription;
-  onEdit: (id: string) => void;
-  onDelete: (id: string) => void;
+  subscription: Subscription
+  onEdit: (id: string) => void
+  onDelete: (id: string) => void
 }
 
 const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ subscription, onEdit, onDelete }) => {
-  const { id, name, price, currency, domain } = subscription;
-  const logoUrl = `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
+  const { id, name, price, currency, domain } = subscription
+  const logoUrl = `https://www.google.com/s2/favicons?domain=${domain}&sz=64`
 
   return (
     <motion.div
@@ -49,7 +49,7 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ subscription, onEdi
         </CardContent>
       </Card>
     </motion.div>
-  );
-};
+  )
+}
 
-export default SubscriptionCard;
+export default SubscriptionCard

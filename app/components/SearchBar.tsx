@@ -1,9 +1,9 @@
-import React from 'react';
-import { Input } from '~/components/ui/input';
-import { Search } from 'lucide-react';
+import { Search } from 'lucide-react'
+import type React from 'react'
+import { Input } from '~/components/ui/input'
 
 interface SearchBarProps {
-  onSearch: (query: string) => void;
+  onSearch: (query: string) => void
 }
 
 const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
@@ -17,7 +17,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
         onChange={(e) => onSearch(e.target.value)}
       />
     </div>
-  );
-};
+  )
+}
 
-export default SearchBar;
+export default SearchBar
