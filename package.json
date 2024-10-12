@@ -50,7 +50,7 @@
     "@radix-ui/react-toggle": "^1.1.0",
     "@radix-ui/react-toggle-group": "^1.1.0",
     "@radix-ui/react-tooltip": "^1.1.2",
-    "@t3-oss/env-nextjs": "^0.10.1",
+    "@t3-oss/env-nextjs": "^0.11.0",
     "@tabler/icons-react": "^3.19.0",
     "@types/canvas-confetti": "^1.6.4",
     "canvas-confetti": "^1.9.3",
