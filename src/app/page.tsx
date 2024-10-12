@@ -9,6 +9,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogFooter,
 } from '@/components/ui/dialog'
 import { FloatingDock } from '@/components/ui/floating-dock'
 import { Input } from '@/components/ui/input'
@@ -16,7 +17,7 @@ import { Label } from '@/components/ui/label'
 import { LinkPreview } from '@/components/ui/link-preview'
 import { PlusCircle } from 'lucide-react'
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback, KeyboardEvent, useRef } from 'react'
 import InstructionsPopup from '~/components/InstructionsPopup'
 import MadeWithKodu from '~/components/MadeWithKodu'
 import { env } from '~/env'
@@ -34,7 +35,12 @@ export default function Component() {
   const { subscriptions, addSubscription, removeSubscription, editSubscription } = useSubscriptionStore()
   const [mounted, setMounted] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
   const [editingSubscription, setEditingSubscription] = useState<Subscription | null>(null)
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null)
+  const subscriptionRefs = useRef<(HTMLDivElement | null)[]>([])
+  const nameInputRef = useRef<HTMLInputElement>(null)
+  const urlInputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     setMounted(true)
@@ -42,6 +48,7 @@ export default function Component() {
 
   const totalMonthly = subscriptions.reduce((sum, sub) => sum + sub.price, 0)
 
+  // Handle form submission for adding or editing a subscription
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const formData = new FormData(event.currentTarget)
@@ -62,10 +69,11 @@ export default function Component() {
     }
   }
 
-  const handleEdit = (subscription: Subscription) => {
+  // Handle editing a subscription
+  const handleEdit = useCallback((subscription: Subscription) => {
     setEditingSubscription(subscription)
     setIsOpen(true)
-  }
+  }, [])
 
   const dockItems = subscriptions.map((sub) => ({
     title: sub.name,
@@ -73,12 +81,91 @@ export default function Component() {
     href: sub.url,
   }))
 
+  // Handle keyboard events for navigation and actions
+  const handleKeyDown = useCallback((e: KeyboardEvent) => {
+    if (isOpen || isDeleteDialogOpen) return // Avoid executing binds when any menu is open
+
+    if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+      e.preventDefault()
+      setSelectedIndex((prev) => {
+        const newIndex = prev === null || prev === 0 ? subscriptions.length - 1 : prev - 1
+        scrollToSubscription(newIndex)
+        return newIndex
+      })
+    } else if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === 'Tab') {
+      e.preventDefault()
+      setSelectedIndex((prev) => {
+        const newIndex = prev === null || prev === subscriptions.length - 1 ? 0 : prev + 1
+        scrollToSubscription(newIndex)
+        return newIndex
+      })
+    } else if (e.key === 'Delete' && selectedIndex !== null && subscriptions[selectedIndex]) {
+      e.preventDefault()
+      setIsDeleteDialogOpen(true)
+    } else if (e.key === 'Enter' && selectedIndex !== null) {
+      e.preventDefault()
+      const selectedSubscription = subscriptions[selectedIndex]
+      if (selectedSubscription) {
+        if (e.shiftKey) {
+          handleEdit(selectedSubscription)
+        } else {
+          window.open(selectedSubscription.url, '_blank')
+        }
+      }
+    } else if (e.key === '+') {
+      e.preventDefault()
+      setIsOpen(true)
+    } else if (e.key === 'v' && e.ctrlKey) {
+      e.preventDefault()
+      setIsOpen(true)
+      navigator.clipboard.readText().then((clipText) => {
+        if (clipText.startsWith('http://') || clipText.startsWith('https://')) {
+          urlInputRef.current?.focus()
+          urlInputRef.current?.setSelectionRange(0, urlInputRef.current.value.length)
+          document.execCommand('insertText', false, clipText)
+        } else {
+          nameInputRef.current?.focus()
+          nameInputRef.current?.setSelectionRange(0, nameInputRef.current.value.length)
+          document.execCommand('insertText', false, clipText)
+        }
+      })
+    }
+  }, [subscriptions, selectedIndex, handleEdit, isOpen, isDeleteDialogOpen])
+
+  // Scroll to the selected subscription
+  const scrollToSubscription = (index: number) => {
+    if (subscriptionRefs.current[index]) {
+      subscriptionRefs.current[index]?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+      })
+    }
+  }
+
+  // Handle confirmation of subscription deletion
+  const handleDeleteConfirm = () => {
+    if (selectedIndex !== null && subscriptions[selectedIndex]) {
+      removeSubscription(subscriptions[selectedIndex].id)
+      if (selectedIndex >= subscriptions.length - 1) {
+        setSelectedIndex(subscriptions.length - 2)
+      }
+    }
+    setIsDeleteDialogOpen(false)
+  }
+
+  useEffect(() => {
+    window.addEventListener('keydown', handleKeyDown as any)
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown as any)
+    }
+  }, [handleKeyDown])
+
   if (!mounted) {
     return null // Return null on initial render to avoid hydration mismatch
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 text-gray-100">
+    <div className="min-h-screen bg-gray-900 text-gray-100" tabIndex={0}>
       <div className="container mx-auto p-8 max-w-7xl">
         <div className="flex justify-between items-center mb-12">
           <h1 className="text-4xl font-bold text-white">Monthly Subscriptions Tracker</h1>
@@ -112,6 +199,7 @@ export default function Component() {
                     className="col-span-3 bg-gray-700 text-white"
                     required
                     defaultValue={editingSubscription?.name ?? ''}
+                    ref={nameInputRef}
                   />
                 </div>
                 <div className="grid grid-cols-4 items-center gap-4">
@@ -125,6 +213,7 @@ export default function Component() {
                     className="col-span-3 bg-gray-700 text-white"
                     required
                     defaultValue={editingSubscription?.url ?? ''}
+                    ref={urlInputRef}
                   />
                 </div>
                 <div className="grid grid-cols-4 items-center gap-4">
@@ -153,9 +242,16 @@ export default function Component() {
           Total Monthly: ${totalMonthly.toFixed(2)}
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {subscriptions.map((subscription) => (
+          {subscriptions.map((subscription, index) => (
             <LinkPreview key={subscription.id} url={subscription.url}>
-              <SubscriptionItem subscription={subscription} onRemove={removeSubscription} onEdit={handleEdit} />
+              <div
+                ref={(el) => {
+                  subscriptionRefs.current[index] = el;
+                }}
+                className={`${selectedIndex === index ? 'ring-2 ring-blue-500 rounded-lg transition-all duration-200 ease-in-out transform hover:scale-105' : ''}`}
+              >
+                <SubscriptionItem subscription={subscription} onRemove={removeSubscription} onEdit={handleEdit} />
+              </div>
             </LinkPreview>
           ))}
         </div>
@@ -166,6 +262,24 @@ export default function Component() {
         desktopClassName="fixed bottom-4 left-1/2 transform -translate-x-1/2"
         mobileClassName="fixed bottom-4 right-4"
       />
+      <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
+        <DialogContent className="sm:max-w-[425px] bg-gray-800 text-gray-100">
+          <DialogHeader>
+            <DialogTitle className="text-white">Confirm Deletion</DialogTitle>
+            <DialogDescription className="text-gray-400">
+              Are you sure you want to delete this subscription?
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button onClick={() => setIsDeleteDialogOpen(false)} variant="secondary">
+              Cancel
+            </Button>
+            <Button onClick={handleDeleteConfirm} variant="destructive">
+              Delete
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }
