@@ -1,0 +1,15 @@
+export const CURRENCY_RATES = {
+  USD: 1,
+  EUR: 0.913826,
+  GBP: 0.765324,
+  INR: 84.059071,
+  AUD: 1.483297,
+  CAD: 1.375725,
+  SGD: 1.305490,
+  CHF: 0.856710,
+  MYR: 4.286720,
+  JPY: 148.793303,
+  CNY: 7.068530,
+};
+
+export const LAST_UPDATED = "Oct 11, 2024 07:53 UTC";
