@@ -34,7 +34,8 @@ interface Subscription {
 export default function Component() {
   const { subscriptions, addSubscription, removeSubscription, editSubscription } = useSubscriptionStore()
   const [mounted, setMounted] = useState(false)
-  const [isOpen, setIsOpen] = useState(false)
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
+  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false)
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
   const [editingSubscription, setEditingSubscription] = useState<Subscription | null>(null)
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null)
@@ -60,10 +61,11 @@ export default function Component() {
     if (name && url && price) {
       if (editingSubscription) {
         editSubscription(editingSubscription.id, { name, url, price, icon })
+        setIsEditDialogOpen(false)
       } else {
         addSubscription({ name, url, price, icon })
+        setIsCreateDialogOpen(false)
       }
-      setIsOpen(false)
       setEditingSubscription(null)
       ;(event.target as HTMLFormElement).reset()
     }
@@ -72,7 +74,7 @@ export default function Component() {
   // Handle editing a subscription
   const handleEdit = useCallback((subscription: Subscription) => {
     setEditingSubscription(subscription)
-    setIsOpen(true)
+    setIsEditDialogOpen(true)
   }, [])
 
   const dockItems = subscriptions.map((sub) => ({
@@ -83,7 +85,7 @@ export default function Component() {
 
   // Handle keyboard events for navigation and actions
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
-    if (isOpen || isDeleteDialogOpen) return // Avoid executing binds when any menu is open
+    if (isEditDialogOpen || isCreateDialogOpen || isDeleteDialogOpen) return // Avoid executing binds when any menu is open
 
     if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
       e.preventDefault()
@@ -114,10 +116,10 @@ export default function Component() {
       }
     } else if (e.key === '+') {
       e.preventDefault()
-      setIsOpen(true)
+      setIsCreateDialogOpen(true)
     } else if (e.key === 'v' && e.ctrlKey) {
       e.preventDefault()
-      setIsOpen(true)
+      setIsCreateDialogOpen(true)
       navigator.clipboard.readText().then((clipText) => {
         if (clipText.startsWith('http://') || clipText.startsWith('https://')) {
           urlInputRef.current?.focus()
@@ -130,7 +132,7 @@ export default function Component() {
         }
       })
     }
-  }, [subscriptions, selectedIndex, handleEdit, isOpen, isDeleteDialogOpen])
+  }, [subscriptions, selectedIndex, handleEdit, isEditDialogOpen, isCreateDialogOpen, isDeleteDialogOpen])
 
   // Scroll to the selected subscription
   const scrollToSubscription = (index: number) => {
@@ -169,7 +171,7 @@ export default function Component() {
       <div className="container mx-auto p-8 max-w-7xl">
         <div className="flex justify-between items-center mb-12">
           <h1 className="text-4xl font-bold text-white">Monthly Subscriptions Tracker</h1>
-          <Dialog open={isOpen} onOpenChange={setIsOpen}>
+          <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
             <DialogTrigger asChild>
               <Button className="bg-blue-600 hover:bg-blue-700 text-white" onClick={() => setEditingSubscription(null)}>
                 <PlusCircle className="mr-2 h-5 w-5" />
@@ -178,13 +180,9 @@ export default function Component() {
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px] bg-gray-800 text-gray-100">
               <DialogHeader>
-                <DialogTitle className="text-white">
-                  {editingSubscription ? 'Edit Subscription' : 'Add New Subscription'}
-                </DialogTitle>
+                <DialogTitle className="text-white">Add New Subscription</DialogTitle>
                 <DialogDescription className="text-gray-400">
-                  {editingSubscription
-                    ? 'Edit the details of your subscription.'
-                    : 'Enter the details for your new subscription.'}
+                  Enter the details for your new subscription.
                 </DialogDescription>
               </DialogHeader>
 
@@ -198,7 +196,6 @@ export default function Component() {
                     name="name"
                     className="col-span-3 bg-gray-700 text-white"
                     required
-                    defaultValue={editingSubscription?.name ?? ''}
                     ref={nameInputRef}
                   />
                 </div>
@@ -212,7 +209,6 @@ export default function Component() {
                     type="url"
                     className="col-span-3 bg-gray-700 text-white"
                     required
-                    defaultValue={editingSubscription?.url ?? ''}
                     ref={urlInputRef}
                   />
                 </div>
@@ -227,11 +223,10 @@ export default function Component() {
                     step="0.01"
                     className="col-span-3 bg-gray-700 text-white"
                     required
-                    defaultValue={editingSubscription?.price ?? ''}
                   />
                 </div>
                 <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white mt-4">
-                  {editingSubscription ? 'Update Subscription' : 'Add Subscription'}
+                  Add Subscription
                 </Button>
               </form>
             </DialogContent>
@@ -262,6 +257,61 @@ export default function Component() {
         desktopClassName="fixed bottom-4 left-1/2 transform -translate-x-1/2"
         mobileClassName="fixed bottom-4 right-4"
       />
+      <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
+        <DialogContent className="sm:max-w-[425px] bg-gray-800 text-gray-100">
+          <DialogHeader>
+            <DialogTitle className="text-white">Edit Subscription</DialogTitle>
+            <DialogDescription className="text-gray-400">
+              Edit the details of your subscription.
+            </DialogDescription>
+          </DialogHeader>
+
+          <form onSubmit={handleSubmit} className="grid gap-4 py-4">
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="edit-name" className="text-right text-gray-300">
+                Name
+              </Label>
+              <Input
+                id="edit-name"
+                name="name"
+                className="col-span-3 bg-gray-700 text-white"
+                required
+                defaultValue={editingSubscription?.name ?? ''}
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="edit-url" className="text-right text-gray-300">
+                URL
+              </Label>
+              <Input
+                id="edit-url"
+                name="url"
+                type="url"
+                className="col-span-3 bg-gray-700 text-white"
+                required
+                defaultValue={editingSubscription?.url ?? ''}
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="edit-price" className="text-right text-gray-300">
+                Price
+              </Label>
+              <Input
+                id="edit-price"
+                name="price"
+                type="number"
+                step="0.01"
+                className="col-span-3 bg-gray-700 text-white"
+                required
+                defaultValue={editingSubscription?.price ?? ''}
+              />
+            </div>
+            <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white mt-4">
+              Update Subscription
+            </Button>
+          </form>
+        </DialogContent>
+      </Dialog>
       <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
         <DialogContent className="sm:max-w-[425px] bg-gray-800 text-gray-100">
           <DialogHeader>
