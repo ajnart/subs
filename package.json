@@ -1,5 +1,11 @@
 {
-  "name": "kodu-remix-shadcn",
+  "name": "subs",
+  "description": "Track your subscriptions easily",
+  "version": "1.0.0",
+  "author": {
+    "name": "ajanrt",
+    "email": "thomas@ajnart.dev"
+  },
   "private": true,
   "sideEffects": false,
   "type": "module",
@@ -47,6 +53,7 @@
     "@remix-run/react": "^2.12.1",
     "@remix-run/serve": "^2.12.1",
     "@types/node": "^22.7.5",
+    "@vercel/remix": "^2.12.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
