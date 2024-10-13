@@ -13,6 +13,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
       <Input
         type="text"
         placeholder="Search subscriptions..."
+        autoFocus
         className="pl-10 pr-4 py-2 w-full"
         onChange={(e) => onSearch(e.target.value)}
       />
