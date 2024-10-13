@@ -26,6 +26,7 @@
       "correctness": {
         "noEmptyCharacterClassInRegex": "error",
         "noEmptyPattern": "error",
+        "useExhaustiveDependencies": "off",
         "noGlobalObjectCalls": "error",
         "noInnerDeclarations": "error",
         "noInvalidConstructorSuper": "error",
