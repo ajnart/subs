@@ -18,7 +18,12 @@ const SubscriptionGrid: React.FC<SubscriptionGridProps> = ({
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
       <AnimatePresence>
         {subscriptions.map((subscription) => (
-          <motion.div key={subscription.id} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.3 }}>
+          <motion.div
+            key={subscription.id}
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.3 }}
+          >
             <SubscriptionCard
               subscription={subscription}
               onEdit={() => onEditSubscription(subscription.id)}
