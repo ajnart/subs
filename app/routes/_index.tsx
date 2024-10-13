@@ -1,9 +1,10 @@
 import type { MetaFunction } from '@remix-run/node'
 import { Download, Upload } from 'lucide-react'
 import type React from 'react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 import AddSubscriptionModal from '~/components/AddSubscriptionModal'
+import AnnouncementBar from '~/components/AnnouncementBar'
 import DeleteConfirmationDialog from '~/components/DeleteConfirmationDialog'
 import Header from '~/components/Header'
 import Hero from '~/components/Hero'
@@ -24,6 +25,7 @@ export default function Index() {
   const [searchQuery, setSearchQuery] = useState('')
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
   const [subscriptionToDelete, setSubscriptionToDelete] = useState<Subscription | null>(null)
+  const [enableKodu, setEnableKodu] = useState(false)
   const {
     subscriptions,
     addSubscription,
@@ -32,6 +34,12 @@ export default function Index() {
     exportSubscriptions,
     importSubscriptions,
   } = useSubscriptionStore()
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.ENV.SHOW_KODU_BANNER) {
+      setEnableKodu(true)
+    }
+  }, [])
 
   const handleAddSubscription = () => {
     setEditingSubscription(null)
@@ -128,6 +136,7 @@ export default function Index() {
 
   return (
     <div className="min-h-screen bg-slate-100">
+      {enableKodu && <AnnouncementBar />}
       <Header onAddSubscription={handleAddSubscription} />
       <main className="container mx-auto py-6 px-3 sm:px-4 lg:px-6">
         <Hero />
