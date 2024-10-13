@@ -2,7 +2,7 @@ import type React from 'react'
 import { NumberTicker } from '~/components/number-ticker'
 import { Card, CardContent } from '~/components/ui/card'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '~/components/ui/select'
-import type { CURRENCY_RATES } from '~/constants/currencyRates'
+import { type CURRENCY_RATES, LAST_UPDATED } from '~/constants/currencyRates'
 import { usePreferencesStore } from '~/stores/preferences'
 
 interface SummaryProps {
@@ -36,7 +36,10 @@ const Summary: React.FC<SummaryProps> = ({ totals, currencyRates }) => {
         </div>
         <div className="mt-4 pt-4 border-t border-slate-200">
           <div className="flex items-center justify-between">
-            <span className="text-lg font-bold text-slate-700">Total:</span>
+            <div className="flex flex-col">
+              <span className="text-lg font-bold text-slate-700">Total:</span>
+              <span className="text-sm text-slate-500">Rates at {LAST_UPDATED}</span>
+            </div>
             <div className="flex items-center">
               <NumberTicker
                 decimalPlaces={2}
