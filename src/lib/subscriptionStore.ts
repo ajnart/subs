@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
+import axios from 'axios';
 import { env } from '~/env';
 
 interface Subscription {
@@ -7,11 +8,16 @@ interface Subscription {
   name: string;
   url: string;
   price: number;
+  currency: string;
   icon: string;
 }
 
 interface SubscriptionStore {
   subscriptions: Subscription[];
+  exchangeRates: Record<string, number>;
+  globalCurrency: string;
+  setGlobalCurrency: (currency: string) => void;
+  fetchExchangeRates: () => Promise<void>;
   addSubscription: (subscription: Omit<Subscription, 'id'>) => void;
   removeSubscription: (id: number) => void;
   editSubscription: (id: number, updatedSubscription: Omit<Subscription, 'id'>) => void;
@@ -23,6 +29,7 @@ const defaultSubscriptions: Subscription[] = [
     name: 'Netflix',
     url: 'https://www.netflix.com',
     price: 15.99,
+    currency: 'USD',
     icon: 'https://www.google.com/s2/favicons?domain=netflix.com',
   },
   {
@@ -30,6 +37,7 @@ const defaultSubscriptions: Subscription[] = [
     name: 'Google One',
     url: 'https://one.google.com',
     price: 1.99,
+    currency: 'USD',
     icon: 'https://www.google.com/s2/favicons?domain=google.com',
   },
   {
@@ -37,6 +45,7 @@ const defaultSubscriptions: Subscription[] = [
     name: 'Amazon Prime',
     url: 'https://www.amazon.com/prime',
     price: 14.99,
+    currency: 'USD',
     icon: 'https://www.google.com/s2/favicons?domain=amazon.com',
   },
   {
@@ -44,6 +53,7 @@ const defaultSubscriptions: Subscription[] = [
     name: 'Spotify',
     url: 'https://www.spotify.com',
     price: 9.99,
+    currency: 'USD',
     icon: 'https://www.google.com/s2/favicons?domain=spotify.com',
   },
   {
@@ -51,13 +61,13 @@ const defaultSubscriptions: Subscription[] = [
     name: 'YouTube Premium',
     url: 'https://onlyfans.com/',
     price: 69.99,
+    currency: 'USD',
     icon: 'https://www.google.com/s2/favicons?domain=onlyfans.com',
   },
 ];
 
 const getStorage = () => {
   if (typeof window === 'undefined') {
-    // Return a dummy storage for SSR
     return {
       getItem: () => Promise.resolve(null),
       setItem: () => Promise.resolve(),
@@ -75,7 +85,6 @@ const getStorage = () => {
         const response = await fetch(`/api/kv/${name}`);
         if (response.ok) {
           const data = await response.json();
-          // If the value is an empty array, return the default subscriptions
           if (Array.isArray(data.value) && data.value.length === 0) {
             return JSON.stringify({ subscriptions: defaultSubscriptions });
           }
@@ -116,6 +125,21 @@ export const useSubscriptionStore = create<SubscriptionStore>()(
   persist(
     (set) => ({
       subscriptions: defaultSubscriptions,
+      exchangeRates: { USD: 1 },
+      globalCurrency: 'USD',
+      setGlobalCurrency: (currency: string) => set({ globalCurrency: currency }),
+      fetchExchangeRates: async () => {
+        try {
+          const response = await axios.get('https://api.frankfurter.app/latest?from=USD');
+          const rates = response.data.rates;
+          if (!rates.USD) {
+            rates.USD = 1;
+          }
+          set({ exchangeRates: rates });
+        } catch (error) {
+          console.error('Error fetching exchange rates:', error);
+        }
+      },
       addSubscription: (newSubscription) =>
         set((state) => ({
           subscriptions: [...state.subscriptions, { ...newSubscription, id: Date.now() }],
