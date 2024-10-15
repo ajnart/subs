@@ -23,39 +23,40 @@ const AddSubscriptionModal: React.FC<AddSubscriptionModalProps> = ({
   editingSubscription,
 }) => {
   const [name, setName] = useState('')
-  const [price, setPrice] = useState('')
+  const [price, setPrice] = useState(0)
   const [currency, setCurrency] = useState('USD')
   const [domain, setDomain] = useState('')
-  const [previewSubscription, setPreviewSubscription] = useState<Subscription | null>(null)
+  const [previewSubscription, setPreviewSubscription] = useState<Subscription>({
+    currency: 'USD',
+    domain: 'https://example.com',
+    id: 'preview',
+    name: 'Example Subscription',
+    price: 9.99,
+  })
   const { toast } = useToast()
 
   useEffect(() => {
     if (editingSubscription) {
       setName(editingSubscription.name)
-      setPrice(editingSubscription.price.toString())
+      setPrice(editingSubscription.price)
       setCurrency(editingSubscription.currency)
       setDomain(editingSubscription.domain)
     } else {
       setName('')
-      setPrice('')
+      setPrice(0)
       setCurrency('USD')
       setDomain('')
     }
   }, [editingSubscription])
 
   useEffect(() => {
-    const priceValue = Number.parseFloat(price)
-    if (name && !Number.isNaN(priceValue) && priceValue > 0 && domain) {
-      setPreviewSubscription({
-        id: 'preview',
-        name,
-        price: priceValue,
-        currency,
-        domain,
-      })
-    } else {
-      setPreviewSubscription(null)
-    }
+    setPreviewSubscription({
+      id: 'preview',
+      name: name.length > 0 ? name : 'Example Subscription',
+      price: price,
+      currency: currency,
+      domain: domain.length > 0 ? domain : 'https://example.com',
+    })
   }, [name, price, currency, domain])
 
   const handleSave = () => {
@@ -67,9 +68,7 @@ const AddSubscriptionModal: React.FC<AddSubscriptionModalProps> = ({
       })
       return
     }
-
-    const priceValue = Number.parseFloat(price)
-    if (Number.isNaN(priceValue) || priceValue <= 0) {
+    if (Number.isNaN(price) || price <= 0) {
       toast({
         title: 'Error',
         description: 'Please enter a valid price.',
@@ -80,7 +79,7 @@ const AddSubscriptionModal: React.FC<AddSubscriptionModalProps> = ({
 
     onSave({
       name,
-      price: priceValue,
+      price: price,
       currency,
       domain,
     })
@@ -96,7 +95,12 @@ const AddSubscriptionModal: React.FC<AddSubscriptionModalProps> = ({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 py-4">
           <div className="space-y-4">
             <Input placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
-            <Input type="number" placeholder="Price" value={price} onChange={(e) => setPrice(e.target.value)} />
+            <Input
+              type="number"
+              placeholder="Price"
+              value={price}
+              onChange={(e) => setPrice(Number.parseFloat(e.target.value))}
+            />
             <Select value={currency} onValueChange={setCurrency}>
               <SelectTrigger>
                 <SelectValue placeholder="Currency" />
