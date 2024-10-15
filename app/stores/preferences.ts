@@ -13,7 +13,7 @@ export const usePreferencesStore = create<PreferencesStore>()(
       setSelectedCurrency: (currency) => set({ selectedCurrency: currency }),
     }),
     {
-      name: 'currency-storage',
+      name: 'preferences-storage',
     },
   ),
 )

@@ -1,23 +1,27 @@
+import { useLoaderData } from '@remix-run/react'
 import type React from 'react'
 import { NumberTicker } from '~/components/number-ticker'
 import { Card, CardContent } from '~/components/ui/card'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '~/components/ui/select'
-import { type CURRENCY_RATES, LAST_UPDATED } from '~/constants/currencyRates'
+import type { loader } from '~/routes/_index'
 import { usePreferencesStore } from '~/stores/preferences'
 
 interface SummaryProps {
   totals: { [key: string]: number }
-  currencyRates: typeof CURRENCY_RATES
 }
 
-const Summary: React.FC<SummaryProps> = ({ totals, currencyRates }) => {
+const Summary: React.FC<SummaryProps> = ({ totals }) => {
   const { selectedCurrency, setSelectedCurrency } = usePreferencesStore()
+  const { lastUpdatd, rates } = useLoaderData<typeof loader>() as {
+    lastUpdatd: string
+    rates: { [key: string]: number }
+  }
 
   const calculateTotal = () => {
     const totalUSD = Object.entries(totals).reduce((acc, [currency, amount]) => {
-      return acc + amount / currencyRates[currency as keyof typeof currencyRates]
+      return acc + amount / (rates[currency] || 1)
     }, 0)
-    return totalUSD * currencyRates[selectedCurrency as keyof typeof currencyRates]
+    return totalUSD * (rates[selectedCurrency] || 1)
   }
 
   const convertedTotal = calculateTotal()
@@ -38,7 +42,9 @@ const Summary: React.FC<SummaryProps> = ({ totals, currencyRates }) => {
           <div className="flex items-center justify-between">
             <div className="flex flex-col">
               <span className="text-lg font-bold text-foreground">Total</span>
-              <span className="text-sm text-muted-foreground">Rates at {LAST_UPDATED}</span>
+              <span className="text-sm text-muted-foreground">
+                Rates updated at: {new Date(lastUpdatd).toLocaleString()}
+              </span>
             </div>
             <div className="flex items-center">
               <NumberTicker
@@ -51,7 +57,7 @@ const Summary: React.FC<SummaryProps> = ({ totals, currencyRates }) => {
                   <SelectValue placeholder="Currency" />
                 </SelectTrigger>
                 <SelectContent>
-                  {Object.keys(currencyRates).map((currency) => (
+                  {Object.keys(rates).map((currency) => (
                     <SelectItem key={currency} value={currency}>
                       {currency}
                     </SelectItem>

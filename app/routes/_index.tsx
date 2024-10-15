@@ -1,4 +1,5 @@
 import type { MetaFunction } from '@remix-run/node'
+import { json } from '@remix-run/react'
 import { Download, Upload } from 'lucide-react'
 import type React from 'react'
 import { useEffect, useRef, useState } from 'react'
@@ -12,11 +13,17 @@ import SearchBar from '~/components/SearchBar'
 import SubscriptionGrid from '~/components/SubscriptionGrid'
 import Summary from '~/components/Summary'
 import { Button } from '~/components/ui/button'
-import { CURRENCY_RATES } from '~/constants/currencyRates'
+import { cronJobsResults } from '~/entry.server'
 import useSubscriptionStore, { type Subscription } from '~/store/subscriptionStore'
 
 export const meta: MetaFunction = () => {
   return [{ title: 'Subs - Subscription Tracker' }, { name: 'description', content: 'Easily track your subscriptions' }]
+}
+export async function loader() {
+  return json({
+    rates: cronJobsResults.rates,
+    lastUpdatd: cronJobsResults.updated,
+  })
 }
 
 export default function Index() {
@@ -166,7 +173,7 @@ export default function Index() {
             <input ref={fileInputRef} type="file" accept=".json" className="hidden" onChange={handleImport} />
           </div>
         </div>
-        <Summary totals={calculateTotals()} currencyRates={CURRENCY_RATES} />
+        <Summary totals={calculateTotals()} />
         <div className="mb-4">
           <SearchBar onSearch={setSearchQuery} />
         </div>

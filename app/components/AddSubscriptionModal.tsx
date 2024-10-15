@@ -1,3 +1,4 @@
+import { useLoaderData } from '@remix-run/react'
 import type React from 'react'
 import { useEffect, useState } from 'react'
 import { Button } from '~/components/ui/button'
@@ -5,7 +6,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '~/components/u
 import { Input } from '~/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '~/components/ui/select'
 import { useToast } from '~/components/ui/use-toast'
-import { CURRENCY_RATES } from '~/constants/currencyRates'
+import type { loader } from '~/routes/_index'
 import type { Subscription } from '~/store/subscriptionStore'
 import SubscriptionCard from './SubscriptionCard'
 
@@ -34,6 +35,7 @@ const AddSubscriptionModal: React.FC<AddSubscriptionModalProps> = ({
     price: 9.99,
   })
   const { toast } = useToast()
+  const { rates } = useLoaderData<typeof loader>()
 
   useEffect(() => {
     if (editingSubscription) {
@@ -106,7 +108,7 @@ const AddSubscriptionModal: React.FC<AddSubscriptionModalProps> = ({
                 <SelectValue placeholder="Currency" />
               </SelectTrigger>
               <SelectContent>
-                {Object.keys(CURRENCY_RATES).map((c) => (
+                {Object.keys(rates).map((c) => (
                   <SelectItem key={c} value={c}>
                     {c}
                   </SelectItem>
@@ -116,7 +118,7 @@ const AddSubscriptionModal: React.FC<AddSubscriptionModalProps> = ({
             <Input placeholder="Domain" value={domain} onChange={(e) => setDomain(e.target.value)} />
           </div>
           {previewSubscription && (
-            // biome-ignore lint/suspicious/noEmptyBlockStatements: It's just a preview, no need for actions
+            // biome-ignore lint/suspicious/noEmptyBlockStatements: Not needed
             <SubscriptionCard subscription={previewSubscription} onEdit={() => {}} onDelete={() => {}} />
           )}
         </div>

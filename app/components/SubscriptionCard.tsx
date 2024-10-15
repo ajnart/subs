@@ -46,7 +46,7 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ subscription, onEdi
             <h3 className="text-xl sm:text-1xl font-bold mb-2 text-card-foreground max-w-full text-wrap-balance overflow-wrap-break-word line-clamp-1 text-center">
               {name}
             </h3>
-            <p className="text-md sm:text-sm font-semibold text-card-foreground text-center">{`${currency} ${price.toFixed(2)}`}</p>
+            <p className="text-md sm:text-sm font-semibold text-card-foreground text-center">{`${currency} ${price}`}</p>
           </CardContent>
         </LinkPreview>
       </Card>

@@ -9,8 +9,43 @@ import { PassThrough } from 'node:stream'
 import type { AppLoadContext, EntryContext } from '@remix-run/node'
 import { createReadableStreamFromReadable } from '@remix-run/node'
 import { RemixServer } from '@remix-run/react'
+import { Cron } from 'croner'
 import { isbot } from 'isbot'
 import { renderToPipeableStream } from 'react-dom/server'
+
+interface ChronJobsResults {
+  rates: {
+    [key: string]: number
+  }
+  updated: Date
+}
+
+export const cronJobsResults: ChronJobsResults = {
+  rates: {},
+  updated: new Date(),
+}
+
+// Every 12 hours
+export const job = Cron(
+  '0 */12 * * *',
+  {
+    name: 'fetch-currency-rates',
+  },
+  async () => {
+    console.log(
+      `[Cron Job] Fetching currency rates at ${new Date().toISOString()}, next run at ${job.nextRun()?.toISOString()}`,
+    )
+    const response = await fetch(
+      'https://api.frankfurter.app/latest?base=USD&symbols=USD,EUR,GBP,JPY,CAD,AUD,INR,CNY,SGD,CHF,NTD',
+    )
+    const data = await response.json()
+    data.rates.USD = 1
+    cronJobsResults.rates = data.rates
+    cronJobsResults.updated = new Date()
+  },
+)
+// First run is immediate
+job.trigger()
 
 const ABORT_DELAY = 5_000
 
