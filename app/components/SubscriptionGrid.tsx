@@ -34,7 +34,7 @@ const SubscriptionGrid: React.FC<SubscriptionGridProps> = ({
       </AnimatePresence>
       {subscriptions.length === 0 && (
         <div className="col-span-full text-center py-8">
-          <p className="text-xl text-slate-600">No subscriptions found. Add one to get started!</p>
+          <p className="text-xl text-muted-foreground">No subscriptions found. Add one to get started!</p>
         </div>
       )}
     </div>

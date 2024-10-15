@@ -4,7 +4,7 @@ import type React from 'react'
 import { useEffect, useState } from 'react'
 import { Button } from './ui/button'
 
-const Hero: React.FC = () => {
+export const Hero: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false)
 
   const setCookie = (name: string, value: string, days: number) => {
@@ -38,12 +38,12 @@ const Hero: React.FC = () => {
       initial={{ opacity: 0, y: -50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="bg-gradient-to-r from-slate-800 to-slate-900 text-white py-12 px-3 sm:px-4 lg:px-6 rounded-lg shadow-xl mb-8 relative"
+      className="bg-gradient text-foreground py-12 px-3 sm:px-4 lg:px-6 rounded-lg shadow-xl mb-8 relative"
     >
       <Button
         variant="ghost"
         size="icon"
-        className="absolute top-2 right-2 text-white hover:bg-slate-700"
+        className="absolute top-2 right-2 text-foreground hover:bg-secondary"
         onClick={handleClose}
       >
         <X className="h-4 w-4" />
@@ -54,14 +54,14 @@ const Hero: React.FC = () => {
           Track, analyze, and optimize your recurring expenses in one place
         </motion.p>
         <motion.div className="flex justify-center space-x-3">
-          <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-lg">
-            <span className="text-2xl font-bold text-slate-800">📊</span>
+          <div className="w-16 h-16 bg-background rounded-full flex items-center justify-center shadow-lg">
+            <span className="text-2xl font-bold text-primary">📊</span>
           </div>
-          <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-lg">
-            <span className="text-2xl font-bold text-slate-800">💰</span>
+          <div className="w-16 h-16 bg-background rounded-full flex items-center justify-center shadow-lg">
+            <span className="text-2xl font-bold text-primary">💰</span>
           </div>
-          <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-lg">
-            <span className="text-2xl font-bold text-slate-800">🚀</span>
+          <div className="w-16 h-16 bg-background rounded-full flex items-center justify-center shadow-lg">
+            <span className="text-2xl font-bold text-primary">🚀</span>
           </div>
         </motion.div>
       </div>

@@ -142,19 +142,24 @@ export default function Index() {
   )
 
   return (
-    <div className="min-h-screen bg-slate-100">
+    <div className="min-h-screen bg-background">
       {enableKodu && <AnnouncementBar />}
       <Header onAddSubscription={handleAddSubscription} />
       <main className="container mx-auto py-6 px-3 sm:px-4 lg:px-6">
         <Hero />
         <div className="mb-6 flex flex-col sm:flex-row justify-between items-center">
-          <h2 className="text-xl font-bold text-slate-800 mb-3 sm:mb-0">Manage {subscriptions.length} Subscriptions</h2>
+          <h2 className="text-xl font-bold text-foreground mb-3 sm:mb-0">
+            Manage {subscriptions.length} Subscriptions
+          </h2>
           <div className="flex space-x-2">
-            <Button onClick={handleExport} className="bg-slate-700 hover:bg-slate-800 text-white text-sm">
+            <Button onClick={handleExport} className="bg-primary hover:bg-primary/80 text-primary-foreground text-sm">
               <Download className="mr-1 h-3 w-3" />
               Export
             </Button>
-            <Button onClick={handleImportClick} className="bg-slate-700 hover:bg-slate-800 text-white text-sm">
+            <Button
+              onClick={handleImportClick}
+              className="bg-primary hover:bg-primary/80 text-primary-foreground text-sm"
+            >
               <Upload className="mr-1 h-3 w-3" />
               Import
             </Button>

@@ -8,8 +8,8 @@ interface SearchBarProps {
 
 const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   return (
-    <div className="relative">
-      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" />
+    <div className="relative rounded-lg bg-card">
+      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
       <Input
         type="text"
         placeholder="Search subscriptions..."

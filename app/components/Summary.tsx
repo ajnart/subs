@@ -23,28 +23,28 @@ const Summary: React.FC<SummaryProps> = ({ totals, currencyRates }) => {
   const convertedTotal = calculateTotal()
 
   return (
-    <Card className="mb-6 bg-white shadow-lg">
+    <Card className="mb-6 bg-card shadow-lg">
       <CardContent className="p-4 sm:p-6">
-        <h2 className="text-xl sm:text-2xl font-bold mb-4 text-slate-800">Summary</h2>
+        <h2 className="text-xl sm:text-2xl font-bold mb-4 text-foreground">Summary</h2>
         <div className="flex flex-wrap gap-3 sm:gap-4">
           {Object.entries(totals).map(([currency, total]) => (
-            <div key={currency} className="flex items-center bg-slate-100 rounded-lg p-2 sm:p-3 shadow-sm">
-              <span className="font-semibold mr-1 text-slate-700 text-sm">{currency}:</span>
-              <p className="text-base sm:text-lg font-bold text-slate-800">{total.toFixed(0)}</p>
+            <div key={currency} className="flex items-center bg-muted rounded-lg p-2 sm:p-3 shadow-sm">
+              <span className="font-semibold mr-1 text-muted-foreground text-sm">{currency}:</span>
+              <p className="text-base sm:text-lg font-bold text-foreground">{total.toFixed(0)}</p>
             </div>
           ))}
         </div>
-        <div className="mt-4 pt-4 border-t border-slate-200">
+        <div className="mt-4 pt-4 border-t border-border">
           <div className="flex items-center justify-between">
             <div className="flex flex-col">
-              <span className="text-lg font-bold text-slate-700">Total:</span>
-              <span className="text-sm text-slate-500">Rates at {LAST_UPDATED}</span>
+              <span className="text-lg font-bold text-foreground">Total</span>
+              <span className="text-sm text-muted-foreground">Rates at {LAST_UPDATED}</span>
             </div>
             <div className="flex items-center">
               <NumberTicker
                 decimalPlaces={2}
                 value={convertedTotal}
-                className="text-xl sm:text-2xl font-bold text-slate-800 mr-2"
+                className="text-xl sm:text-2xl font-bold text-foreground mr-2"
               />
               <Select value={selectedCurrency} onValueChange={setSelectedCurrency}>
                 <SelectTrigger className="w-[80px]">
