@@ -43,7 +43,9 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ subscription, onEdi
         <LinkPreview url={domain}>
           <CardContent className="flex flex-col items-center justify-center p-4 sm:p-6 h-full">
             <img src={logoUrl} alt={`${name} logo`} className="w-16 h-16 mb-3 rounded-full shadow-md" />
-            <h3 className="text-1xl sm:text-2xl font-bold mb-2 text-slate-700">{name}</h3>
+            <h3 className="text-xl sm:text-1xl font-bold mb-2 text-slate-700 max-w-full text-wrap-balance overflow-wrap-break-word line-clamp-1 text-center">
+              {name}
+            </h3>
             <p className="text-md sm:text-sm font-semibold text-slate-800 text-center">{`${currency} ${price.toFixed(2)}`}</p>
           </CardContent>
         </LinkPreview>
