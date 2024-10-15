@@ -8,7 +8,6 @@ import AddSubscriptionModal from '~/components/AddSubscriptionModal'
 import AnnouncementBar from '~/components/AnnouncementBar'
 import DeleteConfirmationDialog from '~/components/DeleteConfirmationDialog'
 import Header from '~/components/Header'
-import Hero from '~/components/Hero'
 import SearchBar from '~/components/SearchBar'
 import SubscriptionGrid from '~/components/SubscriptionGrid'
 import Summary from '~/components/Summary'
@@ -153,7 +152,6 @@ export default function Index() {
       {enableKodu && <AnnouncementBar />}
       <Header onAddSubscription={handleAddSubscription} />
       <main className="container mx-auto py-6 px-3 sm:px-4 lg:px-6">
-        <Hero />
         <div className="mb-6 flex flex-col sm:flex-row justify-between items-center">
           <h2 className="text-xl font-bold text-foreground mb-3 sm:mb-0">
             Manage {subscriptions.length} Subscriptions
