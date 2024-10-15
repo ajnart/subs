@@ -1,7 +1,7 @@
 import type { MetaFunction } from '@remix-run/node'
 import { Download, Upload } from 'lucide-react'
 import type React from 'react'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { toast } from 'sonner'
 import AddSubscriptionModal from '~/components/AddSubscriptionModal'
 import AnnouncementBar from '~/components/AnnouncementBar'
@@ -26,6 +26,7 @@ export default function Index() {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
   const [subscriptionToDelete, setSubscriptionToDelete] = useState<Subscription | null>(null)
   const [enableKodu, setEnableKodu] = useState(false)
+  const fileInputRef = useRef<HTMLInputElement>(null)
   const {
     subscriptions,
     addSubscription,
@@ -103,6 +104,12 @@ export default function Index() {
     }
   }
 
+  const handleImportClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click()
+    }
+  }
+
   const handleImport = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
     if (file) {
@@ -111,7 +118,7 @@ export default function Index() {
         try {
           const content = e.target?.result as string
           importSubscriptions(content)
-          toast.success(`${subscriptions.length} subscriptions imported successfully.`)
+          toast.success('Subscriptions imported successfully.')
         } catch (error) {
           console.error('Import failed:', error)
           toast.error('Failed to import subscriptions. Please check the file and try again.')
@@ -147,13 +154,11 @@ export default function Index() {
               <Download className="mr-1 h-3 w-3" />
               Export
             </Button>
-            <label htmlFor="import-file" className="cursor-pointer">
-              <Button className="bg-slate-700 hover:bg-slate-800 text-white text-sm">
-                <Upload className="mr-1 h-3 w-3" />
-                Import
-              </Button>
-              <input id="import-file" type="file" accept=".json" className="hidden" onChange={handleImport} />
-            </label>
+            <Button onClick={handleImportClick} className="bg-slate-700 hover:bg-slate-800 text-white text-sm">
+              <Upload className="mr-1 h-3 w-3" />
+              Import
+            </Button>
+            <input ref={fileInputRef} type="file" accept=".json" className="hidden" onChange={handleImport} />
           </div>
         </div>
         <Summary totals={calculateTotals()} currencyRates={CURRENCY_RATES} />
