@@ -122,6 +122,9 @@ importers:
       cmdk:
         specifier: ^1.0.0
         version: 1.0.0(@types/react-dom@18.3.0)(@types/react@18.3.11)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      croner:
+        specifier: ^8.1.2
+        version: 8.1.2
       date-fns:
         specifier: ^3.6.0
         version: 3.6.0
@@ -137,6 +140,9 @@ importers:
       isbot:
         specifier: ^4.1.0
         version: 4.4.0
+      jotai:
+        specifier: ^2.10.1
+        version: 2.10.1(@types/react@18.3.11)(react@18.3.1)
       lefthook:
         specifier: ^1.7.18
         version: 1.7.18
@@ -2069,6 +2075,10 @@ packages:
   core-util-is@1.0.3:
     resolution: {integrity: sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==}
 
+  croner@8.1.2:
+    resolution: {integrity: sha512-ypfPFcAXHuAZRCzo3vJL6ltENzniTjwe/qsLleH1V2/7SRDjgvRQyrLmumFTLmjFax4IuSxfGXEn79fozXcJog==}
+    engines: {node: '>=18.0'}
+
   cross-spawn@7.0.3:
     resolution: {integrity: sha512-iRDPJKUPVEND7dHPO8rkbOnPpyDygcDFtWjpeWNCgy8WP2rXcxXL8TskReQl6OrB2G7+UJrags1q15Fudc7G6w==}
     engines: {node: '>= 8'}
@@ -2689,6 +2699,18 @@ packages:
   jiti@1.21.6:
     resolution: {integrity: sha512-2yTgeWTWzMWkHu6Jp9NKgePDaYHbntiwvYuuJLbbN9vl7DC9DvXKOB2BC3ZZ92D3cvV/aflH0osDfwpHepQ53w==}
     hasBin: true
+
+  jotai@2.10.1:
+    resolution: {integrity: sha512-4FycO+BOTl2auLyF2Chvi6KTDqdsdDDtpaL/WHQMs8f3KS1E3loiUShQzAzFA/sMU5cJ0hz/RT1xum9YbG/zaA==}
+    engines: {node: '>=12.20.0'}
+    peerDependencies:
+      '@types/react': '>=17.0.0'
+      react: '>=17.0.0'
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      react:
+        optional: true
 
   js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
@@ -6055,6 +6077,8 @@ snapshots:
 
   core-util-is@1.0.3: {}
 
+  croner@8.1.2: {}
+
   cross-spawn@7.0.3:
     dependencies:
       path-key: 3.1.1
@@ -6677,6 +6701,11 @@ snapshots:
   javascript-stringify@2.1.0: {}
 
   jiti@1.21.6: {}
+
+  jotai@2.10.1(@types/react@18.3.11)(react@18.3.1):
+    optionalDependencies:
+      '@types/react': 18.3.11
+      react: 18.3.1
 
   js-tokens@4.0.0: {}
 
