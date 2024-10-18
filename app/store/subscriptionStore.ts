@@ -38,6 +38,14 @@ const createCustomStorage = () => {
     return localStorage
   }
 
+  if (typeof window === 'undefined') {
+    return {
+      getItem: () => null,
+      setItem: () => null,
+      removeItem: () => null,
+    }
+  }
+
   return {
     getItem: async (key: string): Promise<string | null> => {
       console.log('Getting item from the db (the config file)')
