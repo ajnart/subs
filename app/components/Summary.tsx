@@ -12,9 +12,10 @@ interface SummaryProps {
 
 const Summary: React.FC<SummaryProps> = ({ totals }) => {
   const { selectedCurrency, setSelectedCurrency } = usePreferencesStore()
-  const { lastUpdatd, rates } = useLoaderData<typeof loader>() as {
-    lastUpdatd: string
-    rates: { [key: string]: number }
+  const { lastUpdated, rates } = useLoaderData<typeof loader>()
+
+  if (!rates || !lastUpdated) {
+    return null
   }
 
   const calculateTotal = () => {
@@ -43,7 +44,7 @@ const Summary: React.FC<SummaryProps> = ({ totals }) => {
             <div className="flex flex-col">
               <span className="text-lg font-bold text-foreground">Total</span>
               <span className="text-sm text-muted-foreground">
-                Rates updated at: {new Date(lastUpdatd).toLocaleString()}
+                Rates updated at: {new Date(lastUpdated).toLocaleString()}
               </span>
             </div>
             <div className="flex items-center">

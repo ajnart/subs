@@ -108,7 +108,7 @@ const AddSubscriptionModal: React.FC<AddSubscriptionModalProps> = ({
                 <SelectValue placeholder="Currency" />
               </SelectTrigger>
               <SelectContent>
-                {Object.keys(rates).map((c) => (
+                {Object.keys(rates ?? []).map((c) => (
                   <SelectItem key={c} value={c}>
                     {c}
                   </SelectItem>
