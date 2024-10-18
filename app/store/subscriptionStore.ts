@@ -33,13 +33,14 @@ export const defaultSubscriptions: Subscription[] = [
 ]
 
 const createCustomStorage = () => {
-  const USE_LOCAL_STORAGE = typeof window !== 'undefined' && window.ENV?.USE_LOCAL_STORAGE === false
+  const USE_LOCAL_STORAGE = false
   if (USE_LOCAL_STORAGE) {
     return localStorage
   }
 
   return {
     getItem: async (key: string): Promise<string | null> => {
+      console.log('Getting item from the db (the config file)')
       try {
         const response = await fetch(`/api/storage/${key}`)
         if (!response.ok) return null
