@@ -44,7 +44,7 @@ const Summary: React.FC<SummaryProps> = ({ totals }) => {
             <div className="flex flex-col">
               <span className="text-lg font-bold text-foreground">Total</span>
               <span className="text-sm text-muted-foreground">
-                Rates updated at: {new Date(lastUpdated).toLocaleString()}
+                Rates for: {new Date(lastUpdated).toLocaleDateString()}
               </span>
             </div>
             <div className="flex items-center">
