@@ -182,11 +182,6 @@ export default function Index() {
         <div className="mb-6 flex flex-col sm:flex-row justify-between items-center">
           <div>
             <h2 className="text-xl font-bold text-foreground mb-1">Manage {subscriptions.length} Subscriptions</h2>
-            {lastUpdated && (
-              <p className="text-sm text-muted-foreground">
-                Exchange rates last updated: {new Date(lastUpdated).toLocaleDateString()}
-              </p>
-            )}
           </div>
           <div className="flex space-x-2">
             <Button onClick={handleExport} className="bg-primary hover:bg-primary/80 text-primary-foreground text-sm">

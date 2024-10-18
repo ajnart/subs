@@ -4,7 +4,7 @@ import type { ActionFunction, LoaderFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { defaultSubscriptions } from '~/store/subscriptionStore'
 
-const CONFIG_FILE = path.join(process.cwd(), 'config.json')
+const CONFIG_FILE = path.join(process.cwd(), '/data/config.json')
 
 async function readConfig(): Promise<Record<string, any>> {
   try {

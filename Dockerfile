@@ -1,45 +1,26 @@
-FROM node:20-slim AS base
+FROM oven/bun:latest
 
-# set for base and all layer that inherit from it
-ENV NODE_ENV=production
-
-# Install all node_modules, including dev dependencies
-FROM base AS deps
-
+# Set the working directory inside the container
 WORKDIR /app
 
-ADD package.json ./
-RUN npm install
+COPY package.json ./
+COPY bun.lockb ./
 
-# Setup production node_modules
-FROM base AS production-deps
+# Install dependencies
+RUN bun install --include=dev
 
-WORKDIR /app
+# Copy the rest of your application code
+COPY . .
 
-COPY --from=deps /app/node_modules /app/node_modules
-ADD package.json ./
+# Build the Remix app for production
+RUN bun run build
 
-# Build the app
-FROM base AS build
+ENV USE_LOCAL_STORAGE=false
 
-WORKDIR /app
 
-COPY --from=deps /app/node_modules /app/node_modules
+VOLUME [ "/app/data" ]
 
-ADD . .
-RUN npm run build
+EXPOSE 3000
 
-# Finally, build the production image with minimal footprint
-FROM base
 
-ENV PORT="8080"
-
-WORKDIR /app
-
-COPY --from=production-deps /app/node_modules /app/node_modules
-
-COPY --from=build /app/build /app/build
-COPY --from=build /app/public /app/public
-COPY --from=build /app/package.json /app/package.json
-
-CMD ["npm", "run", "start"]
+CMD ["bun", "start"]
