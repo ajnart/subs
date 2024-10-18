@@ -15,7 +15,18 @@ interface SubscriptionCardProps {
 
 const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ subscription, onEdit, onDelete, className }) => {
   const { id, name, price, currency, domain } = subscription
-  const logoUrl = `https://www.google.com/s2/favicons?domain=${domain}&sz=64`
+
+  // Sanitize the domain URL
+  const sanitizeDomain = (domain: string) => {
+    try {
+      return new URL(domain).href
+    } catch {
+      return new URL(`https://${domain}`).href
+    }
+  }
+
+  const sanitizedDomain = sanitizeDomain(domain)
+  const logoUrl = `https://www.google.com/s2/favicons?domain=${sanitizedDomain}&sz=64`
 
   return (
     <motion.div
@@ -40,7 +51,7 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ subscription, onEdi
             <span className="sr-only">Delete</span>
           </Button>
         </div>
-        <LinkPreview url={domain}>
+        <LinkPreview url={sanitizedDomain}>
           <CardContent className="flex flex-col items-center justify-center p-4 sm:p-6 h-full">
             <img src={logoUrl} alt={`${name} logo`} className="w-16 h-16 mb-3 rounded-full shadow-md" />
             <h3 className="text-xl sm:text-1xl font-bold mb-2 text-card-foreground max-w-full text-wrap-balance overflow-wrap-break-word line-clamp-1 text-center">
