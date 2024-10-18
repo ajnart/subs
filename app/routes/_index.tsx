@@ -1,5 +1,6 @@
-import type { MetaFunction } from '@remix-run/node'
-import { json } from '@remix-run/react'
+import type { LoaderFunctionArgs, MetaFunction } from '@remix-run/node'
+import { json } from '@remix-run/node'
+import { useLoaderData } from '@remix-run/react'
 import { Download, Upload } from 'lucide-react'
 import type React from 'react'
 import { useEffect, useRef, useState } from 'react'
@@ -12,20 +13,30 @@ import SearchBar from '~/components/SearchBar'
 import SubscriptionGrid from '~/components/SubscriptionGrid'
 import Summary from '~/components/Summary'
 import { Button } from '~/components/ui/button'
-import { cronJobsResults } from '~/entry.server'
+import { getCacheHeaders, getCurrencyRates } from '~/services/currency.server'
 import useSubscriptionStore, { type Subscription } from '~/store/subscriptionStore'
+import type { SupportedCurrency } from '~/types/currencies'
 
 export const meta: MetaFunction = () => {
   return [{ title: 'Subs - Subscription Tracker' }, { name: 'description', content: 'Easily track your subscriptions' }]
 }
-export async function loader() {
-  return json({
-    rates: cronJobsResults.rates,
-    lastUpdatd: cronJobsResults.updated,
-  })
+
+export async function loader({ request }: LoaderFunctionArgs) {
+  const data = await getCurrencyRates()
+
+  return json(
+    {
+      rates: data?.rates ?? null,
+      lastUpdated: data?.date ?? null,
+    },
+    {
+      headers: getCacheHeaders(data?.date),
+    },
+  )
 }
 
 export default function Index() {
+  const { rates, lastUpdated } = useLoaderData<typeof loader>()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [editingSubscription, setEditingSubscription] = useState<Subscription | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
@@ -33,6 +44,7 @@ export default function Index() {
   const [subscriptionToDelete, setSubscriptionToDelete] = useState<Subscription | null>(null)
   const [enableKodu, setEnableKodu] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
+
   const {
     subscriptions,
     addSubscription,
@@ -47,6 +59,21 @@ export default function Index() {
       setEnableKodu(true)
     }
   }, [])
+
+  const calculateTotalsInUSD = () => {
+    if (!rates) return {}
+    return subscriptions.reduce(
+      (acc: { [key in SupportedCurrency]?: number }, sub) => {
+        const currency = sub.currency as SupportedCurrency
+        const rate = rates[currency] || 1
+        const amountInUSD = sub.price / rate
+        acc[currency] = (acc[currency] || 0) + sub.price
+        acc.USD = (acc.USD || 0) + amountInUSD
+        return acc
+      },
+      {} as { [key in SupportedCurrency]?: number },
+    )
+  }
 
   const handleAddSubscription = () => {
     setEditingSubscription(null)
@@ -153,9 +180,14 @@ export default function Index() {
       <Header onAddSubscription={handleAddSubscription} />
       <main className="container mx-auto py-6 px-3 sm:px-4 lg:px-6">
         <div className="mb-6 flex flex-col sm:flex-row justify-between items-center">
-          <h2 className="text-xl font-bold text-foreground mb-3 sm:mb-0">
-            Manage {subscriptions.length} Subscriptions
-          </h2>
+          <div>
+            <h2 className="text-xl font-bold text-foreground mb-1">Manage {subscriptions.length} Subscriptions</h2>
+            {lastUpdated && (
+              <p className="text-sm text-muted-foreground">
+                Exchange rates last updated: {new Date(lastUpdated).toLocaleDateString()}
+              </p>
+            )}
+          </div>
           <div className="flex space-x-2">
             <Button onClick={handleExport} className="bg-primary hover:bg-primary/80 text-primary-foreground text-sm">
               <Download className="mr-1 h-3 w-3" />
@@ -171,7 +203,7 @@ export default function Index() {
             <input ref={fileInputRef} type="file" accept=".json" className="hidden" onChange={handleImport} />
           </div>
         </div>
-        <Summary totals={calculateTotals()} />
+        <Summary totals={calculateTotalsInUSD()} />
         <div className="mb-4">
           <SearchBar onSearch={setSearchQuery} />
         </div>

@@ -2,6 +2,7 @@ import * as fs from 'node:fs/promises'
 import * as path from 'node:path'
 import type { ActionFunction, LoaderFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
+import { defaultSubscriptions } from '~/store/subscriptionStore'
 
 const CONFIG_FILE = path.join(process.cwd(), 'config.json')
 
@@ -14,7 +15,7 @@ async function readConfig(): Promise<Record<string, any>> {
       return {}
     }
     console.error('Error reading config file:', error)
-    throw new Response('Internal Server Error', { status: 500 })
+    return {}
   }
 }
 
@@ -23,7 +24,6 @@ async function writeConfig(config: Record<string, any>): Promise<void> {
     await fs.writeFile(CONFIG_FILE, JSON.stringify(config, null, 2), 'utf-8')
   } catch (error) {
     console.error('Error writing config file:', error)
-    throw new Response('Internal Server Error', { status: 500 })
   }
 }
 
@@ -35,13 +35,14 @@ export const loader: LoaderFunction = async ({ params }) => {
       return json({ error: 'Key is undefined' }, { status: 400 })
     }
     const value = config[key]
-    if (value === undefined) {
-      return json({ error: 'Key not found' }, { status: 404 })
+    if (value === undefined && key === 'subscription-storage') {
+      // Return default subscriptions if the key is not found
+      return json({ value: { state: { subscriptions: defaultSubscriptions } } })
     }
-    return json({ value })
+    return json({ value: value || null })
   } catch (error) {
-    if (error instanceof Response) throw error
-    return json({ error: 'Internal Server Error' }, { status: 500 })
+    console.error('Loader error:', error)
+    return json({ value: null })
   }
 }
 
@@ -69,7 +70,7 @@ export const action: ActionFunction = async ({ request, params }) => {
 
     return json({ error: 'Method not allowed' }, { status: 405 })
   } catch (error) {
-    if (error instanceof Response) throw error
+    console.error('Action error:', error)
     return json({ error: 'Internal Server Error' }, { status: 500 })
   }
 }
