@@ -17,7 +17,9 @@
     "lint": "biome lint",
     "format": "biome format",
     "check": "biome check",
-    "ci": "biome ci"
+    "ci": "biome ci",
+    "docker:build": "docker build . -t ajnart/subs",
+    "docker:test": "docker run -p 3000:3000 --rm --name subs ajnart/subs"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
@@ -59,6 +61,7 @@
     "cmdk": "^1.0.0",
     "croner": "^8.1.2",
     "date-fns": "^3.6.0",
+    "dayjs": "^1.11.13",
     "embla-carousel-react": "^8.3.0",
     "framer-motion": "^11.11.7",
     "input-otp": "^1.2.4",
