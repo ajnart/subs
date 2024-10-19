@@ -5,6 +5,7 @@
 			"name": "Debug full stack",
 			"type": "node",
 			"request": "launch",
+			"console": "integratedTerminal",
 			"runtimeExecutable": "bun",
 			"runtimeArgs": [
 				"run",
