@@ -7,12 +7,15 @@
 import { RemixBrowser } from '@remix-run/react'
 import { StrictMode, startTransition } from 'react'
 import { hydrateRoot } from 'react-dom/client'
+import { TooltipProvider } from './components/ui/tooltip'
 
 startTransition(() => {
   hydrateRoot(
     document,
     <StrictMode>
-      <RemixBrowser />
+      <TooltipProvider>
+        <RemixBrowser />
+      </TooltipProvider>
     </StrictMode>,
   )
 })
