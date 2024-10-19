@@ -48,7 +48,6 @@ const createCustomStorage = () => {
 
   return {
     getItem: async (key: string): Promise<string | null> => {
-      console.log('Getting item from the db (the config file)')
       try {
         const response = await fetch(`/api/storage/${key}`)
         if (!response.ok) return null
