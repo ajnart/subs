@@ -33,7 +33,8 @@ export const defaultSubscriptions: Subscription[] = [
 ]
 
 const createCustomStorage = () => {
-  const USE_LOCAL_STORAGE = false
+  const USE_LOCAL_STORAGE = typeof window !== 'undefined' && window.ENV.USE_LOCAL_STORAGE === true
+
   if (USE_LOCAL_STORAGE) {
     return localStorage
   }
