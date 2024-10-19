@@ -47,7 +47,6 @@ export const loader: LoaderFunction = async ({ params }) => {
 }
 
 export const action: ActionFunction = async ({ request, params }) => {
-  console.log('ActionFunction for API storage is running')
   try {
     const key = params.key
     const config = await readConfig()
