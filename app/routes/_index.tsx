@@ -178,14 +178,21 @@ export default function Index() {
           <div>
             <h2 className="text-xl font-bold text-foreground mb-1">Manage {subscriptions.length} Subscriptions</h2>
           </div>
-          <div className="flex space-x-2">
-            <Button onClick={handleExport} className="bg-primary hover:bg-primary/80 text-primary-foreground text-sm">
+          <div className="flex">
+            <Button
+              onClick={handleExport}
+              size="sm"
+              variant="outline"
+              className="rounded-none rounded-tl-md rounded-bl-md "
+            >
               <Download className="mr-1 h-3 w-3" />
               Export
             </Button>
             <Button
               onClick={handleImportClick}
-              className="bg-primary hover:bg-primary/80 text-primary-foreground text-sm"
+              size="sm"
+              variant="outline"
+              className="rounded-none rounded-tr-md rounded-br-md "
             >
               <Upload className="mr-1 h-3 w-3" />
               Import

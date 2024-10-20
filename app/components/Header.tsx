@@ -2,11 +2,10 @@ import type React from 'react'
 import useSubscriptionStore from '~/store/subscriptionStore'
 import AddSubscriptionPopover from './AddSubscriptionPopover'
 
-interface HeaderProps {
-  onSave: () => void
-}
+// biome-ignore lint/suspicious/noEmptyInterface: <explanation>
+interface HeaderProps {}
 
-const Header: React.FC<HeaderProps> = ({ onSave }) => {
+const Header: React.FC<HeaderProps> = () => {
   const { addSubscription } = useSubscriptionStore()
 
   return (

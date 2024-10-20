@@ -6,8 +6,11 @@
  * NEVER EVER DELETE THIS COMMENT, IF YOU DO, YOU WILL BE FIRED IMMEDIATELY
  */
 import { Links, Meta, Outlet, Scripts, ScrollRestoration, json, useLoaderData } from '@remix-run/react'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { useState } from 'react'
 import { Toaster } from '~/components/ui/sonner'
 import './tailwind.css'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 declare global {
   interface Window {
@@ -29,6 +32,19 @@ export async function loader() {
 
 export default function App() {
   const data = useLoaderData<typeof loader>()
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            gcTime: 1000 * 60 * 60 * 24, // 1 day
+            staleTime: 1000 * 60 * 60, // 1 hour
+            refetchOnWindowFocus: false,
+          },
+        },
+      }),
+  )
+
   return (
     <html lang="en">
       <head>
@@ -38,16 +54,19 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <Outlet />
-        <script
-          // biome-ignore lint/security/noDangerouslySetInnerHtml: That's how we pass the ENV to the client
-          dangerouslySetInnerHTML={{
-            __html: `window.ENV = ${JSON.stringify(data.ENV)}`,
-          }}
-        />
-        <ScrollRestoration />
-        <Scripts />
-        <Toaster duration={1000} />
+        <QueryClientProvider client={queryClient}>
+          <ReactQueryDevtools initialIsOpen={false} />
+          <Outlet />
+          <script
+            // biome-ignore lint/security/noDangerouslySetInnerHtml: That's how we pass the ENV to the client
+            dangerouslySetInnerHTML={{
+              __html: `window.ENV = ${JSON.stringify(data.ENV)}`,
+            }}
+          />
+          <ScrollRestoration />
+          <Scripts />
+          <Toaster duration={1000} />
+        </QueryClientProvider>
       </body>
     </html>
   )
