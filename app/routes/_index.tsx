@@ -9,6 +9,7 @@ import AnnouncementBar from '~/components/AnnouncementBar'
 import DeleteConfirmationDialog from '~/components/DeleteConfirmationDialog'
 import EditSubscriptionModal from '~/components/EditSubscriptionModal'
 import Header from '~/components/Header'
+import { IconFinder } from '~/components/IconFinder'
 import SearchBar from '~/components/SearchBar'
 import SubscriptionGrid from '~/components/SubscriptionGrid'
 import Summary from '~/components/Summary'
@@ -200,6 +201,7 @@ export default function Index() {
             <input ref={fileInputRef} type="file" accept=".json" className="hidden" onChange={handleImport} />
           </div>
         </div>
+        <IconFinder />
         <Summary totals={calculateTotalsInUSD()} />
         <div className="mb-4">
           <SearchBar onSearch={setSearchQuery} />

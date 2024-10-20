@@ -4,13 +4,11 @@ export function IconFinder() {
   const { data, error, isLoading } = useQuery({
     queryKey: ['Icons'],
     queryFn: async () => {
-      // Await 500 ms to simulate a slow network request
-      await new Promise((resolve) => setTimeout(resolve, 500))
-      return [
-        { id: 1, name: 'Icon 1' },
-        { id: 2, name: 'Icon 2' },
-        { id: 3, name: 'Icon 3' },
-      ]
+      const response = await fetch('/api/icons')
+      if (!response.ok) {
+        throw new Error('Network response was not ok')
+      }
+      return response.json()
     },
   })
 

@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useLoaderData } from '@remix-run/react'
+import { PlusCircle } from 'lucide-react'
 import type React from 'react'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -72,7 +73,10 @@ export const AddSubscriptionPopover: React.FC<AddSubscriptionPopoverProps> = ({ 
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button variant="outline">Add Subscription</Button>
+        <Button>
+          <PlusCircle className="mr-2 h-4 w-4" />
+          Add Subscription
+        </Button>
       </PopoverTrigger>
       <PopoverContent className="w-80">
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -80,7 +84,7 @@ export const AddSubscriptionPopover: React.FC<AddSubscriptionPopoverProps> = ({ 
           <div>
             <div>
               <Label htmlFor="name">Name</Label>
-              <Input id="name" {...register('name')} className={errors.name ? 'border-red-500' : ''} />
+              <Input required id="name" {...register('name')} className={errors.name ? 'border-red-500' : ''} />
               <p className="text-red-500 text-xs h-4">{errors.name?.message}</p>
             </div>
             <div>
