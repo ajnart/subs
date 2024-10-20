@@ -5,9 +5,9 @@ import { Download, Upload } from 'lucide-react'
 import type React from 'react'
 import { useEffect, useRef, useState } from 'react'
 import { toast } from 'sonner'
-import AddSubscriptionModal from '~/components/AddSubscriptionModal'
 import AnnouncementBar from '~/components/AnnouncementBar'
 import DeleteConfirmationDialog from '~/components/DeleteConfirmationDialog'
+import EditSubscriptionModal from '~/components/EditSubscriptionModal'
 import Header from '~/components/Header'
 import SearchBar from '~/components/SearchBar'
 import SubscriptionGrid from '~/components/SubscriptionGrid'
@@ -73,11 +73,6 @@ export default function Index() {
       },
       {} as { [key in SupportedCurrency]?: number },
     )
-  }
-
-  const handleAddSubscription = () => {
-    setEditingSubscription(null)
-    setIsModalOpen(true)
   }
 
   const handleEditSubscription = (id: string) => {
@@ -177,7 +172,7 @@ export default function Index() {
   return (
     <div className="min-h-screen bg-background">
       {enableKodu && <AnnouncementBar />}
-      <Header onAddSubscription={handleAddSubscription} />
+      <Header />
       <main className="container mx-auto py-6 px-3 sm:px-4 lg:px-6">
         <div className="mb-6 flex flex-col sm:flex-row justify-between items-center">
           <div>
@@ -208,7 +203,7 @@ export default function Index() {
           onDeleteSubscription={handleDeleteSubscription}
         />
       </main>
-      <AddSubscriptionModal
+      <EditSubscriptionModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onSave={handleSaveSubscription}

@@ -9,12 +9,11 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '~/components/u
 import { Input } from '~/components/ui/input'
 import { Label } from '~/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '~/components/ui/select'
-import { useToast } from '~/components/ui/use-toast'
 import type { loader } from '~/routes/_index'
 import type { Subscription } from '~/store/subscriptionStore'
 import SubscriptionCard from './SubscriptionCard'
 
-interface AddSubscriptionModalProps {
+interface EditSubscriptionModalProps {
   isOpen: boolean
   onClose: () => void
   onSave: (subscription: Omit<Subscription, 'id'>) => void
@@ -28,13 +27,12 @@ const subscriptionSchema = z.object({
   domain: z.string().url('Invalid URL'),
 })
 
-const AddSubscriptionModal: React.FC<AddSubscriptionModalProps> = ({
+const EditSubscriptionModal: React.FC<EditSubscriptionModalProps> = ({
   isOpen,
   onClose,
   onSave,
   editingSubscription,
 }) => {
-  const { toast } = useToast()
   const { rates } = useLoaderData<typeof loader>()
 
   const {
@@ -175,4 +173,4 @@ const AddSubscriptionModal: React.FC<AddSubscriptionModalProps> = ({
   )
 }
 
-export default AddSubscriptionModal
+export default EditSubscriptionModal
