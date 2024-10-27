@@ -1,18 +1,18 @@
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useLoaderData } from '@remix-run/react'
 import { PlusCircle } from 'lucide-react'
-import type React from 'react'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
-import { Button } from '~/components/ui/button'
-import { Input } from '~/components/ui/input'
-import { Label } from '~/components/ui/label'
-import { Popover, PopoverContent, PopoverTrigger } from '~/components/ui/popover'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '~/components/ui/select'
 import type { loader } from '~/routes/_index'
 import type { Subscription } from '~/store/subscriptionStore'
+import IconFinder from './IconFinder'
 
 interface AddSubscriptionPopoverProps {
   addSubscription: (subscription: Omit<Subscription, 'id'>) => void
@@ -22,6 +22,7 @@ const subscriptionSchema = z.object({
   name: z.string().min(1, 'Name is required'),
   price: z.number().min(0.01, 'Price must be greater than 0'),
   currency: z.string().min(1, 'Currency is required'),
+  icon: z.string().optional(),
   domain: z.string().url('Invalid URL'),
 })
 
@@ -43,6 +44,7 @@ export const AddSubscriptionPopover: React.FC<AddSubscriptionPopoverProps> = ({ 
     resolver: zodResolver(subscriptionSchema),
     defaultValues: {
       name: '',
+      icon: '',
       price: 0,
       currency: 'USD',
       domain: '',
@@ -63,7 +65,6 @@ export const AddSubscriptionPopover: React.FC<AddSubscriptionPopoverProps> = ({ 
     setShouldFocus(true)
   }
 
-  // Focus name field when popover opens
   useEffect(() => {
     if (open) {
       setFocus('name')
@@ -80,43 +81,46 @@ export const AddSubscriptionPopover: React.FC<AddSubscriptionPopoverProps> = ({ 
       </PopoverTrigger>
       <PopoverContent className="w-80">
         <form onSubmit={handleSubmit(onSubmit)}>
-          <h3 className="font-medium text-lg">Add Subscription</h3>
-          <div>
+          <h3 className="font-medium text-lg mb-4">Add Subscription</h3>
+          <div className="space-y-4">
+            <div>
+              <Label htmlFor="icon">Icon (optional)</Label>
+              <IconFinder onIconSelect={(icon) => setValue('icon', icon)} />
+            </div>
             <div>
               <Label htmlFor="name">Name</Label>
               <Input required id="name" {...register('name')} className={errors.name ? 'border-red-500' : ''} />
               <p className="text-red-500 text-xs h-4">{errors.name?.message}</p>
             </div>
-            <div>
-              <div className="flex items-start space-x-2">
-                <div className="flex-1">
-                  <Label htmlFor="price">Price</Label>
-                  <Input
-                    id="price"
-                    type="number"
-                    {...register('price', {
-                      valueAsNumber: true,
-                    })}
-                    className={errors.price ? 'border-red-500' : ''}
-                  />
-                </div>
-                <div className="flex-1">
-                  <Label htmlFor="currency">Currency</Label>
-                  <Select onValueChange={(value) => setValue('currency', value)} defaultValue="USD">
-                    <SelectTrigger id="currency" className={errors.currency ? 'border-red-500' : ''}>
-                      <SelectValue placeholder="Select currency" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {Object.keys(rates ?? []).map((c) => (
-                        <SelectItem key={c} value={c}>
-                          {c}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
+            <div className="flex items-start space-x-2">
+              <div className="flex-1">
+                <Label htmlFor="price">Price</Label>
+                <Input
+                  id="price"
+                  type="number"
+                  {...register('price', {
+                    valueAsNumber: true,
+                  })}
+                  className={errors.price ? 'border-red-500' : ''}
+                />
+                <p className="text-red-500 text-xs h-4">{errors.price?.message}</p>
               </div>
-              <p className="text-red-500 text-xs h-4">{errors.price?.message || errors.currency?.message}</p>
+              <div className="flex-1">
+                <Label htmlFor="currency">Currency</Label>
+                <Select onValueChange={(value) => setValue('currency', value)} defaultValue="USD">
+                  <SelectTrigger id="currency" className={errors.currency ? 'border-red-500' : ''}>
+                    <SelectValue placeholder="Select currency" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {Object.keys(rates ?? []).map((c) => (
+                      <SelectItem key={c} value={c}>
+                        {c}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <p className="text-red-500 text-xs h-4">{errors.currency?.message}</p>
+              </div>
             </div>
             <div>
               <Label htmlFor="domain">Domain</Label>
@@ -124,7 +128,7 @@ export const AddSubscriptionPopover: React.FC<AddSubscriptionPopoverProps> = ({ 
               <p className="text-red-500 text-xs h-4">{errors.domain?.message}</p>
             </div>
           </div>
-          <div className="flex justify-end">
+          <div className="flex justify-end mt-4">
             <Button type="submit" className="contain-content">
               Save
             </Button>
