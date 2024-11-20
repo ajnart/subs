@@ -79,7 +79,7 @@ export default function Component() {
 
   return (
     <div className="min-h-screen bg-gray-900 text-gray-100">
-      <div className="container mx-auto p-8 max-w-7xl">
+      <div className="container mx-auto p-8 pb-[8rem] max-w-7xl">
         <div className="flex justify-between items-center mb-12">
           <h1 className="text-4xl font-bold text-white">Monthly Subscriptions Tracker</h1>
           <Dialog open={isOpen} onOpenChange={setIsOpen}>
