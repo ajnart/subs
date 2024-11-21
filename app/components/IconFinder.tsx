@@ -16,7 +16,7 @@ interface IconSelectorProps {
   onIconSelect: (icon: Icon) => void
 }
 
-export function IconSelector({ onIconSelect }: IconSelectorProps) {
+export default function IconSelector({ onIconSelect }: IconSelectorProps) {
   const [open, setOpen] = React.useState(false)
   const [selectedIcon, setSelectedIcon] = React.useState<Icon | null>(null)
   const [query, setQuery] = React.useState('')
@@ -46,8 +46,8 @@ export function IconSelector({ onIconSelect }: IconSelectorProps) {
       query === ''
         ? options
         : options.filter((icon) =>
-            icon.label.toLowerCase().replace(/\s+/g, '').includes(query.toLowerCase().replace(/\s+/g, '')),
-          ),
+          icon.label.toLowerCase().replace(/\s+/g, '').includes(query.toLowerCase().replace(/\s+/g, '')),
+        ),
     [options, query],
   )
 
