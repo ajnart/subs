@@ -1,4 +1,4 @@
-FROM oven/bun:latest
+FROM node:23-alpine
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -6,10 +6,9 @@ WORKDIR /app
 COPY package.json ./
 COPY bun.lockb ./
 
+COPY . /app/
 
-RUN bun install remix
-
-COPY build ./build
+RUN npm install
 
 ENV USE_LOCAL_STORAGE=false
 
@@ -19,4 +18,4 @@ ENV PORT=7574
 
 EXPOSE 7574
 
-CMD ["bun", "start"]
+CMD ["npm", "run", "start"]
