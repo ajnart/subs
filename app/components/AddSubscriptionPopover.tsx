@@ -12,7 +12,7 @@ import { toast } from 'sonner'
 import { z } from 'zod'
 import type { loader } from '~/routes/_index'
 import type { Subscription } from '~/store/subscriptionStore'
-import IconFinder from './IconFinder'
+import { IconSelector } from './IconFinder'
 
 interface AddSubscriptionPopoverProps {
   addSubscription: (subscription: Omit<Subscription, 'id'>) => void
@@ -85,7 +85,7 @@ export const AddSubscriptionPopover: React.FC<AddSubscriptionPopoverProps> = ({ 
           <div className="space-y-4">
             <div>
               <Label htmlFor="icon">Icon (optional)</Label>
-              <IconFinder onIconSelect={(icon) => setValue('icon', icon)} />
+              <IconSelector onIconSelect={(icon) => setValue('icon', icon)} />
             </div>
             <div>
               <Label htmlFor="name">Name</Label>

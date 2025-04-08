@@ -6,21 +6,17 @@ WORKDIR /app
 COPY package.json ./
 COPY bun.lockb ./
 
-# Install dependencies
-RUN bun install --include=dev
 
-# Copy the rest of your application code
-COPY . .
+RUN bun install remix
 
-# Build the Remix app for production
-RUN bun run build
+COPY build ./build
 
 ENV USE_LOCAL_STORAGE=false
 
-
 VOLUME [ "/app/data" ]
 
-EXPOSE 3000
+ENV PORT=7574
 
+EXPOSE 7574
 
 CMD ["bun", "start"]

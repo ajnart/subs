@@ -16,7 +16,6 @@ declare global {
   interface Window {
     ENV: {
       USE_LOCAL_STORAGE: boolean
-      SHOW_KODU_BANNER: boolean
     }
   }
 }
@@ -25,7 +24,6 @@ export async function loader() {
   return json({
     ENV: {
       USE_LOCAL_STORAGE: process.env.USE_LOCAL_STORAGE === 'true',
-      SHOW_KODU_BANNER: process.env.SHOW_KODU_BANNER === 'true',
     },
   })
 }

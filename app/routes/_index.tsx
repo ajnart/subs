@@ -3,9 +3,8 @@ import { json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 import { Download, Upload } from 'lucide-react'
 import type React from 'react'
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { toast } from 'sonner'
-import AnnouncementBar from '~/components/AnnouncementBar'
 import DeleteConfirmationDialog from '~/components/DeleteConfirmationDialog'
 import EditSubscriptionModal from '~/components/EditSubscriptionModal'
 import Header from '~/components/Header'
@@ -42,7 +41,6 @@ export default function Index() {
   const [searchQuery, setSearchQuery] = useState('')
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
   const [subscriptionToDelete, setSubscriptionToDelete] = useState<Subscription | null>(null)
-  const [enableKodu, setEnableKodu] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   const {
@@ -53,12 +51,6 @@ export default function Index() {
     exportSubscriptions,
     importSubscriptions,
   } = useSubscriptionStore()
-
-  useEffect(() => {
-    if (typeof window !== 'undefined' && window.ENV.SHOW_KODU_BANNER) {
-      setEnableKodu(true)
-    }
-  }, [])
 
   const calculateTotalsInUSD = () => {
     if (!rates) return {}
@@ -171,7 +163,6 @@ export default function Index() {
 
   return (
     <div className="min-h-screen bg-background">
-      {enableKodu && <AnnouncementBar />}
       <Header />
       <main className="container mx-auto py-6 px-3 sm:px-4 lg:px-6">
         <div className="mb-6 flex flex-col sm:flex-row justify-between items-center">

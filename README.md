@@ -1,59 +1,109 @@
 # Subs - Simplistic Open Source Subscription Cost Tracker
 
-## This repo is a little special 
-> [!NOTE]
-> I am building my own coding assistant extension called [kodu.ai](https://www.kodu.ai/l/extension-coder), the goal is to help people build their ideas with little to no preivous coding experience. This repository comes from an idea I have had in the back of my mind for a while, I built it in less than 2 hours using Kodu and it has helped me improve the extension. I thought the idea was nice so I shared it and a lot of you liked it, so I decided to open-soure the code.
-
-I'd **love** for this repo to be a collaborative effort between enthousiasts of the self-hosted community, my goal with Kodu is to enable anyone to make modifications and improvements to tools they use on a daily basis. If you would like to try to improve this repository by using an LLM/Code assistant feel free to do so, I have a lot to learn from testimonials. If you have some spare time and want to give it a try, visit the [ai-tagged issues](https://github.com/ajnart/subs/issues?q=sort%3Aupdated-desc+is%3Aissue+is%3Aopen+label%3Aai) . They are issues that could be added by anyone, even someone with 0 coding experience. 
-
-
-## Introduction
-
-Hey everyone! Following the feedback from my [previous post](https://www.reddit.com/r/selfhosted/comments/1fvqrlr/i_made_a_simple_selfhosted_subscriptions_costs/), I'm excited to announce that Subs Tracker is now open-source and hosted on my own website. 
-
-### Demo
-You can check out the demo here: [subs.ajnart.fr](https://subs.ajnart.fr)
-
-## What's New?
-
-- **Improved UI/UX**: We've given the app a facelift, making it more visually appealing and user-friendly.
-- **Client-Side Data Storage**: Your data is now stored directly in your browser, eliminating the need for self-hosting.
-- **Edit Functionality**: You can now easily edit your existing subscriptions.
+Subs is a lightweight application designed to help you track and manage your subscription costs across different services. With a clean and intuitive interface, it simplifies the process of monitoring your recurring expenses.
 
 ## Features
 
-- Add, edit, and remove subscriptions
-- Automatic favicon fetching for easy visual identification
-- Total monthly cost calculation
-- Responsive design for both desktop and mobile use
+- **Track Subscriptions**: Add, edit, and delete subscription details including name, price, and currency
+- **Automatic Favicon Fetching**: Visual identification of your subscriptions with icons from their domains
+- **Multi-Currency Support**: Track subscriptions in different currencies with automatic conversion rates
+- **Total Cost Calculation**: See your total monthly expenses at a glance
+- **Import/Export**: Easily back up your subscription data or move it between devices
+- **Client-Side Storage**: Option to store data in your browser for privacy or use SQLite for persistence
+- **Responsive Design**: Works seamlessly on both desktop and mobile devices
+
+## Demo
+
+You can try out Subs without installing anything at [subs.ajnart.fr](https://subs.ajnart.fr)
+
+![Demo GIF](https://github.com/user-attachments/assets/ffb88333-6c4d-46c9-9ca7-49602106e5f1)
 
 ## Tech Stack
 
-For those curious about the technology behind Subs Tracker:
+Subs is built with modern web technologies:
 
-- **Frontend Framework**: Next.js and React
-- **UI Components**: Shadcn UI
+- **Framework**: Remix (React)
+- **Styling**: Tailwind CSS with Shadcn UI components
 - **State Management**: Zustand
-- **Development Tools**: GitHub Copilot and Kodu AI code extension
+- **Package Manager**: Bun
 
-## Docker setup 
+## 🚀 Installation
+
+### 🌐 Use the Online Version
+
+Visit [subs.ajnart.fr](https://subs.ajnart.fr) to use the tool immediately without installation.
+
+### 🐳 Run with Docker
+
+Run with a single command:
+
+```bash
+docker run -p 7574:7574 -v ./data:/app/data --name subs --rm ghcr.io/ajnart/subs
+```
+
+Then visit `http://localhost:7574` in your browser.
+
+### 📦 Using Docker Compose
+
+Create a `docker-compose.yaml` file:
+
+```yaml
+services:
+  subs:
+    image: ghcr.io/ajnart/subs
+    container_name: subs
+    ports:
+      - "7574:7574"
+    restart: unless-stopped
+    # volumes: Optional: Uncomment to use a volume to save data outside of the default docker volume
+      # - ./data:/app/data
+    # environment:
+      # - USE_LOCAL_STORAGE=true  # Uncomment to use browser storage instead of file storage (different config for each browser)
+```
+
+Then run:
+
+```bash
+docker-compose up -d
+```
+
 > [!NOTE]
-> Docker setup work in progress at the moment. Feel free to contribute to the project and help me finish it.
+> Data is stored in the `/app/data` directory inside the container. Mount this directory as a volume to persist your data between container restarts.
 
-## Development Setup / Installation
+### 🛠️ Build from Source
 
-1. Clone the repository
-2. Install dependencies with `pnpm i` (install it [here](https://pnpm.io/cli/install))
-3. Copy the example env var file with `copy .env.example .env`
-    1. Optional: Update the SQLLite database file setting in `.env`
-		2. Optional: Set `NEXT_PUBLIC_USE_SQLITE` to `false` to use localstorage  instead of SQLLite (will persist data in the browser)
-4. Push the database schema with `pnpm run db:push` (not needed if you are using localstorage)
-4. Run the development server with `pnpm run dev`
-5. Open [http://localhost:3000](http://localhost:3000) in your browser
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/ajnart/subs.git
+   cd subs
+   ```
 
-## Demo GIF
+2. Install dependencies:
+   ```bash
+   bun install
+   ```
 
-![CleanShot 2024-10-09 at 20 00 27](https://github.com/user-attachments/assets/ffb88333-6c4d-46c9-9ca7-49602106e5f1)
+3. Configure environment variables:
+   ```bash
+   cp .env.example .env
+   ```
+   - Optional: Set `USE_LOCAL_STORAGE=true` to use browser localStorage instead of using the internal API to handle the data (in ./data/config.json)
+
+4. If using SQLite, push the database schema:
+   ```bash
+   bun run db:push
+   ```
+
+5. Start the development server:
+   ```bash
+   bun run dev
+   ```
+
+6. Open [http://localhost:7574](http://localhost:7574) in your browser
+
+## Contributing
+
+Contributions are welcome! Feel free to open issues or submit pull requests to help improve Subs.
 
 ## License
 
@@ -61,4 +111,4 @@ This project is open-source and available under the MIT License.
 
 ---
 
-Thank you for your interest and support! We hope Subs Tracker helps you keep better track of your subscription costs. Happy tracking!
+Thank you for your interest in Subs! We hope it helps you keep better track of your subscription costs.

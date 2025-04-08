@@ -60,7 +60,7 @@ export function IconSelector({ onIconSelect }: IconSelectorProps) {
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button variant="outline" role="combobox" aria-expanded={open} className="w-full justify-between">
+        <Button variant="outline" aria-expanded={open} className="w-full justify-between">
           {selectedIcon ? (
             <>
               <img src={selectedIcon.value} alt={selectedIcon.label} width={20} height={20} />
