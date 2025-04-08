@@ -67,39 +67,12 @@ Then run:
 docker-compose up -d
 ```
 
+Open [http://localhost:7574](http://localhost:7574) in your browser to see the webui
+
 > [!NOTE]
 > Data is stored in the `/app/data` directory inside the container. Mount this directory as a volume to persist your data between container restarts.
 
-### 🛠️ Build from Source
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/ajnart/subs.git
-   cd subs
-   ```
-
-2. Install dependencies:
-   ```bash
-   bun install
-   ```
-
-3. Configure environment variables:
-   ```bash
-   cp .env.example .env
-   ```
-   - Optional: Set `USE_LOCAL_STORAGE=true` to use browser localStorage instead of using the internal API to handle the data (in ./data/config.json)
-
-4. If using SQLite, push the database schema:
-   ```bash
-   bun run db:push
-   ```
-
-5. Start the development server:
-   ```bash
-   bun run dev
-   ```
-
-6. Open [http://localhost:7574](http://localhost:7574) in your browser
 
 ## Contributing
 
