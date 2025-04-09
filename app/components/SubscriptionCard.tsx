@@ -14,7 +14,7 @@ interface SubscriptionCardProps {
 }
 
 const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ subscription, onEdit, onDelete, className }) => {
-  const { id, name, price, currency, domain } = subscription
+  const { id, name, price, currency, domain, icon } = subscription
 
   // Sanitize the domain URL
   const sanitizeDomain = (domain: string) => {
@@ -26,7 +26,10 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ subscription, onEdi
   }
 
   const sanitizedDomain = sanitizeDomain(domain)
-  const logoUrl = `https://www.google.com/s2/favicons?domain=${sanitizedDomain}&sz=64`
+  const defaultLogoUrl = `https://www.google.com/s2/favicons?domain=${sanitizedDomain}&sz=64`
+
+  // Use custom icon if available, otherwise fall back to domain favicon
+  const logoUrl = icon || defaultLogoUrl
 
   return (
     <motion.div

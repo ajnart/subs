@@ -11,6 +11,7 @@ import { Label } from '~/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '~/components/ui/select'
 import type { loader } from '~/routes/_index'
 import type { Subscription } from '~/store/subscriptionStore'
+import { IconUrlInput } from './IconFinder'
 import SubscriptionCard from './SubscriptionCard'
 
 interface EditSubscriptionModalProps {
@@ -25,6 +26,7 @@ const subscriptionSchema = z.object({
   price: z.number().min(0.01, 'Price must be greater than 0'),
   currency: z.string().min(1, 'Currency is required'),
   domain: z.string().url('Invalid URL'),
+  icon: z.string().optional(),
 })
 
 const EditSubscriptionModal: React.FC<EditSubscriptionModalProps> = ({
@@ -40,6 +42,7 @@ const EditSubscriptionModal: React.FC<EditSubscriptionModalProps> = ({
     handleSubmit,
     watch,
     reset,
+    setValue,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(subscriptionSchema),
@@ -48,6 +51,7 @@ const EditSubscriptionModal: React.FC<EditSubscriptionModalProps> = ({
       price: 0,
       currency: 'USD',
       domain: '',
+      icon: '',
     },
   })
 
@@ -60,6 +64,7 @@ const EditSubscriptionModal: React.FC<EditSubscriptionModalProps> = ({
         price: 0,
         currency: 'USD',
         domain: '',
+        icon: '',
       })
     }
   }, [editingSubscription, reset])
@@ -72,6 +77,7 @@ const EditSubscriptionModal: React.FC<EditSubscriptionModalProps> = ({
     price: watchedFields.price || 0,
     currency: watchedFields.currency || 'USD',
     domain: watchedFields.domain || 'https://example.com',
+    icon: watchedFields.icon,
   }
 
   const onSubmit = (data: Omit<Subscription, 'id'>) => {
@@ -88,6 +94,14 @@ const EditSubscriptionModal: React.FC<EditSubscriptionModalProps> = ({
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div>
+              <div>
+                <IconUrlInput
+                  value={watchedFields.icon || ''}
+                  onChange={(value) => setValue('icon', value)}
+                  label="Icon (optional)"
+                  error={!!errors.icon}
+                />
+              </div>
               <div>
                 <Label htmlFor="name">Name</Label>
                 <Controller

@@ -1,25 +1,37 @@
 import { useQuery } from '@tanstack/react-query'
-import { Check, ChevronsUpDown, Loader2, Search } from 'lucide-react'
+import { Loader2, Search } from 'lucide-react'
 import * as React from 'react'
 
 import { Button } from '@/components/ui/button'
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from '@/components/ui/command'
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import { ScrollArea } from '@/components/ui/scroll-area'
+import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 
 type Icon = {
   value: string
   label: string
 }
 
-interface IconSelectorProps {
-  onIconSelect: (icon: Icon) => void
+interface IconUrlInputProps {
+  value: string
+  onChange: (value: string) => void
+  id?: string
+  label?: string
+  error?: boolean
+  placeholder?: string
 }
 
-export function IconSelector({ onIconSelect }: IconSelectorProps) {
+export function IconUrlInput({
+  value,
+  onChange,
+  id = 'icon',
+  label = 'Icon URL',
+  error = false,
+  placeholder = 'Enter icon URL or search',
+}: IconUrlInputProps) {
   const [open, setOpen] = React.useState(false)
-  const [selectedIcon, setSelectedIcon] = React.useState<Icon | null>(null)
-  const [query, setQuery] = React.useState('')
+  const [searchQuery, setSearchQuery] = React.useState('')
+  const inputRef = React.useRef<HTMLInputElement>(null)
 
   const { data: icons, isLoading } = useQuery({
     queryKey: ['Icons'],
@@ -32,76 +44,119 @@ export function IconSelector({ onIconSelect }: IconSelectorProps) {
     },
   })
 
-  const options: Icon[] = React.useMemo(
+  const options = React.useMemo(
     () =>
       icons?.icons.map((icon: string) => ({
         label: icon,
-        value: `https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/${icon}.svg`,
+        value: `https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/${icon}.png`,
       })) || [],
     [icons],
   )
 
   const filteredIcons = React.useMemo(
     () =>
-      query === ''
+      searchQuery === ''
         ? options
-        : options.filter((icon) =>
-            icon.label.toLowerCase().replace(/\s+/g, '').includes(query.toLowerCase().replace(/\s+/g, '')),
+        : options.filter((icon: Icon) =>
+            icon.label.toLowerCase().replace(/\s+/g, '').includes(searchQuery.toLowerCase().replace(/\s+/g, '')),
           ),
-    [options, query],
+    [options, searchQuery],
   )
 
   const handleSelect = (icon: Icon) => {
-    setSelectedIcon(icon)
-    onIconSelect(icon)
+    onChange(icon.value)
     setOpen(false)
   }
 
+  // Preview the current icon if it's a valid URL
+  const isValidIconUrl = React.useMemo(() => {
+    if (!value) return false
+    try {
+      return Boolean(new URL(value))
+    } catch {
+      return false
+    }
+  }, [value])
+
   return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <Button variant="outline" aria-expanded={open} className="w-full justify-between">
-          {selectedIcon ? (
-            <>
-              <img src={selectedIcon.value} alt={selectedIcon.label} width={20} height={20} />
-              <span className="ml-2">{selectedIcon.label}</span>
-            </>
-          ) : (
-            'Select an icon...'
-          )}
-          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+    <div className="space-y-2">
+      {label && <Label htmlFor={id}>{label}</Label>}
+      <div className="flex items-center gap-2">
+        <div className="relative flex-1">
+          <Input
+            ref={inputRef}
+            id={id}
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+            placeholder={placeholder}
+            className={error ? 'border-red-500' : ''}
+          />
+        </div>
+
+        <Button type="button" variant="outline" size="icon" onClick={() => setOpen(true)} title="Search for icons">
+          <Search className="h-4 w-4" />
+          <span className="sr-only">Search icons</span>
         </Button>
-      </PopoverTrigger>
-      <PopoverContent className="w-[350px] p-0">
-        <Command>
-          <CommandInput placeholder="Search icons..." onValueChange={(value) => setQuery(value)} />
-          <CommandEmpty>
-            <div className="flex flex-col items-center py-6">
-              <Search className="h-10 w-10 text-muted-foreground" />
-              <p className="text-center text-sm text-muted-foreground mt-2">
-                No icons found. Try a different search term.
-              </p>
-            </div>
-          </CommandEmpty>
+
+        {isValidIconUrl && (
+          <div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-md border bg-background">
+            <img
+              src={value}
+              alt="Icon preview"
+              className="h-6 w-6 object-contain"
+              onError={(e) => {
+                ;(e.target as HTMLImageElement).src =
+                  'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLWltYWdlLW9mZiI+PHBhdGggZD0iTTE4IDExdl0iLz48cGF0aCBkPSJtOS41IDE3LjVMNiAxNCIvPjxwYXRoIGQ9Im0xNCA2LTQuNSA0LjUiLz48Y2lyY2xlIGN4PSI4IiBjeT0iOCIgcj0iMiIvPjxwb2x5Z29uIHBvaW50cz0iMTYgMTEgMTMgMTQgMTYgMTcgMTkgMTQiLz48cGF0aCBkPSM2IDIgSCAxOGM1IDAgNSA4IDAgOCIvPjxwYXRoIGQ9Ik0zIDEzLjJBOC4xIDguMSAwIDAgMCA4IDIyIi8+PHBhdGggZD0iTTIxIDl2OGEyIDIgMCAwIDEtMiAyaC04Ii8+PC9zdmc+'
+              }}
+            />
+          </div>
+        )}
+      </div>
+
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent className="sm:max-w-[700px]">
+          <DialogTitle>Select Icon</DialogTitle>
+
+          <div className="relative my-4">
+            <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+            <Input
+              placeholder="Search icons..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-8"
+              autoFocus
+            />
+          </div>
+
           {isLoading ? (
-            <div className="flex items-center justify-center py-6">
-              <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+            <div className="flex items-center justify-center py-10">
+              <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+            </div>
+          ) : filteredIcons.length === 0 ? (
+            <div className="flex flex-col items-center py-10">
+              <Search className="h-12 w-12 text-muted-foreground" />
+              <p className="mt-4 text-center text-muted-foreground">No icons found. Try a different search term.</p>
             </div>
           ) : (
-            <ScrollArea className="h-[300px]">
-              <CommandGroup>
-                {filteredIcons.slice(0, 10).map((icon) => (
-                  <CommandItem key={icon.value} onSelect={() => handleSelect(icon)} className="flex items-center py-2">
-                    <img src={icon.value} alt={icon.label} width={24} height={24} className="mr-2" />
-                    <span>{icon.label}</span>
-                    {selectedIcon?.value === icon.value && <Check className="ml-auto h-4 w-4 opacity-100" />}
-                  </CommandItem>
-                ))}
-              </CommandGroup>
-            </ScrollArea>
+            <div className="grid h-[450px] grid-cols-8 gap-3 overflow-y-auto">
+              {filteredIcons.map((icon: Icon) => (
+                <button
+                  key={icon.value}
+                  onClick={() => handleSelect(icon)}
+                  type="button"
+                  aria-label={`Select ${icon.label} icon`}
+                  className={`flex cursor-pointer flex-col items-center justify-center rounded-md p-2 transition-colors hover:bg-accent ${
+                    value === icon.value ? 'bg-accent' : ''
+                  }`}
+                >
+                  <img src={icon.value} alt={icon.label} width={32} height={32} />
+                  <span className="mt-1 max-w-full truncate text-xs">{icon.label}</span>
+                </button>
+              ))}
+            </div>
           )}
-        </Command>
-      </PopoverContent>
-    </Popover>
+        </DialogContent>
+      </Dialog>
+    </div>
   )
 }

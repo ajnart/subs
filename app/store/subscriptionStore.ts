@@ -7,6 +7,7 @@ export interface Subscription {
   price: number
   currency: string
   domain: string
+  icon?: string
 }
 
 interface SubscriptionStore {
@@ -133,7 +134,8 @@ function isValidSubscription(sub: any): sub is Subscription {
     typeof sub.name === 'string' &&
     typeof sub.price === 'number' &&
     typeof sub.currency === 'string' &&
-    typeof sub.domain === 'string'
+    typeof sub.domain === 'string' &&
+    (sub.icon === undefined || typeof sub.icon === 'string')
   )
 }
 

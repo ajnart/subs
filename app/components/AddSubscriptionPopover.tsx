@@ -12,7 +12,7 @@ import { toast } from 'sonner'
 import { z } from 'zod'
 import type { loader } from '~/routes/_index'
 import type { Subscription } from '~/store/subscriptionStore'
-import { IconSelector } from './IconFinder'
+import { IconUrlInput } from './IconFinder'
 
 interface AddSubscriptionPopoverProps {
   addSubscription: (subscription: Omit<Subscription, 'id'>) => void
@@ -40,6 +40,7 @@ export const AddSubscriptionPopover: React.FC<AddSubscriptionPopoverProps> = ({ 
     reset,
     setFocus,
     setValue,
+    watch,
   } = useForm<SubscriptionFormValues>({
     resolver: zodResolver(subscriptionSchema),
     defaultValues: {
@@ -50,6 +51,8 @@ export const AddSubscriptionPopover: React.FC<AddSubscriptionPopoverProps> = ({ 
       domain: '',
     },
   })
+
+  const iconValue = watch('icon')
 
   useEffect(() => {
     if (shouldFocus) {
@@ -84,8 +87,12 @@ export const AddSubscriptionPopover: React.FC<AddSubscriptionPopoverProps> = ({ 
           <h3 className="font-medium text-lg mb-4">Add Subscription</h3>
           <div className="space-y-4">
             <div>
-              <Label htmlFor="icon">Icon (optional)</Label>
-              <IconSelector onIconSelect={(icon) => setValue('icon', icon)} />
+              <IconUrlInput
+                value={iconValue || ''}
+                onChange={(value) => setValue('icon', value)}
+                label="Icon (optional)"
+                error={!!errors.icon}
+              />
             </div>
             <div>
               <Label htmlFor="name">Name</Label>

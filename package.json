@@ -61,6 +61,7 @@
     "@tanstack/react-query-devtools": "^5.59.15",
     "@tanstack/react-query-persist-client": "^5.59.15",
     "@types/node": "^22.7.5",
+    "caniuse-lite": "^1.0.30001712",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",

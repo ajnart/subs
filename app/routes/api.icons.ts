@@ -17,7 +17,9 @@ export const loader: LoaderFunction = async ({ request }: LoaderFunctionArgs) =>
     const ifModifiedSince = request.headers.get('If-Modified-Since')
 
     // Fetch icons data
-    const result = await fetch('https://api.github.com/repos/walkxcode/dashboard-icons/contents/svg')
+    const result = await fetch(
+      'https://raw.githubusercontent.com/homarr-labs/dashboard-icons/refs/heads/main/tree.json',
+    )
     const data = await result.json()
 
     // Get the last modified date from the API response
@@ -28,12 +30,9 @@ export const loader: LoaderFunction = async ({ request }: LoaderFunctionArgs) =>
       console.debug('Icons data not modified, returning 304')
       return new Response(null, { status: 304 }) // Not Modified
     }
-
-    const icons = data.map(
-      (icon: {
-        name: string
-      }) => icon.name.replace('.svg', ''),
-    )
+    const numberofIcons = data.png.length
+    console.log(`Number of icons: ${numberofIcons}`)
+    const icons = data.png.map((icon: string) => icon.replace('.png', ''))
 
     const endTime = Date.now()
     console.debug(`Icons data fetched successfully in ${endTime - startTime}ms`)
