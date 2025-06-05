@@ -58,9 +58,7 @@ export default function Index() {
       (acc: { [key in SupportedCurrency]?: number }, sub) => {
         const currency = sub.currency as SupportedCurrency
         const rate = rates[currency] || 1
-        const amountInUSD = sub.price / rate
         acc[currency] = (acc[currency] || 0) + sub.price
-        acc.USD = (acc.USD || 0) + amountInUSD
         return acc
       },
       {} as { [key in SupportedCurrency]?: number },
