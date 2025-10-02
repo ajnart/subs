@@ -18,4 +18,7 @@ ENV PORT=7574
 
 EXPOSE 7574
 
+# FIX #36 (missing build statement)
+RUN npm run build
+
 CMD ["npm", "run", "start"]
