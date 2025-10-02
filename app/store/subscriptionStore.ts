@@ -8,8 +8,6 @@ export interface Subscription {
   currency: string
   domain: string
   icon?: string
-  nextPaymentDate?: string // ISO date string
-  billingCycle?: 'monthly' | 'yearly' // Added for future calculation of next payment
 }
 
 interface SubscriptionStore {
@@ -23,33 +21,9 @@ interface SubscriptionStore {
 }
 
 export const defaultSubscriptions: Subscription[] = [
-  { 
-    id: '1', 
-    name: 'Netflix', 
-    price: 15.99, 
-    currency: 'USD', 
-    domain: 'https://netflix.com',
-    nextPaymentDate: '2025-10-15',
-    billingCycle: 'monthly'
-  },
-  { 
-    id: '2', 
-    name: 'Spotify', 
-    price: 9.99, 
-    currency: 'USD', 
-    domain: 'https://spotify.com',
-    nextPaymentDate: '2025-09-20',
-    billingCycle: 'monthly'
-  },
-  { 
-    id: '3', 
-    name: 'Amazon Prime', 
-    price: 14.99, 
-    currency: 'USD', 
-    domain: 'https://amazon.com',
-    nextPaymentDate: '2025-11-01',
-    billingCycle: 'yearly'
-  },
+  { id: '1', name: 'Netflix', price: 15.99, currency: 'USD', domain: 'https://netflix.com' },
+  { id: '2', name: 'Spotify', price: 9.99, currency: 'USD', domain: 'https://spotify.com' },
+  { id: '3', name: 'Amazon Prime', price: 14.99, currency: 'USD', domain: 'https://amazon.com' },
   { id: '4', name: 'Disney+', price: 7.99, currency: 'USD', domain: 'https://disneyplus.com' },
   { id: '5', name: 'YouTube Premium', price: 11.99, currency: 'USD', domain: 'https://youtube.com' },
   { id: '6', name: 'Hulu', price: 7.99, currency: 'USD', domain: 'https://hulu.com' },
@@ -161,9 +135,7 @@ function isValidSubscription(sub: any): sub is Subscription {
     typeof sub.price === 'number' &&
     typeof sub.currency === 'string' &&
     typeof sub.domain === 'string' &&
-    (sub.icon === undefined || typeof sub.icon === 'string') &&
-    (sub.nextPaymentDate === undefined || typeof sub.nextPaymentDate === 'string') &&
-    (sub.billingCycle === undefined || sub.billingCycle === 'monthly' || sub.billingCycle === 'yearly')
+    (sub.icon === undefined || typeof sub.icon === 'string')
   )
 }
 
