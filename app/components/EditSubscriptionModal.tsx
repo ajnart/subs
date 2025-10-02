@@ -27,6 +27,8 @@ const subscriptionSchema = z.object({
   currency: z.string().min(1, 'Currency is required'),
   domain: z.string().url('Invalid URL'),
   icon: z.string().optional(),
+  nextPaymentDate: z.string().optional(),
+  billingCycle: z.enum(['monthly', 'yearly']).optional(),
 })
 
 const EditSubscriptionModal: React.FC<EditSubscriptionModalProps> = ({
@@ -52,12 +54,22 @@ const EditSubscriptionModal: React.FC<EditSubscriptionModalProps> = ({
       currency: 'USD',
       domain: '',
       icon: '',
+      nextPaymentDate: '',
+      billingCycle: 'monthly' as const,
     },
   })
 
   useEffect(() => {
     if (editingSubscription) {
-      reset(editingSubscription)
+      reset({
+        name: editingSubscription.name,
+        price: editingSubscription.price,
+        currency: editingSubscription.currency,
+        domain: editingSubscription.domain,
+        icon: editingSubscription.icon || '',
+        nextPaymentDate: editingSubscription.nextPaymentDate || '',
+        billingCycle: editingSubscription.billingCycle || 'monthly',
+      })
     } else {
       reset({
         name: '',
@@ -65,6 +77,8 @@ const EditSubscriptionModal: React.FC<EditSubscriptionModalProps> = ({
         currency: 'USD',
         domain: '',
         icon: '',
+        nextPaymentDate: '',
+        billingCycle: 'monthly' as const,
       })
     }
   }, [editingSubscription, reset])
@@ -78,6 +92,8 @@ const EditSubscriptionModal: React.FC<EditSubscriptionModalProps> = ({
     currency: watchedFields.currency || 'USD',
     domain: watchedFields.domain || 'https://example.com',
     icon: watchedFields.icon,
+    nextPaymentDate: watchedFields.nextPaymentDate,
+    billingCycle: watchedFields.billingCycle,
   }
 
   const onSubmit = (data: Omit<Subscription, 'id'>) => {
@@ -165,6 +181,39 @@ const EditSubscriptionModal: React.FC<EditSubscriptionModalProps> = ({
                   )}
                 />
                 <p className="text-red-500 text-xs h-4">{errors.domain?.message || '\u00A0'}</p>
+              </div>
+              <div>
+                <Label htmlFor="billingCycle">Billing Cycle</Label>
+                <Controller
+                  name="billingCycle"
+                  control={control}
+                  render={({ field }) => (
+                    <Select onValueChange={field.onChange} value={field.value}>
+                      <SelectTrigger id="billingCycle">
+                        <SelectValue placeholder="Select billing cycle" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="monthly">Monthly</SelectItem>
+                        <SelectItem value="yearly">Yearly</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  )}
+                />
+              </div>
+              <div>
+                <Label htmlFor="nextPaymentDate">Next Payment Date (optional)</Label>
+                <Controller
+                  name="nextPaymentDate"
+                  control={control}
+                  render={({ field }) => (
+                    <Input 
+                      id="nextPaymentDate" 
+                      type="date" 
+                      {...field}
+                      value={field.value || ''}
+                    />
+                  )}
+                />
               </div>
             </div>
             <div className="my-auto">
