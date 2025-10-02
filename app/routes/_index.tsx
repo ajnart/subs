@@ -8,10 +8,12 @@ import { toast } from 'sonner'
 import DeleteConfirmationDialog from '~/components/DeleteConfirmationDialog'
 import EditSubscriptionModal from '~/components/EditSubscriptionModal'
 import Header from '~/components/Header'
+import KeyboardShortcutsDialog from '~/components/KeyboardShortcutsDialog'
 import SearchBar from '~/components/SearchBar'
 import SubscriptionGrid from '~/components/SubscriptionGrid'
 import Summary from '~/components/Summary'
 import { Button } from '~/components/ui/button'
+import { useKeyboard } from '~/hooks/useKeyboard'
 import { getCacheHeaders, getCurrencyRates } from '~/services/currency.server'
 import useSubscriptionStore, { type Subscription } from '~/store/subscriptionStore'
 import type { SupportedCurrency } from '~/types/currencies'
@@ -41,7 +43,10 @@ export default function Index() {
   const [searchQuery, setSearchQuery] = useState('')
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
   const [subscriptionToDelete, setSubscriptionToDelete] = useState<Subscription | null>(null)
+  const [isAddPopoverOpen, setIsAddPopoverOpen] = useState(false)
+  const [isKeyboardShortcutsOpen, setIsKeyboardShortcutsOpen] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
+  const searchBarRef = useRef<HTMLInputElement>(null)
 
   const {
     subscriptions,
@@ -159,9 +164,65 @@ export default function Index() {
       sub.domain.toLowerCase().includes(searchQuery.toLowerCase()),
   )
 
+  // Keyboard shortcuts
+  useKeyboard([
+    {
+      key: 'n',
+      handler: () => {
+        setIsAddPopoverOpen(true)
+      },
+      description: 'Add new subscription',
+    },
+    {
+      key: '/',
+      handler: () => {
+        searchBarRef.current?.focus()
+      },
+      description: 'Focus search bar',
+    },
+    {
+      key: 'e',
+      ctrl: true,
+      handler: () => {
+        handleExport()
+      },
+      description: 'Export subscriptions',
+    },
+    {
+      key: 'i',
+      ctrl: true,
+      handler: () => {
+        handleImportClick()
+      },
+      description: 'Import subscriptions',
+    },
+    {
+      key: '?',
+      handler: () => {
+        setIsKeyboardShortcutsOpen(true)
+      },
+      description: 'Show keyboard shortcuts',
+    },
+    {
+      key: 'Escape',
+      handler: () => {
+        if (isModalOpen) {
+          setIsModalOpen(false)
+        } else if (isDeleteDialogOpen) {
+          setIsDeleteDialogOpen(false)
+        } else if (isAddPopoverOpen) {
+          setIsAddPopoverOpen(false)
+        } else if (isKeyboardShortcutsOpen) {
+          setIsKeyboardShortcutsOpen(false)
+        }
+      },
+      description: 'Close dialogs',
+    },
+  ])
+
   return (
     <div className="min-h-screen bg-background">
-      <Header />
+      <Header addPopoverOpen={isAddPopoverOpen} onAddPopoverOpenChange={setIsAddPopoverOpen} />
       <main className="container mx-auto py-6 px-3 sm:px-4 lg:px-6">
         <div className="mb-6 flex flex-col sm:flex-row justify-between items-center">
           <div>
@@ -191,7 +252,7 @@ export default function Index() {
         </div>
         <Summary totals={calculateTotalsInUSD()} />
         <div className="mb-4">
-          <SearchBar onSearch={setSearchQuery} />
+          <SearchBar ref={searchBarRef} onSearch={setSearchQuery} />
         </div>
         <SubscriptionGrid
           subscriptions={filteredSubscriptions}
@@ -211,6 +272,7 @@ export default function Index() {
         onConfirm={confirmDelete}
         subscriptionName={subscriptionToDelete?.name || ''}
       />
+      <KeyboardShortcutsDialog isOpen={isKeyboardShortcutsOpen} onClose={() => setIsKeyboardShortcutsOpen(false)} />
     </div>
   )
 }
