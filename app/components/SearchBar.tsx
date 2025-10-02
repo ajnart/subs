@@ -1,16 +1,17 @@
 import { Search } from 'lucide-react'
-import type React from 'react'
+import { forwardRef } from 'react'
 import { Input } from '~/components/ui/input'
 
 interface SearchBarProps {
   onSearch: (query: string) => void
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
+const SearchBar = forwardRef<HTMLInputElement, SearchBarProps>(({ onSearch }, ref) => {
   return (
     <div className="relative rounded-lg bg-card">
       <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
       <Input
+        ref={ref}
         type="text"
         placeholder="Search subscriptions..."
         autoFocus
@@ -19,6 +20,8 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
       />
     </div>
   )
-}
+})
+
+SearchBar.displayName = 'SearchBar'
 
 export default SearchBar
