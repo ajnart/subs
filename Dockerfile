@@ -10,6 +10,8 @@ COPY . /app/
 
 RUN npm install
 
+RUN npm run build
+
 ENV USE_LOCAL_STORAGE=false
 
 VOLUME [ "/app/data" ]
