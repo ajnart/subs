@@ -1,16 +1,22 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useLoaderData } from '@remix-run/react'
+import { CalendarIcon } from 'lucide-react'
 import type React from 'react'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import * as z from 'zod'
 import { Button } from '~/components/ui/button'
+import { Calendar } from '~/components/ui/calendar'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '~/components/ui/dialog'
 import { Input } from '~/components/ui/input'
 import { Label } from '~/components/ui/label'
+import { Popover, PopoverContent, PopoverTrigger } from '~/components/ui/popover'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '~/components/ui/select'
+import { Switch } from '~/components/ui/switch'
+import { cn } from '~/lib/utils'
 import type { loader } from '~/routes/_index'
-import type { Subscription } from '~/store/subscriptionStore'
+import type { BillingCycle, Subscription } from '~/store/subscriptionStore'
+import { initializeNextPaymentDate } from '~/utils/nextPaymentDate'
 import { IconUrlInput } from './IconFinder'
 import SubscriptionCard from './SubscriptionCard'
 
@@ -27,6 +33,9 @@ const subscriptionSchema = z.object({
   currency: z.string().min(1, 'Currency is required'),
   domain: z.string().url('Invalid URL'),
   icon: z.string().optional(),
+  billingCycle: z.enum(['monthly', 'yearly', 'weekly', 'daily']).optional(),
+  nextPaymentDate: z.string().optional(),
+  showNextPayment: z.boolean().optional(),
 })
 
 const EditSubscriptionModal: React.FC<EditSubscriptionModalProps> = ({
@@ -36,6 +45,7 @@ const EditSubscriptionModal: React.FC<EditSubscriptionModalProps> = ({
   editingSubscription,
 }) => {
   const { rates } = useLoaderData<typeof loader>()
+  const [calendarOpen, setCalendarOpen] = useState(false)
 
   const {
     control,
@@ -52,6 +62,9 @@ const EditSubscriptionModal: React.FC<EditSubscriptionModalProps> = ({
       currency: 'USD',
       domain: '',
       icon: '',
+      billingCycle: undefined as BillingCycle | undefined,
+      nextPaymentDate: undefined as string | undefined,
+      showNextPayment: false,
     },
   })
 
@@ -65,11 +78,25 @@ const EditSubscriptionModal: React.FC<EditSubscriptionModalProps> = ({
         currency: 'USD',
         domain: '',
         icon: '',
+        billingCycle: undefined,
+        nextPaymentDate: undefined,
+        showNextPayment: false,
       })
     }
   }, [editingSubscription, reset])
 
   const watchedFields = watch()
+
+  // Auto-calculate next payment date when billing cycle changes
+  useEffect(() => {
+    if (watchedFields.billingCycle && watchedFields.showNextPayment) {
+      const currentDate = watchedFields.nextPaymentDate
+      if (!currentDate) {
+        const newDate = initializeNextPaymentDate(watchedFields.billingCycle)
+        setValue('nextPaymentDate', newDate)
+      }
+    }
+  }, [watchedFields.billingCycle, watchedFields.showNextPayment, setValue])
 
   const previewSubscription: Subscription = {
     id: 'preview',
@@ -78,6 +105,9 @@ const EditSubscriptionModal: React.FC<EditSubscriptionModalProps> = ({
     currency: watchedFields.currency || 'USD',
     domain: watchedFields.domain || 'https://example.com',
     icon: watchedFields.icon,
+    billingCycle: watchedFields.billingCycle,
+    nextPaymentDate: watchedFields.nextPaymentDate,
+    showNextPayment: watchedFields.showNextPayment,
   }
 
   const onSubmit = (data: Omit<Subscription, 'id'>) => {
@@ -85,9 +115,19 @@ const EditSubscriptionModal: React.FC<EditSubscriptionModalProps> = ({
     onClose()
   }
 
+  const formatDateForDisplay = (dateString: string | undefined) => {
+    if (!dateString) return 'Pick a date'
+    const date = new Date(dateString)
+    return date.toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+    })
+  }
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[600px] lg:max-w-[800px]">
+      <DialogContent className="sm:max-w-[600px] lg:max-w-[800px] max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>{editingSubscription ? 'Edit Subscription' : 'Add Subscription'}</DialogTitle>
         </DialogHeader>
@@ -166,6 +206,82 @@ const EditSubscriptionModal: React.FC<EditSubscriptionModalProps> = ({
                 />
                 <p className="text-red-500 text-xs h-4">{errors.domain?.message || '\u00A0'}</p>
               </div>
+              <div>
+                <Label htmlFor="billingCycle">Billing Cycle (optional)</Label>
+                <Controller
+                  name="billingCycle"
+                  control={control}
+                  render={({ field }) => (
+                    <Select onValueChange={field.onChange} value={field.value}>
+                      <SelectTrigger id="billingCycle">
+                        <SelectValue placeholder="Select billing cycle" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="daily">Daily</SelectItem>
+                        <SelectItem value="weekly">Weekly</SelectItem>
+                        <SelectItem value="monthly">Monthly</SelectItem>
+                        <SelectItem value="yearly">Yearly</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  )}
+                />
+                <p className="text-red-500 text-xs h-4">{'\u00A0'}</p>
+              </div>
+              {watchedFields.billingCycle && (
+                <>
+                  <div className="flex items-center space-x-2 mb-2">
+                    <Controller
+                      name="showNextPayment"
+                      control={control}
+                      render={({ field }) => (
+                        <Switch id="showNextPayment" checked={field.value} onCheckedChange={field.onChange} />
+                      )}
+                    />
+                    <Label htmlFor="showNextPayment" className="cursor-pointer">
+                      Show next payment date
+                    </Label>
+                  </div>
+                  {watchedFields.showNextPayment && (
+                    <div>
+                      <Label htmlFor="nextPaymentDate">Next Payment Date</Label>
+                      <Controller
+                        name="nextPaymentDate"
+                        control={control}
+                        render={({ field }) => (
+                          <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
+                            <PopoverTrigger asChild>
+                              <Button
+                                id="nextPaymentDate"
+                                variant="outline"
+                                className={cn(
+                                  'w-full justify-start text-left font-normal',
+                                  !field.value && 'text-muted-foreground',
+                                )}
+                              >
+                                <CalendarIcon className="mr-2 h-4 w-4" />
+                                {formatDateForDisplay(field.value)}
+                              </Button>
+                            </PopoverTrigger>
+                            <PopoverContent className="w-auto p-0" align="start">
+                              <Calendar
+                                mode="single"
+                                selected={field.value ? new Date(field.value) : undefined}
+                                onSelect={(date) => {
+                                  field.onChange(date?.toISOString().split('T')[0])
+                                  setCalendarOpen(false)
+                                }}
+                                disabled={(date) => date < new Date(new Date().setHours(0, 0, 0, 0))}
+                                initialFocus
+                              />
+                            </PopoverContent>
+                          </Popover>
+                        )}
+                      />
+                      <p className="text-red-500 text-xs h-4">{'\u00A0'}</p>
+                    </div>
+                  )}
+                </>
+              )}
             </div>
             <div className="my-auto">
               <SubscriptionCard subscription={previewSubscription} onEdit={() => {}} onDelete={() => {}} />

@@ -1,17 +1,21 @@
 import { Button } from '@/components/ui/button'
+import { Calendar } from '@/components/ui/calendar'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { Switch } from '@/components/ui/switch'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useLoaderData } from '@remix-run/react'
-import { PlusCircle } from 'lucide-react'
+import { CalendarIcon, PlusCircle } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
+import { cn } from '~/lib/utils'
 import type { loader } from '~/routes/_index'
-import type { Subscription } from '~/store/subscriptionStore'
+import type { BillingCycle, Subscription } from '~/store/subscriptionStore'
+import { initializeNextPaymentDate } from '~/utils/nextPaymentDate'
 import { IconUrlInput } from './IconFinder'
 
 interface AddSubscriptionPopoverProps {
@@ -26,6 +30,9 @@ const subscriptionSchema = z.object({
   currency: z.string().min(1, 'Currency is required'),
   icon: z.string().optional(),
   domain: z.string().url('Invalid URL'),
+  billingCycle: z.enum(['monthly', 'yearly', 'weekly', 'daily']).optional(),
+  nextPaymentDate: z.string().optional(),
+  showNextPayment: z.boolean().optional(),
 })
 
 type SubscriptionFormValues = z.infer<typeof subscriptionSchema>
@@ -38,6 +45,7 @@ export const AddSubscriptionPopover: React.FC<AddSubscriptionPopoverProps> = ({
   const { rates } = useLoaderData<typeof loader>()
   const [internalOpen, setInternalOpen] = useState(false)
   const [shouldFocus, setShouldFocus] = useState(false)
+  const [calendarOpen, setCalendarOpen] = useState(false)
 
   // Use external control if provided, otherwise use internal state
   const open = externalOpen !== undefined ? externalOpen : internalOpen
@@ -51,6 +59,7 @@ export const AddSubscriptionPopover: React.FC<AddSubscriptionPopoverProps> = ({
     setFocus,
     setValue,
     watch,
+    control,
   } = useForm<SubscriptionFormValues>({
     resolver: zodResolver(subscriptionSchema),
     defaultValues: {
@@ -59,10 +68,16 @@ export const AddSubscriptionPopover: React.FC<AddSubscriptionPopoverProps> = ({
       price: 0,
       currency: 'USD',
       domain: '',
+      billingCycle: undefined,
+      nextPaymentDate: undefined,
+      showNextPayment: false,
     },
   })
 
   const iconValue = watch('icon')
+  const billingCycleValue = watch('billingCycle')
+  const showNextPaymentValue = watch('showNextPayment')
+  const nextPaymentDateValue = watch('nextPaymentDate')
 
   useEffect(() => {
     if (shouldFocus) {
@@ -70,6 +85,17 @@ export const AddSubscriptionPopover: React.FC<AddSubscriptionPopoverProps> = ({
       setShouldFocus(false)
     }
   }, [shouldFocus, setFocus])
+
+  // Auto-calculate next payment date when billing cycle changes
+  useEffect(() => {
+    if (billingCycleValue && showNextPaymentValue) {
+      const currentDate = nextPaymentDateValue
+      if (!currentDate) {
+        const newDate = initializeNextPaymentDate(billingCycleValue)
+        setValue('nextPaymentDate', newDate)
+      }
+    }
+  }, [billingCycleValue, showNextPaymentValue, nextPaymentDateValue, setValue])
 
   const onSubmit = (data: SubscriptionFormValues) => {
     addSubscription(data)
@@ -84,6 +110,16 @@ export const AddSubscriptionPopover: React.FC<AddSubscriptionPopoverProps> = ({
     }
   }, [open, setFocus])
 
+  const formatDateForDisplay = (dateString: string | undefined) => {
+    if (!dateString) return 'Pick a date'
+    const date = new Date(dateString)
+    return date.toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+    })
+  }
+
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
@@ -92,7 +128,7 @@ export const AddSubscriptionPopover: React.FC<AddSubscriptionPopoverProps> = ({
           Add Subscription
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-80">
+      <PopoverContent className="w-80 max-h-[80vh] overflow-y-auto">
         <form onSubmit={handleSubmit(onSubmit)}>
           <h3 className="font-medium text-lg mb-4">Add Subscription</h3>
           <div className="space-y-4">
@@ -144,6 +180,74 @@ export const AddSubscriptionPopover: React.FC<AddSubscriptionPopoverProps> = ({
               <Input id="domain" {...register('domain')} className={errors.domain ? 'border-red-500' : ''} />
               <p className="text-red-500 text-xs h-4">{errors.domain?.message}</p>
             </div>
+            <div>
+              <Label htmlFor="billingCycle">Billing Cycle (optional)</Label>
+              <Select onValueChange={(value) => setValue('billingCycle', value as BillingCycle)}>
+                <SelectTrigger id="billingCycle">
+                  <SelectValue placeholder="Select billing cycle" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="daily">Daily</SelectItem>
+                  <SelectItem value="weekly">Weekly</SelectItem>
+                  <SelectItem value="monthly">Monthly</SelectItem>
+                  <SelectItem value="yearly">Yearly</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            {billingCycleValue && (
+              <>
+                <div className="flex items-center space-x-2">
+                  <Controller
+                    name="showNextPayment"
+                    control={control}
+                    render={({ field }) => (
+                      <Switch id="showNextPayment" checked={field.value} onCheckedChange={field.onChange} />
+                    )}
+                  />
+                  <Label htmlFor="showNextPayment" className="cursor-pointer">
+                    Show next payment date
+                  </Label>
+                </div>
+                {showNextPaymentValue && (
+                  <div>
+                    <Label htmlFor="nextPaymentDate">Next Payment Date</Label>
+                    <Controller
+                      name="nextPaymentDate"
+                      control={control}
+                      render={({ field }) => (
+                        <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
+                          <PopoverTrigger asChild>
+                            <Button
+                              id="nextPaymentDate"
+                              variant="outline"
+                              className={cn(
+                                'w-full justify-start text-left font-normal',
+                                !field.value && 'text-muted-foreground',
+                              )}
+                            >
+                              <CalendarIcon className="mr-2 h-4 w-4" />
+                              {formatDateForDisplay(field.value)}
+                            </Button>
+                          </PopoverTrigger>
+                          <PopoverContent className="w-auto p-0" align="start">
+                            <Calendar
+                              mode="single"
+                              selected={field.value ? new Date(field.value) : undefined}
+                              onSelect={(date) => {
+                                field.onChange(date?.toISOString().split('T')[0])
+                                setCalendarOpen(false)
+                              }}
+                              disabled={(date) => date < new Date(new Date().setHours(0, 0, 0, 0))}
+                              initialFocus
+                            />
+                          </PopoverContent>
+                        </Popover>
+                      )}
+                    />
+                  </div>
+                )}
+              </>
+            )}
           </div>
           <div className="flex justify-end mt-4">
             <Button type="submit" className="contain-content">
