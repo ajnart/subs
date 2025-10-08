@@ -1,6 +1,8 @@
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
+export type BillingCycle = 'monthly' | 'yearly' | 'weekly' | 'daily'
+
 export interface Subscription {
   id: string
   name: string
@@ -8,6 +10,10 @@ export interface Subscription {
   currency: string
   domain: string
   icon?: string
+  billingCycle?: BillingCycle
+  nextPaymentDate?: string // ISO date string
+  showNextPayment?: boolean
+  paymentDay?: number // Day of month for monthly subscriptions (1-31)
 }
 
 interface SubscriptionStore {
@@ -135,7 +141,11 @@ function isValidSubscription(sub: any): sub is Subscription {
     typeof sub.price === 'number' &&
     typeof sub.currency === 'string' &&
     typeof sub.domain === 'string' &&
-    (sub.icon === undefined || typeof sub.icon === 'string')
+    (sub.icon === undefined || typeof sub.icon === 'string') &&
+    (sub.billingCycle === undefined || ['monthly', 'yearly', 'weekly', 'daily'].includes(sub.billingCycle)) &&
+    (sub.nextPaymentDate === undefined || typeof sub.nextPaymentDate === 'string') &&
+    (sub.showNextPayment === undefined || typeof sub.showNextPayment === 'boolean') &&
+    (sub.paymentDay === undefined || typeof sub.paymentDay === 'number')
   )
 }
 
