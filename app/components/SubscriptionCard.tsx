@@ -16,8 +16,7 @@ interface SubscriptionCardProps {
 }
 
 const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ subscription, onEdit, onDelete, className }) => {
-  const { id, name, price, currency, domain, icon, billingCycle, nextPaymentDate, showNextPayment, paymentDay } =
-    subscription
+  const { id, name, price, currency, domain, icon, billingCycle, nextPaymentDate, showNextPayment } = subscription
 
   // Sanitize the domain URL
   const sanitizeDomain = (domain: string) => {
@@ -40,7 +39,7 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ subscription, onEdi
       return null
     }
 
-    const calculatedDate = calculateNextPaymentDate(billingCycle, paymentDay, nextPaymentDate)
+    const calculatedDate = calculateNextPaymentDate(billingCycle, nextPaymentDate)
     if (!calculatedDate) {
       return null
     }
@@ -82,13 +81,13 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ subscription, onEdi
         </div>
         <LinkPreview url={sanitizedDomain}>
           <CardContent className="flex flex-col items-center justify-center p-4 sm:p-6 h-full">
-            <img src={logoUrl} alt={`${name} logo`} className="w-16 h-16 mb-3 rounded-full shadow-md" />
+            <img src={logoUrl} alt={`${name} logo`} className="w-16 h-16 mb-3 rounded-full shadow-md object-cover" />
             <h3 className="text-xl sm:text-1xl font-bold mb-2 text-card-foreground max-w-full text-wrap-balance overflow-wrap-break-word line-clamp-1 text-center">
               {name}
             </h3>
-            <p className="text-md sm:text-sm font-semibold text-card-foreground text-center mb-2">{`${currency} ${price}`}</p>
+            <p className="text-md sm:text-sm font-semibold text-card-foreground text-center">{`${currency} ${price}`}</p>
             {billingCycle && (
-              <Badge variant="secondary" className="mb-2 text-xs">
+              <Badge variant="secondary" className="mt-1 text-xs">
                 per{' '}
                 {billingCycle === 'monthly'
                   ? 'Monthly'
@@ -100,7 +99,7 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ subscription, onEdi
               </Badge>
             )}
             {nextPaymentDisplay && (
-              <div className="flex items-center gap-1 text-xs text-muted-foreground mt-2">
+              <div className="flex items-center gap-1 text-xs text-muted-foreground mt-1">
                 <Calendar className="h-3 w-3" />
                 <span>Next Payment: {nextPaymentDisplay}</span>
               </div>

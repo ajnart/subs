@@ -6,7 +6,6 @@ import type { BillingCycle } from '~/store/subscriptionStore'
  */
 export function calculateNextPaymentDate(
   billingCycle: BillingCycle | undefined,
-  paymentDay: number | undefined,
   currentNextPaymentDate?: string,
 ): string | undefined {
   if (!billingCycle) {
@@ -26,10 +25,10 @@ export function calculateNextPaymentDate(
     }
 
     // Otherwise, calculate the next occurrence
-    nextDate = getNextOccurrence(nextDate, billingCycle, paymentDay, now)
+    nextDate = getNextOccurrence(nextDate, billingCycle, now)
   } else {
     // No existing date, calculate from now
-    nextDate = getNextOccurrence(now, billingCycle, paymentDay, now)
+    nextDate = getNextOccurrence(now, billingCycle, now)
   }
 
   return nextDate.toISOString().split('T')[0] // Return YYYY-MM-DD format
@@ -38,12 +37,7 @@ export function calculateNextPaymentDate(
 /**
  * Get the next occurrence of a payment date after the current date
  */
-function getNextOccurrence(
-  baseDate: Date,
-  billingCycle: BillingCycle,
-  paymentDay: number | undefined,
-  now: Date,
-): Date {
+function getNextOccurrence(baseDate: Date, billingCycle: BillingCycle, now: Date): Date {
   const result = new Date(baseDate)
 
   switch (billingCycle) {
@@ -62,23 +56,9 @@ function getNextOccurrence(
       break
 
     case 'monthly':
-      // For monthly, respect the paymentDay if provided
-      if (paymentDay !== undefined && paymentDay >= 1 && paymentDay <= 31) {
-        // Start from now and find the next occurrence of paymentDay
-        result.setFullYear(now.getFullYear())
-        result.setMonth(now.getMonth())
-        result.setDate(Math.min(paymentDay, getLastDayOfMonth(result.getFullYear(), result.getMonth())))
-
-        // If this date is in the past, move to next month
-        while (result <= now) {
-          result.setMonth(result.getMonth() + 1)
-          result.setDate(Math.min(paymentDay, getLastDayOfMonth(result.getFullYear(), result.getMonth())))
-        }
-      } else {
-        // No specific day, just add months until we're in the future
-        while (result <= now) {
-          result.setMonth(result.getMonth() + 1)
-        }
+      // Add months until we're in the future
+      while (result <= now) {
+        result.setMonth(result.getMonth() + 1)
       }
       break
 
@@ -94,19 +74,9 @@ function getNextOccurrence(
 }
 
 /**
- * Get the last day of a given month
- */
-function getLastDayOfMonth(year: number, month: number): number {
-  return new Date(year, month + 1, 0).getDate()
-}
-
-/**
  * Initialize a next payment date from today based on billing cycle
  */
-export function initializeNextPaymentDate(
-  billingCycle: BillingCycle | undefined,
-  paymentDay?: number,
-): string | undefined {
+export function initializeNextPaymentDate(billingCycle: BillingCycle | undefined): string | undefined {
   if (!billingCycle) {
     return undefined
   }
@@ -124,12 +94,7 @@ export function initializeNextPaymentDate(
       break
 
     case 'monthly':
-      if (paymentDay !== undefined && paymentDay >= 1 && paymentDay <= 31) {
-        nextDate.setMonth(nextDate.getMonth() + 1)
-        nextDate.setDate(Math.min(paymentDay, getLastDayOfMonth(nextDate.getFullYear(), nextDate.getMonth())))
-      } else {
-        nextDate.setMonth(nextDate.getMonth() + 1)
-      }
+      nextDate.setMonth(nextDate.getMonth() + 1)
       break
 
     case 'yearly':

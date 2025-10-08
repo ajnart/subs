@@ -36,7 +36,6 @@ const subscriptionSchema = z.object({
   billingCycle: z.enum(['monthly', 'yearly', 'weekly', 'daily']).optional(),
   nextPaymentDate: z.string().optional(),
   showNextPayment: z.boolean().optional(),
-  paymentDay: z.number().min(1).max(31).optional(),
 })
 
 const EditSubscriptionModal: React.FC<EditSubscriptionModalProps> = ({
@@ -66,7 +65,6 @@ const EditSubscriptionModal: React.FC<EditSubscriptionModalProps> = ({
       billingCycle: undefined as BillingCycle | undefined,
       nextPaymentDate: undefined as string | undefined,
       showNextPayment: false,
-      paymentDay: undefined as number | undefined,
     },
   })
 
@@ -83,23 +81,22 @@ const EditSubscriptionModal: React.FC<EditSubscriptionModalProps> = ({
         billingCycle: undefined,
         nextPaymentDate: undefined,
         showNextPayment: false,
-        paymentDay: undefined,
       })
     }
   }, [editingSubscription, reset])
 
   const watchedFields = watch()
 
-  // Auto-calculate next payment date when billing cycle or payment day changes
+  // Auto-calculate next payment date when billing cycle changes
   useEffect(() => {
     if (watchedFields.billingCycle && watchedFields.showNextPayment) {
       const currentDate = watchedFields.nextPaymentDate
       if (!currentDate) {
-        const newDate = initializeNextPaymentDate(watchedFields.billingCycle, watchedFields.paymentDay)
+        const newDate = initializeNextPaymentDate(watchedFields.billingCycle)
         setValue('nextPaymentDate', newDate)
       }
     }
-  }, [watchedFields.billingCycle, watchedFields.showNextPayment, watchedFields.paymentDay, setValue])
+  }, [watchedFields.billingCycle, watchedFields.showNextPayment, setValue])
 
   const previewSubscription: Subscription = {
     id: 'preview',
@@ -111,7 +108,6 @@ const EditSubscriptionModal: React.FC<EditSubscriptionModalProps> = ({
     billingCycle: watchedFields.billingCycle,
     nextPaymentDate: watchedFields.nextPaymentDate,
     showNextPayment: watchedFields.showNextPayment,
-    paymentDay: watchedFields.paymentDay,
   }
 
   const onSubmit = (data: Omit<Subscription, 'id'>) => {
@@ -231,32 +227,6 @@ const EditSubscriptionModal: React.FC<EditSubscriptionModalProps> = ({
                 />
                 <p className="text-red-500 text-xs h-4">{'\u00A0'}</p>
               </div>
-              {watchedFields.billingCycle === 'monthly' && (
-                <div>
-                  <Label htmlFor="paymentDay">Payment Day of Month (optional)</Label>
-                  <Controller
-                    name="paymentDay"
-                    control={control}
-                    render={({ field }) => (
-                      <Input
-                        id="paymentDay"
-                        type="number"
-                        min="1"
-                        max="31"
-                        placeholder="e.g., 15 for 15th of each month"
-                        {...field}
-                        onChange={(e) => {
-                          const value = e.target.value === '' ? undefined : Number.parseInt(e.target.value)
-                          field.onChange(value)
-                        }}
-                        value={field.value ?? ''}
-                        className={errors.paymentDay ? 'border-red-500' : ''}
-                      />
-                    )}
-                  />
-                  <p className="text-red-500 text-xs h-4">{errors.paymentDay?.message || '\u00A0'}</p>
-                </div>
-              )}
               {watchedFields.billingCycle && (
                 <>
                   <div className="flex items-center space-x-2 mb-2">

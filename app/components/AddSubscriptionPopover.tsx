@@ -31,7 +31,6 @@ const subscriptionSchema = z.object({
   billingCycle: z.enum(['monthly', 'yearly', 'weekly', 'daily']).optional(),
   nextPaymentDate: z.string().optional(),
   showNextPayment: z.boolean().optional(),
-  paymentDay: z.number().min(1).max(31).optional(),
 })
 
 type SubscriptionFormValues = z.infer<typeof subscriptionSchema>
@@ -62,14 +61,12 @@ export const AddSubscriptionPopover: React.FC<AddSubscriptionPopoverProps> = ({ 
       billingCycle: undefined,
       nextPaymentDate: undefined,
       showNextPayment: false,
-      paymentDay: undefined,
     },
   })
 
   const iconValue = watch('icon')
   const billingCycleValue = watch('billingCycle')
   const showNextPaymentValue = watch('showNextPayment')
-  const paymentDayValue = watch('paymentDay')
   const nextPaymentDateValue = watch('nextPaymentDate')
 
   useEffect(() => {
@@ -79,16 +76,16 @@ export const AddSubscriptionPopover: React.FC<AddSubscriptionPopoverProps> = ({ 
     }
   }, [shouldFocus, setFocus])
 
-  // Auto-calculate next payment date when billing cycle or payment day changes
+  // Auto-calculate next payment date when billing cycle changes
   useEffect(() => {
     if (billingCycleValue && showNextPaymentValue) {
       const currentDate = nextPaymentDateValue
       if (!currentDate) {
-        const newDate = initializeNextPaymentDate(billingCycleValue, paymentDayValue)
+        const newDate = initializeNextPaymentDate(billingCycleValue)
         setValue('nextPaymentDate', newDate)
       }
     }
-  }, [billingCycleValue, showNextPaymentValue, paymentDayValue, nextPaymentDateValue, setValue])
+  }, [billingCycleValue, showNextPaymentValue, nextPaymentDateValue, setValue])
 
   const onSubmit = (data: SubscriptionFormValues) => {
     addSubscription(data)
@@ -187,24 +184,6 @@ export const AddSubscriptionPopover: React.FC<AddSubscriptionPopoverProps> = ({ 
                 </SelectContent>
               </Select>
             </div>
-            {billingCycleValue === 'monthly' && (
-              <div>
-                <Label htmlFor="paymentDay">Payment Day of Month (optional)</Label>
-                <Input
-                  id="paymentDay"
-                  type="number"
-                  min="1"
-                  max="31"
-                  placeholder="e.g., 15 for 15th"
-                  {...register('paymentDay', {
-                    valueAsNumber: true,
-                    setValueAs: (v) => (v === '' || v === undefined ? undefined : Number(v)),
-                  })}
-                  className={errors.paymentDay ? 'border-red-500' : ''}
-                />
-                <p className="text-red-500 text-xs h-4">{errors.paymentDay?.message}</p>
-              </div>
-            )}
             {billingCycleValue && (
               <>
                 <div className="flex items-center space-x-2">

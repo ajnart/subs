@@ -13,7 +13,6 @@ export interface Subscription {
   billingCycle?: BillingCycle
   nextPaymentDate?: string // ISO date string
   showNextPayment?: boolean
-  paymentDay?: number // Day of month for monthly subscriptions (1-31)
 }
 
 interface SubscriptionStore {
@@ -144,8 +143,7 @@ function isValidSubscription(sub: any): sub is Subscription {
     (sub.icon === undefined || typeof sub.icon === 'string') &&
     (sub.billingCycle === undefined || ['monthly', 'yearly', 'weekly', 'daily'].includes(sub.billingCycle)) &&
     (sub.nextPaymentDate === undefined || typeof sub.nextPaymentDate === 'string') &&
-    (sub.showNextPayment === undefined || typeof sub.showNextPayment === 'boolean') &&
-    (sub.paymentDay === undefined || typeof sub.paymentDay === 'number')
+    (sub.showNextPayment === undefined || typeof sub.showNextPayment === 'boolean')
   )
 }
 
