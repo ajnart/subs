@@ -20,9 +20,9 @@ const Summary: React.FC<SummaryProps> = ({ totals }) => {
 
   const calculateTotal = () => {
     const totalUSD = Object.entries(totals).reduce((acc, [currency, amount]) => {
-      return acc + amount / (rates[currency] || 1)
+      return acc + amount * (rates[currency] || 1)
     }, 0)
-    return totalUSD * (rates[selectedCurrency] || 1)
+    return totalUSD / (rates[selectedCurrency] || 1)
   }
 
   const convertedTotal = calculateTotal()
