@@ -16,7 +16,8 @@ interface SubscriptionCardProps {
 }
 
 const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ subscription, onEdit, onDelete, className }) => {
-  const { id, name, price, currency, domain, icon, billingCycle, nextPaymentDate, showNextPayment, paymentDay } = subscription
+  const { id, name, price, currency, domain, icon, billingCycle, nextPaymentDate, showNextPayment, paymentDay } =
+    subscription
 
   // Sanitize the domain URL
   const sanitizeDomain = (domain: string) => {
@@ -88,7 +89,14 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ subscription, onEdi
             <p className="text-md sm:text-sm font-semibold text-card-foreground text-center mb-2">{`${currency} ${price}`}</p>
             {billingCycle && (
               <Badge variant="secondary" className="mb-2 text-xs">
-                per {billingCycle === 'monthly' ? 'Monthly' : billingCycle === 'yearly' ? 'Yearly' : billingCycle === 'weekly' ? 'Weekly' : 'Daily'}
+                per{' '}
+                {billingCycle === 'monthly'
+                  ? 'Monthly'
+                  : billingCycle === 'yearly'
+                    ? 'Yearly'
+                    : billingCycle === 'weekly'
+                      ? 'Weekly'
+                      : 'Daily'}
               </Badge>
             )}
             {nextPaymentDisplay && (

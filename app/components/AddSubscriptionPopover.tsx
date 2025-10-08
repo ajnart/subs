@@ -1,10 +1,10 @@
 import { Button } from '@/components/ui/button'
+import { Calendar } from '@/components/ui/calendar'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Switch } from '@/components/ui/switch'
-import { Calendar } from '@/components/ui/calendar'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useLoaderData } from '@remix-run/react'
 import { CalendarIcon, PlusCircle } from 'lucide-react'
@@ -12,9 +12,9 @@ import { useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
+import { cn } from '~/lib/utils'
 import type { loader } from '~/routes/_index'
 import type { BillingCycle, Subscription } from '~/store/subscriptionStore'
-import { cn } from '~/lib/utils'
 import { initializeNextPaymentDate } from '~/utils/nextPaymentDate'
 import { IconUrlInput } from './IconFinder'
 
@@ -198,7 +198,7 @@ export const AddSubscriptionPopover: React.FC<AddSubscriptionPopoverProps> = ({ 
                   placeholder="e.g., 15 for 15th"
                   {...register('paymentDay', {
                     valueAsNumber: true,
-                    setValueAs: (v) => v === '' || v === undefined ? undefined : Number(v),
+                    setValueAs: (v) => (v === '' || v === undefined ? undefined : Number(v)),
                   })}
                   className={errors.paymentDay ? 'border-red-500' : ''}
                 />
@@ -212,11 +212,7 @@ export const AddSubscriptionPopover: React.FC<AddSubscriptionPopoverProps> = ({ 
                     name="showNextPayment"
                     control={control}
                     render={({ field }) => (
-                      <Switch
-                        id="showNextPayment"
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
-                      />
+                      <Switch id="showNextPayment" checked={field.value} onCheckedChange={field.onChange} />
                     )}
                   />
                   <Label htmlFor="showNextPayment" className="cursor-pointer">

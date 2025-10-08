@@ -19,12 +19,12 @@ export function calculateNextPaymentDate(
   // If we have a current next payment date, use it as the base
   if (currentNextPaymentDate) {
     nextDate = new Date(currentNextPaymentDate)
-    
+
     // If the date is in the future, keep it
     if (nextDate > now) {
       return currentNextPaymentDate
     }
-    
+
     // Otherwise, calculate the next occurrence
     nextDate = getNextOccurrence(nextDate, billingCycle, paymentDay, now)
   } else {
@@ -68,7 +68,7 @@ function getNextOccurrence(
         result.setFullYear(now.getFullYear())
         result.setMonth(now.getMonth())
         result.setDate(Math.min(paymentDay, getLastDayOfMonth(result.getFullYear(), result.getMonth())))
-        
+
         // If this date is in the past, move to next month
         while (result <= now) {
           result.setMonth(result.getMonth() + 1)

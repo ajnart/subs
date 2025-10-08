@@ -13,9 +13,9 @@ import { Label } from '~/components/ui/label'
 import { Popover, PopoverContent, PopoverTrigger } from '~/components/ui/popover'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '~/components/ui/select'
 import { Switch } from '~/components/ui/switch'
+import { cn } from '~/lib/utils'
 import type { loader } from '~/routes/_index'
 import type { BillingCycle, Subscription } from '~/store/subscriptionStore'
-import { cn } from '~/lib/utils'
 import { initializeNextPaymentDate } from '~/utils/nextPaymentDate'
 import { IconUrlInput } from './IconFinder'
 import SubscriptionCard from './SubscriptionCard'
@@ -264,11 +264,7 @@ const EditSubscriptionModal: React.FC<EditSubscriptionModalProps> = ({
                       name="showNextPayment"
                       control={control}
                       render={({ field }) => (
-                        <Switch
-                          id="showNextPayment"
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
-                        />
+                        <Switch id="showNextPayment" checked={field.value} onCheckedChange={field.onChange} />
                       )}
                     />
                     <Label htmlFor="showNextPayment" className="cursor-pointer">
