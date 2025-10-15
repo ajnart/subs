@@ -63,7 +63,7 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ subscription, onEdi
       transition={{ type: 'spring', stiffness: 300, damping: 20 }}
       className={`group ${className}`}
     >
-      <Card className="bg-card hover:bg-card/80 transition-all duration-200 shadow-md hover:shadow-lg relative h-full">
+      <Card className="bg-card hover:bg-card/80 transition-all duration-200 shadow-md hover:shadow-lg relative h-full min-h-[200px]">
         <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex space-x-2 z-10">
           <Button variant="outline" size="icon" onClick={() => onEdit(id)} className="bg-background hover:bg-muted">
             <Edit className="h-4 w-4" />
@@ -80,7 +80,7 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ subscription, onEdi
           </Button>
         </div>
         <LinkPreview url={sanitizedDomain}>
-          <CardContent className="flex flex-col items-center justify-center p-4 sm:p-6 h-full">
+          <CardContent className="flex flex-col items-center justify-center p-4 sm:p-6 min-h-[200px]">
             <img src={logoUrl} alt={`${name} logo`} className="w-16 h-16 mb-3 rounded-full shadow-md object-cover" />
             <h3 className="text-xl sm:text-1xl font-bold mb-2 text-card-foreground max-w-full text-wrap-balance overflow-wrap-break-word line-clamp-1 text-center">
               {name}
