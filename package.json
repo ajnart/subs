@@ -18,6 +18,9 @@
     "format": "biome format",
     "check": "biome check",
     "ci": "biome ci",
+    "test": "playwright test",
+    "test:ui": "playwright test --ui",
+    "test:headed": "playwright test --headed",
     "docker:build": "docker build . -t ajnart/subs",
     "docker:test": "docker run -p 3000:3000 --rm --name subs ajnart/subs"
   },
@@ -92,6 +95,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
+    "@playwright/test": "^1.56.1",
     "@remix-run/dev": "^2.13.1",
     "@types/react": "^18.3.11",
     "@types/react-dom": "^18.3.1",
