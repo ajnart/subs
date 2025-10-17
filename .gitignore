@@ -8,6 +8,9 @@ package-lock.json
 
 # testing
 /coverage
+/test-results/
+/playwright-report/
+/playwright/.cache/
 
 # database
 /prisma/db.sqlite
