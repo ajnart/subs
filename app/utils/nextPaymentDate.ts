@@ -1,5 +1,21 @@
 import type { BillingCycle } from '~/store/subscriptionStore'
 
+function toCalendarDate(date: Date): Date {
+  return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()))
+}
+
+function parseCalendarDate(date: string): Date {
+  const [year, month, day] = date.split('-').map(Number)
+  return new Date(Date.UTC(year, month - 1, day))
+}
+
+function addMonthlyOccurrence(date: Date, dayOfMonth: number): Date {
+  const nextMonth = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth() + 1, 1))
+  const lastDayOfMonth = new Date(Date.UTC(nextMonth.getUTCFullYear(), nextMonth.getUTCMonth() + 1, 0)).getUTCDate()
+  nextMonth.setUTCDate(Math.min(dayOfMonth, lastDayOfMonth))
+  return nextMonth
+}
+
 /**
  * Calculate the next payment date based on billing cycle and current date
  * Ensures the returned date is always in the future
@@ -7,28 +23,29 @@ import type { BillingCycle } from '~/store/subscriptionStore'
 export function calculateNextPaymentDate(
   billingCycle: BillingCycle | undefined,
   currentNextPaymentDate?: string,
+  now = new Date(),
 ): string | undefined {
   if (!billingCycle) {
     return undefined
   }
 
-  const now = new Date()
+  const today = toCalendarDate(now)
   let nextDate: Date
 
   // If we have a current next payment date, use it as the base
   if (currentNextPaymentDate) {
-    nextDate = new Date(currentNextPaymentDate)
+    nextDate = parseCalendarDate(currentNextPaymentDate)
 
     // If the date is in the future, keep it
-    if (nextDate > now) {
+    if (nextDate > today) {
       return currentNextPaymentDate
     }
 
     // Otherwise, calculate the next occurrence
-    nextDate = getNextOccurrence(nextDate, billingCycle, now)
+    nextDate = getNextOccurrence(nextDate, billingCycle, today)
   } else {
-    // No existing date, calculate from now
-    nextDate = getNextOccurrence(now, billingCycle, now)
+    // No existing date, calculate from today
+    nextDate = getNextOccurrence(today, billingCycle, today)
   }
 
   return nextDate.toISOString().split('T')[0] // Return YYYY-MM-DD format
@@ -37,35 +54,37 @@ export function calculateNextPaymentDate(
 /**
  * Get the next occurrence of a payment date after the current date
  */
-function getNextOccurrence(baseDate: Date, billingCycle: BillingCycle, now: Date): Date {
-  const result = new Date(baseDate)
+function getNextOccurrence(baseDate: Date, billingCycle: BillingCycle, today: Date): Date {
+  let result = new Date(baseDate)
 
   switch (billingCycle) {
     case 'daily':
       // Add days until we're in the future
-      while (result <= now) {
-        result.setDate(result.getDate() + 1)
+      while (result <= today) {
+        result.setUTCDate(result.getUTCDate() + 1)
       }
       break
 
     case 'weekly':
       // Add weeks until we're in the future
-      while (result <= now) {
-        result.setDate(result.getDate() + 7)
+      while (result <= today) {
+        result.setUTCDate(result.getUTCDate() + 7)
       }
       break
 
-    case 'monthly':
-      // Add months until we're in the future
-      while (result <= now) {
-        result.setMonth(result.getMonth() + 1)
+    case 'monthly': {
+      // Keep the original day when catching up; clamp months without that day.
+      const dayOfMonth = result.getUTCDate()
+      while (result <= today) {
+        result = addMonthlyOccurrence(result, dayOfMonth)
       }
       break
+    }
 
     case 'yearly':
       // Add years until we're in the future
-      while (result <= now) {
-        result.setFullYear(result.getFullYear() + 1)
+      while (result <= today) {
+        result.setUTCFullYear(result.getUTCFullYear() + 1)
       }
       break
   }
@@ -76,29 +95,30 @@ function getNextOccurrence(baseDate: Date, billingCycle: BillingCycle, now: Date
 /**
  * Initialize a next payment date from today based on billing cycle
  */
-export function initializeNextPaymentDate(billingCycle: BillingCycle | undefined): string | undefined {
+export function initializeNextPaymentDate(
+  billingCycle: BillingCycle | undefined,
+  now = new Date(),
+): string | undefined {
   if (!billingCycle) {
     return undefined
   }
 
-  const now = new Date()
-  const nextDate = new Date(now)
+  const nextDate = toCalendarDate(now)
 
   switch (billingCycle) {
     case 'daily':
-      nextDate.setDate(nextDate.getDate() + 1)
+      nextDate.setUTCDate(nextDate.getUTCDate() + 1)
       break
 
     case 'weekly':
-      nextDate.setDate(nextDate.getDate() + 7)
+      nextDate.setUTCDate(nextDate.getUTCDate() + 7)
       break
 
     case 'monthly':
-      nextDate.setMonth(nextDate.getMonth() + 1)
-      break
+      return addMonthlyOccurrence(nextDate, nextDate.getUTCDate()).toISOString().split('T')[0]
 
     case 'yearly':
-      nextDate.setFullYear(nextDate.getFullYear() + 1)
+      nextDate.setUTCFullYear(nextDate.getUTCFullYear() + 1)
       break
   }
 
