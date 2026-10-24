@@ -1,0 +1,466 @@
+.agents/skills/THIRD-PARTY-NOTICES.md
+  h_d6e478ca18e517 32-37
+.agents/skills/hallmark/LICENSE
+  h_d6e478ca18e517 1-21
+.agents/skills/hallmark/SKILL.md
+  h_d6e478ca18e517 1-154
+.agents/skills/hallmark/agents/openai.yaml
+  h_d6e478ca18e517 1-13
+.agents/skills/hallmark/references/anatomy.md
+  h_d6e478ca18e517 1-71
+.agents/skills/hallmark/references/brand-truth.md
+  h_d6e478ca18e517 1-40
+.agents/skills/hallmark/references/comp.md
+  h_d6e478ca18e517 1-104
+.agents/skills/hallmark/references/craft.md
+  h_d6e478ca18e517 1-116
+.agents/skills/hallmark/references/dark-mode.md
+  h_d6e478ca18e517 1-49
+.agents/skills/hallmark/references/data-viz.md
+  h_d6e478ca18e517 1-48
+.agents/skills/hallmark/references/design-md.md
+  h_d6e478ca18e517 1-53
+.agents/skills/hallmark/references/direction.md
+  h_d6e478ca18e517 1-52
+.agents/skills/hallmark/references/export-formats.md
+  h_d6e478ca18e517 1-80
+.agents/skills/hallmark/references/flow.md
+  h_d6e478ca18e517 1-131
+.agents/skills/hallmark/references/fonts.md
+  h_d6e478ca18e517 1-58
+.agents/skills/hallmark/references/gates.md
+  h_d6e478ca18e517 1-243
+.agents/skills/hallmark/references/genres/atmospheric.md
+  h_d6e478ca18e517 1-24
+.agents/skills/hallmark/references/genres/editorial.md
+  h_d6e478ca18e517 1-24
+.agents/skills/hallmark/references/genres/modern-minimal.md
+  h_d6e478ca18e517 1-24
+.agents/skills/hallmark/references/genres/playful.md
+  h_d6e478ca18e517 1-24
+.agents/skills/hallmark/references/imagery.md
+  h_d6e478ca18e517 1-99
+.agents/skills/hallmark/references/interaction-and-states.md
+  h_d6e478ca18e517 1-89
+.agents/skills/hallmark/references/layout.md
+  h_d6e478ca18e517 1-104
+.agents/skills/hallmark/references/macrostructures.md
+  h_d6e478ca18e517 1-119
+.agents/skills/hallmark/references/macrostructures/01-bento-grid.md
+  h_d6e478ca18e517 1-21
+.agents/skills/hallmark/references/macrostructures/02-long-document.md
+  h_d6e478ca18e517 1-35
+.agents/skills/hallmark/references/macrostructures/03-marquee-hero.md
+  h_d6e478ca18e517 1-21
+.agents/skills/hallmark/references/macrostructures/04-stat-led.md
+  h_d6e478ca18e517 1-21
+.agents/skills/hallmark/references/macrostructures/05-workbench.md
+  h_d6e478ca18e517 1-21
+.agents/skills/hallmark/references/macrostructures/06-conversational-faq.md
+  h_d6e478ca18e517 1-28
+.agents/skills/hallmark/references/macrostructures/07-manifesto.md
+  h_d6e478ca18e517 1-28
+.agents/skills/hallmark/references/macrostructures/08-photographic.md
+  h_d6e478ca18e517 1-21
+.agents/skills/hallmark/references/macrostructures/09-quote-led.md
+  h_d6e478ca18e517 1-21
+.agents/skills/hallmark/references/macrostructures/10-specimen.md
+  h_d6e478ca18e517 1-21
+.agents/skills/hallmark/references/macrostructures/11-catalogue.md
+  h_d6e478ca18e517 1-21
+.agents/skills/hallmark/references/macrostructures/12-letter.md
+  h_d6e478ca18e517 1-21
+.agents/skills/hallmark/references/macrostructures/13-index-first.md
+  h_d6e478ca18e517 1-21
+.agents/skills/hallmark/references/macrostructures/14-narrative-workflow.md
+  h_d6e478ca18e517 1-21
+.agents/skills/hallmark/references/macrostructures/15-split-studio.md
+  h_d6e478ca18e517 1-21
+.agents/skills/hallmark/references/macrostructures/16-feature-stack.md
+  h_d6e478ca18e517 1-23
+.agents/skills/hallmark/references/macrostructures/17-type-specimen.md
+  h_d6e478ca18e517 1-19
+.agents/skills/hallmark/references/macrostructures/18-portfolio-grid.md
+  h_d6e478ca18e517 1-21
+.agents/skills/hallmark/references/macrostructures/19-map-diagram.md
+  h_d6e478ca18e517 1-21
+.agents/skills/hallmark/references/macrostructures/20-ecosystem-index.md
+  h_d6e478ca18e517 1-19
+.agents/skills/hallmark/references/macrostructures/21-component-playground.md
+  h_d6e478ca18e517 1-21
+.agents/skills/hallmark/references/microinteractions.md
+  h_d6e478ca18e517 1-80
+.agents/skills/hallmark/references/patterns.md
+  h_d6e478ca18e517 1-202
+.agents/skills/hallmark/references/redesign.md
+  h_d6e478ca18e517 1-88
+.agents/skills/hallmark/references/responsive.md
+  h_d6e478ca18e517 1-46
+.agents/skills/hallmark/references/review-finish.md
+  h_d6e478ca18e517 1-19
+.agents/skills/hallmark/references/review-hero.md
+  h_d6e478ca18e517 1-20
+.agents/skills/hallmark/references/scroll-choreography.md
+  h_d6e478ca18e517 1-110
+.agents/skills/hallmark/references/texture.md
+  h_d6e478ca18e517 1-90
+.agents/skills/hallmark/references/themes/README.md
+  h_d6e478ca18e517 1-58
+.agents/skills/hallmark/references/themes/almanac.md
+  h_d6e478ca18e517 1-103
+.agents/skills/hallmark/references/themes/arcade.md
+  h_d6e478ca18e517 1-102
+.agents/skills/hallmark/references/themes/atelier.md
+  h_d6e478ca18e517 1-98
+.agents/skills/hallmark/references/themes/bloom.md
+  h_d6e478ca18e517 1-102
+.agents/skills/hallmark/references/themes/blueprint.md
+  h_d6e478ca18e517 1-103
+.agents/skills/hallmark/references/themes/broadside.md
+  h_d6e478ca18e517 1-108
+.agents/skills/hallmark/references/themes/brutal.md
+  h_d6e478ca18e517 1-95
+.agents/skills/hallmark/references/themes/carnival.md
+  h_d6e478ca18e517 1-104
+.agents/skills/hallmark/references/themes/cobalt.md
+  h_d6e478ca18e517 1-101
+.agents/skills/hallmark/references/themes/console.md
+  h_d6e478ca18e517 1-99
+.agents/skills/hallmark/references/themes/coral.md
+  h_d6e478ca18e517 1-102
+.agents/skills/hallmark/references/themes/darkroom.md
+  h_d6e478ca18e517 1-99
+.agents/skills/hallmark/references/themes/dose.md
+  h_d6e478ca18e517 1-98
+.agents/skills/hallmark/references/themes/dusk.md
+  h_d6e478ca18e517 1-105
+.agents/skills/hallmark/references/themes/editorial.md
+  h_d6e478ca18e517 1-97
+.agents/skills/hallmark/references/themes/formwork.md
+  h_d6e478ca18e517 1-107
+.agents/skills/hallmark/references/themes/furrow.md
+  h_d6e478ca18e517 1-98
+.agents/skills/hallmark/references/themes/garden.md
+  h_d6e478ca18e517 1-97
+.agents/skills/hallmark/references/themes/grid.md
+  h_d6e478ca18e517 1-101
+.agents/skills/hallmark/references/themes/halftone.md
+  h_d6e478ca18e517 1-106
+.agents/skills/hallmark/references/themes/hedgerow.md
+  h_d6e478ca18e517 1-104
+.agents/skills/hallmark/references/themes/hum.md
+  h_d6e478ca18e517 1-99
+.agents/skills/hallmark/references/themes/index.json
+  h_d6e478ca18e517 1-2191
+.agents/skills/hallmark/references/themes/ink.md
+  h_d6e478ca18e517 1-106
+.agents/skills/hallmark/references/themes/kiln.md
+  h_d6e478ca18e517 1-108
+.agents/skills/hallmark/references/themes/loom.md
+  h_d6e478ca18e517 1-106
+.agents/skills/hallmark/references/themes/lumen.md
+  h_d6e478ca18e517 1-103
+.agents/skills/hallmark/references/themes/manifesto.md
+  h_d6e478ca18e517 1-101
+.agents/skills/hallmark/references/themes/midnight.md
+  h_d6e478ca18e517 1-97
+.agents/skills/hallmark/references/themes/newsprint.md
+  h_d6e478ca18e517 1-102
+.agents/skills/hallmark/references/themes/overprint.md
+  h_d6e478ca18e517 1-101
+.agents/skills/hallmark/references/themes/pasteup.md
+  h_d6e478ca18e517 1-100
+.agents/skills/hallmark/references/themes/piste.md
+  h_d6e478ca18e517 1-99
+.agents/skills/hallmark/references/themes/ribbon.md
+  h_d6e478ca18e517 1-106
+.agents/skills/hallmark/references/themes/rim.md
+  h_d6e478ca18e517 1-96
+.agents/skills/hallmark/references/themes/riso.md
+  h_d6e478ca18e517 1-98
+.agents/skills/hallmark/references/themes/solstice.md
+  h_d6e478ca18e517 1-104
+.agents/skills/hallmark/references/themes/specimen.md
+  h_d6e478ca18e517 1-100
+.agents/skills/hallmark/references/themes/spore.md
+  h_d6e478ca18e517 1-104
+.agents/skills/hallmark/references/themes/sport.md
+  h_d6e478ca18e517 1-101
+.agents/skills/hallmark/references/themes/squeeze.md
+  h_d6e478ca18e517 1-99
+.agents/skills/hallmark/references/themes/sticker.md
+  h_d6e478ca18e517 1-106
+.agents/skills/hallmark/references/themes/studio.md
+  h_d6e478ca18e517 1-99
+.agents/skills/hallmark/references/themes/terminal.md
+  h_d6e478ca18e517 1-96
+.agents/skills/hallmark/references/themes/terrazzo.md
+  h_d6e478ca18e517 1-106
+.agents/skills/hallmark/references/themes/ultraviolet.md
+  h_d6e478ca18e517 1-106
+.agents/skills/hallmark/references/themes/vellum.md
+  h_d6e478ca18e517 1-105
+.agents/skills/hallmark/references/themes/wayfind.md
+  h_d6e478ca18e517 1-105
+.agents/skills/hallmark/references/themes/werkstatt.md
+  h_d6e478ca18e517 1-105
+.agents/skills/hallmark/scripts/capture.mjs
+  h_d6e478ca18e517 1-125
+.agents/skills/hallmark/scripts/fixtures/exemplars/atmospheric.html
+  h_d6e478ca18e517 1-324
+.agents/skills/hallmark/scripts/fixtures/exemplars/editorial.html
+  h_d6e478ca18e517 1-363
+.agents/skills/hallmark/scripts/fixtures/exemplars/modern-minimal.html
+  h_d6e478ca18e517 1-527
+.agents/skills/hallmark/scripts/fixtures/exemplars/playful.html
+  h_d6e478ca18e517 1-353
+.agents/skills/hallmark/scripts/fixtures/eyebrow-fail/index.html
+  h_d6e478ca18e517 1-118
+.agents/skills/hallmark/scripts/fixtures/eyebrow-pass/index.html
+  h_d6e478ca18e517 1-137
+.agents/skills/hallmark/scripts/fixtures/kept/after.html
+  h_d6e478ca18e517 1-27
+.agents/skills/hallmark/scripts/fixtures/kept/before.html
+  h_d6e478ca18e517 1-26
+.agents/skills/hallmark/scripts/fixtures/slopped.html
+  h_d6e478ca18e517 1-145
+.agents/skills/hallmark/scripts/fixtures/tailwind-fail/Feature.vue
+  h_d6e478ca18e517 1-14
+.agents/skills/hallmark/scripts/fixtures/tailwind-fail/Hero.tsx
+  h_d6e478ca18e517 1-33
+.agents/skills/hallmark/scripts/fixtures/tailwind-fail/index.html
+  h_d6e478ca18e517 1-74
+.agents/skills/hallmark/scripts/fixtures/tailwind-fail/style.css
+  h_d6e478ca18e517 1-6
+.agents/skills/hallmark/scripts/fixtures/tailwind-pass/Hero.tsx
+  h_d6e478ca18e517 1-33
+.agents/skills/hallmark/scripts/fixtures/tailwind-pass/index.html
+  h_d6e478ca18e517 1-57
+.agents/skills/hallmark/scripts/fixtures/tailwind-pass/style.css
+  h_d6e478ca18e517 1-15
+.agents/skills/hallmark/scripts/fixtures/waiver/index.html
+  h_d6e478ca18e517 1-54
+.agents/skills/hallmark/scripts/imagegen.mjs
+  h_d6e478ca18e517 1-85
+.agents/skills/hallmark/scripts/install-hook.mjs
+  h_d6e478ca18e517 1-70
+.agents/skills/hallmark/scripts/install.mjs
+  h_d6e478ca18e517 1-141
+.agents/skills/hallmark/scripts/lint-hook.mjs
+  h_d6e478ca18e517 1-49
+.agents/skills/hallmark/scripts/photos.json
+  h_d6e478ca18e517 1
+.agents/skills/hallmark/scripts/picture.mjs
+  h_d6e478ca18e517 1-71
+.agents/skills/hallmark/scripts/refcheck.mjs
+  h_d6e478ca18e517 1-352
+.agents/skills/hallmark/scripts/sloplint-render.mjs
+  h_d6e478ca18e517 1-1252
+.agents/skills/hallmark/scripts/sloplint.mjs
+  h_d6e478ca18e517 1-4422
+.agents/skills/hallmark/scripts/theme.mjs
+  h_d6e478ca18e517 1-650
+.dockerignore
+  h_d6e478ca18e517 8-9
+.github/workflows/ci.yml
+  h_d6e478ca18e517 6-12,20,30,32-74
+.gitignore
+  h_d6e478ca18e517 64
+.hallmark/.gitignore
+  h_d6e478ca18e517 1-5
+.hallmark/log.json
+  h_d6e478ca18e517 1-21
+.hallmark/preflight.json
+  h_d6e478ca18e517 1-24
+.hallmark/qa.json
+  h_d6e478ca18e517 1-75
+.scratch/rewrite/issues/01-framework-foundation.md
+  h_d6e478ca18e517 4,23-26
+.scratch/rewrite/issues/02-design-system.md
+  h_d6e478ca18e517 4,23-26
+.scratch/rewrite/issues/03-durable-collection.md
+  h_d6e478ca18e517 4,23-26
+.scratch/rewrite/issues/04-access-boundary.md
+  h_d6e478ca18e517 4,24-27
+.scratch/rewrite/issues/05-money-recurrence.md
+  h_d6e478ca18e517 4,24-27
+.scratch/rewrite/issues/06-legacy-migration.md
+  h_d6e478ca18e517 4,24-27
+.scratch/rewrite/issues/07-collection-contract.md
+  h_d6e478ca18e517 4,24-27
+.scratch/rewrite/issues/08-private-shell.md
+  h_d6e478ca18e517 4,24-27
+.scratch/rewrite/issues/09-entry-editing.md
+  h_d6e478ca18e517 4,24-27
+.scratch/rewrite/issues/10-lifecycle-details.md
+  h_d6e478ca18e517 4,24-27
+.scratch/rewrite/issues/11-card-table.md
+  h_d6e478ca18e517 4,24-27
+.scratch/rewrite/issues/12-find-organize.md
+  h_d6e478ca18e517 4,24-27
+.scratch/rewrite/issues/13-bulk-management.md
+  h_d6e478ca18e517 4,24-27
+.scratch/rewrite/issues/14-summary-currency.md
+  h_d6e478ca18e517 4,24-27
+.scratch/rewrite/issues/15-upcoming-calendar.md
+  h_d6e478ca18e517 4,24-27
+.scratch/rewrite/issues/16-insights.md
+  h_d6e478ca18e517 4,24-27
+.scratch/rewrite/issues/17-budget-scenarios.md
+  h_d6e478ca18e517 4,24-27
+.scratch/rewrite/issues/18-portable-backups.md
+  h_d6e478ca18e517 4,24-27
+.scratch/rewrite/issues/19-import-preview.md
+  h_d6e478ca18e517 4,24-27
+.scratch/rewrite/issues/20-opt-in-templates.md
+  h_d6e478ca18e517 4,24-27
+.scratch/rewrite/issues/21-price-history.md
+  h_d6e478ca18e517 4,24-27
+.scratch/rewrite/issues/22-accessibility-resilience.md
+  h_d6e478ca18e517 4,24-27
+.scratch/rewrite/issues/23-container-operations.md
+  h_d6e478ca18e517 4,24-29
+.scratch/rewrite/issues/24-release-verification.md
+  h_d6e478ca18e517 4,24-29
+.scratch/rewrite/issues/25-visual-polish.md
+  h_d6e478ca18e517 1-22
+.scratch/rewrite/issues/26-static-demo.md
+  h_d6e478ca18e517 1-22
+.scratch/rewrite/issues/27-demo-deployment.md
+  h_d6e478ca18e517 1-24
+.scratch/rewrite/map.md
+  h_d6e478ca18e517 23,29,33-61,65,71-73,75,77,81-109
+.scratch/rewrite/spec.md
+  h_d6e478ca18e517 77-84,131-141
+Dockerfile
+  h_d6e478ca18e517 8
+README.md
+  h_d6e478ca18e517 3,5,7,9-10,12-13,15,24,26,28,30,32-35,37,39,41-44,46,48,52-59,61,63,65,67,69,77
+biome.json
+  h_d6e478ca18e517 10,12-13
+bun.lock
+  h_d6e478ca18e517 17,19-20,47,128-143,150-203,216-269,304-309,468-469,472-473,610-611,752-753,762-763,810-811,1006-1007,1012-1015,1066,1168-1169,1286-1289,1292-1293,1304-1307,1320-1321,1332-1333,1394-1395,1412-1413,1420-1421,1426-1427
+components.json
+  h_d6e478ca18e517 24-27
+demo/index.html
+  h_d6e478ca18e517 1-14
+demo/main.tsx
+  h_d6e478ca18e517 1-18
+docs/agents/architecture.md
+  h_d6e478ca18e517 34-43
+docs/agents/skills.md
+  h_d6e478ca18e517 5,16,29,44,47
+docs/self-hosting.md
+  h_d6e478ca18e517 1-24
+package.json
+  h_d6e478ca18e517 10-15,18-19,36,38-39,60,65-66
+skills-lock.json
+  h_d6e478ca18e517 10-15
+src/components/aceternity/LICENSE
+  h_d6e478ca18e517 1-14
+src/components/aceternity/glowing-effect.tsx
+  h_d6e478ca18e517 1-182
+src/components/magicui/LICENSE
+  h_d6e478ca18e517 1-21
+src/components/magicui/animated-theme-toggler.tsx
+  h_d6e478ca18e517 1-111
+src/components/magicui/animation-activity.ts
+  h_d6e478ca18e517 1-30
+src/components/magicui/blur-fade.tsx
+  h_d6e478ca18e517 1-53
+src/components/magicui/border-beam.tsx
+  h_d6e478ca18e517 1-111
+src/components/magicui/dot-pattern.tsx
+  h_d6e478ca18e517 1-61
+src/components/magicui/magic-card.tsx
+  h_d6e478ca18e517 1-72
+src/components/magicui/number-ticker.tsx
+  h_d6e478ca18e517 1-74
+src/components/subs/app.tsx
+  h_d6e478ca18e517 24,31,54,176,181-185,190,213-217,231-248,256,258-262,267-326,328-330,343,346,349-350,353,363-367,412-413,439
+src/components/subs/auth.tsx
+  h_d6e478ca18e517 1,4,18,42-45,65-69,71,73-77,93,97,111-112
+src/components/subs/calendar-view.tsx
+  h_d6e478ca18e517 50,152
+src/components/subs/insights.tsx
+  h_d6e478ca18e517 5,54,66,71-72,92,100,122-123,128-129,138-139,142,146,174-179
+src/components/subs/overview.tsx
+  h_d6e478ca18e517 8,11-12,15,21,30,32-39,55-61,68-93,96,98-102,107,109,112,115-122,134-135,146-147,179,181-182,205,207-217,219-308,310-311,313,319,323-324,327,329-341,343-354,360-376,378,380-401,450-452,455,488-493,495-526
+src/components/subs/settings.tsx
+  h_d6e478ca18e517 20-23,31,66-73,75,150-155,164,173,184,201,210,259-260,272,274,282-283,305,337,351-352,360,374,378-401,411,420-435,476,489,509
+src/components/subs/shared.tsx
+  h_d6e478ca18e517 1-13,15,17,64-89,140-153,157,159
+src/components/subs/subscription-form.tsx
+  h_d6e478ca18e517 169,185,237,264,267-316,324,358,369-396
+src/components/ui/link-preview.tsx
+  h_d6e478ca18e517 1-156
+src/demo/adapter.ts
+  h_d6e478ca18e517 1-335
+src/demo/starter.ts
+  h_d6e478ca18e517 1-72
+src/demo/styles.css
+  h_d6e478ca18e517 1-2
+src/hooks/use-subs.ts
+  h_d6e478ca18e517 3,39,76-104
+src/lib/api.ts
+  h_d6e478ca18e517 1-2,19,21,23-30
+src/lib/import.ts
+  h_d6e478ca18e517 1-262
+src/lib/limits.ts
+  h_d6e478ca18e517 1-2
+src/lib/mode.ts
+  h_d6e478ca18e517 1
+src/lib/types.ts
+  h_d6e478ca18e517 53-63,68
+src/lib/validation.ts
+  h_d6e478ca18e517 1-125
+src/server/api.ts
+  h_d6e478ca18e517 3-4,6,8,57-63,118,123
+src/server/auth.ts
+  h_d6e478ca18e517 4
+src/server/backup.ts
+  h_d6e478ca18e517 1-6
+src/server/database.ts
+  h_d6e478ca18e517 4,6-7,11,100-105
+src/server/import.ts
+  h_d6e478ca18e517 2-5,7,13-14,20,24-30,43,45
+src/server/validation.ts
+  h_d6e478ca18e517 1
+src/styles.css
+  h_d6e478ca18e517 131-139,142,203-204,209-211,218-339
+tests/components/billing-health-warnings.spec.ts
+  h_d6e478ca18e517 11-13,16
+tests/components/category-filter.spec.ts
+  h_d6e478ca18e517 26
+tests/components/keyboard-shortcuts.spec.ts
+  h_d6e478ca18e517 1,4,15-18,22,30
+tests/components/p0-features.spec.ts
+  h_d6e478ca18e517 15,21-22,75,147,149-150
+tests/components/spending-insights.spec.ts
+  h_d6e478ca18e517 38-40
+tests/components/undo-delete.spec.ts
+  h_d6e478ca18e517 15,17
+tests/helpers.ts
+  h_d6e478ca18e517 52-55
+tests/subscription-card-size.spec.ts
+  h_d6e478ca18e517 18
+tests/utils/duplicate-detection.spec.ts
+  h_d6e478ca18e517 39-54,72-97
+tsconfig.json
+  h_d6e478ca18e517 7-8
+vite.demo.config.ts
+  h_d6e478ca18e517 1-16
+wrangler.demo.jsonc
+  h_d6e478ca18e517 1-11
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "aa70c375fa7f486410439656460c58a99ac03d89",
+  "prompts": {},
+  "humans": {
+    "h_d6e478ca18e517": {
+      "author": "Thomas Camlong <thomas@ajnart.fr>"
+    }
+  }
+}
