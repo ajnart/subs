@@ -1,8 +1,6 @@
-## Subs v3.0.0 (draft)
+## Subs v3.0.0
 
 A new private Collection runtime, a simpler subscription-first home, and a browser-only public demo.
-
-Subs 2 is already released; this is the next major version. v3 publication and the Pages custom-domain cutover are pending final verification.
 
 ### Highlights
 
@@ -18,11 +16,11 @@ See the [feature overview, shortcuts, and limits](https://github.com/ajnart/subs
 
 ### Demo and deployment
 
-The primary demo target is [sub.ajnart.dev](https://sub.ajnart.dev), with [subs.ajnart.dev](https://subs.ajnart.dev) intended to remain a compatibility alias after verified cutover. Pages publication and custom-domain HTTPS are not yet verified. Browser data is separate for each hostname; export/import a backup to move demo edits between them.
+Try the verified Cloudflare Pages demo at [subs.ajnart.dev](https://subs.ajnart.dev), its only canonical hostname. HTTPS and published assets match the tested build; the demo opens without a PIN or backend requests, and batch creation and persistence after reload are verified. Browser data is separate for each hostname; export/import a backup to move demo edits.
 
-This PIN-free demo is a separate `DEMO_MODE` browser build, not a private installation with `DISABLE_AUTH`. `bun run deploy:demo` builds `dist/demo` and uses `wrangler pages deploy --branch main`; it needs no Pages Functions, backend, or bindings. Ordinary local and Docker builds never publish.
+This PIN-free demo is a separate `DEMO_MODE` browser build, not a private installation with `DISABLE_AUTH`. It needs no Pages Functions, backend, or bindings. Ordinary local and Docker builds never publish.
 
-The Checks workflow gates `main`/manual Pages deployments on application and Docker checks. Automatic deployment remains blocked: the `CLOUDFLARE_API_TOKEN` Actions secret was absent at release preflight. Missing credentials fail explicitly before publishing. CI needs **Account → Cloudflare Pages → Edit** permission scoped to the configured account; local OAuth is not a CI credential.
+Manual Pages publication is verified. Automated Pages deployment remains blocked because repository Actions secrets are empty; CI requires a scoped `CLOUDFLARE_API_TOKEN` with **Account → Cloudflare Pages → Edit** permission. Working local OAuth or MCP authentication does not supply that CI credential.
 
 ### Upgrade from Subs 2
 
