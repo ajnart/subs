@@ -1,0 +1,18 @@
+.hallmark/qa.json
+  h_d6e478ca18e517 8-9,60
+.scratch/rewrite/issues/27-demo-deployment.md
+  h_d6e478ca18e517 24-26
+.scratch/rewrite/map.md
+  h_d6e478ca18e517 109
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "77b69982fdcf2978ca48abaa9fa06bfc6c66ccae",
+  "prompts": {},
+  "humans": {
+    "h_d6e478ca18e517": {
+      "author": "Thomas Camlong <thomas@ajnart.fr>"
+    }
+  }
+}
