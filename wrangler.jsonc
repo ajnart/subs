@@ -1,0 +1,6 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "subs-demo",
+  "pages_build_output_dir": "./dist/demo",
+  "compatibility_date": "2026-10-19"
+}
