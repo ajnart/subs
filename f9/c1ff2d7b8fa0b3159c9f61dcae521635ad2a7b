@@ -1,0 +1,78 @@
+.github/workflows/ci.yml
+  h_d6e478ca18e517 56
+.gitignore
+  h_d6e478ca18e517 65
+.ignore
+  h_d6e478ca18e517 1-2
+.scratch/quick-setup/spec.md
+  h_d6e478ca18e517 1-31
+.scratch/quick-setup/validation.md
+  h_d6e478ca18e517 1-76
+.scratch/rewrite/issues/27-demo-deployment.md
+  h_d6e478ca18e517 10,31-32
+.scratch/rewrite/map.md
+  h_d6e478ca18e517 32
+.scratch/rewrite/spec.md
+  h_d6e478ca18e517 83,139
+.scratch/simple-home/spec.md
+  h_d6e478ca18e517 1-24
+.scratch/simple-home/validation.md
+  h_d6e478ca18e517 1-34
+.scratch/v3-release/notes.md
+  h_d6e478ca18e517 1-25
+.scratch/v3-release/spec.md
+  h_d6e478ca18e517 1-24
+.scratch/v3-release/validation.md
+  h_d6e478ca18e517 1-38
+README.md
+  h_d6e478ca18e517 5,25-34,70,72,89
+docs/agents/architecture.md
+  h_d6e478ca18e517 41
+src/components/subs/app.tsx
+  h_d6e478ca18e517 34,43,46,51-53,69-70,78,86-88,91,95-103,105-110,123-151,161-165,169,179,223-224,230-232,234,242,248-250,310,313-322,324-325,327,468,476-478,507-508,517,519,522-524,526-532,534,538-548,561,588-591,617,619-620
+src/components/subs/calendar-view.tsx
+  h_d6e478ca18e517 137
+src/components/subs/command-palette.tsx
+  h_d6e478ca18e517 61,65,113,116,177,180
+src/components/subs/overview.tsx
+  h_d6e478ca18e517 7,34,77-92,179-180,232-245,252-259,338,354-356,369,373-378,397,408,426,517,563
+src/components/subs/quick-setup.tsx
+  h_d6e478ca18e517 1-914
+src/components/subs/shared.tsx
+  h_d6e478ca18e517 2,6,59,128-132,134-137,139-140,142-148,150,158-163,171-200
+src/components/subs/subscription-form.tsx
+  h_d6e478ca18e517 1-2,12-20,24,27-29,40,50,52-65,68-70,74,78-83,85-108,110-114,116,120,123,126,129-130,133-144,147-174,178-190,193,196,198-199,203-205,208-210,212-215,218,225,227-228,232-248,253-255,261,264-281,283-300,302-304,306-579,581-582,585-587,589-593,598,601-602
+src/hooks/use-subs.ts
+  h_d6e478ca18e517 2,79,153-163,188-202
+src/lib/quick-setup.ts
+  h_d6e478ca18e517 1-108
+src/lib/service-icons.ts
+  h_d6e478ca18e517 21-70
+src/lib/templates.ts
+  h_d6e478ca18e517 14-33
+tests/components/billing-health-warnings.spec.ts
+  h_d6e478ca18e517 11
+tests/components/category-filter.spec.ts
+  h_d6e478ca18e517 12
+tests/components/keyboard-shortcuts.spec.ts
+  h_d6e478ca18e517 43
+tests/components/spending-insights.spec.ts
+  h_d6e478ca18e517 16,37,56
+tests/components/undo-delete.spec.ts
+  h_d6e478ca18e517 6,25
+tests/components/upcoming-payments.spec.ts
+  h_d6e478ca18e517 11
+wrangler.demo.jsonc
+  h_d6e478ca18e517 5,10-13
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "f9c1ff2d7b8fa0b3159c9f61dcae521635ad2a7b",
+  "prompts": {},
+  "humans": {
+    "h_d6e478ca18e517": {
+      "author": "Thomas Camlong <thomas@ajnart.fr>"
+    }
+  }
+}
