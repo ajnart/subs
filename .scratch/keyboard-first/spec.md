@@ -58,4 +58,4 @@ The user explicitly requested parallel sub-agents and the OpenChamber todo featu
 
 All eight feature todos have integrated acceptance evidence in [validation.md](validation.md). Five implementation lanes and a read-only review/fix/review cycle were completed. The feature remains on [PR #50](https://github.com/ajnart/subs/pull/50), not merged into the default branch.
 
-The existing Cloudflare deployment-token blocker is separate: repository Actions secrets were still empty at final local verification. Local OAuth deployment does not enable automatic CI deployment.
+The formerly noted Cloudflare deployment-token blocker is resolved by the user-directed manual publication mode: demo publishing is a credentialed Cloudflare MCP/Wrangler Pages operation and the Checks workflow validates only, so no `CLOUDFLARE_API_TOKEN` Actions secret is required.

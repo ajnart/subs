@@ -80,7 +80,7 @@ Replace the running application with a responsive, service-centered Subs experie
 66. As a user, I want the previous interactive link-preview experience restored, so that I can inspect a public Service link on demand.
 67. As a visitor, I want a working public demo without a PIN or backend, so that I can try Subs immediately.
 68. As a demo user, I want local edits, import/export, and an explicit reset, so that I can explore without affecting another visitor or private Installation.
-69. As an Operator, I want the static demo deployed automatically to Cloudflare Pages with Wrangler at subs.ajnart.dev as its only canonical hostname, so that the public version follows successful release builds.
+69. As an Operator, I want the static demo published to Cloudflare Pages at subs.ajnart.dev as its only canonical hostname, so that the public version can be refreshed from a validated build. Publishing is a manual, credentialed Cloudflare MCP/Wrangler operation; no automatic Actions deployment is configured.
 70. As a contributor, I want current application screenshots and a short README, so that setup and the product are clear without excessive documentation.
 
 ## Implementation Decisions
@@ -136,7 +136,7 @@ Replace the running application with a responsive, service-centered Subs experie
 - Restore lazy, user-activated link previews for safe public HTTP(S) URLs. Never request previews on page mount, preview local/private addresses, or add server-side arbitrary URL fetching.
 - The static demo reuses the app UI with isolated browser persistence and clearly identified sample data. No API, database, PIN, or live exchange-rate service is required. Demo rates are explicitly illustrative, not current market rates.
 - Private Docker installations still start empty with authentication enabled. Demo flags must not change the private runtime's defaults or include server modules and secrets in static assets.
-- Build and validate both targets. Deploy the static artifact to Cloudflare Pages using Wrangler at subs.ajnart.dev as its only canonical hostname after successful checks; limit custom-domain cutover changes to its old Worker binding and Pages/DNS records. Distinguish verified HTTPS serving from Pages control-plane validation. Do not make ordinary local builds or Docker builds publish remotely. Keep automated deployment credentials scoped and outside the repository. Pages serves no backend, Functions or PIN challenge; private Docker installations retain PIN protection by default.
+- Build and validate both targets. Publish the static artifact to Cloudflare Pages at subs.ajnart.dev as its only canonical hostname from a validated build; publishing is a manual, credentialed Cloudflare MCP/Wrangler operation, and the Checks workflow validates without deploying. Limit custom-domain cutover changes to its old Worker binding and Pages/DNS records. Distinguish verified HTTPS serving from Pages control-plane validation. Do not make ordinary local builds or Docker builds publish remotely. Never print, commit or copy broad credentials into CI. Pages serves no backend, Functions or PIN challenge; private Docker installations retain PIN protection by default.
 - Refresh real application screenshots and keep the public README short. Detailed release evidence belongs in these internal tickets rather than lengthy product copy.
 
 ## Testing Decisions

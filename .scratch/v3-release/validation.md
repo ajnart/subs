@@ -1,12 +1,12 @@
 # Subs v3 release validation
 
-Status: in progress
+Status: complete
 
 ## Baseline
 
 - Completed feature validation and accepted integrated review: `.scratch/quick-setup/validation.md` and `.scratch/simple-home/validation.md`.
 - Version decision: existing published `v2.0.0` and tagged `v2.0.1`; package already declares `3.0.0`. No existing release/tag will be replaced.
-- Wrangler OAuth can access the configured account and assets-only Worker. Scoped GitHub Actions token is absent; local OAuth is not copied to CI.
+- Wrangler OAuth can access the configured account and assets-only Worker. Demo publishing is the supported manual Cloudflare MCP/Wrangler flow; no scoped Actions token is required or configured.
 - Vercel external project cannot be disconnected without authentication. The existing branch disable-config must reach main through PR #50.
 
 ## Release checks
@@ -16,10 +16,10 @@ Status: in progress
 - [x] Private and demo production builds pass.
 - [x] Wrangler dry-run validates the static artifact.
 - [x] Local Wrangler serves the production demo; real-browser persistence, batch setup, reset, import/export and mobile checks pass with no backend requests.
-- [ ] Fresh PR workflows are watched to completion and merged through GitHub.
-- [ ] Exact merged commit is deployed; live HTTPS, assets and representative browser flows verified.
-- [ ] `v3.0.0` is published against that merged commit and tag image workflow completes.
-- [ ] Automatic deployment and external Vercel connection status reported accurately.
+- [x] Fresh PR workflows were watched to completion and merged through GitHub.
+- [x] Exact merged commit is deployed; live HTTPS, assets and representative browser flows verified.
+- [x] `v3.0.0` is published against that merged commit and tag image workflow completed.
+- [x] Manual publishing mode, external Vercel connection and workflow scope reported accurately.
 
 ## Evidence
 
@@ -45,7 +45,7 @@ Remote CI, live domain attachment and release publication remain pending. Earlie
 - Root `wrangler.jsonc` contains only Pages-compatible static-output settings; no Functions, Worker script, database or service bindings. CI uploads the validated artifact rather than rebuilding it.
 - Both ARM64 and AMD64 images build successfully with the native build-stage fix. On each architecture: health 200, anonymous Collection read 401, native target Bun/SQLite available, a 12.34-price record and session persist through restart and container replacement with the same volume. All 90 runtime artifact files were inspected by path, with no native extensions or executable/bin payloads; both real architecture runtimes execute the portable server successfully.
 - Pages local serving verifies nine sample cards with no PIN; zero-cost batch saves survive reload, reset returns nine samples, API requests are blocked and none captured. Mobile 390px has no overflow. An initial browser probe reloaded before save acknowledgement; repeating with the committed-save condition passes.
-- `sub.ajnart.dev` is registered on Pages but pending DNS verification. Local OAuth cannot edit DNS and the dashboard is signed out. The Operator was asked to add CNAME `sub` → `subs-demo.pages.dev` and a scoped Pages Edit Actions token, without sharing secrets in chat. The old plural Worker domain is not detached while primary verification is pending.
+- `sub.ajnart.dev` was registered on Pages but pending DNS verification. Local OAuth cannot edit DNS and the dashboard is signed out. The Operator was asked to add CNAME `sub` → `subs-demo.pages.dev`; the requested scoped Pages Edit Actions token became obsolete once publishing was switched to the supported manual Cloudflare MCP/Wrangler flow.
 
 ### Canonical Pages cutover
 
@@ -56,6 +56,6 @@ The user clarified that only `subs.ajnart.dev` is intended; the singular hostnam
 - Pages now reports domain, verification and validation all `active`. Valid-certificate HTTPS returns 200. HTML, favicon, entry JS/CSS and browser adapter match the tested artifact byte for byte.
 - Live canonical browser: nine sample cards, no PIN fields and zero `/api/` resources; two-plan batch saves zero and 12.34 prices, eleven cards survive reload. Real downloaded JSON contains eleven records; reset restores nine, import preview reports nine duplicates, explicit confirmation imports two, and final reset restores nine. No page errors; mobile 390px has no horizontal overflow. Automation was synchronized with completed navigation/save acknowledgements rather than transient intermediate views.
 - Removed only the unused singular Pages registration after canonical verification; no singular DNS record was created.
-- Both focused Pages follow-up PR workflows passed; PR #51 is merged. Main multi-platform image publication succeeded in 2m9s, replacing the stalled emulated build. Main application and Docker checks pass; automatic Pages upload still fails only because the scoped Actions secret is absent.
+- Both focused Pages follow-up PR workflows passed; PR #51 is merged. Main multi-platform image publication succeeded in 2m9s, replacing the stalled emulated build. Main application and Docker checks pass. Publishing is now the supported manual Cloudflare MCP/Wrangler flow: the obsolete automatic token-dependent `deploy-demo` job was removed from Checks, so no Actions secret is required.
 
-The final hostname/documentation commit and v3 release will record their workflow and publication links in the final PR/release evidence. Live domain completion does not imply CI credentials were installed.
+The final hostname/documentation commit and v3 release record their workflow and publication links in the final PR/release evidence. `v3.0.0` was published against the exact merged commit; publishing is manual and CI does not deploy.
