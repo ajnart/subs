@@ -1,0 +1,232 @@
+.agents/skills/THIRD-PARTY-NOTICES.md
+  h_d6e478ca18e517 1-111
+.agents/skills/domain-modeling/ADR-FORMAT.md
+  h_d6e478ca18e517 1-47
+.agents/skills/domain-modeling/GLOSSARY-FORMAT.md
+  h_d6e478ca18e517 1-60
+.agents/skills/domain-modeling/SKILL.md
+  h_d6e478ca18e517 1-74
+.agents/skills/domain-modeling/agents/openai.yaml
+  h_d6e478ca18e517 1-3
+.agents/skills/nitro/GENERATION.md
+  h_d6e478ca18e517 1-5
+.agents/skills/nitro/SKILL.md
+  h_d6e478ca18e517 1-50
+.agents/skills/nitro/references/advanced-migration.md
+  h_d6e478ca18e517 1-164
+.agents/skills/nitro/references/core-assets.md
+  h_d6e478ca18e517 1-119
+.agents/skills/nitro/references/core-cache.md
+  h_d6e478ca18e517 1-162
+.agents/skills/nitro/references/core-configuration.md
+  h_d6e478ca18e517 1-151
+.agents/skills/nitro/references/core-rendering.md
+  h_d6e478ca18e517 1-144
+.agents/skills/nitro/references/core-routing.md
+  h_d6e478ca18e517 1-213
+.agents/skills/nitro/references/core-storage.md
+  h_d6e478ca18e517 1-111
+.agents/skills/nitro/references/deploy-presets.md
+  h_d6e478ca18e517 1-96
+.agents/skills/nitro/references/features-database.md
+  h_d6e478ca18e517 1-100
+.agents/skills/nitro/references/features-openapi.md
+  h_d6e478ca18e517 1-119
+.agents/skills/nitro/references/features-plugins.md
+  h_d6e478ca18e517 1-97
+.agents/skills/nitro/references/features-tasks.md
+  h_d6e478ca18e517 1-126
+.agents/skills/nitro/references/features-websocket.md
+  h_d6e478ca18e517 1-128
+.agents/skills/react-start/SKILL.md
+  h_d6e478ca18e517 1-296
+.agents/skills/react-start/server-components/SKILL.md
+  h_d6e478ca18e517 1-128
+.agents/skills/react-start/server-components/docs/architecture.md
+  h_d6e478ca18e517 1-84
+.agents/skills/react-start/server-components/docs/caching-refresh-ssr.md
+  h_d6e478ca18e517 1-140
+.agents/skills/react-start/server-components/docs/composite-components.md
+  h_d6e478ca18e517 1-115
+.agents/skills/react-start/server-components/docs/current-api-notes.md
+  h_d6e478ca18e517 1-74
+.agents/skills/react-start/server-components/docs/debugging-review.md
+  h_d6e478ca18e517 1-141
+.agents/skills/react-start/server-components/docs/sources.md
+  h_d6e478ca18e517 1-39
+.agents/skills/react-start/server-components/examples/01-renderable-route-loader.tsx
+  h_d6e478ca18e517 1-28
+.agents/skills/react-start/server-components/examples/02-composite-slots.tsx
+  h_d6e478ca18e517 1-124
+.agents/skills/react-start/server-components/examples/03-query-owned-rsc.tsx
+  h_d6e478ca18e517 1-100
+.agents/skills/react-start/server-components/examples/04-selective-ssr-data-only.tsx
+  h_d6e478ca18e517 1-72
+.agents/skills/react-start/server-components/examples/05-ssr-false-browser-loader.tsx
+  h_d6e478ca18e517 1-40
+.agents/skills/react-start/server-components/examples/06-low-level-flight-api-route.tsx
+  h_d6e478ca18e517 1-40
+.agents/skills/router-core/SKILL.md
+  h_d6e478ca18e517 1-158
+.agents/skills/router-core/auth-and-guards/SKILL.md
+  h_d6e478ca18e517 1-499
+.agents/skills/router-core/code-splitting/SKILL.md
+  h_d6e478ca18e517 1-323
+.agents/skills/router-core/data-loading/SKILL.md
+  h_d6e478ca18e517 1-497
+.agents/skills/router-core/navigation/SKILL.md
+  h_d6e478ca18e517 1-449
+.agents/skills/router-core/not-found-and-errors/SKILL.md
+  h_d6e478ca18e517 1-445
+.agents/skills/router-core/path-params/SKILL.md
+  h_d6e478ca18e517 1-383
+.agents/skills/router-core/search-params/SKILL.md
+  h_d6e478ca18e517 1-350
+.agents/skills/router-core/search-params/references/validation-patterns.md
+  h_d6e478ca18e517 1-384
+.agents/skills/router-core/ssr/SKILL.md
+  h_d6e478ca18e517 1-492
+.agents/skills/router-core/type-safety/SKILL.md
+  h_d6e478ca18e517 1-499
+.agents/skills/shadcn/SKILL.md
+  h_d6e478ca18e517 1-296
+.agents/skills/shadcn/agents/openai.yml
+  h_d6e478ca18e517 1-5
+.agents/skills/shadcn/assets/showcase/color-pair.tsx
+  h_d6e478ca18e517 1-126
+.agents/skills/shadcn/assets/showcase/preview-states.css
+  h_d6e478ca18e517 1-14
+.agents/skills/shadcn/assets/showcase/state-matrix.tsx
+  h_d6e478ca18e517 1-72
+.agents/skills/shadcn/cli.md
+  h_d6e478ca18e517 1-290
+.agents/skills/shadcn/customization.md
+  h_d6e478ca18e517 1-211
+.agents/skills/shadcn/design-system-page.md
+  h_d6e478ca18e517 1-268
+.agents/skills/shadcn/design-system.md
+  h_d6e478ca18e517 1-386
+.agents/skills/shadcn/evals/evals.json
+  h_d6e478ca18e517 1-126
+.agents/skills/shadcn/mcp.md
+  h_d6e478ca18e517 1-105
+.agents/skills/shadcn/registry.md
+  h_d6e478ca18e517 1-277
+.agents/skills/shadcn/rules/base-vs-radix.md
+  h_d6e478ca18e517 1-306
+.agents/skills/shadcn/rules/chat.md
+  h_d6e478ca18e517 1-507
+.agents/skills/shadcn/rules/composition.md
+  h_d6e478ca18e517 1-213
+.agents/skills/shadcn/rules/forms.md
+  h_d6e478ca18e517 1-192
+.agents/skills/shadcn/rules/icons.md
+  h_d6e478ca18e517 1-101
+.agents/skills/shadcn/rules/styling.md
+  h_d6e478ca18e517 1-185
+.agents/skills/shadcn/scripts/showcase-coverage.mjs
+  h_d6e478ca18e517 1-53
+.agents/skills/start-core/SKILL.md
+  h_d6e478ca18e517 1-231
+.agents/skills/start-core/auth-server-primitives/SKILL.md
+  h_d6e478ca18e517 1-415
+.agents/skills/start-core/deployment/SKILL.md
+  h_d6e478ca18e517 1-316
+.agents/skills/start-core/execution-model/SKILL.md
+  h_d6e478ca18e517 1-353
+.agents/skills/start-core/middleware/SKILL.md
+  h_d6e478ca18e517 1-399
+.agents/skills/start-core/server-functions/SKILL.md
+  h_d6e478ca18e517 1-498
+.agents/skills/start-core/server-routes/SKILL.md
+  h_d6e478ca18e517 1-324
+.agents/skills/to-spec/SKILL.md
+  h_d6e478ca18e517 1-75
+.agents/skills/to-spec/agents/openai.yaml
+  h_d6e478ca18e517 1-5
+.scratch/rewrite/issues/01-framework-foundation.md
+  h_d6e478ca18e517 1-22
+.scratch/rewrite/issues/02-design-system.md
+  h_d6e478ca18e517 1-22
+.scratch/rewrite/issues/03-durable-collection.md
+  h_d6e478ca18e517 1-22
+.scratch/rewrite/issues/04-access-boundary.md
+  h_d6e478ca18e517 1-23
+.scratch/rewrite/issues/05-money-recurrence.md
+  h_d6e478ca18e517 1-23
+.scratch/rewrite/issues/06-legacy-migration.md
+  h_d6e478ca18e517 1-23
+.scratch/rewrite/issues/07-collection-contract.md
+  h_d6e478ca18e517 1-23
+.scratch/rewrite/issues/08-private-shell.md
+  h_d6e478ca18e517 1-23
+.scratch/rewrite/issues/09-entry-editing.md
+  h_d6e478ca18e517 1-23
+.scratch/rewrite/issues/10-lifecycle-details.md
+  h_d6e478ca18e517 1-23
+.scratch/rewrite/issues/11-card-table.md
+  h_d6e478ca18e517 1-23
+.scratch/rewrite/issues/12-find-organize.md
+  h_d6e478ca18e517 1-23
+.scratch/rewrite/issues/13-bulk-management.md
+  h_d6e478ca18e517 1-23
+.scratch/rewrite/issues/14-summary-currency.md
+  h_d6e478ca18e517 1-23
+.scratch/rewrite/issues/15-upcoming-calendar.md
+  h_d6e478ca18e517 1-23
+.scratch/rewrite/issues/16-insights.md
+  h_d6e478ca18e517 1-23
+.scratch/rewrite/issues/17-budget-scenarios.md
+  h_d6e478ca18e517 1-23
+.scratch/rewrite/issues/18-portable-backups.md
+  h_d6e478ca18e517 1-23
+.scratch/rewrite/issues/19-import-preview.md
+  h_d6e478ca18e517 1-23
+.scratch/rewrite/issues/20-opt-in-templates.md
+  h_d6e478ca18e517 1-23
+.scratch/rewrite/issues/21-price-history.md
+  h_d6e478ca18e517 1-23
+.scratch/rewrite/issues/22-accessibility-resilience.md
+  h_d6e478ca18e517 1-23
+.scratch/rewrite/issues/23-container-operations.md
+  h_d6e478ca18e517 1-23
+.scratch/rewrite/issues/24-release-verification.md
+  h_d6e478ca18e517 1-23
+.scratch/rewrite/map.md
+  h_d6e478ca18e517 1-74
+.scratch/rewrite/spec.md
+  h_d6e478ca18e517 1-144
+AGENTS.md
+  h_d6e478ca18e517 1-27
+GLOSSARY.md
+  h_d6e478ca18e517 1-89
+docs/adr/0001-start-nitro-sqlite.md
+  h_d6e478ca18e517 1-5
+docs/adr/0002-single-installation-pin.md
+  h_d6e478ca18e517 1-5
+docs/adr/0003-design-authority.md
+  h_d6e478ca18e517 1-5
+docs/agents/architecture.md
+  h_d6e478ca18e517 1-33
+docs/agents/domain.md
+  h_d6e478ca18e517 1-17
+docs/agents/issue-tracker.md
+  h_d6e478ca18e517 1-28
+docs/agents/skills.md
+  h_d6e478ca18e517 1-45
+docs/agents/triage-labels.md
+  h_d6e478ca18e517 1-14
+skills-lock.json
+  h_d6e478ca18e517 1-47
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "0bbdda69696f912792941862d7913ea97f6e0c7c",
+  "prompts": {},
+  "humans": {
+    "h_d6e478ca18e517": {
+      "author": "Thomas Camlong <thomas@ajnart.fr>"
+    }
+  }
+}
