@@ -7,8 +7,10 @@
       "src/**",
       "tests/**",
       "scripts/**",
+      "demo/**",
       "*.json",
-      "vite.config.ts",
+      "*.jsonc",
+      "vite*.config.ts",
       "playwright.config.ts",
       "!src/routeTree.gen.ts"
     ]

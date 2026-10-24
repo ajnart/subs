@@ -61,3 +61,4 @@ data/*.db-*
 /.nitro/
 /.tanstack/
 /dist/
+/.wrangler/

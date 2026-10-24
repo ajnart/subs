@@ -1,7 +1,7 @@
 # 14 — Spending summary and Currency honesty
 
 Status: ready-for-agent
-Progress: claimed
+Progress: resolved
 Type: task
 Blocked by: 05, 11
 
@@ -21,3 +21,7 @@ Present useful projected spending without false arithmetic or fabricated convers
 ## Comments
 
 No new FX feed is required for release; honest unavailable behavior is complete behavior.
+
+## Completion evidence — October 24, 2026
+
+The summary always shows active-only native-currency monthly totals and yearly estimates. Any converted aggregate is secondary and marked partial/stale when applicable; demo rates are explicitly illustrative. Existing spending tests pass for mixed/missing FX and the $53.42 monthly / $641.00 yearly normalization case. The final ticker stays at the real count through visibility changes and reduced motion; screenshots correctly show 7 active of 9 demo records.

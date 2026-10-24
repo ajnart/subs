@@ -1,7 +1,7 @@
 # 04 — Installation access boundary
 
 Status: ready-for-agent
-Progress: claimed
+Progress: resolved
 Type: task
 Blocked by: 03
 
@@ -21,3 +21,7 @@ Protect one Collection by default without introducing accounts.
 ## Comments
 
 Validate through HTTP behavior and real persistence. Do not create new unit-test files.
+
+## Completion evidence — October 24, 2026
+
+`src/server/auth.ts` supplies salted scrypt PIN hashes, opaque hashed sessions, expiry, revocation, persistent throttling and trusted-Origin checks. Existing HTTP regressions pass for protected reads, CSRF, cookie flags and logout; container checks verify expiry and throttling after restart. A fresh-image race permits exactly one setup request (200/409), rejects a wrong operator token, and keeps `DISABLE_AUTH=1` protected. Exactly `true` bypasses PIN protection while retaining Origin checks. Recovery is filesystem maintenance only.

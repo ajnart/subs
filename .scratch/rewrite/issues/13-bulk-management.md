@@ -1,7 +1,7 @@
 # 13 — Bulk management
 
 Status: ready-for-agent
-Progress: claimed
+Progress: resolved
 Type: task
 Blocked by: 12
 
@@ -21,3 +21,7 @@ Maintain many records safely with explicit selection and atomic actions.
 ## Comments
 
 Prefer one small server bulk contract over repeated unreliable browser mutation loops.
+
+## Completion evidence — October 24, 2026
+
+Overview reconciles visible selections and presents their exact count; `app.tsx` sends one revision-guarded transactional bulk request for status, category or confirmed deletion. Invalid/stale targets reject the operation rather than partially acknowledging writes. The UI reviewer exercised confirmed bulk deletion to an empty demo collection and its onboarding state. Labels describe tracking changes, not provider actions.

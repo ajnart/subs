@@ -1,10 +1,12 @@
 import { randomUUID } from 'node:crypto'
 import { z } from 'zod'
+import { parseImport } from '../lib/import'
+import { assertMoneyPrecision, exponent, HttpError, inputSchema, preferencesSchema, readBody } from '../lib/validation'
 import { authDisabled, checkOrigin, login, logout, requireAuth, setup, status, throttle } from './auth'
+import { serializeBackup } from './backup'
 import { getSubscription, mutate, readData, revisionTag, saveSubscription, setMeta, withDatabase } from './database'
-import { importData, parseImport } from './import'
+import { importData } from './import'
 import { getRates } from './rates'
-import { assertMoneyPrecision, exponent, HttpError, inputSchema, preferencesSchema, readBody } from './validation'
 
 const pinSchema = z.string().regex(/^\d{6}$/, 'PIN must contain exactly six digits')
 const importSchema = z.object({ data: z.unknown() }).strict()
@@ -52,8 +54,13 @@ export async function handleApiRequest(request: Request): Promise<Response> {
       if (method === 'GET' && path === '/api/data')
         return json(await readData(db), 200, { ETag: await revisionTag(db) })
       if (method === 'GET' && path === '/api/export') {
-        return json({ version: 3, exportedAt: new Date().toISOString(), ...(await readData(db)) }, 200, {
-          'Content-Disposition': 'attachment; filename="subs-backup.json"',
+        return new Response(serializeBackup(await readData(db)), {
+          headers: {
+            'Content-Type': 'application/json; charset=utf-8',
+            'Content-Disposition': 'attachment; filename="subs-backup.json"',
+            'Cache-Control': 'no-store',
+            'X-Content-Type-Options': 'nosniff',
+          },
         })
       }
       if (method === 'GET' && path === '/api/rates') return json(await getRates(db))
@@ -108,12 +115,12 @@ export async function handleApiRequest(request: Request): Promise<Response> {
       if (method === 'POST' && path === '/api/import/preview') {
         const body = importSchema.parse(await readBody(request))
         const current = await readData(db)
-        const { subscriptions, warnings, duplicates } = parseImport(
+        const { subscriptions, warnings, duplicates, matches } = parseImport(
           body.data,
           current.subscriptions,
           current.preferences,
         )
-        return json({ subscriptions, warnings, duplicates }, 200, { ETag: await revisionTag(db) })
+        return json({ subscriptions, warnings, duplicates, matches }, 200, { ETag: await revisionTag(db) })
       }
       if (method === 'POST' && path === '/api/import') {
         const body = importCommitSchema.parse(await readBody(request))

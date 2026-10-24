@@ -12,9 +12,9 @@ test('cancel deletion keeps the record and confirmed deletion persists an empty 
   await page.getByRole('button', { name: 'Delete Last remaining plan' }).click()
   await confirmation.getByRole('button', { name: 'Delete permanently' }).click()
   await expect(confirmation).not.toBeVisible()
-  await expect(page.getByText('Make room for a clearer picture.')).toBeVisible()
+  await expect(page.getByText('Add your first subscription', { exact: true })).toBeVisible()
   await page.reload()
-  await expect(page.getByText('Make room for a clearer picture.')).toBeVisible()
+  await expect(page.getByText('Add your first subscription', { exact: true })).toBeVisible()
   expect((await collection(page.request)).subscriptions).toEqual([])
 })
 

@@ -1,0 +1,11 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "subs-demo",
+  "account_id": "71a8e70b7b1e301fca750fd6c6ae1f1d",
+  "compatibility_date": "2026-10-24",
+  "workers_dev": false,
+  "preview_urls": false,
+  "build": { "command": "bun run build:demo" },
+  "assets": { "directory": "./dist/demo", "not_found_handling": "single-page-application" },
+  "routes": [{ "pattern": "subs.ajnart.dev", "custom_domain": true }]
+}

@@ -4,7 +4,8 @@
     "src/**/*.tsx",
     "tests/**/*.ts",
     "scripts/**/*.ts",
-    "vite.config.ts",
+    "demo/**/*.tsx",
+    "vite*.config.ts",
     "playwright.config.ts"
   ],
   "compilerOptions": {

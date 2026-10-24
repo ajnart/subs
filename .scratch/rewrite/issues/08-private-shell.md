@@ -1,7 +1,7 @@
 # 08 — Private responsive shell
 
 Status: ready-for-agent
-Progress: claimed
+Progress: resolved
 Type: task
 Blocked by: 02, 04, 07
 
@@ -21,3 +21,7 @@ Provide a recognizable Subs home, protected entry, and working navigation on pho
 ## Comments
 
 Do not advertise planned provider automation in navigation or onboarding.
+
+## Completion evidence — October 24, 2026
+
+`src/components/subs/app.tsx` and `auth.tsx` distinguish setup, locked, unlocked and explicit bypass states. Real container setup/login worked through the browser, and the final protected PIN screen was inspected at 320px. One responsive navigation reaches all four destinations without overflow. Existing preferences/logout flows pass; light/dark screenshots use the supplied theme, with local persistence restricted to non-sensitive appearance/layout preferences.

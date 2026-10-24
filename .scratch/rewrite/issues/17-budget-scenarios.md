@@ -1,7 +1,7 @@
 # 17 — Budget and Savings Scenarios
 
 Status: ready-for-agent
-Progress: claimed
+Progress: resolved
 Type: task
 Blocked by: 16
 
@@ -21,3 +21,7 @@ Help users evaluate projected cost against a target without executing financial 
 ## Comments
 
 A Budget is not a spending cap and cannot prevent payments.
+
+## Completion evidence — October 24, 2026
+
+Settings saves the monthly target/currency as shared preferences. Insights compares only convertible amounts, disables unavailable scenario inputs and labels monthly/yearly savings as estimates. Existing budget/scenario and unavailable-FX tests pass and confirm that scenarios leave subscriptions unchanged. Preferences survive reload; no scenario executes lifecycle or provider changes.

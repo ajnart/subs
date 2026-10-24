@@ -36,6 +36,22 @@ test('duplicate preview, skip and merge preserve a stable record identity', asyn
   expect(kept).toHaveLength(2)
   expect(new Set(kept.map((item) => item.id)).size).toBe(2)
   expect(kept.some((item) => item.id === original.id)).toBe(true)
+  const other = await createSubscription(context.request, { name: 'Other service', domain: 'other.example' })
+  const ambiguous = [{ ...other, id: original.id }]
+  const before = await collection(context.request)
+  const conflictPreview = await context.request.post('/api/import/preview', { headers, data: { data: ambiguous } })
+  expect(await conflictPreview.json()).toMatchObject({
+    matches: expect.arrayContaining([
+      expect.objectContaining({ existingId: original.id, reason: 'id', conflict: true }),
+      expect.objectContaining({ existingId: other.id, reason: 'service', conflict: true }),
+    ]),
+  })
+  const conflicted = await context.request.post('/api/import', {
+    headers: await revisionHeaders(context.request, conflictPreview),
+    data: { data: ambiguous, mode: 'merge' },
+  })
+  expect(conflicted.status()).toBe(409)
+  expect(await collection(context.request)).toEqual(before)
 })
 
 test('replace removes unrelated records and skip detects duplicates inside a file', async ({ context }) => {
@@ -53,4 +69,30 @@ test('replace removes unrelated records and skip detects duplicates inside a fil
   const replaced = await importCollection(context.request, [subscription({ name: 'Replacement' })], 'replace')
   expect(await replaced.json()).toEqual({ imported: 1 })
   expect((await collection(context.request)).subscriptions).toEqual([expect.objectContaining({ name: 'Replacement' })])
+  const repeatedServices = Array.from({ length: 101 }, (_, index) => ({ ...repeated, id: `repeated-${index}` }))
+  const populated = await importCollection(context.request, repeatedServices, 'replace')
+  expect(await populated.json()).toEqual({ imported: 101 })
+  const before = await collection(context.request)
+  const exported = await context.request.get('/api/export')
+  expect(exported.ok(), await exported.text()).toBeTruthy()
+  const backup: unknown = await exported.json()
+  const boundedPreview = await context.request.post('/api/import/preview', { headers, data: { data: backup } })
+  expect(boundedPreview.ok(), await boundedPreview.text()).toBeTruthy()
+  expect(await boundedPreview.json()).toMatchObject({
+    duplicates: 101,
+    matches: expect.arrayContaining([expect.objectContaining({ conflict: true })]),
+    warnings: expect.arrayContaining(['Duplicate matches are limited to two examples per row in this preview.']),
+  })
+  const ambiguousMerge = await context.request.post('/api/import', {
+    headers: await revisionHeaders(context.request, boundedPreview),
+    data: { data: backup, mode: 'merge' },
+  })
+  expect(ambiguousMerge.status()).toBe(409)
+  expect(await collection(context.request)).toEqual(before)
+  const skippedBackup = await importCollection(context.request, backup, 'skip')
+  expect(await skippedBackup.json()).toEqual({ imported: 0 })
+  expect(await collection(context.request)).toEqual(before)
+  const restored = await importCollection(context.request, backup, 'replace')
+  expect(await restored.json()).toEqual({ imported: 101 })
+  expect(await collection(context.request)).toEqual(before)
 })

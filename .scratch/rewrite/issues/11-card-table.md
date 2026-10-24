@@ -1,7 +1,7 @@
 # 11 — Service cards and table
 
 Status: ready-for-agent
-Progress: claimed
+Progress: resolved
 Type: task
 Blocked by: 08, 10
 
@@ -21,3 +21,7 @@ Show the same Collection as recognizable cards or a comparable compact table.
 ## Comments
 
 Every displayed primitive must come from the replacement design system.
+
+## Completion evidence — October 24, 2026
+
+`overview.tsx` renders the same records as local-branded service cards or a table, with native prices, lifecycle and recurrence details. The real-browser reviewer exercised both layouts, filters, editing and empty-state recovery. Mobile/desktop overflow tests pass; the 320px follow-up confirms visible actions and navigation. No external assets load before a service link is activated. Footer alignment was corrected and recaptured.

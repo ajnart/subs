@@ -15,9 +15,7 @@ for (const viewport of [
     await page.goto('/')
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
     await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true)
-    const navigation = page.getByRole('navigation', {
-      name: viewport.width < 768 ? 'Mobile navigation' : 'Main navigation',
-    })
+    const navigation = page.getByRole('navigation', { name: 'Main navigation' })
     await navigation.getByRole('button', { name: 'Calendar' }).click()
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Calendar')
     await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true)

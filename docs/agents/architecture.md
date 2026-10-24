@@ -31,3 +31,13 @@ Context7 quota had already been exhausted in the coordinating research session, 
 ## Verification boundaries
 
 Production RSS must be measured after warmup on the actual production build with runtime, dataset, duration, and methodology recorded. Do not infer a memory figure from framework choice. Auth, migration, persistence, and startup protection must be exercised through HTTP and real SQLite; primary user flows use existing Playwright seams. The parent agent owns final integrated lint/typecheck once concurrent edits settle.
+
+## Private and static build boundary
+
+The private target uses `vite.config.ts`, Start/Nitro, and SQLite. Docker builds only that target; it starts empty and protected unless the Operator sets exactly `DISABLE_AUTH=true`. `VITE_DEMO_MODE` does not come from the Docker environment.
+
+The separate `vite.demo.config.ts` builds `demo/main.tsx` with React and Tailwind only, disables environment-file loading, and defines the demo flag for that bundle. Shared UI selects the browser adapter through `src/lib/api.ts`; import parsing, validation, and limits are browser-safe modules. `src/server/` remains server-only. Demo records use `subs-demo-v3`; reset and import never migrate or remove legacy storage. Non-sensitive appearance/layout preferences may use their existing browser keys.
+
+`bun run build` validates both artifacts without publishing. `bun run deploy:demo` invokes Wrangler's custom static build and publishes `dist/demo` at `subs.ajnart.dev`. The Checks workflow gates deployment on both application checks and Docker validation, deploys `main` or an explicit manual request, and requires a scoped `CLOUDFLARE_API_TOKEN` secret. Local Wrangler OAuth is not a durable CI credential.
+
+Magic UI and Aceternity were installed through their real shadcn registries, recorded in `components.json`. Their adapted files retain separate license notices. Previews activate on hover/focus, send only a public origin to Microlink, and exclude local/private addresses; there is no server URL-fetching endpoint. This is opt-in disclosure to a third party, not private provider monitoring.

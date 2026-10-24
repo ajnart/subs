@@ -29,6 +29,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
+## nutlope/hallmark
+
+Applies to `hallmark` and its copied references, scripts, and theme assets.
+Source: https://github.com/nutlope/hallmark
+The complete MIT license, copyright 2026 Hallmark contributors, is retained in [hallmark/LICENSE](hallmark/LICENSE). Preserve that file and the upstream notices with the copied skill.
+
 ## shadcn/ui
 
 Applies to `shadcn`.

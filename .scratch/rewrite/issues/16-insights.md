@@ -1,7 +1,7 @@
 # 16 — Spending and Category insights
 
 Status: ready-for-agent
-Progress: claimed
+Progress: resolved
 Type: task
 Blocked by: 12, 14
 
@@ -21,3 +21,7 @@ Explain projected spending composition with accessible, truthful visualizations.
 ## Comments
 
 Historical payment reporting is not part of this release.
+
+## Completion evidence — October 24, 2026
+
+`insights.tsx` derives category amounts and monthly projected commitments from the shared active-only calculations. Token-colored bars retain textual amounts, currency context and honest partial-conversion notices. The reviewer exercised the insights page, and existing spending regressions pass without changing subscriptions. Empty and zero-budget states remain functional rather than fabricating historical payments.

@@ -1,7 +1,7 @@
 # 21 — Price Change support decision
 
 Status: ready-for-agent
-Progress: claimed
+Progress: resolved
 Type: task
 Blocked by: 07, 10
 
@@ -21,3 +21,7 @@ Expose genuine Price Changes only if the delivered backend can support them hone
 ## Comments
 
 This conditional enhancement is the only explicit core-scope deferral allowed by the user-selected release.
+
+## Completion evidence — October 24, 2026
+
+Implemented, not deferred. SQLite records a known-price baseline and subsequent real price/currency changes; authenticated history is shown through the recorded-prices disclosure. Same-value edits do not create changes, and related rows follow subscription deletion. Container checks retained the two known entries through restart and final-image replacement. Portable JSON explicitly excludes history: new/replace imports begin new baselines, merge keeps existing history, and full-volume snapshots preserve everything. The demo implements the same disclosed behavior without inventing pre-import history.

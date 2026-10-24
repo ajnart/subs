@@ -1,0 +1,6 @@
+/* Hallmark · fixture: tailwind-fail · every utility tell, one per element */
+:root {
+  --color-paper: oklch(18% 0.02 270);
+  --color-ink: oklch(95% 0.01 270);
+  --color-glow: oklch(62% 0.25 300 / 0.6);
+}

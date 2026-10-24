@@ -1,0 +1,74 @@
+<!doctype html>
+<!-- Tailwind fixture: MUST FAIL. Fires 67, 54, 64, 10a, 12, 11, 2a, 2b, 29, 6a, 34, 48, 74 and 3 from utility classes, one tell per element. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tailwind fail fixture</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="style.css">
+</head>
+<!-- 34: overflow-x-hidden on body -->
+<body class="overflow-x-hidden bg-slate-950 text-slate-100">
+
+  <!-- 29: glass nav -->
+  <nav class="sticky top-0 bg-white/10 backdrop-blur-md px-6 py-4">
+    <a href="/" class="font-semibold">Fieldnote</a>
+    <!-- 67: tracked caps nav link -->
+    <a href="/docs" class="text-sm uppercase tracking-wider">Docs</a>
+  </nav>
+
+  <!-- 6a: the first section is the hero, sized in vh -->
+  <section class="relative min-h-screen px-6 py-24">
+    <!-- 29: blurred orb -->
+    <div aria-hidden="true" class="absolute left-1/3 top-0 h-72 w-72 rounded-full bg-fuchsia-500 blur-3xl"></div>
+    <!-- 54: accent eyebrow before the h1 -->
+    <p class="text-sm font-semibold text-indigo-600">Fewer handoffs</p>
+    <h1 class="text-6xl font-bold">
+      <!-- 2b: gradient text in another hue -->
+      <span class="bg-gradient-to-r from-amber-400 to-orange-600 bg-clip-text text-transparent">Field notes</span> for crews at sea
+    </h1>
+    <!-- 64: mono as costume on a meta line -->
+    <p class="font-mono text-xs text-slate-400">Updated weekly by the crew</p>
+    <!-- 10a: transition-all -->
+    <a href="/start" class="rounded-lg bg-indigo-600 px-4 py-2 transition-all">Start a log</a>
+    <!-- 29: coloured zero-offset glow -->
+    <button type="button" class="rounded-lg px-4 py-2 shadow-[0_0_40px_var(--color-glow)]">Preview</button>
+    <!-- 12: bounce -->
+    <div aria-hidden="true" class="mt-12 h-6 w-6 animate-bounce rounded-full border"></div>
+  </section>
+
+  <!-- 2a: purple-to-blue band -->
+  <div aria-hidden="true" class="h-2 bg-gradient-to-r from-purple-500 to-blue-500"></div>
+
+  <section class="px-6 py-24">
+    <h2 class="text-3xl font-semibold">What the crew gets</h2>
+    <!-- 3: three icon tiles above h3s; 11: hover scale on three elements -->
+    <div class="mt-12 grid gap-8 md:grid-cols-3">
+      <div class="rounded-xl p-6 hover:scale-105">
+        <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-600"><svg aria-hidden="true" viewBox="0 0 24 24" class="h-5 w-5"><path d="M4 12h16"/></svg></div>
+        <h3 class="mt-4 font-semibold">Tide tables</h3>
+        <p class="mt-2 text-slate-400">Every reading lands on the same chart.</p>
+      </div>
+      <div class="rounded-xl p-6 hover:scale-105">
+        <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-600"><svg aria-hidden="true" viewBox="0 0 24 24" class="h-5 w-5"><path d="M12 4v16"/></svg></div>
+        <h3 class="mt-4 font-semibold">Crew logs</h3>
+        <p class="mt-2 text-slate-400">One log per watch, signed by whoever kept it.</p>
+      </div>
+      <div class="rounded-xl p-6 hover:scale-105">
+        <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-600"><svg aria-hidden="true" viewBox="0 0 24 24" class="h-5 w-5"><path d="M4 4l16 16"/></svg></div>
+        <h3 class="mt-4 font-semibold">Weather</h3>
+        <p class="mt-2 text-slate-400">Forecasts pinned to the hour you sail.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="px-6 py-24">
+    <!-- 11: the image itself scales on hover -->
+    <img src="harbour.jpg" alt="The harbour at dawn" class="rounded-2xl hover:scale-110">
+    <!-- 48: literal colour and family in classes -->
+    <p class="mt-6 bg-[#0b0b12] font-['Inter'] p-4">Logs stay on the boat until you sync them.</p>
+  </section>
+
+</body>
+</html>

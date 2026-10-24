@@ -1,7 +1,7 @@
 # 02 — Regenerated design system
 
 Status: ready-for-agent
-Progress: claimed
+Progress: resolved
 Type: task
 Blocked by: 01
 
@@ -20,3 +20,7 @@ Establish one freshly generated design vocabulary for the whole replacement UI.
 ## Comments
 
 Preset owns structure/APIs/icons; Bold Wikipedia owns theme tokens. Preserve Subs identity, not the old screen geometry.
+
+## Completion evidence — October 24, 2026
+
+The framework/design lane generated retained primitives from exact preset b3rmZdYMye with Start, pointer behavior, Radix Nova and Phosphor. `components.json` records the resulting registry configuration; `src/styles.css` retains the supplied Bold Wikipedia light/dark tokens. Real desktop/mobile captures were inspected in both modes. Hallmark's token-parser false positives and stamp exception remain disclosed in `.hallmark/qa.json`, not reported as a clean tool pass.

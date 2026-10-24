@@ -1,6 +1,7 @@
-import { ArrowRightIcon, LockKeyIcon, StackIcon } from '@phosphor-icons/react'
+import { LockKeyIcon, StackIcon } from '@phosphor-icons/react'
 import { REGEXP_ONLY_DIGITS } from 'input-otp'
 import { useState } from 'react'
+import { DotPattern } from '@/components/magicui/dot-pattern'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Field, FieldDescription, FieldGroup, FieldLabel } from '@/components/ui/field'
@@ -14,6 +15,7 @@ function Pin({ id, value, onChange }: { id: string; value: string; onChange: (va
     <InputOTP
       id={id}
       maxLength={6}
+      minLength={6}
       pattern={REGEXP_ONLY_DIGITS}
       value={value}
       onChange={onChange}
@@ -37,6 +39,10 @@ export function Auth({ setup, onSuccess }: { setup: boolean; onSuccess: () => Pr
   const [busy, setBusy] = useState(false)
   const submit = async (event: React.FormEvent) => {
     event.preventDefault()
+    if (!/^\d{6}$/.test(pin)) {
+      setError('Enter a six-digit PIN.')
+      return
+    }
     if (setup && pin !== confirm) {
       setError('The PINs do not match. Please try again.')
       return
@@ -56,22 +62,19 @@ export function Auth({ setup, onSuccess }: { setup: boolean; onSuccess: () => Pr
     }
   }
   return (
-    <main className="flex min-h-svh flex-col items-center justify-center gap-8 bg-muted/30 px-5 py-12">
-      <div className="flex items-center gap-2 text-2xl font-bold tracking-tight">
-        <StackIcon weight="fill" className="text-primary" />
-        subs<span className="text-primary">.</span>
+    <main className="subs-auth relative flex min-h-svh flex-col items-center justify-center gap-6 overflow-x-clip bg-background px-4 py-10">
+      <DotPattern width={24} height={24} cr={0.75} className="opacity-60" />
+      <div className="relative flex items-center gap-2 text-xl font-semibold">
+        <StackIcon weight="fill" aria-hidden="true" className="text-primary" />
+        subs
       </div>
-      <Card className="w-full max-w-md">
+      <Card className="relative w-full max-w-sm gap-5">
         <CardHeader>
-          <div className="mb-3 flex size-10 items-center justify-center rounded-md bg-muted">
-            <LockKeyIcon className="size-5" />
-          </div>
-          <CardTitle>{setup ? 'A little setup. A lot of clarity.' : 'Welcome back.'}</CardTitle>
-          <CardDescription>
-            {setup
-              ? 'Create your private subscription space. Your six-digit PIN keeps your spending yours.'
-              : 'Unlock your subscriptions and pick up where you left off.'}
-          </CardDescription>
+          <CardTitle className="flex items-center gap-2">
+            <LockKeyIcon aria-hidden="true" className="size-4 text-muted-foreground" />
+            {setup ? 'Create PIN' : 'Unlock Subs'}
+          </CardTitle>
+          <CardDescription>{setup ? 'Set up this installation.' : 'Enter your PIN to continue.'}</CardDescription>
         </CardHeader>
         <CardContent>
           <form id="auth-form" onSubmit={submit}>
@@ -87,13 +90,11 @@ export function Auth({ setup, onSuccess }: { setup: boolean; onSuccess: () => Pr
                     required
                     autoComplete="off"
                   />
-                  <FieldDescription>
-                    Find this in the server logs or SUBS_SETUP_TOKEN environment setting.
-                  </FieldDescription>
+                  <FieldDescription>From server logs or SUBS_SETUP_TOKEN.</FieldDescription>
                 </Field>
               )}
               <Field>
-                <FieldLabel htmlFor="pin">{setup ? 'Choose a six-digit PIN' : 'Your six-digit PIN'}</FieldLabel>
+                <FieldLabel htmlFor="pin">Six-digit PIN</FieldLabel>
                 <Pin id="pin" value={pin} onChange={setPin} />
               </Field>
               {setup && (
@@ -107,17 +108,11 @@ export function Auth({ setup, onSuccess }: { setup: boolean; onSuccess: () => Pr
           </form>
         </CardContent>
         <CardFooter>
-          <Button
-            className="w-full"
-            form="auth-form"
-            disabled={busy || pin.length !== 6 || (setup && (confirm.length !== 6 || !token))}
-          >
-            {busy ? 'Please wait…' : setup ? 'Create my space' : 'Unlock Subs'}
-            <ArrowRightIcon data-icon="inline-end" />
+          <Button className="w-full" form="auth-form" disabled={busy}>
+            {busy ? 'Please wait…' : setup ? 'Create PIN' : 'Unlock Subs'}
           </Button>
         </CardFooter>
       </Card>
-      <p className="text-xs text-muted-foreground">Self-hosted. No tracking. Just your subscriptions.</p>
     </main>
   )
 }

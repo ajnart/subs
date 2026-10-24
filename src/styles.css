@@ -128,9 +128,18 @@
   --shadow-xl: 0px 1px 4px 0px hsl(0 0% 0% / 0.05), 0px 8px 10px -1px hsl(0 0% 0% / 0.05);
   --shadow-2xl: 0px 1px 4px 0px hsl(0 0% 0% / 0.13);
   --tracking-normal: 0.0125em;
+  --subs-content-width: 72rem;
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --dur-micro: 150ms;
+  --dur-short: 220ms;
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-.dark {
+:root.dark {
   --background: oklch(0.2376 0 0);
   --foreground: oklch(0.9389 0 0);
   --card: oklch(0.2697 0 0);
@@ -191,13 +200,140 @@
   }
   html {
     @apply font-sans;
+    overflow-x: clip;
+    scroll-padding-top: var(--space-xl);
   }
   body {
     @apply bg-background text-foreground;
     letter-spacing: var(--tracking-normal);
+    overflow-x: clip;
+    caret-color: var(--primary);
+    scrollbar-color: var(--border) var(--background);
   }
   button:not(:disabled),
   [role="button"]:not(:disabled) {
     cursor: pointer;
+  }
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-foreground);
+}
+
+.subs-container {
+  width: 100%;
+  max-width: var(--subs-content-width);
+  margin-inline: auto;
+  padding-inline: var(--space-md);
+}
+
+:where(h1, h2, h3) {
+  min-width: 0;
+  overflow-wrap: break-word;
+  text-wrap: balance;
+}
+
+:where(a, button, input, textarea, select, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+:where(.subs-app, .subs-auth, [data-slot="dialog-content"])
+  :where([data-slot="input"], [data-slot="textarea"], [data-slot="select-trigger"]) {
+  border-color: var(--muted-foreground);
+}
+
+:where(button, input, textarea, select):disabled {
+  cursor: not-allowed;
+}
+
+.subs-app [data-slot="button"],
+.subs-auth [data-slot="button"],
+[data-slot="dialog-content"] [data-slot="button"] {
+  transition-property: background-color, color, border-color, opacity, transform;
+  transition-duration: var(--dur-micro);
+  transition-timing-function: var(--ease-out);
+}
+
+:where(.subs-app, .subs-auth, [data-slot="dialog-content"]) button:not(:disabled):active {
+  transform: translateY(1px);
+}
+
+.subs-disclosure > summary {
+  cursor: pointer;
+  padding-block: var(--space-xs);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--muted-foreground);
+}
+
+.subs-disclosure[open] > summary {
+  color: var(--foreground);
+}
+
+.subs-skip {
+  position: fixed;
+  inset-inline-start: var(--space-md);
+  inset-block-start: var(--space-md);
+  transform: translateY(-200%);
+  background: var(--background);
+  color: var(--foreground);
+  padding: var(--space-xs) var(--space-md);
+}
+
+.subs-skip:focus-visible {
+  transform: none;
+}
+
+.subs-service-card {
+  transition: border-color var(--dur-short) var(--ease-out);
+}
+
+.subs-service-card:focus-within {
+  border-color: var(--ring);
+}
+
+.subs-service-link:hover,
+.subs-service-link:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+@media (min-width: 40rem) {
+  .subs-container {
+    padding-inline: var(--space-xl);
+  }
+}
+
+@media (pointer: coarse) {
+  :where(.subs-app, .subs-auth, [data-slot="dialog-content"])
+    :where(
+      [data-slot="button"],
+      [data-slot="toggle-group-item"],
+      [data-slot="select-trigger"],
+      input:not([type="checkbox"]),
+      summary
+    ) {
+    min-height: 44px;
+  }
+
+  :where(.subs-app, .subs-auth, [data-slot="dialog-content"]) :where(input, textarea) {
+    font-size: 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms;
+    animation-iteration-count: 1;
+    transition-duration: 0.01ms;
+    scroll-behavior: auto;
+  }
+
+  :where(.subs-app, .subs-auth, [data-slot="dialog-content"]) button:not(:disabled):active {
+    transform: none;
   }
 }

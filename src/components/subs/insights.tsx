@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Checkbox } from '@/components/ui/checkbox'
-import { Field, FieldDescription, FieldGroup, FieldLabel, FieldLegend, FieldSet } from '@/components/ui/field'
+import { Field, FieldGroup, FieldLabel, FieldLegend, FieldSet } from '@/components/ui/field'
 import { Progress } from '@/components/ui/progress'
 import { convertAmount, formatMoney, monthlyAmount } from '@/lib/subscriptions'
 import type { AppData, ExchangeRates } from '@/lib/types'
@@ -51,7 +51,7 @@ export function Insights({ data, rates }: { data: AppData; rates?: ExchangeRates
     if (missing) return `${formatMoney(amount, currency)} +`
     return formatMoney(amount, currency)
   }
-  let budgetNote = 'Set a monthly budget in Settings to give your spending a little direction.'
+  let budgetNote = 'Set a budget in Settings.'
   if (monthlyBudget && unavailable)
     budgetNote = 'Spending cannot be compared with your budget until rates are available.'
   else if (monthlyBudget && total > monthlyBudget) {
@@ -63,16 +63,13 @@ export function Insights({ data, rates }: { data: AppData; rates?: ExchangeRates
   return (
     <div className="flex flex-col gap-6">
       {missing && (
-        <Notice title="Partial currency conversion">
-          Some currencies have no exchange rate. Totals and savings below include only convertible subscriptions, not a
-          complete spending estimate.
-        </Notice>
+        <Notice title="Partial currency conversion">Converted estimates exclude currencies without rates.</Notice>
       )}
       <div className="grid items-start gap-6 lg:grid-cols-2">
         <Card>
           <CardHeader>
-            <CardTitle>Where your money goes</CardTitle>
-            <CardDescription>Monthly equivalents, grouped by category.</CardDescription>
+            <CardTitle>By category</CardTitle>
+            <CardDescription>Monthly estimates in {currency}.</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="flex flex-col gap-5">
@@ -92,9 +89,7 @@ export function Insights({ data, rates }: { data: AppData; rates?: ExchangeRates
                   </div>
                 ))
               ) : (
-                <p className="py-6 text-sm text-muted-foreground">
-                  Add an active subscription to see your spending mix.
-                </p>
+                <p className="py-6 text-sm text-muted-foreground">No active subscriptions.</p>
               )}
             </div>
           </CardContent>
@@ -102,8 +97,7 @@ export function Insights({ data, rates }: { data: AppData; rates?: ExchangeRates
         <div className="flex flex-col gap-6">
           <Card>
             <CardHeader>
-              <CardTitle>Your monthly budget</CardTitle>
-              <CardDescription>A boundary, not a guilt trip.</CardDescription>
+              <CardTitle>Monthly budget</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="flex flex-col gap-3">
@@ -125,14 +119,14 @@ export function Insights({ data, rates }: { data: AppData; rates?: ExchangeRates
           </Card>
           <Card>
             <CardHeader>
-              <CardTitle>On the horizon</CardTitle>
-              <CardDescription>Projected charges in the next 30 days, including today.</CardDescription>
+              <CardTitle>Next 30 days</CardTitle>
+              <CardDescription>Projected charges in {currency}.</CardDescription>
             </CardHeader>
             <CardContent>
               <p className="text-2xl font-semibold tracking-tight">{forecastLabel}</p>
               <p className="mt-2 text-sm text-muted-foreground">
-                {forecast.length} projected charges across {new Set(forecast.map((item) => item.subscription.id)).size}{' '}
-                services. Includes repeated daily and weekly renewals; not a record of actual payments.
+                {forecast.length} projected charges, {new Set(forecast.map((item) => item.subscription.id)).size}{' '}
+                services.
               </p>
             </CardContent>
           </Card>
@@ -141,18 +135,17 @@ export function Insights({ data, rates }: { data: AppData; rates?: ExchangeRates
       <Card>
         <CardHeader>
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <CardTitle>What if you let a few go?</CardTitle>
-            <Badge variant="outline">Just exploring · nothing changes</Badge>
+            <CardTitle>Savings scenario</CardTitle>
+            <Badge variant="outline">Preview only</Badge>
           </div>
           <CardDescription>
-            Select subscriptions to see potential savings. Your actual plans stay untouched.
+            Select plans to exclude from this estimate. Your subscriptions stay unchanged.
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid gap-8 lg:grid-cols-[1fr_16rem]">
+          <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_16rem]">
             <FieldSet>
               <FieldLegend className="sr-only">Subscriptions to exclude from estimate</FieldLegend>
-              <FieldDescription>What could you live without?</FieldDescription>
               <FieldGroup className="grid gap-3 sm:grid-cols-2">
                 {converted.map((item) => (
                   <Field key={item.id} orientation="horizontal" className="rounded-md border p-3">
@@ -178,8 +171,12 @@ export function Insights({ data, rates }: { data: AppData; rates?: ExchangeRates
             </FieldSet>
             <div className="flex flex-col justify-center gap-2 rounded-md bg-muted/50 p-6">
               <p className="text-xs font-medium text-muted-foreground">Potential monthly savings</p>
-              <p className="text-3xl font-semibold tracking-tight">{formatMoney(savings, currency)}</p>
-              <p className="text-sm text-muted-foreground">That’s {formatMoney(savings * 12, currency)} a year.</p>
+              <p className="text-3xl font-semibold tracking-tight tabular-nums">
+                {unavailable ? 'Unavailable' : formatMoney(savings, currency)}
+              </p>
+              {!unavailable && (
+                <p className="text-sm text-muted-foreground">{formatMoney(savings * 12, currency)} yearly estimate</p>
+              )}
               <p className="mt-3 text-xs text-muted-foreground">
                 New monthly estimate: {estimateLabel(total - savings)}
               </p>

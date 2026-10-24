@@ -5,6 +5,8 @@ npm-debug.log
 .env.*
 !.env.example
 .agents
+.hallmark
+.wrangler
 .opencode
 .scratch
 .output

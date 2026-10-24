@@ -1,6 +1,7 @@
-import { expect, test } from '../helpers'
+import { createSubscription, expect, test } from '../helpers'
 
 test('global shortcuts add, search and show help outside text inputs', async ({ page }) => {
+  await createSubscription(page.request)
   await page.goto('/')
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
   await page.keyboard.press('n')
@@ -11,10 +12,14 @@ test('global shortcuts add, search and show help outside text inputs', async ({ 
   await expect(page.getByRole('textbox', { name: 'Search subscriptions' })).toBeFocused()
   await page.getByRole('heading', { level: 1 }).click()
   await page.keyboard.press('?')
-  await expect(page.getByRole('dialog')).toContainText('Shortcuts work when you’re not typing in a field.')
+  const help = page.getByRole('dialog')
+  await expect(help.getByText('N or A', { exact: true })).toBeVisible()
+  await expect(help.getByText('/', { exact: true })).toBeVisible()
+  await expect(help.getByText('?', { exact: true })).toBeVisible()
 })
 
 test('typing shortcut characters in search and notes never opens another dialog', async ({ page }) => {
+  await createSubscription(page.request)
   await page.goto('/')
   const search = page.getByRole('textbox', { name: 'Search subscriptions' })
   await search.fill('')
@@ -22,6 +27,7 @@ test('typing shortcut characters in search and notes never opens another dialog'
   await expect(search).toHaveValue('na/?')
   await expect(page.getByRole('dialog')).not.toBeVisible()
   await page.getByRole('button', { name: /Add subscription/ }).click()
+  await page.getByRole('dialog').locator('summary').click()
   const notes = page.getByRole('dialog').getByLabel('Notes', { exact: true })
   await notes.pressSequentially('na/?')
   await expect(notes).toHaveValue('na/?')

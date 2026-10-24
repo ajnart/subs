@@ -1,7 +1,7 @@
 # 06 — Legacy migration boundary
 
 Status: ready-for-agent
-Progress: claimed
+Progress: resolved
 Type: task
 Blocked by: 04, 05
 
@@ -21,3 +21,7 @@ Move existing users to the server Collection without data loss or forced sample 
 ## Comments
 
 The existing server persisted the subscription-storage key containing a Zustand state wrapper; file exports were plain arrays.
+
+## Completion evidence — October 24, 2026
+
+`src/lib/import.ts` normalizes arrays, persisted state and key-wrapped legacy sources through one browser-safe validator, with precision/default warnings and allowlisted preferences. Settings offers authorized explicit preview/confirmation and optional source clearing only after success; the static demo never reads or clears legacy keys. Existing import-validation tests pass, including preview side-effect checks and invalid-input rollback. Upgrade and preserved-volume rollback steps are in `docs/self-hosting.md`.

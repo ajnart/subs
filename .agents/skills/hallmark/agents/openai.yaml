@@ -1,0 +1,13 @@
+interface:
+  display_name: Hallmark
+  short_description: Design skill. Pages that look made, not generated.
+  default_prompts:
+    - "$hallmark a landing page for <product>"
+    - "$hallmark a pricing page for <product>, custom"
+    - "$hallmark a signup form component"
+    - "$hallmark redesign <path to a page or an app>"
+
+policy:
+  allow_implicit_invocation: true
+
+dependencies: []

@@ -1,7 +1,7 @@
 # 01 — Framework and runtime foundation
 
 Status: ready-for-agent
-Progress: claimed
+Progress: resolved
 Type: task
 Blocked by: none
 
@@ -20,3 +20,7 @@ Replace the live Remix foundation with the selected TanStack Start and Nitro v3 
 ## Comments
 
 Read the Private Collection specification and architecture decision before choosing a workaround. Nitro v3 is beta; use v3 docs and explicit imports.
+
+## Completion evidence — October 24, 2026
+
+`vite.config.ts`, Start routes, Nitro's Bun preset and the lockfile replace the old runtime. Both production targets and the final Bun 1.4.3 Docker image build successfully. The actual image serves HTTP and reads/writes SQLite without a separate backend or database process. Legacy data is accepted only through explicit migration, not discarded or automatically seeded. Runtime measurements are in ticket 23.

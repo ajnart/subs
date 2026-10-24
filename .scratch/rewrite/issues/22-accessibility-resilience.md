@@ -1,7 +1,7 @@
 # 22 — Accessibility, keyboard, and resilience
 
 Status: ready-for-agent
-Progress: claimed
+Progress: resolved
 Type: task
 Blocked by: 13, 15, 17, 19, 20, 21
 
@@ -21,3 +21,7 @@ Complete the primary workflows without mouse-only controls, misleading success, 
 ## Comments
 
 Use existing Playwright flow coverage and focused manual checks; no new unit-test files.
+
+## Completion evidence — October 24, 2026
+
+Existing shortcut, dialog, failed-delete, preferences, import, mobile and desktop flows pass in the final 27-test suite. A fresh-context browser review covered focus, disclosures, reduced motion, validation, empty recovery and narrow layouts; its three P2 findings plus footer nit were fixed and recaptured. Demo corrupt-storage recovery and API-blocked persistence were checked separately, as was the private 320px PIN screen. `.hallmark/qa.json` discloses tool false positives and review limitations; this is not a blanket WCAG certification. No new unit-test files were added.

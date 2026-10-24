@@ -1,7 +1,7 @@
 # 10 — Lifecycle, notes, and trials
 
 Status: ready-for-agent
-Progress: claimed
+Progress: resolved
 Type: task
 Blocked by: 09
 
@@ -21,3 +21,7 @@ Track the real state of each commitment without implying actions at its provider
 ## Comments
 
 Lifecycle State is tracking state, not a payment status.
+
+## Completion evidence — October 24, 2026
+
+Active/paused/cancelled status, notes and optional trial dates persist through the standard form and API. Existing lifecycle/trial tests verify that deadlines are advisory and inactive records do not contribute ongoing spending; browser editing preserves notes and dates. Delete confirmations and failed-delete recovery pass. No action contacts a provider or automatically cancels a trial.

@@ -74,6 +74,14 @@ Replace the running application with a responsive, service-centered Subs experie
 60. As an Operator, I want measured production memory and documented measurement conditions, so that capacity claims reflect real evidence.
 61. As an Operator, I want a safe migration and restore procedure, so that replacing the old application is reversible through preserved data.
 62. As a user, I want the old UI and storage path retired from the running product, so that there is only one truthful Subs experience.
+63. As a user, I want concise labels without marketing or repeated explanations, so that tracking stays simple.
+64. As a new user, I want a compact setup and quick-start experience, so that my first Subscription is easy to add.
+65. As a user, I want purposeful motion and a carefully composed background, so that the app feels polished without distracting from my data.
+66. As a user, I want the previous interactive link-preview experience restored, so that I can inspect a public Service link on demand.
+67. As a visitor, I want a working public demo without a PIN or backend, so that I can try Subs immediately.
+68. As a demo user, I want local edits, import/export, and an explicit reset, so that I can explore without affecting another visitor or private Installation.
+69. As an Operator, I want the static demo deployed automatically with Wrangler at subs.ajnart.dev, so that the public version follows successful release builds.
+70. As a contributor, I want current application screenshots and a short README, so that setup and the product are clear without excessive documentation.
 
 ## Implementation Decisions
 
@@ -119,6 +127,17 @@ Replace the running application with a responsive, service-centered Subs experie
 - Default duplicate action is skip. Offer explicit add-as-new or replace choices; replace-all is a distinct destructive confirmation. The server revalidates preview decisions and applies accepted rows atomically against the previewed Collection revision.
 - Versioned exports contain Collection records and portable shared preferences, with schema version and export timestamp. Exclude PIN material, setup tokens, sessions, rate-limit records, and server secrets.
 - Price Change history is a conditional release enhancement only if the backend actually records and exposes it. Show genuine recorded changes; never fabricate past prices from today's values or claim historical payments. If absent, omit its controls and list it as deferred rather than blocking the core release dishonestly.
+
+### Visual polish and static demonstration
+
+- Apply the installed Hallmark skill to the existing app, preserving the exact preset and Bold Wikipedia theme. Use real Magic UI and Aceternity registry components where they improve interaction, not a wholesale landing-page component showcase.
+- Remove promotional language and redundant explanation. Keep short functional labels, essential validation, financial uncertainty, destructive confirmations, and security guidance where needed.
+- Motion respects reduced-motion preferences, uses bounded transform/opacity transitions, preserves focus, and never hides usable content permanently. Review desktop/mobile and light/dark states in a real browser.
+- Restore lazy, user-activated link previews for safe public HTTP(S) URLs. Never request previews on page mount, preview local/private addresses, or add server-side arbitrary URL fetching.
+- The static demo reuses the app UI with isolated browser persistence and clearly identified sample data. No API, database, PIN, or live exchange-rate service is required. Demo rates are explicitly illustrative, not current market rates.
+- Private Docker installations still start empty with authentication enabled. Demo flags must not change the private runtime's defaults or include server modules and secrets in static assets.
+- Build and validate both targets. Deploy the static artifact using Wrangler at subs.ajnart.dev after successful checks; do not make ordinary local builds or Docker builds publish remotely. Keep automated deployment credentials scoped and outside the repository.
+- Refresh real application screenshots and keep the public README short. Detailed release evidence belongs in these internal tickets rather than lengthy product copy.
 
 ## Testing Decisions
 

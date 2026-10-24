@@ -1,3 +1,5 @@
+import { isDemo } from '@/lib/mode'
+
 export class ApiError extends Error {
   constructor(
     public status: number,
@@ -14,11 +16,18 @@ export async function apiResponse<T>(
 ): Promise<{ data: T; revision: string | null }> {
   const headers = new Headers(options.headers)
   if (!headers.has('Content-Type')) headers.set('Content-Type', 'application/json')
-  const response = await fetch(`/api${path}`, {
+  const requestOptions = {
     ...options,
-    credentials: 'same-origin',
+    credentials: 'same-origin' as const,
     headers,
-  })
+  }
+  let response: Response
+  if (isDemo) {
+    const { demoResponse } = await import('@/demo/adapter')
+    response = await demoResponse(path, requestOptions)
+  } else {
+    response = await fetch(`/api${path}`, requestOptions)
+  }
   let body: unknown
   try {
     body = await response.json()

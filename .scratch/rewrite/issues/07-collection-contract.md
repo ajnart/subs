@@ -1,7 +1,7 @@
 # 07 — Authenticated Collection contract
 
 Status: ready-for-agent
-Progress: claimed
+Progress: resolved
 Type: task
 Blocked by: 04, 05
 
@@ -21,3 +21,7 @@ Expose a small validated server boundary that all UI features can rely on.
 ## Comments
 
 Use framework-native facilities; add another RPC/backend layer only for a documented necessary blocker.
+
+## Completion evidence — October 24, 2026
+
+`src/server/api.ts` exposes authenticated validated CRUD, bulk actions, preferences, export/import and history with no-store responses. Mutations require `If-Match`; missing and stale revisions return 428/409, including stale destructive import previews. Transactions acknowledge committed state only. Existing HTTP tests and container rollback checks pass, and both client builds keep server persistence/auth modules outside the browser boundary.

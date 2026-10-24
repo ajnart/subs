@@ -12,13 +12,14 @@ import {
 
 test('create and edit through the browser persist on the server without browser storage', async ({ page }) => {
   await page.goto('/')
-  await expect(page.getByText('Make room for a clearer picture.')).toBeVisible()
+  await expect(page.getByText('Add your first subscription', { exact: true })).toBeVisible()
   expect((await collection(page.request)).subscriptions).toEqual([])
   await page.getByRole('button', { name: /Add subscription/ }).click()
   const dialog = page.getByRole('dialog')
   await dialog.getByLabel('Service name').fill('My real plan')
   await dialog.getByLabel('Price per billing cycle').fill('19.99')
-  await dialog.getByLabel('Next payment', { exact: true }).fill('2030-01-31')
+  await dialog.getByLabel('Next payment (optional)', { exact: true }).fill('2030-01-31')
+  await dialog.locator('summary').click()
   await dialog.getByLabel('Notes', { exact: true }).fill('Annual review reminder')
   await dialog.getByRole('button', { name: 'Save subscription' }).click()
   await expect(dialog).not.toBeVisible()
@@ -71,7 +72,7 @@ test('private reads reject anonymous clients and cross-origin mutations cannot c
   context,
 }) => {
   const saved = await createSubscription(context.request)
-  const anonymous = await playwright.request.newContext({ baseURL: origin })
+  const anonymous = await playwright.request.newContext({ baseURL: origin, storageState: { cookies: [], origins: [] } })
   try {
     for (const endpoint of ['/api/data', '/api/export', '/api/rates']) {
       const response = await anonymous.get(endpoint)
@@ -143,8 +144,10 @@ test('mutations require revisions and stale writes or destructive previews canno
 })
 
 test('login uses a protected cookie and logout revokes the session', async ({ playwright }) => {
-  const client = await playwright.request.newContext({ baseURL: origin })
+  const client = await playwright.request.newContext({ baseURL: origin, storageState: { cookies: [], origins: [] } })
   try {
+    const status = await client.get('/api/status')
+    expect(await status.json()).toMatchObject({ authenticated: false, authDisabled: false })
     const wrong = await client.post('/api/login', { headers, data: { pin: '000000' } })
     expect(wrong.status()).toBe(401)
     const login = await client.post('/api/login', { headers, data: { pin } })

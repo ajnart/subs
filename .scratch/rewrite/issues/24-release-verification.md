@@ -1,7 +1,7 @@
 # 24 — Release verification and retirement
 
 Status: ready-for-agent
-Progress: claimed
+Progress: resolved
 Type: task
 Blocked by: 23
 
@@ -21,3 +21,9 @@ Ship only capabilities supported by integrated runtime and validation evidence.
 ## Comments
 
 Ready-for-agent means ready to implement. Completion requires observable behavior, not a populated checklist alone.
+
+## Completion evidence — October 24, 2026
+
+Final integrated lint and typecheck pass with no inherited failure exemption. All 27 existing Playwright tests pass; both production builds, final Docker build and Compose validation pass. The Chromium extraction blocker was repaired before claiming browser results. Container evidence is in ticket 23; real light/dark/mobile screenshots and review dispositions are in `.hallmark/qa.json`. The final safety review's duplicate-candidate restore finding was reproduced and fixed, with the 101-record round trip added to the existing external test seam.
+
+The old runtime/store paths are retired and migration preserves original inputs. Tickets 01–26 record completed implementation evidence, including real price history; ticket 27 separately retains the external automatic-deployment credential blocker and GitHub CI outcome. No release tag or merge is implied by a local build. Upstream use-client warnings and the approximately 868 kB static entry chunk remain non-blocking build warnings.

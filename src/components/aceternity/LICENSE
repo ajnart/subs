@@ -1,0 +1,14 @@
+Aceternity UI components
+Author: Manu Arora <hi@manuarora.in>
+Sources: https://ui.aceternity.com/registry/link-preview.json
+         https://ui.aceternity.com/registry/glowing-effect.json
+Terms: https://ui.aceternity.com/licence
+Free-component clarification: https://ui.aceternity.com/llms-full.txt
+
+The official free-component documentation states:
+"components are free to use in unlimited personal and commercial projects.
+Reselling or redistributing the components as a competing library is not permitted."
+
+These files and ../ui/link-preview.tsx are adapted for the Subs end product,
+not distributed as a competing component library. Aceternity retains ownership.
+No MIT license is claimed for these registry downloads.

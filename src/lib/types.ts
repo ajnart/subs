@@ -50,8 +50,20 @@ export interface Backup extends AppData {
   exportedAt: string
 }
 
+export interface ImportMatch {
+  incomingIndex: number
+  incomingId: string
+  incomingName: string
+  existingId: string
+  existingName: string
+  reason: 'id' | 'service'
+  conflict: boolean
+  conflictGroup: string | null
+}
+
 export interface ImportPreview {
   subscriptions: Subscription[]
   warnings: string[]
   duplicates: number
+  matches: ImportMatch[]
 }

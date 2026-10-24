@@ -1,7 +1,7 @@
 # 19 — Import Preview and duplicate decisions
 
 Status: ready-for-agent
-Progress: claimed
+Progress: resolved
 Type: task
 Blocked by: 08, 18
 
@@ -21,3 +21,7 @@ Let users inspect migration/import consequences before changing the Collection.
 ## Comments
 
 Existing import-validation and duplicate-detection Playwright coverage is prior art, not permission to preserve silent replacement behavior.
+
+## Completion evidence — October 24, 2026
+
+Settings shows normalized rows, warnings and explicit ID/service match targets, defaults to Skip, and confirms Replace separately. The preview's ETag remains frozen until explicit re-preview. Shared matching rejects ambiguous/repeated merge targets; candidate display is limited to two examples per row without preventing Replace or Skip. All five existing import tests pass, including conflicting identities, no preview side effects, malformed backups and round trips; the broader stale-preview regression also passes.

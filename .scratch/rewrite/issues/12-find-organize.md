@@ -1,7 +1,7 @@
 # 12 — Search, filters, and sort
 
 Status: ready-for-agent
-Progress: claimed
+Progress: resolved
 Type: task
 Blocked by: 11
 
@@ -21,3 +21,7 @@ Let users find the right commitments without obscuring the Collection's actual s
 ## Comments
 
 Keep presentation preferences non-sensitive; the server remains authoritative for records.
+
+## Completion evidence — October 24, 2026
+
+Overview composes name/notes search, category, lifecycle and cycle filters, explicit result counts and clear-filter recovery. Shared sorting has deterministic ties and currency-aware cost grouping. The existing composed-filter test passes, and the reviewer exercised search-empty recovery and table view. Summary data remains collection-wide rather than silently following filtered rows.

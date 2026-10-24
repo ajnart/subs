@@ -8,9 +8,12 @@ test('trial deadlines and lifecycle details remain visible without treating tria
   await createSubscription(page.request, { name: 'Paused trial plan', trialEndsAt: '2030-02-01', status: 'paused' })
   await page.goto('/')
   await expect(page.getByText('Trial ends Feb 1, 2030', { exact: true })).toHaveCount(2)
-  await expect(page.getByText('Not included in spending', { exact: true })).toBeVisible()
+  const summary = page.getByRole('region', { name: 'Spending summary' })
+  await expect(summary).toContainText('$12.00')
+  await expect(summary).not.toContainText('$24.00')
   const records = (await collection(page.request)).subscriptions
   expect(records.find((item) => item.name === 'Trial plan')?.status).toBe('active')
+  expect(records.find((item) => item.name === 'Paused trial plan')?.status).toBe('paused')
   await page.getByRole('navigation', { name: 'Main navigation' }).getByRole('button', { name: 'Calendar' }).click()
   await page.getByRole('button', { name: 'Feb 1, 2030, 1 payments and trial deadlines', exact: true }).click()
   await expect(

@@ -1,0 +1,2 @@
+export const MAX_BACKUP_BYTES = 2 * 1024 * 1024
+export const MAX_REQUEST_BODY_BYTES = MAX_BACKUP_BYTES + 64 * 1024

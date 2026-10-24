@@ -1,7 +1,7 @@
 # 18 — Portable versioned Backups
 
 Status: ready-for-agent
-Progress: claimed
+Progress: resolved
 Type: task
 Blocked by: 06, 07
 
@@ -21,3 +21,7 @@ Make the Collection portable while keeping Installation access private.
 ## Comments
 
 Portable data Backup differs from an Operator-controlled full volume snapshot.
+
+## Completion evidence — October 24, 2026
+
+Authorized no-store v3 exports include subscriptions and preferences but exclude access material and recorded history. Shared size bounds and a transactional canonical-export check keep committed private collections restorable within 2 MiB. Existing import/backup tests pass; the container rejected over-limit growth without changing state/revision. A 101-record same-service backup now previews and restores successfully, with bounded match examples and ambiguous merge still rejected. Full-volume recovery is documented separately.

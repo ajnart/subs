@@ -1,7 +1,7 @@
 # 03 — Durable Collection schema
 
 Status: ready-for-agent
-Progress: claimed
+Progress: resolved
 Type: task
 Blocked by: 01
 
@@ -20,3 +20,7 @@ Make embedded SQLite the single durable source of Collection truth.
 ## Comments
 
 Optional Price Changes may use a separate related record if implemented; do not infer past values.
+
+## Completion evidence — October 24, 2026
+
+`src/server/database.ts` owns parameterized SQLite persistence, separate credential/session state, collection revisions, price baselines and transactional mutations. Nitro explicitly selects `bun-sqlite`; runtime `DATA_DIR` is applied by `database-path.ts`. HTTP checks retained 100 records, recorded history and an existing session across restart and replacement with the final image. Oversized collection writes roll back without advancing the revision. Fresh private installations remain empty.

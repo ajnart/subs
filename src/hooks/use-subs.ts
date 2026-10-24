@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { api, collectionApi, errorMessage, revisionHeaders } from '@/lib/api'
+import { isDemo } from '@/lib/mode'
 import type { AppData, ExchangeRates, Preferences, Status, Subscription, SubscriptionInput } from '@/lib/types'
 
 export function useSubs() {
@@ -35,6 +36,7 @@ export function useSubs() {
         if (current !== generation.current) return
         setData(nextData.data)
         updateRevision(nextData.revision)
+        setLoading(false)
         try {
           const nextRates = await api<ExchangeRates>('/rates', { signal })
           if (current === generation.current) {
@@ -70,6 +72,35 @@ export function useSubs() {
       window.removeEventListener('subs:locked', lock)
     }
   }, [refresh, updateRevision])
+
+  useEffect(() => {
+    if (!isDemo) return
+    const controller = new AbortController()
+    const reset = async () => {
+      try {
+        const headers = new Headers()
+        if (revisionRef.current) headers.set('If-Match', revisionRef.current)
+        await api('/demo/reset', { method: 'POST', headers, signal: controller.signal })
+        if (!controller.signal.aborted) await refresh(controller.signal)
+      } catch (cause) {
+        if (!controller.signal.aborted) setError(errorMessage(cause))
+      }
+    }
+    const changed = (event: StorageEvent) => {
+      if (event.key !== 'subs-demo-v3' && event.key !== null) return
+      setError(
+        'The demo collection changed in another tab. Refresh to review it before making changes; your open draft has not been replaced.',
+      )
+    }
+    const handleReset = () => void reset()
+    window.addEventListener('subs:demo-reset', handleReset)
+    window.addEventListener('storage', changed)
+    return () => {
+      controller.abort()
+      window.removeEventListener('subs:demo-reset', handleReset)
+      window.removeEventListener('storage', changed)
+    }
+  }, [refresh])
 
   const save = async (
     input: SubscriptionInput | Pick<SubscriptionInput, 'status'>,

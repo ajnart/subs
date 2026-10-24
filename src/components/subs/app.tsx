@@ -3,7 +3,6 @@ import {
   ArrowUpRightIcon,
   CalendarDotsIcon,
   ChartBarIcon,
-  CheckCircleIcon,
   GearSixIcon,
   HouseIcon,
   KeyboardIcon,
@@ -22,13 +21,14 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
+import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog'
-import { Separator } from '@/components/ui/separator'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useSubs } from '@/hooks/use-subs'
 import { useTheme } from '@/hooks/use-theme'
 import { api, errorMessage, isRevisionConflict } from '@/lib/api'
+import { isDemo } from '@/lib/mode'
 import { convertAmount, monthlyAmount } from '@/lib/subscriptions'
 import { templates } from '@/lib/templates'
 import type { Subscription, SubscriptionInput } from '@/lib/types'
@@ -51,12 +51,7 @@ const navigation = [
   { name: 'Insights', icon: ChartBarIcon },
   { name: 'Settings', icon: GearSixIcon },
 ] as const
-const descriptions: Record<Page, string> = {
-  Overview: 'A clear view of what you pay for. And what’s coming next.',
-  Calendar: 'No surprises. See your recurring payments, one month at a time.',
-  Insights: 'Small recurring charges. A bigger picture worth knowing.',
-  Settings: 'A few thoughtful defaults, and complete control of your data.',
-}
+const resetDemo = () => window.dispatchEvent(new Event('subs:demo-reset'))
 
 export function SubsApp() {
   const store = useSubs()
@@ -142,7 +137,6 @@ export function SubsApp() {
         return
       }
     }
-    toast.success('Selected subscriptions paused')
   }
   const confirmDelete = async () => {
     if (deleteConflict) return
@@ -162,7 +156,6 @@ export function SubsApp() {
     if (!remaining.length) {
       setDeleting([])
       setEditor(null)
-      toast.success('Subscriptions deleted')
     } else setDeleting(remaining)
     setDeleteBusy(false)
   }
@@ -180,16 +173,21 @@ export function SubsApp() {
           subs.
         </div>
         {store.error ? (
-          <Notice title="Could not connect to your server">
+          <Notice title={isDemo ? 'Could not load demo' : 'Could not connect to your server'}>
             <p>{store.error}</p>
             <Button variant="outline" onClick={() => void store.refresh()}>
               Try again
             </Button>
+            {isDemo && (
+              <Button variant="outline" onClick={resetDemo}>
+                Reset demo
+              </Button>
+            )}
           </Notice>
         ) : (
           <>
             <p className="sr-only" role="status">
-              Loading your space
+              Loading subscriptions
             </p>
             <Skeleton className="h-12 w-64" />
             <Skeleton className="h-28 w-full" />
@@ -212,6 +210,11 @@ export function SubsApp() {
           <Button variant="outline" onClick={() => void store.refresh()}>
             Try again
           </Button>
+          {isDemo && (
+            <Button variant="outline" onClick={resetDemo}>
+              Reset demo
+            </Button>
+          )}
         </Notice>
       </main>
     )
@@ -225,78 +228,24 @@ export function SubsApp() {
     await store.save(input, id, revision)
   }
   return (
-    <div className="min-h-svh bg-background">
-      <aside className="fixed inset-y-0 left-0 hidden w-56 flex-col border-r bg-sidebar p-5 text-sidebar-foreground md:flex">
-        <a
-          href="/"
-          aria-label="Subs home"
-          className="mb-12 flex items-center gap-2 px-2 text-2xl font-bold tracking-tight"
-        >
-          <StackIcon weight="fill" className="size-7 text-primary" />
-          subs<span className="-ml-2 text-primary">.</span>
-        </a>
-        <p className="mb-3 px-3 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
-          Your workspace
-        </p>
-        <nav aria-label="Main navigation" className="flex flex-col gap-1">
-          {navigation.map((item) => (
-            <Button
-              key={item.name}
-              variant={page === item.name ? 'secondary' : 'ghost'}
-              onClick={() => setPage(item.name)}
-              aria-current={page === item.name ? 'page' : undefined}
-              className="justify-start"
-            >
-              <item.icon weight={page === item.name ? 'fill' : 'regular'} data-icon="inline-start" />
-              {item.name}
-            </Button>
-          ))}
-        </nav>
-        <div className="mt-auto flex flex-col gap-4">
-          <div className="flex flex-col gap-2 rounded-md border bg-background p-4">
-            <CheckCircleIcon className="size-5 text-primary" />
-            <p className="text-xs font-medium">Less noise. More clarity.</p>
-            <p className="text-xs leading-relaxed text-muted-foreground">A little awareness goes a long way.</p>
-          </div>
-          <Button variant="ghost" size="sm" className="justify-start" onClick={() => setShortcuts(true)}>
-            <KeyboardIcon data-icon="inline-start" />
-            Keyboard shortcuts<kbd className="ml-auto text-xs text-muted-foreground">?</kbd>
-          </Button>
-          {!store.status.authDisabled && (
-            <Button variant="ghost" size="sm" className="justify-start" onClick={() => void lock()} disabled={locking}>
-              <LockKeyIcon data-icon="inline-start" />
-              {locking ? 'Locking…' : 'Lock workspace'}
-            </Button>
-          )}
-          <Separator />
-          <p className="px-2 text-[10px] text-muted-foreground">YOUR SUBSCRIPTIONS, SIMPLIFIED.</p>
-        </div>
-      </aside>
-      <div className="md:pl-56">
-        <header className="flex flex-col border-b md:hidden">
-          <div className="flex items-center justify-between gap-3 p-4">
-            <a href="/" className="flex items-center gap-2 text-xl font-bold">
-              <StackIcon weight="fill" className="text-primary" />
-              subs.
-            </a>
-            <div className="flex gap-2">
-              <Button variant="ghost" size="icon" aria-label="Keyboard shortcuts" onClick={() => setShortcuts(true)}>
-                <KeyboardIcon />
-              </Button>
-              {!store.status.authDisabled && (
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  aria-label="Lock workspace"
-                  onClick={() => void lock()}
-                  disabled={locking}
-                >
-                  <LockKeyIcon />
-                </Button>
-              )}
-            </div>
-          </div>
-          <nav aria-label="Mobile navigation" className="grid grid-cols-4 gap-1 px-2 pb-2">
+    <div className="subs-app min-h-svh bg-background">
+      <a href="#main" className="subs-skip">
+        Skip to content
+      </a>
+      <header className="border-b bg-background/95">
+        <div className="subs-container flex flex-wrap items-center gap-x-3 gap-y-2 py-3 sm:gap-x-8">
+          <a
+            href="/"
+            aria-label="Subs home"
+            className="subs-wordmark flex shrink-0 items-center gap-2 text-xl font-semibold"
+          >
+            <StackIcon weight="fill" aria-hidden="true" className="size-6 text-primary" />
+            subs
+          </a>
+          <nav
+            aria-label="Main navigation"
+            className="order-3 flex min-w-0 w-full items-center gap-1 sm:order-none sm:w-auto"
+          >
             {navigation.map((item) => (
               <Button
                 key={item.name}
@@ -304,30 +253,81 @@ export function SubsApp() {
                 size="sm"
                 onClick={() => setPage(item.name)}
                 aria-current={page === item.name ? 'page' : undefined}
-                className="gap-1 px-1 text-xs"
+                className="min-w-0 flex-1 gap-1 px-1.5 text-xs sm:flex-none sm:px-2.5 sm:text-sm"
               >
-                <item.icon data-icon="inline-start" />
+                <item.icon
+                  weight={page === item.name ? 'fill' : 'regular'}
+                  data-icon="inline-start"
+                  className="hidden min-[400px]:inline-block"
+                />
                 {item.name}
               </Button>
             ))}
           </nav>
-        </header>
-        <main className="mx-auto flex max-w-7xl flex-col gap-8 px-4 py-7 sm:px-8 md:py-10 lg:px-12">
-          <div className="flex flex-wrap items-start justify-between gap-4">
-            <div className="flex flex-col gap-2">
-              <div className="mb-1 flex items-center gap-2 text-xs text-muted-foreground">
-                <span>Workspace</span>
-                <span>/</span>
-                <span className="text-foreground">{page}</span>
-              </div>
-              <h1 className="text-3xl font-semibold tracking-tight">
-                {page === 'Overview' ? 'Everything, in perspective.' : page}
-              </h1>
-              <p className="max-w-xl text-sm text-muted-foreground">{descriptions[page]}</p>
-            </div>
-            <Button onClick={() => setEditor({ kind: 'new' })}>
+          <div className="ml-auto flex items-center gap-1">
+            {isDemo && (
+              <>
+                <Badge variant="outline">Demo</Badge>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => {
+                    setEditor(null)
+                    setDeleting([])
+                    setPage('Overview')
+                    window.dispatchEvent(new Event('subs:demo-reset'))
+                  }}
+                >
+                  Reset demo
+                </Button>
+              </>
+            )}
+            <Button
+              variant="ghost"
+              size="icon"
+              aria-label="Refresh"
+              title="Refresh"
+              onClick={() => void store.refresh()}
+              disabled={store.loading}
+            >
+              <ArrowClockwiseIcon />
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              aria-label="Keyboard shortcuts"
+              title="Keyboard shortcuts (?)"
+              onClick={() => setShortcuts(true)}
+              className="hidden sm:inline-flex"
+            >
+              <KeyboardIcon />
+            </Button>
+            {!store.status.authDisabled && (
+              <Button
+                variant="ghost"
+                size="icon"
+                aria-label="Lock workspace"
+                title="Lock workspace"
+                onClick={() => void lock()}
+                disabled={locking}
+              >
+                <LockKeyIcon />
+              </Button>
+            )}
+          </div>
+        </div>
+      </header>
+      <div>
+        <main id="main" className="subs-container flex flex-col gap-7 py-7 sm:py-10">
+          <div className="flex items-center justify-between gap-3">
+            <h1 className="min-w-0 break-words text-2xl font-semibold tracking-tight">
+              {page === 'Overview' ? 'Subscriptions' : page}
+            </h1>
+            <Button aria-label="Add subscription" onClick={() => setEditor({ kind: 'new' })}>
               <PlusIcon data-icon="inline-start" />
-              Add subscription<kbd className="ml-2 hidden text-[10px] opacity-70 lg:inline">N</kbd>
+              <span className="hidden sm:inline">Add subscription</span>
+              <span className="sm:hidden">Add</span>
+              <kbd className="ml-2 hidden text-xs opacity-70 lg:inline">N</kbd>
             </Button>
           </div>
           {store.error && (
@@ -340,18 +340,17 @@ export function SubsApp() {
           )}
           {missing && (
             <Notice title="Some currencies cannot be converted">
-              Exchange rates are unavailable for part of your collection. Summary totals are partial; original
-              subscription prices are still shown accurately.
+              Converted estimates are partial. Native-currency totals are shown below.
             </Notice>
           )}
-          {store.rates?.stale && (
+          {store.rates?.stale && !missing && !isDemo && (
             <Notice title={store.rates.updatedAt ? 'Using saved exchange rates' : 'Exchange rates unavailable'}>
               {store.rates.updatedAt
-                ? 'Your exchange rates may be out of date. Estimates can differ from your actual charges.'
-                : 'Converted totals are unavailable for mixed currencies. Original-currency amounts remain accurate.'}
+                ? 'Converted estimates use older rates.'
+                : 'Native-currency totals are shown without conversion.'}
             </Notice>
           )}
-          {page !== 'Settings' && (
+          {page !== 'Settings' && subscriptions.length > 0 && (
             <Summary subscriptions={subscriptions} currency={preferences.currency} rates={store.rates} />
           )}
           {page === 'Overview' && (
@@ -361,6 +360,11 @@ export function SubsApp() {
               rates={store.rates}
               onAdd={() => setEditor({ kind: 'new' })}
               onTemplates={() => setStarters(true)}
+              onTemplate={(template) => setEditor({ kind: 'new', template })}
+              onImport={() => {
+                setPage('Settings')
+                setTimeout(() => document.getElementById('backup-import')?.click(), 0)
+              }}
               onEdit={(subscription) => setEditor({ kind: 'edit', subscription })}
               onDelete={requestDelete}
               onPause={pause}
@@ -384,16 +388,6 @@ export function SubsApp() {
               onLock={lock}
             />
           )}
-          <footer className="flex flex-wrap items-center justify-between gap-3 border-t pt-5 text-xs text-muted-foreground">
-            <span>
-              Thoughtfully tracked. Entirely yours.
-              {store.rates?.updatedAt && ` · FX: Frankfurter, ${new Date(store.rates.updatedAt).toLocaleDateString()}`}
-            </span>
-            <Button variant="ghost" size="sm" onClick={() => void store.refresh()} disabled={store.loading}>
-              <ArrowClockwiseIcon data-icon="inline-start" />
-              {store.loading ? 'Refreshing…' : 'Refresh'}
-            </Button>
-          </footer>
         </main>
       </div>
       {editor && (
@@ -415,10 +409,8 @@ export function SubsApp() {
         <Dialog open onOpenChange={setStarters}>
           <DialogContent className="max-h-[85svh] overflow-y-auto sm:max-w-xl">
             <DialogHeader>
-              <DialogTitle>A familiar place to start</DialogTitle>
-              <DialogDescription>
-                Choose a service. You’ll add your own price and plan details. Nothing is added until you save.
-              </DialogDescription>
+              <DialogTitle>Choose a service</DialogTitle>
+              <DialogDescription>Add your own plan and price.</DialogDescription>
             </DialogHeader>
             <div className="grid gap-2 sm:grid-cols-2">
               {templates.map((item) => (
@@ -444,7 +436,7 @@ export function SubsApp() {
         <Dialog open onOpenChange={setShortcuts}>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>A little faster</DialogTitle>
+              <DialogTitle>Keyboard shortcuts</DialogTitle>
               <DialogDescription>Shortcuts work when you’re not typing in a field.</DialogDescription>
             </DialogHeader>
             <dl className="flex flex-col gap-4">

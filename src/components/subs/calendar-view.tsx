@@ -47,7 +47,7 @@ export function CalendarView({
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
               <CardTitle>{month.toLocaleDateString(undefined, { month: 'long', year: 'numeric' })}</CardTitle>
-              <CardDescription>A little foresight for your finances.</CardDescription>
+              <CardDescription>Payments and trial deadlines.</CardDescription>
             </div>
             <div className="flex items-center gap-1">
               <Button variant="outline" size="icon" aria-label="Previous month" onClick={() => changeMonth(-1)}>
@@ -149,7 +149,7 @@ export function CalendarView({
                 </button>
               ))
             ) : (
-              <p className="py-8 text-sm text-muted-foreground">No payments scheduled. A little breathing room.</p>
+              <p className="py-8 text-sm text-muted-foreground">No scheduled payments or trial deadlines.</p>
             )}
           </div>
         </CardContent>

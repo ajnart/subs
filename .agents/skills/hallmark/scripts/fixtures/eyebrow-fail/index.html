@@ -1,0 +1,118 @@
+<!doctype html>
+<!--
+  Gate 54 fixture: MUST FAIL, six times.
+
+  Every case here was invisible to the pre-1.3 detector, which keyed on
+  `grid-template-columns` in the CSS and so only ever saw one geometry.
+  Assertion (run from this directory):
+
+    node ../../sloplint.mjs . --json | node -e "let s='';process.stdin.on('data',d=>s+=d).on('end',()=>console.log(JSON.parse(s).findings.filter(f=>f.gate==='54'&&f.grade==='FAIL').length))"
+    # expected: 6
+
+  Scoped to gate 54 on purpose: this file is deliberately slop in other ways too.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gate 54 eyebrow fixture (must fail)</title>
+<style>
+/* Hallmark · macrostructure: fixture · tone: n/a · anchor hue: 250 · hero: Settled/H1 */
+/* Hallmark · pre-emit critique: P3 H3 E3 S3 R3 V3 · weakest: all - this is a fixture */
+:root {
+  --color-paper: oklch(97% 0.006 250); --color-ink: oklch(20% 0.02 250);
+  --color-muted: oklch(52% 0.015 250);
+  --font-display: "Fraunces", serif; --font-body: "Public Sans", sans-serif;
+  --font-label: "Geist Mono", monospace;
+  --text-xs: 0.75rem; --tracking-label: 0.12em;
+}
+html, body { overflow-x: clip; }
+body { background: var(--color-paper); color: var(--color-ink); font-family: var(--font-body); }
+h1, h2, h3 { font-family: var(--font-display); }
+
+/* 1: flex column. No grid anywhere; the old check could not see this. */
+.a__head { display: flex; flex-direction: column; gap: 0.5rem; }
+.a__eyebrow { font-family: var(--font-label); text-transform: uppercase;
+  letter-spacing: var(--tracking-label); font-size: var(--text-xs); color: var(--color-muted); }
+
+/* 2: plain block stack, and a class name outside the label vocabulary.
+       Caught by resolved CSS alone: uppercase + tracking + small size. */
+.b__strand { text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.75rem;
+  color: var(--color-muted); }
+
+/* 3: the classic side-by-side grid. Regression guard for the old behaviour. */
+.c__head { display: grid; grid-template-columns: minmax(0, 0.4fr) minmax(0, 1fr); gap: 2rem; }
+
+/* 4: multi-column head declared ONLY inside a max-width block. The old check
+       skipped every max-width rule, so this shape was a free pass. */
+@media (max-width: 48rem) {
+  .d__head { display: grid; grid-template-columns: 1fr 2fr; }
+}
+
+/* 5: class-less heading. The old check required a semantic match on the head
+       wrapper's own classes to even look. */
+.e__mark { font-family: var(--font-label); text-transform: uppercase;
+  letter-spacing: 0.1em; font-size: 0.75rem; }
+
+/* 6: "overline" was not in the old vocabulary at all. */
+.overline { font-size: 0.75rem; letter-spacing: 0.16em; text-transform: uppercase; }
+</style>
+</head>
+<body>
+
+<!-- 1 · flex column stack -->
+<section>
+  <div class="a__head">
+    <p class="a__eyebrow">01 · The tour</p>
+    <h2>Everything in one pass</h2>
+  </div>
+  <p>Body copy.</p>
+</section>
+
+<!-- 2 · plain block stack, non-vocabulary class, CSS signals only -->
+<section>
+  <div>
+    <p class="b__strand">Weather and tides</p>
+    <h2>Read the water before you launch</h2>
+  </div>
+  <p>Body copy.</p>
+</section>
+
+<!-- 3 · side-by-side grid (the only shape the old gate caught) -->
+<section>
+  <div class="c__head">
+    <span class="eyebrow">02 / Features</span>
+    <h2>What it does</h2>
+  </div>
+  <p>Body copy.</p>
+</section>
+
+<!-- 4 · two-column head hidden inside a max-width query -->
+<section>
+  <div class="d__head">
+    <span class="kicker">Chapter three</span>
+    <h2>The long crossing</h2>
+  </div>
+  <p>Body copy.</p>
+</section>
+
+<!-- 5 · class-less heading under a labelled span -->
+<section>
+  <div>
+    <span class="e__mark">Introducing</span>
+    <h2>A quieter way to ship</h2>
+  </div>
+  <p>Body copy.</p>
+</section>
+
+<!-- 6 · the word the old vocabulary never knew -->
+<section>
+  <div>
+    <p class="overline">Pricing</p>
+    <h2>Pay for what you send</h2>
+  </div>
+  <p>Body copy.</p>
+</section>
+
+</body>
+</html>

@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -119,7 +118,6 @@ export function SubscriptionForm({
         subscription?.id,
         subscription ? draftRevision : undefined,
       )
-      toast.success(subscription ? 'Subscription updated' : 'Subscription added')
       onClose()
     } catch (cause) {
       setError(errorMessage(cause))
@@ -168,9 +166,7 @@ export function SubscriptionForm({
       <DialogContent className="max-h-[90svh] overflow-y-auto sm:max-w-xl">
         <DialogHeader>
           <DialogTitle>{subscription ? 'Edit subscription' : 'Add a subscription'}</DialogTitle>
-          <DialogDescription>
-            One less thing to keep in your head. Add the details from your own plan.
-          </DialogDescription>
+          <DialogDescription>Enter your plan details.</DialogDescription>
         </DialogHeader>
         <form id="subscription-form" onSubmit={submit}>
           <FieldGroup>
@@ -186,7 +182,7 @@ export function SubscriptionForm({
                 autoFocus
               />
             </Field>
-            <FieldGroup className="grid grid-cols-2 gap-4">
+            <FieldGroup className="grid grid-cols-1 gap-4 min-[400px]:grid-cols-2">
               <Field data-invalid={Boolean(error) && !price}>
                 <FieldLabel htmlFor="price">Price per billing cycle</FieldLabel>
                 <Input
@@ -238,7 +234,7 @@ export function SubscriptionForm({
                   value={form.nextPaymentDate}
                   onChange={(event) => change('nextPaymentDate', event.target.value)}
                 />
-                <FieldDescription>Leave blank to exclude this plan from renewal forecasts.</FieldDescription>
+                <FieldDescription>Optional. No date, no forecast.</FieldDescription>
               </Field>
               <Field>
                 <FieldLabel htmlFor="category">Category</FieldLabel>
@@ -265,52 +261,59 @@ export function SubscriptionForm({
                   value={form.status}
                   onChange={(value) => change('status', value as SubscriptionStatus)}
                 />
-                <FieldDescription>
-                  Tracking only. Changing status does not cancel your plan with the provider.
-                </FieldDescription>
+                <FieldDescription>Tracking only. Cancel plans with the provider.</FieldDescription>
               </Field>
             </FieldGroup>
-            <Field>
-              <FieldLabel htmlFor="domain">
-                Website <span className="text-muted-foreground">(optional)</span>
-              </FieldLabel>
-              <Input
-                id="domain"
-                placeholder="spotify.com"
-                value={form.domain}
-                onChange={(event) => change('domain', event.target.value)}
-                maxLength={2048}
-              />
-              {website && (
-                <FieldDescription>
-                  <a href={website} target="_blank" rel="noopener noreferrer" className="underline underline-offset-4">
-                    Open service website ↗
-                  </a>
-                </FieldDescription>
-              )}
-            </Field>
-            <Field>
-              <FieldLabel htmlFor="trial">
-                Trial ends <span className="text-muted-foreground">(optional)</span>
-              </FieldLabel>
-              <Input
-                id="trial"
-                type="date"
-                value={form.trialEndsAt ?? ''}
-                onChange={(event) => change('trialEndsAt', event.target.value || null)}
-              />
-              <FieldDescription>Keep the deadline visible before your trial turns into a charge.</FieldDescription>
-            </Field>
-            <Field>
-              <FieldLabel htmlFor="notes">Notes</FieldLabel>
-              <Textarea
-                id="notes"
-                placeholder="Plan details, account email, or a reminder to yourself…"
-                value={form.notes}
-                onChange={(event) => change('notes', event.target.value)}
-                maxLength={10000}
-              />
-            </Field>
+            <details className="subs-disclosure">
+              <summary>Website, trial & notes</summary>
+              <FieldGroup className="pt-4">
+                <Field>
+                  <FieldLabel htmlFor="domain">
+                    Website <span className="text-muted-foreground">(optional)</span>
+                  </FieldLabel>
+                  <Input
+                    id="domain"
+                    placeholder="spotify.com"
+                    value={form.domain}
+                    onChange={(event) => change('domain', event.target.value)}
+                    maxLength={2048}
+                  />
+                  {website && (
+                    <FieldDescription>
+                      <a
+                        href={website}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="underline underline-offset-4"
+                      >
+                        Open website
+                      </a>
+                    </FieldDescription>
+                  )}
+                </Field>
+                <Field>
+                  <FieldLabel htmlFor="trial">
+                    Trial ends <span className="text-muted-foreground">(optional)</span>
+                  </FieldLabel>
+                  <Input
+                    id="trial"
+                    type="date"
+                    value={form.trialEndsAt ?? ''}
+                    onChange={(event) => change('trialEndsAt', event.target.value || null)}
+                  />
+                </Field>
+                <Field>
+                  <FieldLabel htmlFor="notes">Notes</FieldLabel>
+                  <Textarea
+                    id="notes"
+                    placeholder="Plan details or account email"
+                    value={form.notes}
+                    onChange={(event) => change('notes', event.target.value)}
+                    maxLength={10000}
+                  />
+                </Field>
+              </FieldGroup>
+            </details>
             {error && (
               <Notice
                 title={conflict ? 'This collection changed while you were editing' : 'Could not save subscription'}
@@ -318,10 +321,7 @@ export function SubscriptionForm({
                 <p>{error}</p>
                 {conflict && (
                   <>
-                    <p>
-                      Your input is preserved. Review the current server version before making another change; nothing
-                      has been overwritten.
-                    </p>
+                    <p>Your draft is unchanged. Review the latest version before saving.</p>
                     <Button
                       type="button"
                       variant="outline"
@@ -355,10 +355,7 @@ export function SubscriptionForm({
                     </div>
                   ))}
                 </dl>
-                <p>
-                  Your draft is still in the form above. Loading this version discards that draft, then lets you edit
-                  the latest details.
-                </p>
+                <p>Loading this version replaces your unsaved draft.</p>
                 <Button type="button" variant="outline" size="sm" onClick={useLatest}>
                   Load latest details into form
                 </Button>
@@ -369,32 +366,34 @@ export function SubscriptionForm({
         {subscription && (
           <>
             <Separator />
-            <section aria-label="Recorded price changes" className="flex flex-col gap-2">
-              <h3 className="text-sm font-medium">Recorded prices</h3>
-              <p className="text-xs text-muted-foreground">Changes saved in Subs, not a history of payments.</p>
-              {historyLoading && (
-                <p className="text-xs text-muted-foreground" role="status">
-                  Loading recorded prices…
-                </p>
-              )}
-              {historyError && (
-                <p className="text-xs text-destructive">Could not load recorded prices: {historyError}</p>
-              )}
-              {!historyLoading && !historyError && !history.length && (
-                <p className="text-xs text-muted-foreground">No price records yet.</p>
-              )}
-              <ul className="flex max-h-32 flex-col gap-2 overflow-y-auto">
-                {history.map((record) => (
-                  <li
-                    key={`${record.date}-${record.currency}-${record.price}`}
-                    className="flex justify-between gap-3 text-xs"
-                  >
-                    <span className="text-muted-foreground">{new Date(record.date).toLocaleString()}</span>
-                    <span>{formatMoney(record.price, record.currency)}</span>
-                  </li>
-                ))}
-              </ul>
-            </section>
+            <details className="subs-disclosure">
+              <summary>Recorded prices</summary>
+              <section aria-label="Recorded price changes" className="flex flex-col gap-2 pt-3">
+                <p className="text-xs text-muted-foreground">Recorded changes, not payments.</p>
+                {historyLoading && (
+                  <p className="text-xs text-muted-foreground" role="status">
+                    Loading recorded prices…
+                  </p>
+                )}
+                {historyError && (
+                  <p className="text-xs text-destructive">Could not load recorded prices: {historyError}</p>
+                )}
+                {!historyLoading && !historyError && !history.length && (
+                  <p className="text-xs text-muted-foreground">No price records yet.</p>
+                )}
+                <ul className="flex max-h-32 flex-col gap-2 overflow-y-auto">
+                  {history.map((record) => (
+                    <li
+                      key={`${record.date}-${record.currency}-${record.price}`}
+                      className="flex justify-between gap-3 text-xs"
+                    >
+                      <span className="text-muted-foreground">{new Date(record.date).toLocaleString()}</span>
+                      <span>{formatMoney(record.price, record.currency)}</span>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            </details>
           </>
         )}
         <DialogFooter>

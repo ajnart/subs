@@ -1,8 +1,8 @@
 import { createHash, randomBytes, scrypt, timingSafeEqual } from 'node:crypto'
 import { promisify } from 'node:util'
 import type { Status } from '../lib/types'
+import { HttpError } from '../lib/validation'
 import { type Database, getMeta, setMeta, transaction } from './database'
-import { HttpError } from './validation'
 
 const derive = promisify(scrypt)
 const sessionTtl = 7 * 24 * 60 * 60 * 1000

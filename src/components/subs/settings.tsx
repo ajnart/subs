@@ -17,7 +17,10 @@ import { Field, FieldDescription, FieldGroup, FieldLabel } from '@/components/ui
 import { Input } from '@/components/ui/input'
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 import { api, collectionApi, errorMessage, isRevisionConflict, revisionHeaders } from '@/lib/api'
-import type { AppData, ImportPreview, Preferences, Subscription } from '@/lib/types'
+import { mergeImportTargets } from '@/lib/import'
+import { MAX_BACKUP_BYTES } from '@/lib/limits'
+import { isDemo } from '@/lib/mode'
+import type { AppData, ImportMatch, ImportPreview, Preferences, Subscription } from '@/lib/types'
 import { Choice, currencies, Notice } from './shared'
 
 type ImportState = {
@@ -25,7 +28,7 @@ type ImportState = {
   preview: ImportPreview
   legacy: boolean
   revision: string
-  rows: { key: string; subscription: Subscription }[]
+  rows: { key: string; subscription: Subscription; matches: ImportMatch[] }[]
 }
 
 export function Settings({
@@ -60,7 +63,16 @@ export function Settings({
   const [confirmed, setConfirmed] = useState(false)
   const [clearLegacy, setClearLegacy] = useState(false)
   const file = useRef<HTMLInputElement>(null)
+  let mergeError = ''
+  if (importing && mode === 'merge') {
+    try {
+      mergeImportTargets(importing.preview)
+    } catch (cause) {
+      mergeError = errorMessage(cause)
+    }
+  }
   useEffect(() => {
+    if (isDemo) return
     try {
       for (let index = 0; index < localStorage.length; index += 1) {
         if (localStorage.key(index) === 'subscription-storage') {
@@ -135,6 +147,12 @@ export function Settings({
     setConfirmed(false)
     setClearLegacy(false)
     setImportConflict(false)
+    const matches = new Map<number, ImportMatch[]>()
+    for (const match of result.data.matches) {
+      const candidates = matches.get(match.incomingIndex) ?? []
+      candidates.push(match)
+      matches.set(match.incomingIndex, candidates)
+    }
     setImporting({
       data,
       preview: result.data,
@@ -143,6 +161,7 @@ export function Settings({
       rows: result.data.subscriptions.map((subscription, index) => ({
         key: `${subscription.id}-${index}`,
         subscription,
+        matches: matches.get(index) ?? [],
       })),
     })
   }
@@ -151,7 +170,7 @@ export function Settings({
     setBusy(true)
     setError('')
     try {
-      if (selected.size > 2 * 1024 * 1024) throw new Error('Choose a JSON backup smaller than 2 MB.')
+      if (selected.size > MAX_BACKUP_BYTES) throw new Error('Choose a JSON backup no larger than 2 MiB.')
       const data: unknown = JSON.parse(await selected.text())
       await preview(data, false)
     } catch (cause) {
@@ -162,6 +181,7 @@ export function Settings({
     }
   }
   const migrateLegacy = async () => {
+    if (isDemo) return
     setBusy(true)
     setError('')
     try {
@@ -178,7 +198,7 @@ export function Settings({
     }
   }
   const importBackup = async () => {
-    if (!importing || importConflict) return
+    if (!importing || importConflict || mergeError) return
     setBusy(true)
     setError('')
     try {
@@ -187,7 +207,7 @@ export function Settings({
         headers: revisionHeaders(importing.revision),
         body: JSON.stringify({ data: importing.data, mode }),
       })
-      if (importing.legacy && clearLegacy) {
+      if (!isDemo && importing.legacy && clearLegacy) {
         try {
           localStorage.removeItem('subscription-storage')
           localStorage.removeItem('preferences-storage')
@@ -236,8 +256,8 @@ export function Settings({
       {preferencesReview && (
         <Notice title="Current server preferences">
           <p>
-            Currency: {preferencesReview.preferences.currency} · Monthly budget:{' '}
-            {preferencesReview.preferences.monthlyBudget} · Appearance: {preferencesReview.preferences.theme}
+            Currency: {preferencesReview.preferences.currency}, monthly budget:{' '}
+            {preferencesReview.preferences.monthlyBudget}, appearance: {preferencesReview.preferences.theme}
           </p>
           <p>Loading these preferences discards your unsaved settings draft.</p>
           <Button
@@ -249,9 +269,9 @@ export function Settings({
           </Button>
         </Notice>
       )}
-      {legacy && (
+      {!isDemo && legacy && (
         <Notice title="An older Subs collection is on this browser">
-          <p>Keep your subscriptions together. Nothing is read or uploaded until you choose to preview it.</p>
+          <p>Browser data is read only when you preview it.</p>
           <Button variant="outline" size="sm" onClick={() => void migrateLegacy()} disabled={busy}>
             Read and preview browser collection
           </Button>
@@ -259,8 +279,8 @@ export function Settings({
       )}
       <Card>
         <CardHeader>
-          <CardTitle>A space that feels like yours</CardTitle>
-          <CardDescription>Your defaults, saved securely on your server.</CardDescription>
+          <CardTitle>Preferences</CardTitle>
+          <CardDescription>Currency, budget and appearance.</CardDescription>
         </CardHeader>
         <CardContent>
           <form id="preferences-form" onSubmit={save}>
@@ -282,7 +302,7 @@ export function Settings({
                       <option key={item} value={item} />
                     ))}
                   </datalist>
-                  <FieldDescription>Original subscription currencies stay unchanged.</FieldDescription>
+                  <FieldDescription>Original prices stay unchanged.</FieldDescription>
                 </Field>
                 <Field>
                   <FieldLabel htmlFor="monthly-budget">Monthly budget</FieldLabel>
@@ -314,7 +334,7 @@ export function Settings({
                   <ToggleGroupItem value="dark">Dark</ToggleGroupItem>
                   <ToggleGroupItem value="system">System</ToggleGroupItem>
                 </ToggleGroup>
-                <FieldDescription>Save to apply your preferred appearance on this device.</FieldDescription>
+                <FieldDescription>Applied when saved.</FieldDescription>
               </Field>
             </FieldGroup>
           </form>
@@ -328,8 +348,8 @@ export function Settings({
       </Card>
       <Card>
         <CardHeader>
-          <CardTitle>Your data. Your call.</CardTitle>
-          <CardDescription>Take a backup, move servers, or bring an older collection along.</CardDescription>
+          <CardTitle>Backups</CardTitle>
+          <CardDescription>JSON import and export.</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="flex flex-wrap gap-3">
@@ -337,7 +357,7 @@ export function Settings({
               <DownloadSimpleIcon data-icon="inline-start" />
               Export backup
             </Button>
-            <Button variant="outline" onClick={() => file.current?.click()} disabled={busy}>
+            <Button id="backup-import" variant="outline" onClick={() => file.current?.click()} disabled={busy}>
               <UploadSimpleIcon data-icon="inline-start" />
               Import backup
             </Button>
@@ -351,36 +371,34 @@ export function Settings({
             />
           </div>
           <p className="mt-4 text-xs text-muted-foreground">
-            JSON backups include current subscriptions and preferences, not PINs or price-change history. Every import
-            gets a preview before anything changes.
+            Includes subscriptions and preferences, not PINs or recorded price history. Imports require a preview.
           </p>
         </CardContent>
       </Card>
-      <Card>
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <ShieldCheckIcon className="size-5 text-primary" />
-            <CardTitle>Private by design</CardTitle>
-          </div>
-          <CardDescription>
-            No third-party service icons. No analytics. Your records live on your server.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <p className="text-sm text-muted-foreground">
-            {authDisabled
-              ? 'Authentication is disabled by your server operator. Anyone who can reach this server can access your collection.'
-              : 'Your six-digit PIN protects access. Lock your space when you step away.'}
-          </p>
-        </CardContent>
-        {!authDisabled && (
-          <CardFooter>
-            <Button variant="outline" onClick={() => void onLock()} disabled={busy}>
-              Lock this session
-            </Button>
-          </CardFooter>
-        )}
-      </Card>
+      {!isDemo && (
+        <Card>
+          <CardHeader>
+            <div className="flex items-center gap-2">
+              <ShieldCheckIcon className="size-5 text-primary" />
+              <CardTitle>Security</CardTitle>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm text-muted-foreground">
+              {authDisabled
+                ? 'Authentication is disabled by your server operator. Anyone who can reach this server can access your collection.'
+                : 'PIN protection is enabled.'}
+            </p>
+          </CardContent>
+          {!authDisabled && (
+            <CardFooter>
+              <Button variant="outline" onClick={() => void onLock()} disabled={busy}>
+                Lock this session
+              </Button>
+            </CardFooter>
+          )}
+        </Card>
+      )}
       {importing && (
         <Dialog
           open
@@ -390,7 +408,7 @@ export function Settings({
         >
           <DialogContent className="max-h-[90svh] overflow-y-auto">
             <DialogHeader>
-              <DialogTitle>Check before you bring it in</DialogTitle>
+              <DialogTitle>Import preview</DialogTitle>
               <DialogDescription>Review your backup. No changes have been made yet.</DialogDescription>
             </DialogHeader>
             <div className="flex flex-col gap-4">
@@ -399,13 +417,22 @@ export function Settings({
                 <Badge variant="outline">{importing.preview.duplicates} duplicates</Badge>
               </div>
               <div className="max-h-40 overflow-y-auto rounded-md border p-3">
-                {importing.rows.map(({ key, subscription: item }) => (
-                  <p key={key} className="py-1 text-sm">
-                    {item.name}{' '}
-                    <span className="text-muted-foreground">
-                      · {item.currency} {item.price} / {item.billingCycle}
-                    </span>
-                  </p>
+                {importing.rows.map(({ key, subscription: item, matches }) => (
+                  <div key={key} className="flex flex-col gap-1 py-2 text-sm">
+                    <p>
+                      {item.name}{' '}
+                      <span className="text-muted-foreground">
+                        {item.currency} {item.price} / {item.billingCycle}
+                      </span>
+                    </p>
+                    {matches.map((match) => (
+                      <p key={match.existingId} className="text-xs text-muted-foreground">
+                        Matches <strong className="font-medium text-foreground">{match.existingName}</strong>
+                        {match.reason === 'id' ? ' by ID' : ' by service'}
+                        {match.conflict && ' — conflicting target'}
+                      </p>
+                    ))}
+                  </div>
                 ))}
               </div>
               {importing.preview.warnings.length > 0 && (
@@ -446,7 +473,7 @@ export function Settings({
                     <FieldLabel htmlFor="confirm-replace">I understand this replaces my entire collection.</FieldLabel>
                   </Field>
                 )}
-                {importing.legacy && (
+                {!isDemo && importing.legacy && (
                   <Field orientation="horizontal">
                     <Checkbox
                       id="clear-legacy"
@@ -459,6 +486,7 @@ export function Settings({
                   </Field>
                 )}
               </FieldGroup>
+              {mergeError && <Notice title="Choose a different import mode">{mergeError}</Notice>}
               {error && <Notice>{error}</Notice>}
               {importConflict && (
                 <Notice title="This import preview is out of date">
@@ -478,7 +506,7 @@ export function Settings({
               </Button>
               <Button
                 onClick={() => void importBackup()}
-                disabled={busy || importConflict || (mode === 'replace' && !confirmed)}
+                disabled={busy || importConflict || Boolean(mergeError) || (mode === 'replace' && !confirmed)}
               >
                 {busy ? 'Importing…' : 'Confirm import'}
               </Button>

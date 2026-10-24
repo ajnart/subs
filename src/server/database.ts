@@ -1,12 +1,14 @@
 import { mkdir } from 'node:fs/promises'
 import { resolve } from 'node:path'
 import { useDatabase as getDatabase } from 'nitro/database'
+import { MAX_BACKUP_BYTES } from '../lib/limits'
 import type { AppData, Preferences, Subscription } from '../lib/types'
-import { assertMoneyPrecision, exponent, HttpError, toMinor } from './validation'
+import { assertMoneyPrecision, defaultPreferences, exponent, HttpError, toMinor } from '../lib/validation'
+import { serializeBackup } from './backup'
 
 export type Database = ReturnType<typeof getDatabase>
 
-export const defaultPreferences: Preferences = { currency: 'USD', monthlyBudget: 0, theme: 'system' }
+export { defaultPreferences } from '../lib/validation'
 
 let initialized: Promise<Database> | undefined
 let queue: Promise<void> = Promise.resolve()
@@ -95,6 +97,12 @@ export async function mutate(db: Database, request: Request, operation: () => Pr
     if (expected !== (await revisionTag(db)))
       throw new HttpError(409, 'The collection changed on another device. Reload before saving.')
     const response = await operation()
+    if (Buffer.byteLength(serializeBackup(await readData(db)), 'utf8') > MAX_BACKUP_BYTES) {
+      throw new HttpError(
+        413,
+        'The collection exceeds the 2 MiB portable backup limit. Shorten notes, remove records, or import a smaller replacement backup. Nothing was saved; existing data can still be exported for recovery.',
+      )
+    }
     await setMeta(db, 'collection_revision', String(Number((await getMeta(db, 'collection_revision')) ?? '0') + 1))
     response.headers.set('ETag', await revisionTag(db))
     return response

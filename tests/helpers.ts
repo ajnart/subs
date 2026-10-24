@@ -49,7 +49,10 @@ export async function mockRates(context: BrowserContext, rates: Record<string, n
 export const test = base.extend<{ resetCollection: undefined }, { authenticatedState: StorageState }>({
   authenticatedState: [
     async ({ playwright }, use) => {
-      const request = await playwright.request.newContext({ baseURL: origin })
+      const request = await playwright.request.newContext({
+        baseURL: origin,
+        storageState: { cookies: [], origins: [] },
+      })
       await authenticate(request)
       await use(await request.storageState())
       await request.dispose()

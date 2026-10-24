@@ -1,7 +1,7 @@
 # 05 — Money and recurrence rules
 
 Status: ready-for-agent
-Progress: claimed
+Progress: resolved
 Type: task
 Blocked by: 03
 
@@ -21,3 +21,7 @@ Give every view the same trustworthy Price and calendar calculations.
 ## Comments
 
 Exercise edge cases through existing external seams rather than inventing a separate calculation-test framework.
+
+## Completion evidence — October 24, 2026
+
+Shared validation and `src/lib/subscriptions.ts` implement minor-unit prices, date-only anchors and common projections. Existing external tests pass for invalid precision, zero-/three-decimal currencies, daily/weekly/quarterly estimates, January 31 clamping and leap-day restoration. Lifecycle exclusions, optional dates and missing-FX native totals pass their existing browser flows. No extra calculation-test framework or fabricated rates were introduced.

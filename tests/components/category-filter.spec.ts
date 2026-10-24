@@ -23,7 +23,7 @@ test('category, lifecycle, cycle and text filters compose and can be cleared', a
   await page.getByRole('combobox', { name: 'Filter by billing cycle' }).click()
   await page.getByRole('option', { name: 'Yearly', exact: true }).click()
   await page.getByRole('textbox', { name: 'Search subscriptions' }).fill('no matches')
-  await expect(page.getByText('No matches. No worries.')).toBeVisible()
+  await expect(page.getByText('No matching subscriptions', { exact: true })).toBeVisible()
   await page.getByRole('button', { name: 'Clear filters' }).click()
   await expect(rows).toHaveCount(2)
 })

@@ -1,7 +1,7 @@
 # 09 — Quick entry and editing
 
 Status: ready-for-agent
-Progress: claimed
+Progress: resolved
 Type: task
 Blocked by: 08
 
@@ -21,3 +21,7 @@ Make adding and correcting a Subscription fast and dependable.
 ## Comments
 
 New Collection defaults remain empty; optional templates arrive separately.
+
+## Completion evidence — October 24, 2026
+
+`subscription-form.tsx` uses one validated manual/template/edit form with optional dates and disclosed link/trial/notes fields. Save failures retain drafts and their original revision. The existing create/edit/reload test passes, as do rejected unsafe-link, money and date cases. At 320px the payment field spans 256px in one column; keyboard dialog flows, cancel and focus restoration were exercised in the UI review and existing tests.

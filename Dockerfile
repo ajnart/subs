@@ -5,7 +5,7 @@ ENV DATA_DIR=/data
 COPY package.json bun.lock ./
 RUN bun install --frozen-lockfile --linker hoisted
 COPY . .
-RUN bun run build
+RUN bun run build:server
 
 FROM oven/bun:1.4.3-alpine AS runtime
 
