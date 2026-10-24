@@ -1,4 +1,4 @@
-FROM oven/bun:1.4.3-alpine AS build
+FROM --platform=$BUILDPLATFORM oven/bun:1.4.3-alpine AS build
 
 WORKDIR /app
 ENV DATA_DIR=/data

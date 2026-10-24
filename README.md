@@ -32,6 +32,12 @@ Choose several service presets or paste website links, then enter each plan's pr
 
 Use **Add subscription** for a single plan, with a service preview and optional custom icon URL. You can move a new draft into quick setup without losing its details.
 
+## Features
+
+Currency-aware prices, active/paused/cancelled tracking, anchored renewals, trials, and calendar. Search, table view, bulk actions, budgets, and savings scenarios help manage the Collection. Totals are projections; recorded price changes are not payment records.
+
+[Features, shortcuts, and limits](docs/features.md)
+
 ## Keyboard first
 
 Press **⌘/Ctrl K** to search subscriptions, starter templates, and commands. Hold **⌘ or Ctrl** to reveal shortcuts; use arrows or J/K between subscriptions and Enter to manage one. **?** shows the full shortcut list. The speaker button controls TIKS interaction sounds on this device.
@@ -62,14 +68,20 @@ Open http://localhost:5173. `bun run lint`, `bun run typecheck`, and `bun run te
 
 ## Static demo
 
+The separate `DEMO_MODE` build uses sample data stored only in your browser, illustrative exchange rates, and no backend or PIN. Reset restores the samples. Skipping PIN is built into this browser-only target, not private-server `DISABLE_AUTH`.
+
 ```sh
-bun run dev:demo
-bun run deploy:demo
+bun run build:demo
+bun run preview:demo
 ```
 
-The demo uses sample data stored only in your browser, illustrative exchange rates, and no backend or PIN. Reset restores the samples. Wrangler builds and publishes `dist/demo` at `sub.ajnart.dev`; `subs.ajnart.dev` remains a compatibility alias. Ordinary local and Docker builds never publish.
+Preview the built static site with Wrangler Pages at http://127.0.0.1:4174. Use `bun run dev:demo` for Vite development at http://127.0.0.1:5174.
 
-The Checks workflow is configured for automatic `main` deployments and explicit manual demo deployments after application and Docker checks pass. Both require the repository's `CLOUDFLARE_API_TOKEN` Actions secret with scoped Cloudflare deployment permissions; without it, deployment stops at the credential preflight.
+`bun run deploy:demo` builds the demo and directly uploads `dist/demo` to Cloudflare Pages with `--branch main`. Root `wrangler.jsonc` sets `pages_build_output_dir`; there are no Pages Functions, backend, or bindings. Ordinary local and Docker builds never publish.
+
+`sub.ajnart.dev` is the primary target, with `subs.ajnart.dev` intended to remain a compatibility alias. The Pages custom-domain cutover is pending live verification. Browser data is separate for each hostname; export/import a backup to move demo edits.
+
+The Checks workflow gates `main` and explicit manual Pages deployments on application and Docker checks. It requires a `CLOUDFLARE_API_TOKEN` Actions secret scoped to the configured account with **Account → Cloudflare Pages → Edit** permission. That secret was absent at release preflight: automatic deployment remains blocked, and missing credentials fail before publishing. Local Wrangler OAuth does not enable CI deployment.
 
 ## Configuration
 

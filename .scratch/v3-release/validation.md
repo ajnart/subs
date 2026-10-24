@@ -36,3 +36,13 @@ Status: in progress
 - SHA-256: HTML `1be0213c3e399ac00c8838a759a5c3505fdbf8e4f8d020765f93fc1bb568fca5`; entry JS `729aa2e29ed35edc7926317682bec18ea8342477bbe5bf4353bcfa04f40fe219`; CSS `ecf411a8f035c8edeea127994e0f7e54b12304cd7ba6c09e22d79394431cce08`.
 
 Remote CI, live domain attachment and release publication remain pending. Earlier feature regressions are not presented as fresh live-release validation.
+
+### Pages follow-up
+
+- PR #50 merged to main at `63dbaaf3cc8ff55c15e83742fbc2de07031fb63c`. Main application and Docker checks passed; upload failed only at the missing-token preflight. The old multi-platform image run was canceled after its ARM64 Vite transform stalled for over 25 minutes; no successful image publication is claimed for it.
+- Full local existing suite: 27 passed, 29.4 seconds, zero retries. Lint/typecheck and both production builds pass with the Pages configuration.
+- Pages project `subs-demo` was created as a real direct-upload Pages project, production branch main, `subs-demo.pages.dev`. Wrangler's new-project Worker delegation was explicitly opted out during creation; subsequent uploads target the established Pages project normally.
+- Root `wrangler.jsonc` contains only Pages-compatible static-output settings; no Functions, Worker script, database or service bindings. CI uploads the validated artifact rather than rebuilding it.
+- Both ARM64 and AMD64 images build successfully with the native build-stage fix. On each architecture: health 200, anonymous Collection read 401, native target Bun/SQLite available, a 12.34-price record and session persist through restart and container replacement with the same volume. All 90 runtime artifact files were inspected by path, with no native extensions or executable/bin payloads; both real architecture runtimes execute the portable server successfully.
+- Pages local serving verifies nine sample cards with no PIN; zero-cost batch saves survive reload, reset returns nine samples, API requests are blocked and none captured. Mobile 390px has no overflow. An initial browser probe reloaded before save acknowledgement; repeating with the committed-save condition passes.
+- `sub.ajnart.dev` is registered on Pages but pending DNS verification. Local OAuth cannot edit DNS and the dashboard is signed out. The Operator was asked to add CNAME `sub` → `subs-demo.pages.dev` and a scoped Pages Edit Actions token, without sharing secrets in chat. The old plural Worker domain is not detached while primary verification is pending.

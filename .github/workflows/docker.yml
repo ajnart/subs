@@ -5,7 +5,7 @@ on:
     branches: [main]
     tags:
       - v*
-    
+
   workflow_dispatch:
 
 env:
@@ -15,6 +15,7 @@ env:
 jobs:
   build_and_push:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     permissions:
       packages: write
       contents: read

@@ -33,6 +33,7 @@ jobs:
         with:
           name: subs-demo
           path: dist/demo
+          if-no-files-found: error
           retention-days: 7
 
   docker:
@@ -65,10 +66,15 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         run: |
           if [ -z "$CLOUDFLARE_API_TOKEN" ]; then
-            echo "::error::Set the CLOUDFLARE_API_TOKEN Actions secret with scoped Cloudflare deployment permissions."
+            echo "::error::Set the CLOUDFLARE_API_TOKEN Actions secret with Cloudflare Pages Edit permission for the configured account."
             exit 1
           fi
+      - uses: actions/download-artifact@v8.0.2
+        with:
+          name: subs-demo
+          path: dist/demo
       - name: Deploy static demo
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-        run: bun run deploy:demo
+          CLOUDFLARE_ACCOUNT_ID: "71a8e70b7b1e301fca750fd6c6ae1f1d"
+        run: ./node_modules/.bin/wrangler pages deploy --branch main --commit-hash "$GITHUB_SHA"
