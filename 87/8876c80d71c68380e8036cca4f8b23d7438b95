@@ -1,0 +1,130 @@
+.scratch/keyboard-first/spec.md
+  h_d6e478ca18e517 1-61
+.scratch/keyboard-first/validation.md
+  h_d6e478ca18e517 1-57
+.scratch/rewrite/map.md
+  h_d6e478ca18e517 9-10
+.scratch/rewrite/spec.md
+  h_d6e478ca18e517 120,156
+README.md
+  h_d6e478ca18e517 17-30,79
+bun.lock
+  h_d6e478ca18e517 10,15,434-435,648-649
+demo/main.tsx
+  h_d6e478ca18e517 15
+docs/agents/architecture.md
+  h_d6e478ca18e517 5,46-49
+docs/self-hosting.md
+  h_d6e478ca18e517 11-18
+package.json
+  h_d6e478ca18e517 29,34
+public/reminders-sw.js
+  h_d6e478ca18e517 1-18
+public/service-icons/1password.svg
+  h_d6e478ca18e517 1
+public/service-icons/LICENSE-APACHE-2.0.txt
+  h_d6e478ca18e517 1-201
+public/service-icons/LICENSE-CC-BY-4.0.txt
+  h_d6e478ca18e517 1-396
+public/service-icons/PROVENANCE.md
+  h_d6e478ca18e517 1-31
+public/service-icons/amazon.svg
+  h_d6e478ca18e517 1
+public/service-icons/chatgpt.svg
+  h_d6e478ca18e517 1-10
+public/service-icons/disney-plus.svg
+  h_d6e478ca18e517 1
+public/service-icons/dropbox.svg
+  h_d6e478ca18e517 1
+public/service-icons/figma.svg
+  h_d6e478ca18e517 1
+public/service-icons/github.svg
+  h_d6e478ca18e517 1
+public/service-icons/google.svg
+  h_d6e478ca18e517 1
+public/service-icons/icloud.svg
+  h_d6e478ca18e517 1
+public/service-icons/netflix.svg
+  h_d6e478ca18e517 1
+public/service-icons/notion.svg
+  h_d6e478ca18e517 1
+public/service-icons/proton-mail.svg
+  h_d6e478ca18e517 1
+public/service-icons/spotify.svg
+  h_d6e478ca18e517 1-3
+public/service-icons/strava.svg
+  h_d6e478ca18e517 1
+public/service-icons/youtube.svg
+  h_d6e478ca18e517 1
+src/components/subs/app.tsx
+  h_d6e478ca18e517 10,29,34,38-39,42,45,48,53,65-67,71,80-81,88-89,92-95,97-144,235,259-265,268-274,278,292,297-299,322,330-343,349-350,361-362,374-375,386,391,429-430,436,440,451-466,474,500,518-523,526-528,531
+src/components/subs/auth.css
+  h_d6e478ca18e517 1-62
+src/components/subs/auth.tsx
+  h_d6e478ca18e517 3,11,13,15-31,35-39,46,49,51,58-66,72-74,79,84,95,98,104-107,113-118,134-135,140-152,155-165,173
+src/components/subs/command-palette.tsx
+  h_d6e478ca18e517 1-195
+src/components/subs/overview.tsx
+  h_d6e478ca18e517 21,35,37,51,56-58,102,120,153,173,177-178,181,183-184,186-188,191,205-209,343,368-372,375,377,381,394,406-413,455-461,464,472,488,493-499,537
+src/components/subs/reminders.tsx
+  h_d6e478ca18e517 1-131
+src/components/subs/service-cards.css
+  h_d6e478ca18e517 1-77
+src/components/subs/settings.tsx
+  h_d6e478ca18e517 24,42,50,381
+src/components/subs/shared.tsx
+  h_d6e478ca18e517 1-2,6,8,59,130-144,146-160
+src/components/subs/sound-toggle.tsx
+  h_d6e478ca18e517 1-25
+src/components/ui/command.tsx
+  h_d6e478ca18e517 1-37
+src/components/ui/input-otp.tsx
+  h_d6e478ca18e517 40,44,59
+src/hooks/use-keyboard.ts
+  h_d6e478ca18e517 1-168
+src/hooks/use-reminders.ts
+  h_d6e478ca18e517 1-107
+src/hooks/use-subs.ts
+  h_d6e478ca18e517 3,8-10,12,14,16-17,23-34,54,61,75-76,81
+src/lib/bootstrap.functions.ts
+  h_d6e478ca18e517 1-9
+src/lib/bootstrap.tsx
+  h_d6e478ca18e517 1-59
+src/lib/reminders.ts
+  h_d6e478ca18e517 1-180
+src/lib/service-icons.ts
+  h_d6e478ca18e517 1-33
+src/lib/sounds.ts
+  h_d6e478ca18e517 1-116
+src/lib/subscriptions.ts
+  h_d6e478ca18e517 24,101
+src/lib/view-transitions.ts
+  h_d6e478ca18e517 1-54
+src/routes/__root.tsx
+  h_d6e478ca18e517 1,18,45
+src/routes/index.tsx
+  h_d6e478ca18e517 3-4,6-19
+src/server/api.ts
+  h_d6e478ca18e517 18,63
+src/server/bootstrap.server.ts
+  h_d6e478ca18e517 1-30
+src/styles.css
+  h_d6e478ca18e517 5
+src/styles/interaction.css
+  h_d6e478ca18e517 1-58
+src/styles/keyboard.css
+  h_d6e478ca18e517 1-115
+tests/components/keyboard-shortcuts.spec.ts
+  h_d6e478ca18e517 6,8-11,18-31,42
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "878876c80d71c68380e8036cca4f8b23d7438b95",
+  "prompts": {},
+  "humans": {
+    "h_d6e478ca18e517": {
+      "author": "Thomas Camlong <thomas@ajnart.fr>"
+    }
+  }
+}
