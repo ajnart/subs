@@ -31,6 +31,7 @@ The coordinator claims this release through completion. GPT-6.1 Sol implementati
 - Latest user scope adds Hallmark-led UI polish, purposeful Magic UI/Aceternity components, lazy link previews, and a browser-only static demo deployed with Wrangler at subs.ajnart.dev. The private Docker target remains separate and protected by default.
 - Subsequent release steering selects `sub.ajnart.dev` as primary and retains the plural hostname as a compatibility alias. Publish a new major, `v3.0.0`, because v2 already exists; stop obsolete Vercel Git deployments without deleting the external project. Current release work and validation are tracked in `.scratch/v3-release/spec.md`.
 - The user then explicitly selected Cloudflare Pages for the PIN-free static DEMO_MODE build, authorized full existing-test and Docker verification, and requested concise Markdown feature docs without a website. PR #50 is merged; the focused Pages/container follow-up must also merge before the final v3 release. This supersedes the prior Worker-hosting choice, not the private-server boundary.
+- Latest hostname correction supersedes the earlier singular-primary/compatibility-alias steering above: `subs.ajnart.dev` is the only canonical hostname. The singular hostname is not a target or alias. The initial constraint was to preserve the old plural Worker deployment until the Pages custom-domain cutover was verified; current cutover evidence follows below.
 
 ## Execution order
 
@@ -111,3 +112,17 @@ Future exploratory candidates, not release commitments: provider price monitorin
 - [25 — Visual polish](issues/25-visual-polish.md): all three P2 review findings plus footer nit fixed and recaptured; Hallmark static exceptions remain explicit.
 - [26 — Static demo](issues/26-static-demo.md): API-blocked persistence, isolated reset/corrupt recovery and static build pass.
 - [27 — Deployment/screenshots](issues/27-demo-deployment.md): final demo published and HTTPS assets verified. GitHub application and Docker checks passed for implementation commit `aa70c37` on push and PR #50; automatic production deployment remains blocked on the scoped Actions secret.
+
+### Historical pre-cutover Pages release follow-up
+
+- Main `328902e` is live at https://subs-demo.pages.dev (deployment https://b2da0cfb.subs-demo.pages.dev). Nine cards, PIN-free access, zero API requests, batch creation, persistence, and reset were verified.
+- Main multiarch GHCR publication succeeded in 2m9s; all 27 existing tests, both builds, lint, and typecheck passed.
+- Only `subs.ajnart.dev` is canonical. It still points to the old Worker and has not been cut over to Pages. Reauthenticated MCP still fails with `requires login before it can register a client`, even after reconnecting and activating the credential. The scoped CI token remains absent; neither custom-domain activation nor automatic deployment is complete.
+
+### MCP authentication resolved and canonical Pages HTTPS verified
+
+- The user was correct: MCP authentication works. Account `71a8e70b7b1e301fca750fd6c6ae1f1d`, Pages project `subs-demo`, main `328902e`, and deployment `b2da0cfb` returning HTTP 200 were verified. The preceding MCP errors and old-Worker state are historical, not current blockers.
+- Registered `subs.ajnart.dev` as a Pages domain (ID prefix `9dfced2f`), detached only its old Worker custom-domain binding (ID prefix `3a37d7`), and created the CNAME (record ID prefix `4877c624`) to `subs-demo.pages.dev`, proxied with TTL 1. Unrelated Worker resources were not removed.
+- https://subs.ajnart.dev is live with a valid certificate. HTML, favicon, JS, CSS, and adapter bytes match the tested build. The live browser showed nine cards, no PIN, and zero API requests; adding two plans priced at zero and 12.34 produced eleven cards and persisted after reload.
+- The earlier 17:46 pending-validation snapshot is superseded: Pages domain status, verification and validation are all active; canonical HTTPS and the published artifact are verified.
+- Repository Actions secrets remain `[]`. Manual Pages publication is verified; automated Pages CI remains blocked on the scoped token. Publish the requested `v3.0.0` against the exact merged commit after the final PR merges, without claiming automatic deployment.

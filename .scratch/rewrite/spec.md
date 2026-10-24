@@ -80,7 +80,7 @@ Replace the running application with a responsive, service-centered Subs experie
 66. As a user, I want the previous interactive link-preview experience restored, so that I can inspect a public Service link on demand.
 67. As a visitor, I want a working public demo without a PIN or backend, so that I can try Subs immediately.
 68. As a demo user, I want local edits, import/export, and an explicit reset, so that I can explore without affecting another visitor or private Installation.
-69. As an Operator, I want the static demo deployed automatically to Cloudflare Pages with Wrangler at sub.ajnart.dev, retaining subs.ajnart.dev as a compatibility alias, so that the public version follows successful release builds.
+69. As an Operator, I want the static demo deployed automatically to Cloudflare Pages with Wrangler at subs.ajnart.dev as its only canonical hostname, so that the public version follows successful release builds.
 70. As a contributor, I want current application screenshots and a short README, so that setup and the product are clear without excessive documentation.
 
 ## Implementation Decisions
@@ -136,7 +136,7 @@ Replace the running application with a responsive, service-centered Subs experie
 - Restore lazy, user-activated link previews for safe public HTTP(S) URLs. Never request previews on page mount, preview local/private addresses, or add server-side arbitrary URL fetching.
 - The static demo reuses the app UI with isolated browser persistence and clearly identified sample data. No API, database, PIN, or live exchange-rate service is required. Demo rates are explicitly illustrative, not current market rates.
 - Private Docker installations still start empty with authentication enabled. Demo flags must not change the private runtime's defaults or include server modules and secrets in static assets.
-- Build and validate both targets. Deploy the static artifact to Cloudflare Pages using Wrangler at sub.ajnart.dev after successful checks, retaining subs.ajnart.dev as a compatibility alias after primary-domain verification; do not make ordinary local builds or Docker builds publish remotely. Keep automated deployment credentials scoped and outside the repository. Pages serves no backend, Functions or PIN challenge; private Docker installations retain PIN protection by default.
+- Build and validate both targets. Deploy the static artifact to Cloudflare Pages using Wrangler at subs.ajnart.dev as its only canonical hostname after successful checks; limit custom-domain cutover changes to its old Worker binding and Pages/DNS records. Distinguish verified HTTPS serving from Pages control-plane validation. Do not make ordinary local builds or Docker builds publish remotely. Keep automated deployment credentials scoped and outside the repository. Pages serves no backend, Functions or PIN challenge; private Docker installations retain PIN protection by default.
 - Refresh real application screenshots and keep the public README short. Detailed release evidence belongs in these internal tickets rather than lengthy product copy.
 
 ## Testing Decisions
@@ -159,5 +159,7 @@ Replace the running application with a responsive, service-centered Subs experie
 ## Further Notes
 
 This document specifies the target release; ready-for-agent is triage readiness, not evidence anything has shipped. Completion and deferral evidence belong in the execution map and individual tickets. Exploratory candidates such as provider price monitoring, notifications, offline writes, multi-Collection support, or a future FX feed remain proposals requiring a separate decision and do not appear as functioning controls or release promises.
+
+The Pages demo is live at https://subs.ajnart.dev with verified HTTPS, matching build assets, no PIN or API requests, and batch persistence after reload. MCP authentication works. Pages domain status, verification and validation are all active, superseding the earlier 17:46 pending snapshot. Manual publication is verified, while automated Pages deployment remains blocked by the absent scoped Actions token. The requested `v3.0.0` publication follows the final PR merge.
 
 The authoritative supporting sources are TanStack Start's official overview and hosting guidance, Nitro's current v3 documentation, shadcn's official TanStack installation guide, and the supplied Bold Wikipedia registry theme. Source links, repository-local skill provenance, and restore instructions are maintained in the agent documentation.

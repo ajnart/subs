@@ -5,9 +5,11 @@ Progress: claimed
 Type: task
 Blocked by: 23, 24, 26
 
+Current blocker: scoped Cloudflare Pages Edit Actions token. Domain access and manual publication are verified; automatic publication is not yet proven.
+
 ## Outcome
 
-Publish the validated static demo at sub.ajnart.dev, retain subs.ajnart.dev as a compatibility alias, and show the current app in a concise README.
+Publish the validated static demo at subs.ajnart.dev as its only canonical hostname, and show the current app in a concise README.
 
 ## Acceptance criteria
 
@@ -18,6 +20,8 @@ Publish the validated static demo at sub.ajnart.dev, retain subs.ajnart.dev as a
 - Record actual deployment URL, CI outcome, runtime memory, and any credential blocker honestly.
 
 ## Evidence
+
+Latest Pages evidence: `subs.ajnart.dev` is the only canonical hostname. Renewed MCP authentication enabled its verified cutover from the old Worker binding to proxied CNAME `subs-demo.pages.dev`. Pages reports the domain active, verification active and validation active; valid HTTPS and all static entry assets match the tested build. Live batch/persistence/export/import/reset and PIN-free/zero-backend checks pass. The mistaken singular Pages registration was removed. Earlier Worker/domain/authentication evidence below is retained as history; the only remaining deployment blocker is the scoped Actions token.
 
 October 24, 2026: Wrangler published the final static artifact to https://subs.ajnart.dev, version `b8d6886a-02ed-442c-8037-a6a6c97fc1d2`. HTTPS with a valid certificate returns 200, and the published JS/CSS names match the final local build. Public DNS answers are present; the local machine required explicit resolution while its negative cache caught up. README is concise and uses three refreshed real screenshots with the correct active count and no transient toasts.
 
@@ -32,3 +36,13 @@ The final development browser confirms Inter loads with HTTP 200 and no backend 
 Subsequent user steering requests the singular primary hostname and a major release. `.scratch/v3-release/spec.md` tracks that publication. The earlier deployment URLs and version IDs above are historical evidence, not proof of the new release or automatic deployment. The credential blocker remains open until an actual Actions deployment succeeds.
 
 PR #50 merged at `63dbaaf3cc8ff55c15e83742fbc2de07031fb63c`; fresh PR checks passed all 27 existing tests and Docker. Main application and Docker checks also passed, but the deploy job failed at the expected absent-token preflight in run `40112683090`, before upload. The user subsequently selected real Cloudflare Pages, not a Worker-hosted static application. The scoped CI credential now needs Account → Cloudflare Pages → Edit; custom-domain DNS access is separate. The existing plural Worker binding is retained until the primary Pages hostname is verified.
+
+### Historical pre-cutover follow-up
+
+Latest user correction supersedes the earlier singular-primary request: only `subs.ajnart.dev` is canonical, not a compatibility alias. Main `328902e` is live on Pages at https://subs-demo.pages.dev (deployment https://b2da0cfb.subs-demo.pages.dev), with nine cards, PIN-free access, zero API requests, batch creation, persistence, and reset verified. Main multiarch GHCR publication succeeded in 2m9s; all 27 existing tests, both builds, lint, and typecheck passed. The plural custom domain still points to the old Worker; no Pages cutover is complete. Reauthenticated MCP still fails with `requires login before it can register a client`, even after reconnecting and activating the credential. The scoped CI token remains absent, so automatic deployment is still unproven and this ticket remains claimed.
+
+### Current canonical Pages verification
+
+MCP authentication now works and verified account `71a8e70b7b1e301fca750fd6c6ae1f1d`, project `subs-demo`, main `328902e`, and deployment `b2da0cfb` returning HTTP 200. The Pages domain was registered, only its old Worker binding was detached, and a proxied CNAME with TTL 1 now points `subs.ajnart.dev` to `subs-demo.pages.dev`. Canonical HTTPS has a valid certificate; HTML, favicon, JS, CSS, and adapter bytes match the tested build. The browser showed nine cards, no PIN, and zero API requests. Adding two plans priced at zero and 12.34 produced eleven cards, and reload preserved them.
+
+The 17:46 pending-validation snapshot is superseded: Pages domain status, verification and validation are now all active, with live HTTPS verified. Repository Actions secrets remain empty: manual Pages publication is verified, while automated deployment remains blocked by the absent scoped token. This ticket remains claimed only for that automation requirement; the user requested `v3.0.0` publication after the final PR merges.

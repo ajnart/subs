@@ -2,7 +2,7 @@
 
 Track subscriptions, renewals, and recurring costs.
 
-[Try the demo](https://sub.ajnart.dev) · [Self-host](#docker)
+[Try the demo](https://subs.ajnart.dev) · [Self-host](#docker)
 
 ![Subs overview](docs/screenshots/overview-dark.png)
 
@@ -79,9 +79,9 @@ Preview the built static site with Wrangler Pages at http://127.0.0.1:4174. Use 
 
 `bun run deploy:demo` builds the demo and directly uploads `dist/demo` to Cloudflare Pages with `--branch main`. Root `wrangler.jsonc` sets `pages_build_output_dir`; there are no Pages Functions, backend, or bindings. Ordinary local and Docker builds never publish.
 
-`sub.ajnart.dev` is the primary target, with `subs.ajnart.dev` intended to remain a compatibility alias. The Pages custom-domain cutover is pending live verification. Browser data is separate for each hostname; export/import a backup to move demo edits.
+The Cloudflare Pages demo is live at [subs.ajnart.dev](https://subs.ajnart.dev), its only canonical hostname, with verified HTTPS and no PIN or backend. It is also available at [subs-demo.pages.dev](https://subs-demo.pages.dev). Browser data is separate for each hostname; export/import a backup to move demo edits.
 
-The Checks workflow gates `main` and explicit manual Pages deployments on application and Docker checks. It requires a `CLOUDFLARE_API_TOKEN` Actions secret scoped to the configured account with **Account → Cloudflare Pages → Edit** permission. That secret was absent at release preflight: automatic deployment remains blocked, and missing credentials fail before publishing. Local Wrangler OAuth does not enable CI deployment.
+The Checks workflow gates `main` and explicit manual Pages deployments on application and Docker checks. It requires a `CLOUDFLARE_API_TOKEN` Actions secret scoped to the configured account with **Account → Cloudflare Pages → Edit** permission. Manual Pages publication is verified, but repository Actions secrets remain empty: automatic deployment is blocked, and missing credentials fail before publishing. Local Wrangler OAuth and authenticated MCP access do not enable CI deployment.
 
 ## Configuration
 

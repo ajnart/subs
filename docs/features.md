@@ -37,6 +37,6 @@ The speaker button controls TIKS interaction sounds on this device. **Settings â
 ## Private installation and public demo
 
 - **Private:** one Bun Docker process and writable SQLite volume, initially empty and protected by a six-digit PIN. An Operator setup token authorizes first-use PIN setup; the same private Collection is available across devices. Use HTTPS and protect full-volume snapshots for complete recovery.
-- **Demo:** a separate browser-only `DEMO_MODE` build targeting [sub.ajnart.dev](https://sub.ajnart.dev), with sample data, illustrative rates, local edits/import/export/reset, and no backend or PIN. This is not private-server `DISABLE_AUTH`; browser data is isolated by hostname and is not synced between devices. The Pages domain cutover is still pending live verification.
+- **Demo:** a separate browser-only `DEMO_MODE` build live on Cloudflare Pages at [subs.ajnart.dev](https://subs.ajnart.dev), its only canonical hostname, with verified HTTPS, sample data, illustrative rates, local edits/import/export/reset, and no backend or PIN. This is not private-server `DISABLE_AUTH`; browser data is isolated by hostname and is not synced between devices. It is also available at [subs-demo.pages.dev](https://subs-demo.pages.dev).
 
 Subs does not connect to banks, execute payments or provider cancellations, monitor provider pricing, or provide background sync/closed-browser alarms.

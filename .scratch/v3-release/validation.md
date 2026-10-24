@@ -46,3 +46,16 @@ Remote CI, live domain attachment and release publication remain pending. Earlie
 - Both ARM64 and AMD64 images build successfully with the native build-stage fix. On each architecture: health 200, anonymous Collection read 401, native target Bun/SQLite available, a 12.34-price record and session persist through restart and container replacement with the same volume. All 90 runtime artifact files were inspected by path, with no native extensions or executable/bin payloads; both real architecture runtimes execute the portable server successfully.
 - Pages local serving verifies nine sample cards with no PIN; zero-cost batch saves survive reload, reset returns nine samples, API requests are blocked and none captured. Mobile 390px has no overflow. An initial browser probe reloaded before save acknowledgement; repeating with the committed-save condition passes.
 - `sub.ajnart.dev` is registered on Pages but pending DNS verification. Local OAuth cannot edit DNS and the dashboard is signed out. The Operator was asked to add CNAME `sub` → `subs-demo.pages.dev` and a scoped Pages Edit Actions token, without sharing secrets in chat. The old plural Worker domain is not detached while primary verification is pending.
+
+### Canonical Pages cutover
+
+The user clarified that only `subs.ajnart.dev` is intended; the singular hostname is not a target or alias. Renewed Cloudflare MCP access now reaches the correct account and zone. The earlier authentication/DNS blockers above are historical and resolved.
+
+- Verified Pages project `subs-demo` production branch main, deployment `b2da0cfb-a282-445e-84bd-27bfa467bb4a` from merged `328902e7b166337a2978d35871a4512627e78a16`, before touching the existing hostname.
+- Registered `subs.ajnart.dev` on Pages, detached only the old Worker custom-domain binding, then created proxied CNAME `subs.ajnart.dev` → `subs-demo.pages.dev`, TTL 1. No Worker project or unrelated DNS record was deleted.
+- Pages now reports domain, verification and validation all `active`. Valid-certificate HTTPS returns 200. HTML, favicon, entry JS/CSS and browser adapter match the tested artifact byte for byte.
+- Live canonical browser: nine sample cards, no PIN fields and zero `/api/` resources; two-plan batch saves zero and 12.34 prices, eleven cards survive reload. Real downloaded JSON contains eleven records; reset restores nine, import preview reports nine duplicates, explicit confirmation imports two, and final reset restores nine. No page errors; mobile 390px has no horizontal overflow. Automation was synchronized with completed navigation/save acknowledgements rather than transient intermediate views.
+- Removed only the unused singular Pages registration after canonical verification; no singular DNS record was created.
+- Both focused Pages follow-up PR workflows passed; PR #51 is merged. Main multi-platform image publication succeeded in 2m9s, replacing the stalled emulated build. Main application and Docker checks pass; automatic Pages upload still fails only because the scoped Actions secret is absent.
+
+The final hostname/documentation commit and v3 release will record their workflow and publication links in the final PR/release evidence. Live domain completion does not imply CI credentials were installed.
