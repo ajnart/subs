@@ -1,0 +1,242 @@
+.dockerignore
+  h_d6e478ca18e517 5-18
+.env.example
+  h_d6e478ca18e517 1-3
+.github/workflows/ci.yml
+  h_d6e478ca18e517 1-25
+.github/workflows/docker.yml
+  h_d6e478ca18e517 23,28,32,43,46,49,56,58,64
+.gitignore
+  h_d6e478ca18e517 55-63
+.scratch/rewrite/issues/01-framework-foundation.md
+  h_d6e478ca18e517 4
+.scratch/rewrite/issues/02-design-system.md
+  h_d6e478ca18e517 4
+.scratch/rewrite/issues/03-durable-collection.md
+  h_d6e478ca18e517 4
+.scratch/rewrite/issues/04-access-boundary.md
+  h_d6e478ca18e517 4
+.scratch/rewrite/issues/05-money-recurrence.md
+  h_d6e478ca18e517 4
+.scratch/rewrite/issues/06-legacy-migration.md
+  h_d6e478ca18e517 4
+.scratch/rewrite/issues/07-collection-contract.md
+  h_d6e478ca18e517 4
+.scratch/rewrite/issues/08-private-shell.md
+  h_d6e478ca18e517 4
+.scratch/rewrite/issues/09-entry-editing.md
+  h_d6e478ca18e517 4
+.scratch/rewrite/issues/10-lifecycle-details.md
+  h_d6e478ca18e517 4
+.scratch/rewrite/issues/11-card-table.md
+  h_d6e478ca18e517 4
+.scratch/rewrite/issues/12-find-organize.md
+  h_d6e478ca18e517 4
+.scratch/rewrite/issues/13-bulk-management.md
+  h_d6e478ca18e517 4
+.scratch/rewrite/issues/14-summary-currency.md
+  h_d6e478ca18e517 4
+.scratch/rewrite/issues/15-upcoming-calendar.md
+  h_d6e478ca18e517 4
+.scratch/rewrite/issues/16-insights.md
+  h_d6e478ca18e517 4
+.scratch/rewrite/issues/17-budget-scenarios.md
+  h_d6e478ca18e517 4
+.scratch/rewrite/issues/18-portable-backups.md
+  h_d6e478ca18e517 4
+.scratch/rewrite/issues/19-import-preview.md
+  h_d6e478ca18e517 4
+.scratch/rewrite/issues/20-opt-in-templates.md
+  h_d6e478ca18e517 4
+.scratch/rewrite/issues/21-price-history.md
+  h_d6e478ca18e517 4
+.scratch/rewrite/issues/22-accessibility-resilience.md
+  h_d6e478ca18e517 4
+.scratch/rewrite/issues/23-container-operations.md
+  h_d6e478ca18e517 4
+.scratch/rewrite/issues/24-release-verification.md
+  h_d6e478ca18e517 4
+.scratch/rewrite/map.md
+  h_d6e478ca18e517 17-18
+.scratch/rewrite/spec.md
+  h_d6e478ca18e517 98,111
+.vscode/tasks.json
+  h_d6e478ca18e517 5-6,13,16
+Dockerfile
+  h_d6e478ca18e517 1,4-8,10,12-13,15-21,23-24
+GLOSSARY.md
+  h_d6e478ca18e517 40
+IDEAS.md
+  h_d6e478ca18e517 3-4,8,15,35,49,54,58,69,72,76,87,90,94,105,109,113,124,139,154,162,170,182,192,205,217-220,223-225,229-232,240,251,263,275,291,306,312,316,325,335,344,357,367,377,387,399,406,412,418,424,432,443,449,455,462,469,476,482
+README.md
+  h_d6e478ca18e517 3,5,7,9,11-14,16,18,20,22,24-27,29,31,33-37,39,41,43-49,51,53,55,57,59-62,64,66,68,70-76,78,80,82,84,86,88-92,95,97,99,101,103-108,110,112-113,116,118
+biome.json
+  h_d6e478ca18e517 2,5-14,16-20,23-24
+components.json
+  h_d6e478ca18e517 3,7-8,13-14,16-25
+compose.yml
+  h_d6e478ca18e517 1-15
+lefthook.yml
+  h_d6e478ca18e517 4-5,11-12
+package.json
+  h_d6e478ca18e517 4,7,9-15,17,19,22-40,43-44,46-57
+playwright.config.ts
+  h_d6e478ca18e517 1-3,6-8,11,14,17-19,31-39
+public/favicon.svg
+  h_d6e478ca18e517 1-4
+scripts/reset-pin.ts
+  h_d6e478ca18e517 1-2,4-7,9-22,24-26
+src/components/subs/app.tsx
+  h_d6e478ca18e517 1-41,43-58,61-72,74-93,95-127,130-142,144-145,147-160,162-167,169-173,175-180,182-192,194-198,201-269,271-272,274-281,283-284,286-310,312-326,328-331,333-514
+src/components/subs/auth.tsx
+  h_d6e478ca18e517 1-29,32-42,44-55,59-67,69-109,111-113,115-116,118,120-121,123
+src/components/subs/calendar-view.tsx
+  h_d6e478ca18e517 1-10,12-32,34-41,44-69,71-77,79-91,93-96,98,100-111,115-153,155-157
+src/components/subs/insights.tsx
+  h_d6e478ca18e517 1-52,54-62,64-72,74-75,78-98,102-103,105-106,109-119,121-123,126,128-129,132-136,139-172,174-175,177-185,187-189
+src/components/subs/overview.tsx
+  h_d6e478ca18e517 1-29,31-33,35-49,51-87,89,91-94,96-181,183-192,195-200,203-218,220-242,244-245,247-259,263-281,283-330,332-345,347-410,412-417,419-441,444-447,449
+src/components/subs/projections.ts
+  h_d6e478ca18e517 1-2,4-5,8-19,22-27
+src/components/subs/settings.tsx
+  h_d6e478ca18e517 1-4,6-16,18-21,23-28,31-62,64-69,71-88,91-108,110-146,149-221,223-288,290,293-297,299-399,401-409,411-432,434-444,446-447,449-459,461-473,475-489
+src/components/subs/shared.tsx
+  h_d6e478ca18e517 1-3,5-37,39-47,50-57,60-61,63-79,81,83-95,97,99,101-106
+src/components/subs/subscription-form.tsx
+  h_d6e478ca18e517 2-3,5-19,21-23,26-46,48-53,55-65,67-73,75-76,78-90,92-128,131-150,152-159,162-168,170-173,175-203,205-215,217-239,241-251,253-266,268-354,356-378,380-408,410-417
+src/components/ui/alert-dialog.tsx
+  h_d6e478ca18e517 1-3,5,7-9,11-13,15-17,19-22,24-25,29-30,32,34,36-53,55-66,68-79,81-92,94-105,107-149,153-154,156,158-161,163
+src/components/ui/alert.tsx
+  h_d6e478ca18e517 1-3,6,10,12,16,18,21-36,38-49,51-53,55
+src/components/ui/badge.tsx
+  h_d6e478ca18e517 1-4,7,11-12,14-17,21,23,26-32,35
+src/components/ui/button.tsx
+  h_d6e478ca18e517 1-4,7,11,13,15-20,23-31,35-36,38,41-51,53-62
+src/components/ui/calendar.tsx
+  h_d6e478ca18e517 1,3-7,13-17,19-23,27-38,40-60,62-69,71-79,81-94,96-102,106-128,135-171
+src/components/ui/card.tsx
+  h_d6e478ca18e517 1-69
+src/components/ui/checkbox.tsx
+  h_d6e478ca18e517 1-4,6,8-9,11,14-26
+src/components/ui/dialog.tsx
+  h_d6e478ca18e517 1,3-7,9-11,13-15,17-19,21-23,25-28,30-31,34-36,38,40-41,43-69,71-75,77-78,80-100,102-110,112-123,129,131-133,135
+src/components/ui/dropdown-menu.tsx
+  h_d6e478ca18e517 1-59,61-62,66-69,71-73,75-164,167-215,223,225,228-230,236
+src/components/ui/empty.tsx
+  h_d6e478ca18e517 1-80
+src/components/ui/field.tsx
+  h_d6e478ca18e517 1-3,5-6,8-18,21-34,36-46,49-56,58-62,64-78,80,82-86,88,90-102,104,107,109-110,115,117,119-120,122-125,127-143,146-155,157,159-191,194-197,200-201,203,206-215
+src/components/ui/input-otp.tsx
+  h_d6e478ca18e517 1-4,6-22,24-35,37-43,45,49-50,52-53,65,67-78,80
+src/components/ui/input.tsx
+  h_d6e478ca18e517 1-2,4,6-8,10-11,14,16,18
+src/components/ui/label.tsx
+  h_d6e478ca18e517 1-18
+src/components/ui/popover.tsx
+  h_d6e478ca18e517 1,3-5,7-9,11-26,28-29,33-51,53
+src/components/ui/progress.tsx
+  h_d6e478ca18e517 1-3,5-20
+src/components/ui/scroll-area.tsx
+  h_d6e478ca18e517 1-3,5-18,20,22,24,26-29,31,36-41,43-44
+src/components/ui/select.tsx
+  h_d6e478ca18e517 1,3-6,8-10,12-14,16-18,20-31,33-34,38-57,59-62,64-66,68-82,84-92,94-137,139-155,160,162,164-167
+src/components/ui/separator.tsx
+  h_d6e478ca18e517 1-3,5-11,13,17-18,23
+src/components/ui/skeleton.tsx
+  h_d6e478ca18e517 1,3-4
+src/components/ui/sonner.tsx
+  h_d6e478ca18e517 1,3-5,8,12,14-28,31
+src/components/ui/switch.tsx
+  h_d6e478ca18e517 1,3-5,7,9-12,15-17,19,22-29,31-32
+src/components/ui/table.tsx
+  h_d6e478ca18e517 1,3-4,6,8-10,14-15,18-19,22,24-28,30,32,34-39,43,45,47-52,56,58,60-62,66,68,70,73-74
+src/components/ui/tabs.tsx
+  h_d6e478ca18e517 1-73
+src/components/ui/textarea.tsx
+  h_d6e478ca18e517 1-17
+src/components/ui/toggle-group.tsx
+  h_d6e478ca18e517 1,3-8,11-14,16-19,22-54,56-62,67-70,72,77,84
+src/components/ui/toggle.tsx
+  h_d6e478ca18e517 1-4,7,11-12,15-17,21-22,24,27-36
+src/components/ui/tooltip.tsx
+  h_d6e478ca18e517 1,3-5,7-9,11-29,31-32,35-41,43
+src/hooks/use-subs.ts
+  h_d6e478ca18e517 1-18,20-64,66-70,72-95,97,100-104,106-111,114-119,121-125,128-133,135,138-139
+src/hooks/use-theme.ts
+  h_d6e478ca18e517 1,3,5-6,8-9
+src/lib/api.ts
+  h_d6e478ca18e517 1-68
+src/lib/subscriptions.ts
+  h_d6e478ca18e517 1,3-6,8-10,12-14,16-20,23-25,27-29,31,33,35-37,39,43-52,54-65,67-78,80-97,99-101
+src/lib/templates.ts
+  h_d6e478ca18e517 1-14
+src/lib/types.ts
+  h_d6e478ca18e517 1-41,44-45,48-57
+src/lib/utils.ts
+  h_d6e478ca18e517 1
+src/routeTree.gen.ts
+  h_d6e478ca18e517 1,3,5,7-49,52-59,61-66,71-77,79-84
+src/router.tsx
+  h_d6e478ca18e517 1-2,4-11,13-15
+src/routes/__root.tsx
+  h_d6e478ca18e517 1-6,8-31,33,35,37,40-46
+src/routes/api.$.ts
+  h_d6e478ca18e517 1-13
+src/routes/index.tsx
+  h_d6e478ca18e517 1-4
+src/server/api.ts
+  h_d6e478ca18e517 1-7,9-11,13-17,20-39,41-135,137-146
+src/server/auth.ts
+  h_d6e478ca18e517 1-13,15-17,19-21,23-31,33-40,42-49,51-53,55-63,65-68,71-145
+src/server/database-path.ts
+  h_d6e478ca18e517 1-12
+src/server/database.ts
+  h_d6e478ca18e517 1-5,7,9,11-13,15-34,36-40,42-61,63,65-73,75,77-81,83-85,87-89,91-102,104-124,126-129,131-162
+src/server/import.ts
+  h_d6e478ca18e517 1-21,24-35,38-59,61-62,65-76,78-114,116-122,124-139,141-145,147,149-151,153-166,168-178,180-186,188-189,191-223,225-234,236
+src/server/nitro-database.d.ts
+  h_d6e478ca18e517 1-3
+src/server/rates.ts
+  h_d6e478ca18e517 1-19,21,23-33,35,38-43
+src/server/validation.ts
+  h_d6e478ca18e517 1,3-9,13-16,18-31,33-62,64-70,72-74,76-78,80-86,90-119
+src/styles.css
+  h_d6e478ca18e517 1-4,6,8-74,77-185,190-193,197-201
+tests/components/billing-health-warnings.spec.ts
+  h_d6e478ca18e517 1-8,10-20,22-42,44-55
+tests/components/category-filter.spec.ts
+  h_d6e478ca18e517 1,3-9,11-28
+tests/components/keyboard-shortcuts.spec.ts
+  h_d6e478ca18e517 1-15,17-28
+tests/components/p0-features.spec.ts
+  h_d6e478ca18e517 1-13,15-31,34-38,40-50,52-56,58-66,69-102,105-142,145-160
+tests/components/spending-insights.spec.ts
+  h_d6e478ca18e517 1-26,28-44,46-55
+tests/components/undo-delete.spec.ts
+  h_d6e478ca18e517 1-19,21-32
+tests/components/upcoming-payments.spec.ts
+  h_d6e478ca18e517 1-18,20-44,46-58
+tests/helpers.ts
+  h_d6e478ca18e517 1-2,4-14,17-29,32-41,43-45,49-118
+tests/subscription-card-size.spec.ts
+  h_d6e478ca18e517 1-14,16-32,34
+tests/utils/duplicate-detection.spec.ts
+  h_d6e478ca18e517 1-38,41-55
+tests/utils/import-validation.spec.ts
+  h_d6e478ca18e517 1-27,29-31,33-34,36-58,60-67,69-72,74,76-80,82-92
+tsconfig.json
+  h_d6e478ca18e517 2-9,11,13-22,24-27
+vite.config.ts
+  h_d6e478ca18e517 1-22,25-30,32-39,41,43
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "4c85d55a87ff4f548c8dcd84fd0321a0b210d99e",
+  "prompts": {},
+  "humans": {
+    "h_d6e478ca18e517": {
+      "author": "Thomas Camlong <thomas@ajnart.fr>"
+    }
+  }
+}
