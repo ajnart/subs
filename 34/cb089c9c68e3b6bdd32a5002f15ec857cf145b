@@ -1,0 +1,32 @@
+.github/workflows/ci.yml
+  h_d6e478ca18e517 57
+.scratch/rewrite/issues/27-demo-deployment.md
+  h_d6e478ca18e517 8-9,12,24-25,39-48
+.scratch/rewrite/map.md
+  h_d6e478ca18e517 34,115-128
+.scratch/rewrite/spec.md
+  h_d6e478ca18e517 83,139,163-164
+.scratch/v3-release/notes.md
+  h_d6e478ca18e517 1,19,21,23
+.scratch/v3-release/spec.md
+  h_d6e478ca18e517 9,15,21,26-29
+.scratch/v3-release/validation.md
+  h_d6e478ca18e517 49-61
+README.md
+  h_d6e478ca18e517 5,82,84
+docs/agents/architecture.md
+  h_d6e478ca18e517 47,49-51
+docs/features.md
+  h_d6e478ca18e517 40
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "34cb089c9c68e3b6bdd32a5002f15ec857cf145b",
+  "prompts": {},
+  "humans": {
+    "h_d6e478ca18e517": {
+      "author": "Thomas Camlong <thomas@ajnart.fr>"
+    }
+  }
+}
