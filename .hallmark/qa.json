@@ -6,6 +6,7 @@
     "biome": "Passed: final bun run lint across all application, demo, script and existing test files",
     "testsAndBuild": "Passed: all 27 existing Playwright tests, both production builds, final Docker build and docker compose config --quiet",
     "githubCI": "Implementation commit aa70c37 passed application and Docker jobs in push run 40097437178 and PR run 40097518928; feature-branch deployment was intentionally skipped",
+    "demoDevelopment": "Final linked-Bun development browser loads Inter with HTTP 200 and no backend requests; a separate unrelated temporary file remains blocked with HTTP 403",
     "accessibilityScan": "Final light overview: axe 4.12.1 reports zero violations and one incomplete kbd contrast result; this is a focused scan, not full-app conformance certification",
     "staticHallmark": "Final command exits 1 with 42 static FAIL: one CSS stamp conflicts with the repository no-comments requirement; 41 findings misclassify the authoritative :root.dark theme declarations as literals outside tokens. Values remain in declared theme blocks. This is not a clean Hallmark pass.",
     "renderHallmark": "Final production-demo render completed at 1280x800, 1440x900, 1920x1080, desktop full page and 375px full page. Zero rendered FAIL; one REFLEX and two WARN have explicit dispositions below.",

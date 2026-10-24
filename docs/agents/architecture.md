@@ -40,4 +40,6 @@ The separate `vite.demo.config.ts` builds `demo/main.tsx` with React and Tailwin
 
 `bun run build` validates both artifacts without publishing. `bun run deploy:demo` invokes Wrangler's custom static build and publishes `dist/demo` at `subs.ajnart.dev`. The Checks workflow gates deployment on both application checks and Docker validation, deploys `main` or an explicit manual request, and requires a scoped `CLOUDFLARE_API_TOKEN` secret. Local Wrangler OAuth is not a durable CI credential.
 
+`vercel.json` disables the legacy Vercel Git auto-deployment: neither the persistent Bun/SQLite installation nor the Cloudflare demo targets Vercel. The external project is not deleted. Demo development keeps Vite filesystem restrictions enabled and adds only the resolved font package directory alongside the workspace, so linked Bun installs can serve their fonts without exposing the entire package cache.
+
 Magic UI and Aceternity were installed through their real shadcn registries, recorded in `components.json`. Their adapted files retain separate license notices. Previews activate on hover/focus, send only a public origin to Microlink, and exclude local/private addresses; there is no server URL-fetching endpoint. This is opt-in disclosure to a third party, not private provider monitoring.
