@@ -1,0 +1,77 @@
+.subs-service-mark {
+  display: inline-flex;
+  width: 2.75rem;
+  height: 2.75rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--muted);
+  color: var(--muted-foreground);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.subs-service-mark[data-branded="true"] {
+  background: white;
+}
+
+.subs-service-mark[data-size="large"] {
+  width: 3.25rem;
+  height: 3.25rem;
+}
+
+.subs-service-mark img {
+  width: 62%;
+  height: 62%;
+  object-fit: contain;
+}
+
+.subs-service-card {
+  box-shadow: var(--shadow-xs);
+  transition:
+    border-color 180ms,
+    box-shadow 180ms,
+    transform 180ms;
+}
+
+.subs-service-card:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+}
+
+.subs-service-card [data-slot="card-footer"] {
+  padding-block: 0.75rem;
+  border-top: 1px solid var(--border);
+  background: color-mix(in oklch, var(--muted) 35%, transparent);
+}
+
+.subs-service-card[data-status="paused"],
+.subs-service-card[data-status="cancelled"] {
+  box-shadow: none;
+}
+
+.subs-service-row:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: -2px;
+  background: var(--accent);
+}
+
+@media (hover: hover) {
+  .subs-service-card:hover {
+    border-color: color-mix(in oklch, var(--primary) 45%, var(--border));
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .subs-service-card {
+    transition: none;
+  }
+
+  .subs-service-card:hover {
+    transform: none;
+  }
+}

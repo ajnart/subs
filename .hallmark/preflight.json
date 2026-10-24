@@ -1,0 +1,24 @@
+{
+  "scanned": "2026-10-24",
+  "scope": "app",
+  "mode": "redesign",
+  "findings": {
+    "fonts": "Inter Variable, src/styles.css:9 and :111",
+    "palette": "Exact Bold Wikipedia light/dark semantic tokens, src/styles.css:77-186",
+    "motion": "framer-motion 14.3.0; registry components installed by a separate owner and actual exports verified before use",
+    "framework": "React 19 and TanStack Start, package.json:27 and :39",
+    "material": "Actual Subs collection, service names, native prices, recurrence dates, optional starter templates",
+    "audience": "One person tracking their own subscriptions",
+    "action": "Add and manage subscriptions",
+    "tone": "Quiet, precise, utilitarian",
+    "before": "Static scan recorded in before.json and before.txt; no browser capture performed by this worker"
+  },
+  "preserve": ["Radix Nova primitives", "Bold Wikipedia tokens", "Inter", "Phosphor icons", "HTTP and revision callbacks", "routes and field identifiers", "native-currency amounts"],
+  "introduce": ["Compact workbench shell", "three-figure summary", "service quick-start picker", "on-demand link previews", "short onboarding", "advanced form disclosure", "reduced-motion-safe state feedback"],
+  "files": {
+    "edit": ["src/components/subs/**", "src/styles.css", "src/hooks/use-theme.ts"],
+    "create": [".hallmark/preflight.json", ".hallmark/log.json", ".hallmark/qa.json"],
+    "delete": []
+  },
+  "verification": "Final render, fresh-context review disposition and actual screenshot evidence are recorded in qa.json. Static tool failures remain disclosed; no before-browser capture or clean Hallmark pass is claimed."
+}

@@ -1,0 +1,77 @@
+{
+  "date": "2026-10-24",
+  "scope": "app",
+  "checks": {
+    "typecheck": "Passed: bun run typecheck",
+    "biome": "Passed: final bun run lint across all application, demo, script and existing test files",
+    "testsAndBuild": "Passed: all 27 existing Playwright tests, both production builds, final Docker build and docker compose config --quiet",
+    "githubCI": "Implementation commit aa70c37 passed application and Docker jobs in push run 40097437178 and PR run 40097518928; feature-branch deployment was intentionally skipped",
+    "demoDevelopment": "Final linked-Bun development browser loads Inter with HTTP 200 and no backend requests; a separate unrelated temporary file remains blocked with HTTP 403",
+    "accessibilityScan": "Final light overview: axe 4.12.1 reports zero violations and one incomplete kbd contrast result; this is a focused scan, not full-app conformance certification",
+    "staticHallmark": "Final command exits 1 with 42 static FAIL: one CSS stamp conflicts with the repository no-comments requirement; 41 findings misclassify the authoritative :root.dark theme declarations as literals outside tokens. Values remain in declared theme blocks. This is not a clean Hallmark pass.",
+    "renderHallmark": "Final production-demo render completed at 1280x800, 1440x900, 1920x1080, desktop full page and 375px full page. Zero rendered FAIL; one REFLEX and two WARN have explicit dispositions below.",
+    "screenshots": "Recaptured and visually read docs/screenshots/overview-dark.png, overview-light.png and mobile.png with reduced motion, final active count 7, and no toast overlays",
+    "freshContextReview": "Reviewer verdict was fix: three P2 findings and one P3 footer nit. Narrow form layout, all four mobile destinations, light-mode date contrast and aligned card footers are fixed. Parent confirmed the final 320px layout and read the refreshed screenshots."
+  },
+  "usedRegistryComponents": [
+    "Magic UI MagicCard for low-opacity service-card interaction",
+    "Magic UI NumberTicker for the actual active-subscription count",
+    "Magic UI DotPattern for the compact PIN-screen background, without a glow loop",
+    "Aceternity LinkPreview through the adapted Radix HoverCard component, image mounted only on hover/focus"
+  ],
+  "preserved": [
+    "Exact Bold Wikipedia light/dark tokens, Inter, Radix Nova and Phosphor",
+    "Frozen editor/preferences revision and import-preview revision callbacks",
+    "Failed-save drafts and explicit stale-version review",
+    "Optional payment dates and trial/calendar projection logic",
+    "Overview, Calendar, Insights, Settings navigation labels",
+    "Existing form field identifiers and save/delete action labels"
+  ],
+  "changedLabels": [
+    "Overview page heading: Everything, in perspective. -> Subscriptions",
+    "Authentication heading/action: Create PIN / Unlock Subs",
+    "Browse starters -> Choose a service",
+    "Empty collection: Add your first subscription, service picker, Add manually, Import existing",
+    "Desktop sidebar and separate Mobile navigation -> one responsive Main navigation",
+    "Website/trial/notes and recorded prices now use keyboard-accessible disclosure summaries"
+  ],
+  "demoGuards": [
+    "Demo badge and Reset demo action dispatch subs:demo-reset",
+    "Reset demo is also available when initial data loading fails",
+    "Demo rates labeled Illustrative rates, never attributed to Frankfurter or described as unavailable solely because updatedAt is null",
+    "Settings never scans, reads, imports or clears legacy subscription-storage/preferences-storage in demo mode"
+  ],
+  "integrationEvidence": [
+    "Import preview displays real ID/service candidates and ambiguity warnings, preserves its revision snapshot, and rejects ambiguous merge without blocking replace or skip",
+    "101 same-service records restore from their own backup; preview candidates are bounded to two examples per incoming row, also checked with 10000 parser rows",
+    "Demo CRUD survives reload with API requests blocked; reset preserves legacy-storage canaries; corrupt demo storage recovers through Reset demo",
+    "No backend or external requests before link activation; focusing Spotify requests only https://spotify.com through Microlink",
+    "Ticker remains 7 through offscreen/visibility changes; reduced-motion overview reports zero running animations",
+    "At 320px, document width is 320px, payment field is 256px in a single column, and Overview, Calendar, Insights and Settings all fit",
+    "Private production PIN screen inspected at 320px; setup, login, sessions and explicit auth bypass checked against real SQLite containers",
+    "Appearance/layout keys remain non-sensitive presentation preferences; only subs-demo-v3 owns demo collection data"
+  ],
+  "findingDispositions": [
+    "REFLEX 39b waived: 74px upcoming rows are compound date/service/amount navigation targets, not oversized marketing CTA controls; their larger hit areas are intentional",
+    "WARN F18 dismissed twice: shadcn data-slot=button marks actual controls, not image slots; stretching these controls to image aspect ratios would damage the app layout",
+    "No before-browser capture exists for this redesign; refreshed screenshots establish the final state, not a fabricated before/after comparison",
+    "Automated accessibility checks and focused keyboard/contrast review are not a complete WCAG conformance certification"
+  ],
+  "remainingExternalWork": [
+    "Automatic production demo deployment requires the repository CLOUDFLARE_API_TOKEN Actions secret; it was absent at final verification"
+  ],
+  "browserChecklist": [
+    "320px and 375px: header/nav, demo reset, search/filter controls, card action targets, PIN slots and form disclosures fit without page overflow",
+    "768px, 1440px and 1920px: one capped content width; summaries remain readable and service grid does not gain extra columns",
+    "Light/dark/system: exact theme survives preferences save and reload; provider remains authoritative",
+    "Reduced motion: ticker shows final count, pointer gradients stop, dialogs stay usable and no content remains transparent",
+    "Empty collection: starter choice only fills a draft; price remains user-entered; Import existing opens the backup picker",
+    "Mixed currencies with rates: every native monthly total remains prominent; converted aggregate is secondary and labeled estimate",
+    "Missing all FX rates: native totals remain accurate and no unavailable converted spending is presented as zero",
+    "Network panel before hover/focus: no Microlink or remote logo requests; service link focus/hover loads only the public origin preview",
+    "Private/local/IP service URLs: ordinary safe external link fallback without preview requests",
+    "Keyboard: skip link, navigation, disclosures, search shortcut, add shortcut, preview focus/Escape and Radix dialog focus restoration",
+    "Two-device conflict: failed save retains draft; refresh/review does not silently adopt a new revision; import confirms only its preview revision",
+    "Corrupt demo storage: initial error Reset demo recovers without any backend request or legacy storage mutation"
+  ]
+}

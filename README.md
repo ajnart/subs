@@ -1,158 +1,91 @@
 # Subs
 
-Open source subscription tracker built for people who want a fast, simple way to understand recurring costs.
+Track subscriptions, renewals, and recurring costs.
 
-Subs helps you log your subscriptions, view totals across currencies, and keep track of upcoming payments without sending your data to third-party services.
+[Try the demo](https://subs.ajnart.dev) · [Self-host](#docker)
 
-## Live Demo
+![Subs overview](docs/screenshots/overview-dark.png)
 
-Try it now: [subs.ajnart.fr](https://subs.ajnart.fr)
+<details>
+<summary>Light mode and mobile</summary>
 
-![Demo GIF](https://github.com/user-attachments/assets/ffb88333-6c4d-46c9-9ca7-49602106e5f1)
+![Subs in light mode](docs/screenshots/overview-light.png)
+<img src="docs/screenshots/mobile.png" alt="Subs on mobile" width="360" />
 
-## What You Can Do
+</details>
 
-- Add, edit, and delete subscriptions
-- Track billing cycles (daily, weekly, monthly, yearly)
-- Show next payment date with automatic future-date calculation
-- Search, sort, and filter subscriptions
-- View totals in multiple currencies with conversion rates
-- Import and export your subscriptions as JSON
-- Use keyboard shortcuts for common actions
-- Use a responsive interface on desktop and mobile
+<details>
+<summary>Keyboard search and private unlock</summary>
 
-## Tech Stack
+![Search commands and subscriptions](docs/screenshots/command-palette.png)
+![Masked private unlock](docs/screenshots/unlock.png)
 
-- Remix + React
-- Tailwind CSS + shadcn/ui
-- Zustand for client-side state
-- Playwright for end-to-end tests
-- Biome for linting/formatting
+</details>
 
-## Storage Options
+## Keyboard first
 
-Subs supports two persistence modes:
+Press **⌘/Ctrl K** to search subscriptions, starter templates, and commands. Hold **⌘ or Ctrl** to reveal shortcuts; use arrows or J/K between subscriptions and Enter to manage one. **?** shows the full shortcut list. The speaker button controls TIKS interaction sounds on this device.
 
-1. Browser storage
-2. Server-side JSON file storage
-
-The mode is controlled by `USE_LOCAL_STORAGE`.
-
-- `USE_LOCAL_STORAGE=true`: use browser local storage
-- `USE_LOCAL_STORAGE=false` (default): use server endpoint storage in `data/config.json`
-
-## Quick Start
-
-### Requirements
-
-- Node.js 20+
-- npm or Bun
-
-### Install
-
-Using npm:
-
-```bash
-npm install
-```
-
-Using Bun:
-
-```bash
-bun install
-```
-
-### Run Development Server
-
-Using npm:
-
-```bash
-npm run dev
-```
-
-Using Bun:
-
-```bash
-bun run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000).
-
-## Scripts
-
-- `npm run dev` - start local development server
-- `npm run build` - create production build
-- `npm run start` - run production build
-- `npm run test` - run Playwright tests
-- `npm run test:ui` - open Playwright UI mode
-- `npm run typecheck` - TypeScript type checking
-- `npm run lint` - lint with Biome
-- `npm run format` - format with Biome
+**Settings → Browser reminders** enables renewal and trial notifications on this device. Reminders need HTTPS or localhost and run best effort while Subs is open and unlocked, not after the browser is closed. Sound and reminder settings stay local and are not included in backups.
 
 ## Docker
 
-Run with Docker:
-
-```bash
-docker run -p 7574:7574 -v ./data:/app/data --name subs --rm ghcr.io/ajnart/subs
+```sh
+docker compose up --build -d
+docker compose logs subs
 ```
 
-Then open [http://localhost:7574](http://localhost:7574).
+Open http://localhost:7574. Copy the setup token from the logs and choose a six-digit PIN. Data stays in the mounted `./data` directory; back it up before updating. Use HTTPS and set `SUBS_ORIGIN` when exposing Subs through a reverse proxy.
 
-### Docker Compose
+[Backup, upgrade, and rollback](docs/self-hosting.md)
 
-```yaml
-services:
-  subs:
-    image: ghcr.io/ajnart/subs
-    container_name: subs
-    ports:
-      - "7574:7574"
-    restart: unless-stopped
-    volumes:
-      - ./data:/app/data
-    # environment:
-    #   - USE_LOCAL_STORAGE=true
+## Development
+
+Requires [Bun](https://bun.sh/) 1.4.3+.
+
+```sh
+bun install --frozen-lockfile --linker hoisted
+bun run dev
 ```
 
-Start it:
+Open http://localhost:5173. `bun run lint`, `bun run typecheck`, and `bun run test` run the checks. `bun run build` builds both targets; `bun run start` starts the private server.
 
-```bash
-docker compose up -d
+## Static demo
+
+```sh
+bun run dev:demo
+bun run deploy:demo
 ```
 
-## Keyboard Shortcuts
+The demo uses sample data stored only in your browser, illustrative exchange rates, and no backend or PIN. Reset restores the samples. Wrangler builds and publishes `dist/demo` at `subs.ajnart.dev`; ordinary local and Docker builds never publish.
 
-- `n` - open Add Subscription
-- `/` - focus Search
-- `Ctrl/Cmd + e` - export JSON
-- `Ctrl/Cmd + i` - import JSON
-- `?` - open keyboard shortcuts dialog
-- `Escape` - close open dialog/popover
+CI deploys successful `main` builds automatically. Set the repository's `CLOUDFLARE_API_TOKEN` Actions secret with scoped Workers deployment permissions. The Checks workflow also supports an explicit manual demo deployment.
 
-## Project Structure
+## Configuration
 
-- `app/routes/_index.tsx` - main dashboard view
-- `app/components/` - UI and feature components
-- `app/store/subscriptionStore.ts` - subscription state and persistence
-- `app/utils/nextPaymentDate.ts` - billing cycle date logic
-- `tests/` - Playwright test suite
+| Variable             | Default                     | Use                                    |
+| -------------------- | --------------------------- | -------------------------------------- |
+| `DATA_DIR`           | `./data`, `/data` in Docker | Database directory                     |
+| `SQLITE_PATH`        | `<DATA_DIR>/subs.sqlite`    | Override database file                 |
+| `SUBS_SETUP_TOKEN`   | Generated in server logs    | First-use operator token               |
+| `SUBS_ORIGIN`        | Request origin              | Public origin behind a proxy           |
+| `SUBS_COOKIE_SECURE` | Enabled on HTTPS            | Explicit Secure-cookie override        |
+| `DISABLE_AUTH`       | `false`                     | Exactly `true` disables PIN protection |
 
-## Contributing
+## Existing data
 
-Contributions are welcome.
+Export from Subs 2 or preserve `data/config.json`, then restore through **Settings → Import**. Legacy arrays and browser/server storage envelopes are supported. Review the preview before replacing anything; keep the original backup. `USE_LOCAL_STORAGE` and the old storage API are retired.
 
-1. Fork and clone the repository.
-2. Create a feature branch.
-3. Run checks before opening a PR:
+JSON backups contain subscriptions and preferences, not PINs, sessions, or recorded price history. Collections are bounded to a restorable 2 MiB backup. Known service icons are bundled; other public service origins may receive a direct favicon request without a referrer. Hovering or focusing a public service link requests a preview from Microlink; previews do not load automatically.
 
-```bash
-npm run typecheck
-npm run test
+## Lost PIN
+
+Stop Subs and back up `./data`, then:
+
+```sh
+docker compose run --rm --no-deps subs bun scripts/reset-pin.ts --confirm
+docker compose up -d subs
+docker compose logs subs
 ```
 
-4. Open a pull request with a clear description of changes.
-
-## License
-
-MIT
+Complete setup again. Subscriptions and preferences are preserved.

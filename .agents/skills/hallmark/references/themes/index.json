@@ -1,0 +1,2191 @@
+{
+ "built": "2026-10-22",
+ "themes": [
+  {
+   "name": "Almanac",
+   "slug": "almanac",
+   "genre": "editorial",
+   "posture": "restrained",
+   "paper": {
+    "band": "mid",
+    "L": 84,
+    "hue": 245
+   },
+   "display": {
+    "class": "grotesk-sans",
+    "face": "Hanken Grotesk"
+   },
+   "accent": {
+    "band": "chromatic-magenta",
+    "hue": 350
+   },
+   "keywords": [
+    "almanac",
+    "yearbook",
+    "field guide",
+    "reference",
+    "handbook",
+    "manual",
+    "index",
+    "catalogue",
+    "encyclopedia",
+    "data",
+    "figures",
+    "tables",
+    "statistics",
+    "research",
+    "dataset",
+    "records",
+    "directory",
+    "glossary",
+    "specifications"
+   ],
+   "material": "cool slate stock with a pale printed sheet, blue-black ink, Hanken Grotesk heads over Newsreader prose with mono figures, two rule weights and square corners, one chart magenta",
+   "file": "references/themes/almanac.md",
+   "photo": "muted",
+   "pictured": "Workbench, Stage hero",
+   "picture": "references/themes/almanac.jpg"
+  },
+  {
+   "name": "Arcade",
+   "slug": "arcade",
+   "genre": "playful",
+   "posture": "full-palette",
+   "paper": {
+    "band": "dark",
+    "L": 14,
+    "hue": 312
+   },
+   "display": {
+    "class": "pixel",
+    "face": "Silkscreen and Bungee"
+   },
+   "accent": {
+    "band": "chromatic-ember",
+    "hue": 40
+   },
+   "keywords": [
+    "game",
+    "indie",
+    "game studio",
+    "launch party",
+    "demo night",
+    "hackathon",
+    "festival",
+    "meetup",
+    "retro",
+    "pixel",
+    "arcade",
+    "nostalgia",
+    "synth",
+    "lo-fi",
+    "toy",
+    "zine",
+    "club night",
+    "loud"
+   ],
+   "material": "aubergine CRT ground, lilac-white ink, Bungee capitals split in RGB over Chivo, Silkscreen figures, hard offset shadows, ember and acid signals",
+   "file": "references/themes/arcade.md",
+   "photo": "tint accent",
+   "pictured": "Marquee Hero, Stage hero",
+   "picture": "references/themes/arcade.jpg"
+  },
+  {
+   "name": "Atelier",
+   "slug": "atelier",
+   "genre": "editorial",
+   "posture": "restrained",
+   "paper": {
+    "band": "light",
+    "L": 94.5,
+    "hue": 76
+   },
+   "display": {
+    "class": "roman-serif",
+    "face": "Sentient"
+   },
+   "accent": {
+    "band": "cool",
+    "hue": 248
+   },
+   "keywords": [
+    "fashion",
+    "atelier",
+    "couture",
+    "fragrance",
+    "gallery",
+    "exhibition",
+    "museum",
+    "ceramics",
+    "furniture",
+    "homeware",
+    "architecture",
+    "design studio",
+    "lookbook",
+    "collection",
+    "craft",
+    "small-batch",
+    "made by hand",
+    "brand story",
+    "luxury",
+    "object",
+    "hotel",
+    "boutique hotel",
+    "hospitality",
+    "stay"
+   ],
+   "material": "limewash paper under a slow luminous air, deep umber ink, Sentient light over Hanken Grotesk, cotton card stock with fibre and pressed type, hairlines, matted prints in warm daylight, one cool slate signal",
+   "file": "references/themes/atelier.md",
+   "photo": "warm con=-6 vib=-10",
+   "pictured": "Gallery Hang, Diffusion hero",
+   "picture": "references/themes/atelier.jpg"
+  },
+  {
+   "name": "Bloom",
+   "slug": "bloom",
+   "genre": "atmospheric",
+   "posture": "committed",
+   "paper": {
+    "band": "light",
+    "L": 97,
+    "hue": 72
+   },
+   "display": {
+    "class": "grotesk-sans",
+    "face": "Ranade"
+   },
+   "accent": {
+    "band": "warm",
+    "hue": 36
+   },
+   "keywords": [
+    "generative",
+    "ai creative",
+    "music",
+    "song",
+    "video",
+    "image",
+    "voice",
+    "art",
+    "make",
+    "create",
+    "compose",
+    "render",
+    "imagine",
+    "prompt",
+    "creative studio",
+    "playground",
+    "expressive",
+    "warm",
+    "daylight",
+    "consumer creative",
+    "portrait",
+    "headshot",
+    "selfie",
+    "retouch"
+   ],
+   "material": "warm off-white paper with grain and a generated working grid, two quiet terracotta blooms, warm umber ink, Ranade with one roman Gambarino figure, rubber and cased parts lit from above, part tones on rounded clips",
+   "file": "references/themes/bloom.md",
+   "photo": "warm exp=4",
+   "pictured": "Workbench, Stage hero",
+   "picture": "references/themes/bloom.jpg"
+  },
+  {
+   "name": "Blueprint",
+   "slug": "blueprint",
+   "genre": "modern-minimal",
+   "posture": "drenched",
+   "paper": {
+    "band": "mid",
+    "L": 35,
+    "hue": 256
+   },
+   "display": {
+    "class": "geometric-sans",
+    "face": "Chakra Petch"
+   },
+   "accent": {
+    "band": "neutral",
+    "hue": 240
+   },
+   "keywords": [
+    "architecture",
+    "architect",
+    "engineering",
+    "construction",
+    "structural",
+    "interiors",
+    "planning",
+    "surveying",
+    "cad",
+    "drafting",
+    "fabrication",
+    "prefab",
+    "developer",
+    "technical",
+    "spec",
+    "permit",
+    "renovation",
+    "build",
+    "drawings",
+    "architecture studio",
+    "timber"
+   ],
+   "material": "prussian-blue sheet, white line ink, Chakra Petch capitals over IBM Plex Sans with mono measurements, square double keylines and dimension strings, photographs printed as cyanotypes, the white line as the only signal",
+   "file": "references/themes/blueprint.md",
+   "photo": "duotone paper-3 ink con=30 exp=-10",
+   "pictured": "Bento Grid, Poster hero",
+   "picture": "references/themes/blueprint.jpg"
+  },
+  {
+   "name": "Broadside",
+   "slug": "broadside",
+   "genre": "editorial",
+   "posture": "committed",
+   "paper": {
+    "band": "light",
+    "L": 92,
+    "hue": 88
+   },
+   "display": {
+    "class": "display-condensed",
+    "face": "Six Caps"
+   },
+   "accent": {
+    "band": "warm",
+    "hue": 33
+   },
+   "keywords": [
+    "auction",
+    "sale",
+    "market",
+    "fair",
+    "event",
+    "one night",
+    "announcement",
+    "town",
+    "notice",
+    "poster",
+    "bill",
+    "lots",
+    "machinery",
+    "tools",
+    "festival",
+    "fete",
+    "hammer",
+    "date",
+    "venue",
+    "tickets"
+   ],
+   "material": "grained buff stock, near-black ink, Six Caps and Bevan wood capitals over Archivo Narrow, ink rules at one point or five, one vermilion",
+   "file": "references/themes/broadside.md",
+   "photo": "duotone ink paper con=20",
+   "pictured": "Marquee Hero, Settled hero",
+   "picture": "references/themes/broadside.jpg"
+  },
+  {
+   "name": "Brutal",
+   "slug": "brutal",
+   "genre": "editorial",
+   "posture": "committed",
+   "paper": {
+    "band": "light",
+    "L": 97.5,
+    "hue": 95
+   },
+   "display": {
+    "class": "grotesk-heavy",
+    "face": "Libre Franklin"
+   },
+   "accent": {
+    "band": "chromatic-yellow",
+    "hue": 105
+   },
+   "keywords": [
+    "brutalist",
+    "raw",
+    "bold",
+    "high-contrast",
+    "statement",
+    "agency",
+    "design studio",
+    "portfolio",
+    "streetwear",
+    "drop",
+    "zine",
+    "type-forward",
+    "graphic design",
+    "poster",
+    "festival",
+    "collective",
+    "no-nonsense",
+    "uncompromising"
+   ],
+   "material": "near-white poster stock, near-black ink as 3px rules, boxed cells and solid fills, uppercase Libre Franklin 900 over its 400, zero radius, one acid-yellow fill",
+   "file": "references/themes/brutal.md",
+   "photo": "duotone ink paper con=24",
+   "pictured": "Marquee Hero, Poster hero",
+   "picture": "references/themes/brutal.jpg"
+  },
+  {
+   "name": "Carnival",
+   "slug": "carnival",
+   "genre": "editorial",
+   "posture": "full-palette",
+   "paper": {
+    "band": "light",
+    "L": 92,
+    "hue": 50
+   },
+   "display": {
+    "class": "display-heavy",
+    "face": "Big Shoulders Display"
+   },
+   "accent": {
+    "band": "chromatic-yellow",
+    "hue": 95
+   },
+   "keywords": [
+    "record label",
+    "podcast",
+    "comedy",
+    "indie",
+    "zine",
+    "poster",
+    "illustrator",
+    "games",
+    "hot sauce",
+    "merch",
+    "streetwear",
+    "cassette",
+    "vinyl",
+    "live show",
+    "festival",
+    "loud",
+    "maximalist",
+    "scrappy"
+   ],
+   "material": "tinted paper, deep warm ink, Big Shoulders Display 800 capitals set poster-large over Golos Text, 2px rules, a hard 4px ink shadow, two accents that compete as whole fields",
+   "file": "references/themes/carnival.md",
+   "photo": "natural vib=20 con=10",
+   "pictured": "Label and Ledger, Stage hero",
+   "picture": "references/themes/carnival.jpg"
+  },
+  {
+   "name": "Cobalt",
+   "slug": "cobalt",
+   "genre": "modern-minimal",
+   "posture": "restrained",
+   "paper": {
+    "band": "light",
+    "L": 98.5,
+    "hue": 250
+   },
+   "display": {
+    "class": "grotesk-sans",
+    "face": "Familjen Grotesk"
+   },
+   "accent": {
+    "band": "cool",
+    "hue": 256
+   },
+   "keywords": [
+    "api",
+    "sdk",
+    "cli",
+    "dev tool",
+    "developer platform",
+    "docs",
+    "documentation",
+    "infrastructure",
+    "backend",
+    "database",
+    "observability",
+    "webhooks",
+    "events",
+    "type-safe",
+    "open source",
+    "ship",
+    "deploy",
+    "developer experience",
+    "technical"
+   ],
+   "material": "cool near-white paper, blue-grey ink and hairlines, Familjen Grotesk over IBM Plex Sans, a generated ASCII field on an 8 by 16 cell, keycaps and cut-corner panels, JetBrains Mono on graphite, one electric cobalt signal",
+   "file": "references/themes/cobalt.md",
+   "photo": "duotone graphite paper",
+   "pictured": "Feature Ledger, Field hero",
+   "picture": "references/themes/cobalt.jpg"
+  },
+  {
+   "name": "Console",
+   "slug": "console",
+   "genre": "modern-minimal",
+   "posture": "restrained",
+   "paper": {
+    "band": "dark",
+    "L": 17,
+    "hue": 250
+   },
+   "display": {
+    "class": "grotesk-sans",
+    "face": "Host Grotesk"
+   },
+   "accent": {
+    "band": "chromatic-amber",
+    "hue": 80
+   },
+   "keywords": [
+    "lab",
+    "laboratory",
+    "protocol",
+    "experiment",
+    "notebook",
+    "science",
+    "research",
+    "observability",
+    "monitoring",
+    "version control",
+    "audit",
+    "compliance",
+    "instruments",
+    "data",
+    "devtools",
+    "engineering",
+    "telemetry",
+    "record",
+    "operations",
+    "dark",
+    "developer"
+   ],
+   "material": "graphite ground in three lightness steps, pale ink, hairline panels cut from one surface, Host Grotesk 500 for reading, Atkinson Hyperlegible Mono for what was measured, amber for a person and cool blue for an instrument",
+   "file": "references/themes/console.md",
+   "photo": "duotone paper-3 ink",
+   "pictured": "Audit Trail, Stage hero",
+   "picture": "references/themes/console.jpg"
+  },
+  {
+   "name": "Coral",
+   "slug": "coral",
+   "genre": "modern-minimal",
+   "posture": "restrained",
+   "paper": {
+    "band": "light",
+    "L": 97,
+    "hue": 55
+   },
+   "display": {
+    "class": "grotesk-sans",
+    "face": "General Sans"
+   },
+   "accent": {
+    "band": "warm",
+    "hue": 30
+   },
+   "keywords": [
+    "saas",
+    "platform",
+    "billing",
+    "payments",
+    "invoicing",
+    "dashboard",
+    "b2b",
+    "startup",
+    "product",
+    "pricing",
+    "analytics",
+    "fintech",
+    "workflow",
+    "team",
+    "onboarding",
+    "trust",
+    "warm",
+    "human",
+    "calm"
+   ],
+   "material": "warm grey paper and a felt desk, cotton stationery lit from the left, General Sans throughout with Geist Mono figures, letterpress card controls, coral pressed into the stock for the one settled state",
+   "file": "references/themes/coral.md",
+   "photo": "muted sepia=8",
+   "pictured": "Conversational FAQ, Desk hero",
+   "picture": "references/themes/coral.jpg"
+  },
+  {
+   "name": "Darkroom",
+   "slug": "darkroom",
+   "genre": "atmospheric",
+   "posture": "restrained",
+   "paper": {
+    "band": "dark",
+    "L": 12.5,
+    "hue": 55
+   },
+   "display": {
+    "class": "display-condensed",
+    "face": "Sofia Sans Extra Condensed"
+   },
+   "accent": {
+    "band": "chromatic-amber",
+    "hue": 58
+   },
+   "keywords": [
+    "photographer",
+    "photography",
+    "film",
+    "analogue",
+    "darkroom",
+    "prints",
+    "portfolio",
+    "exhibition",
+    "gallery",
+    "edition",
+    "commission",
+    "cinematographer",
+    "negative",
+    "archive",
+    "monochrome",
+    "lab",
+    "moody",
+    "black and white",
+    "night",
+    "print shop",
+    "travel",
+    "places",
+    "landscape",
+    "portrait",
+    "photo studio"
+   ],
+   "material": "warm print-black ground, a fine light grain, fibre-white ink, hairline Sofia Sans Extra Condensed capitals over Barlow, zero radius, black-and-white photographs printed deeper than the ground, one amber safelight",
+   "file": "references/themes/darkroom.md",
+   "photo": "mono high=-20 shad=-12",
+   "pictured": "Photographic, Poster hero",
+   "picture": "references/themes/darkroom.jpg"
+  },
+  {
+   "name": "Dose",
+   "slug": "dose",
+   "genre": "modern-minimal",
+   "posture": "committed",
+   "paper": {
+    "band": "light",
+    "L": 97.6,
+    "hue": 88
+   },
+   "display": {
+    "class": "grotesk-sans",
+    "face": "Schibsted Grotesk"
+   },
+   "accent": {
+    "band": "chromatic-green",
+    "hue": 160
+   },
+   "keywords": [
+    "health",
+    "medication",
+    "pharmacy",
+    "care",
+    "carer",
+    "family",
+    "reminders",
+    "schedule",
+    "app",
+    "mobile",
+    "medicine",
+    "patients",
+    "clinic",
+    "prescription",
+    "tracking",
+    "calm",
+    "trust",
+    "routine",
+    "elderly",
+    "parents"
+   ],
+   "material": "warm morning paper with a fibre grain and window light, translucent tinted plastic, green-black ink, Schibsted Grotesk over Instrument Sans with DM Mono pharmacy labels, moulded controls, one pharmacy green",
+   "file": "references/themes/dose.md",
+   "photo": "natural sat=-15 con=-6",
+   "pictured": "Care Register, Organiser hero",
+   "picture": "references/themes/dose.jpg"
+  },
+  {
+   "name": "Dusk",
+   "slug": "dusk",
+   "genre": "modern-minimal",
+   "posture": "committed",
+   "paper": {
+    "band": "dark",
+    "L": 17.5,
+    "hue": 268
+   },
+   "display": {
+    "class": "grotesk-sans",
+    "face": "Wix Madefor Display"
+   },
+   "accent": {
+    "band": "cool",
+    "hue": 274
+   },
+   "keywords": [
+    "treasury",
+    "banking",
+    "fintech",
+    "payments",
+    "reconciliation",
+    "ledger",
+    "accounting",
+    "close",
+    "month end",
+    "audit",
+    "balance",
+    "cash management",
+    "payouts",
+    "settlement",
+    "compliance",
+    "controller",
+    "bookkeeping",
+    "finance team",
+    "invoicing",
+    "payroll",
+    "overnight",
+    "automation"
+   ],
+   "material": "a real landscape at the turn of the light behind the hero, slate below it, the product in smoked glass with a lit top edge, Wix Madefor Display at a quiet weight over Wix Madefor Text, bone wells for light surfaces, one periwinkle signal and one apricot",
+   "file": "references/themes/dusk.md",
+   "photo": "natural con=4 vib=6",
+   "pictured": "Narrative Workflow, Stage hero",
+   "picture": "references/themes/dusk.jpg"
+  },
+  {
+   "name": "Editorial",
+   "slug": "editorial",
+   "genre": "editorial",
+   "posture": "restrained",
+   "paper": {
+    "band": "light",
+    "L": 97,
+    "hue": 86
+   },
+   "display": {
+    "class": "display-condensed",
+    "face": "Bricolage Grotesque"
+   },
+   "accent": {
+    "band": "chromatic-green",
+    "hue": 152
+   },
+   "keywords": [
+    "magazine",
+    "editorial",
+    "feature",
+    "culture",
+    "fashion",
+    "design annual",
+    "interview",
+    "longform",
+    "publication",
+    "issue",
+    "contemporary",
+    "art direction",
+    "profile",
+    "lookbook",
+    "brand story",
+    "journal",
+    "considered",
+    "travel",
+    "city guide",
+    "guide"
+   ],
+   "material": "warm white uncoated stock, printed black ink with a cool tilt, Bricolage Grotesque condensed at 800 over Source Serif 4, square corners, a heavy ink rule over 1px hairlines, one printer's green",
+   "file": "references/themes/editorial.md",
+   "photo": "natural sat=-10 con=4",
+   "pictured": "Marquee Hero, Stage hero",
+   "picture": "references/themes/editorial.jpg"
+  },
+  {
+   "name": "Formwork",
+   "slug": "formwork",
+   "genre": "editorial",
+   "posture": "restrained",
+   "paper": {
+    "band": "mid",
+    "L": 74,
+    "hue": 80
+   },
+   "display": {
+    "class": "display-condensed",
+    "face": "Oswald"
+   },
+   "accent": {
+    "band": "warm",
+    "hue": 38
+   },
+   "keywords": [
+    "construction",
+    "concrete",
+    "skatepark",
+    "contractor",
+    "civil",
+    "landscape",
+    "foundry",
+    "industrial",
+    "fabrication",
+    "workshop",
+    "engineering",
+    "cast",
+    "welded",
+    "builders",
+    "hardware",
+    "tools",
+    "site",
+    "heavy"
+   ],
+   "material": "warm grey concrete paper with a speck grain, near-black ink, Oswald capitals over Archivo, square cast edges and hard shadows, hard black-and-white photographs of poured concrete, one safety orange signal",
+   "file": "references/themes/formwork.md",
+   "photo": "natural sat=-100 con=35 exp=8",
+   "pictured": "Site Board, Poster hero",
+   "picture": "references/themes/formwork.jpg"
+  },
+  {
+   "name": "Furrow",
+   "slug": "furrow",
+   "genre": "modern-minimal",
+   "posture": "committed",
+   "paper": {
+    "band": "light",
+    "L": 96,
+    "hue": 85
+   },
+   "display": {
+    "class": "grotesk-sans",
+    "face": "Red Hat Display"
+   },
+   "accent": {
+    "band": "warm",
+    "hue": 40
+   },
+   "keywords": [
+    "farm",
+    "agriculture",
+    "land",
+    "field",
+    "livestock",
+    "sheep",
+    "cattle",
+    "crop",
+    "records",
+    "compliance",
+    "inspection",
+    "fleet",
+    "field service",
+    "rural",
+    "contractor",
+    "hectares",
+    "yard",
+    "outdoors",
+    "seasonal",
+    "working",
+    "units"
+   ],
+   "material": "warm manila paper, near-black ink in rules, a generated survey map in sienna contours and slate water, Red Hat Display 600 over Red Hat Text with Red Hat Mono figures, moulded 6px keys, a waterproof notebook card, one tangerine signal and a grass green for what is in date",
+   "file": "references/themes/furrow.md",
+   "photo": "natural con=8 sat=-6",
+   "pictured": "Field Record, Map hero",
+   "picture": "references/themes/furrow.jpg"
+  },
+  {
+   "name": "Garden",
+   "slug": "garden",
+   "genre": "editorial",
+   "posture": "committed",
+   "paper": {
+    "band": "light",
+    "L": 95.8,
+    "hue": 90
+   },
+   "display": {
+    "class": "roman-serif",
+    "face": "Vollkorn"
+   },
+   "accent": {
+    "band": "chromatic-green",
+    "hue": 140
+   },
+   "keywords": [
+    "farm",
+    "apiary",
+    "honey",
+    "cidery",
+    "orchard",
+    "pick your own",
+    "apples",
+    "seed",
+    "nursery",
+    "herbalist",
+    "botanical",
+    "tea",
+    "preserves",
+    "single-origin",
+    "seasonal",
+    "harvest",
+    "small-maker",
+    "csa",
+    "provenance",
+    "grown",
+    "field",
+    "homestead"
+   ],
+   "material": "warm oat paper, deep green ink, Vollkorn 600 with old-style figures over Hanken Grotesk, hairlines and soft moss or clay tints, daylight photographs in true colour, one leaf-green signal",
+   "file": "references/themes/garden.md",
+   "photo": "natural con=6 sat=-6",
+   "pictured": "Field Guide, Stage hero",
+   "picture": "references/themes/garden.jpg"
+  },
+  {
+   "name": "Grid",
+   "slug": "grid",
+   "genre": "editorial",
+   "posture": "full-palette",
+   "paper": {
+    "band": "light",
+    "L": 97.5,
+    "hue": 90
+   },
+   "display": {
+    "class": "grotesk-sans",
+    "face": "Radio Canada Big"
+   },
+   "accent": {
+    "band": "cool",
+    "hue": 266
+   },
+   "keywords": [
+    "identity",
+    "brand system",
+    "wayfinding",
+    "signage",
+    "design studio",
+    "type specimen",
+    "editorial grid",
+    "institution",
+    "museum",
+    "archive",
+    "index",
+    "directory",
+    "systems",
+    "modular",
+    "swiss",
+    "grotesque",
+    "manual",
+    "programme",
+    "poster",
+    "collection"
+   ],
+   "material": "white poster stock, blue-black ink, Radio Canada Big 700 in sentence case over Radio Canada, flat fields of ultramarine and one Swiss red mark, no strokes",
+   "file": "references/themes/grid.md",
+   "photo": "duotone ink paper-2 con=12",
+   "pictured": "Poster Sequence, Poster hero",
+   "picture": "references/themes/grid.jpg"
+  },
+  {
+   "name": "Halftone",
+   "slug": "halftone",
+   "genre": "playful",
+   "posture": "committed",
+   "paper": {
+    "band": "light",
+    "L": 96.2,
+    "hue": 94
+   },
+   "display": {
+    "class": "slab-serif",
+    "face": "Ultra"
+   },
+   "accent": {
+    "band": "warm",
+    "hue": 33
+   },
+   "keywords": [
+    "drinks",
+    "soda",
+    "food brand",
+    "print shop",
+    "zine",
+    "magazine",
+    "record label",
+    "packaging",
+    "campaign",
+    "label",
+    "bottle",
+    "can",
+    "screen print",
+    "bold",
+    "one colour",
+    "retail",
+    "craft",
+    "loud",
+    "fruit",
+    "snack"
+   ],
+   "material": "butter-cream stock, brown-black ink, Ultra over Chivo, three-pixel ink rules and square wells, one vermilion printed solid and through a dot screen, photographs in full colour",
+   "file": "references/themes/halftone.md",
+   "photo": "natural vib=25 sat=10 con=6",
+   "pictured": "Back of the Can, Settled hero",
+   "picture": "references/themes/halftone.jpg"
+  },
+  {
+   "name": "Hedgerow",
+   "slug": "hedgerow",
+   "genre": "editorial",
+   "posture": "drenched",
+   "paper": {
+    "band": "dark",
+    "L": 24,
+    "hue": 158
+   },
+   "display": {
+    "class": "high-contrast-serif",
+    "face": "Prata"
+   },
+   "accent": {
+    "band": "chromatic-green",
+    "hue": 118
+   },
+   "keywords": [
+    "distillery",
+    "gin",
+    "brewery",
+    "forager",
+    "botanicals",
+    "nature reserve",
+    "walking",
+    "trail",
+    "seeds",
+    "plants",
+    "nursery",
+    "hedge",
+    "countryside",
+    "field guide",
+    "provenance",
+    "harvest",
+    "batch",
+    "seasonal",
+    "map",
+    "miles"
+   ],
+   "material": "deep leaf-green paper, cream ink, Prata heads over Manrope, low-key photographs in true colour, square flat surfaces with pill controls, one chartreuse signal with a moss strength for cream",
+   "file": "references/themes/hedgerow.md",
+   "photo": "natural sat=-10 con=8 exp=-8",
+   "pictured": "Field Guide, Poster hero",
+   "picture": "references/themes/hedgerow.jpg"
+  },
+  {
+   "name": "Hum",
+   "slug": "hum",
+   "genre": "playful",
+   "posture": "full-palette",
+   "paper": {
+    "band": "light",
+    "L": 97,
+    "hue": 95
+   },
+   "display": {
+    "class": "rounded-sans",
+    "face": "Chillax"
+   },
+   "accent": {
+    "band": "chromatic-yellow",
+    "hue": 95
+   },
+   "keywords": [
+    "daily",
+    "habit",
+    "streak",
+    "practice",
+    "learning",
+    "reading",
+    "curiosity",
+    "mood",
+    "energy",
+    "friendship",
+    "community",
+    "kids",
+    "family",
+    "parents",
+    "school",
+    "game",
+    "puzzle",
+    "creative",
+    "playful",
+    "alive"
+   ],
+   "material": "grained cream paper pulled toward pear-yellow, torn paper edges with a pale fibre core, card-stock controls that press down, blue-black ink, Chillax throughout, three accents that never blend and a mint for growth",
+   "file": "references/themes/hum.md",
+   "photo": "natural vib=12 exp=4",
+   "pictured": "Workbench, Settled hero",
+   "picture": "references/themes/hum.jpg"
+  },
+  {
+   "name": "Ink",
+   "slug": "ink",
+   "genre": "editorial",
+   "posture": "restrained",
+   "paper": {
+    "band": "light",
+    "L": 99.5,
+    "hue": 100
+   },
+   "display": {
+    "class": "grotesk-sans",
+    "face": "Epilogue"
+   },
+   "accent": {
+    "band": "chromatic-teal",
+    "hue": 190
+   },
+   "keywords": [
+    "library",
+    "lending",
+    "community",
+    "civic",
+    "notice board",
+    "catalogue",
+    "rota",
+    "volunteer",
+    "non-profit",
+    "neighbourhood",
+    "borrow",
+    "tools",
+    "repair",
+    "membership",
+    "events",
+    "local",
+    "competent",
+    "monochrome"
+   ],
+   "material": "white paper, a black with no hue, Epilogue 700 over Epilogue 400, hairline rules and state pills, one teal that means in",
+   "file": "references/themes/ink.md",
+   "photo": "muted",
+   "pictured": "Catalogue, Settled hero",
+   "picture": "references/themes/ink.jpg"
+  },
+  {
+   "name": "Kiln",
+   "slug": "kiln",
+   "genre": "atmospheric",
+   "posture": "full-palette",
+   "paper": {
+    "band": "dark",
+    "L": 13,
+    "hue": 40
+   },
+   "display": {
+    "class": "high-contrast-serif",
+    "face": "Boska"
+   },
+   "accent": {
+    "band": "warm",
+    "hue": 45
+   },
+   "keywords": [
+    "kiln",
+    "ceramics",
+    "pottery",
+    "firing",
+    "glaze",
+    "heat",
+    "temperature",
+    "ceramics studio",
+    "craft",
+    "sensor",
+    "monitor",
+    "hardware",
+    "iot",
+    "warmth",
+    "dark",
+    "glow",
+    "schedule",
+    "workshop"
+   ],
+   "material": "near-black ground, cream ink, Boska over Geist, smoked wells, photographs lit by the work, a heat ramp that marks temperature, one ember signal",
+   "file": "references/themes/kiln.md",
+   "photo": "warm sepia=50 sat=-12 con=8 exp=-6",
+   "pictured": "Workbench, Stage hero",
+   "picture": "references/themes/kiln.jpg"
+  },
+  {
+   "name": "Loom",
+   "slug": "loom",
+   "genre": "editorial",
+   "posture": "committed",
+   "paper": {
+    "band": "light",
+    "L": 95,
+    "hue": 85
+   },
+   "display": {
+    "class": "roman-serif",
+    "face": "Libre Caslon Display"
+   },
+   "accent": {
+    "band": "cool",
+    "hue": 266
+   },
+   "keywords": [
+    "weaving",
+    "textile",
+    "linen",
+    "wool",
+    "weaving studio",
+    "cloth",
+    "craft",
+    "atelier",
+    "handmade",
+    "natural",
+    "indigo",
+    "fabric",
+    "by the metre",
+    "workshop",
+    "maker",
+    "slow",
+    "commission",
+    "interiors",
+    "samples"
+   ],
+   "material": "ecru paper with sand steps, warm near-black ink, Libre Caslon Display heads and prices over Hanken Grotesk, thin rules and one ink rule, cloth photographed close in window light, one deep indigo",
+   "file": "references/themes/loom.md",
+   "photo": "natural sat=-12 con=-4",
+   "pictured": "Narrative Workflow, Poster hero",
+   "picture": "references/themes/loom.jpg"
+  },
+  {
+   "name": "Lumen",
+   "slug": "lumen",
+   "genre": "atmospheric",
+   "posture": "restrained",
+   "paper": {
+    "band": "dark",
+    "L": 12.5,
+    "hue": 290
+   },
+   "display": {
+    "class": "roman-serif",
+    "face": "Instrument Serif"
+   },
+   "accent": {
+    "band": "warm",
+    "hue": 62
+   },
+   "keywords": [
+    "inference",
+    "model",
+    "llm",
+    "ai tool",
+    "agent",
+    "voice",
+    "synthesis",
+    "api",
+    "gpu",
+    "serverless",
+    "runtime",
+    "tokens",
+    "latency",
+    "open models",
+    "developer",
+    "research lab",
+    "ml platform",
+    "dev tools",
+    "premium"
+   ],
+   "material": "violet-black ground, near-white ink, lowercase Instrument Serif heads a step large over Geist and Geist Mono, hairline wells, a faint blueprint grid, one molten brass signal and one rose verb",
+   "file": "references/themes/lumen.md",
+   "photo": "duotone paper ink-2",
+   "pictured": "Map / Diagram, Settled hero",
+   "picture": "references/themes/lumen.jpg"
+  },
+  {
+   "name": "Manifesto",
+   "slug": "manifesto",
+   "genre": "editorial",
+   "posture": "committed",
+   "paper": {
+    "band": "dark",
+    "L": 13,
+    "hue": 60
+   },
+   "display": {
+    "class": "display-condensed",
+    "face": "Anton"
+   },
+   "accent": {
+    "band": "warm",
+    "hue": 28
+   },
+   "keywords": [
+    "manifesto",
+    "statement",
+    "declaration",
+    "principles",
+    "beliefs",
+    "mission",
+    "movement",
+    "protest",
+    "cause",
+    "campaign",
+    "petition",
+    "activism",
+    "advocacy",
+    "rights",
+    "values",
+    "take a stand",
+    "bold launch",
+    "defiant",
+    "punk",
+    "record label"
+   ],
+   "material": "warm near-black ground, warm off-white ink, Anton capitals at poster size leaded tight over a quiet Public Sans body, hairlines, a heavy ink bar and square edges, one fighting red",
+   "file": "references/themes/manifesto.md",
+   "photo": "duotone paper ink con=24",
+   "pictured": "Manifesto, Ledge hero",
+   "picture": "references/themes/manifesto.jpg"
+  },
+  {
+   "name": "Midnight",
+   "slug": "midnight",
+   "genre": "atmospheric",
+   "posture": "committed",
+   "paper": {
+    "band": "dark",
+    "L": 14,
+    "hue": 264
+   },
+   "display": {
+    "class": "grotesk-sans",
+    "face": "Mona Sans"
+   },
+   "accent": {
+    "band": "cool",
+    "hue": 230
+   },
+   "keywords": [
+    "render",
+    "3d",
+    "animation",
+    "vfx",
+    "film",
+    "video",
+    "frames",
+    "pipeline",
+    "generative",
+    "ai tool",
+    "model playground",
+    "dark mode",
+    "nocturnal",
+    "late-night",
+    "after-hours",
+    "overnight",
+    "moody",
+    "cinematic",
+    "cerebral",
+    "calm",
+    "technical",
+    "midnight"
+   ],
+   "material": "midnight-blue ground to every edge, cool white ink, Mona Sans expanded at 300 over its normal width, square-cut surfaces in lightness steps, photographs as moonlight, one azure signal",
+   "file": "references/themes/midnight.md",
+   "photo": "duotone paper ink-2",
+   "pictured": "Narrative Workflow, Settled hero",
+   "picture": "references/themes/midnight.jpg"
+  },
+  {
+   "name": "Newsprint",
+   "slug": "newsprint",
+   "genre": "editorial",
+   "posture": "restrained",
+   "paper": {
+    "band": "light",
+    "L": 94,
+    "hue": 92
+   },
+   "display": {
+    "class": "slab-serif",
+    "face": "Zilla Slab"
+   },
+   "accent": {
+    "band": "warm",
+    "hue": 32
+   },
+   "keywords": [
+    "newspaper",
+    "broadsheet",
+    "journalism",
+    "publication",
+    "magazine",
+    "newsletter",
+    "local news",
+    "op-ed",
+    "opinion",
+    "essay",
+    "longform",
+    "column",
+    "reportage",
+    "press",
+    "gazette",
+    "review",
+    "dispatch",
+    "literary"
+   ],
+   "material": "pale newsprint stock, warm black ink, Zilla Slab heads over a Spectral body with Libre Franklin agate for listed figures, justified columns under hairline column rules, a double rule, one dried-brick signal",
+   "file": "references/themes/newsprint.md",
+   "photo": "mono",
+   "pictured": "Broadsheet Front, Stage hero",
+   "picture": "references/themes/newsprint.jpg"
+  },
+  {
+   "name": "Overprint",
+   "slug": "overprint",
+   "genre": "playful",
+   "posture": "full-palette",
+   "paper": {
+    "band": "light",
+    "L": 91.5,
+    "hue": 92
+   },
+   "display": {
+    "class": "grotesk-heavy",
+    "face": "Anybody"
+   },
+   "accent": {
+    "band": "cool",
+    "hue": 212
+   },
+   "keywords": [
+    "venue",
+    "gigs",
+    "live music",
+    "festival",
+    "music",
+    "label",
+    "print studio",
+    "bar",
+    "club",
+    "poster",
+    "tickets",
+    "events",
+    "nightlife",
+    "two-colour",
+    "screenprint",
+    "punk",
+    "zine",
+    "loud",
+    "listings",
+    "door"
+   ],
+   "material": "grey newsprint stock, near-black ink, wide heavy Anybody capitals over Archivo, flat square fills, a teal pass and an orange pass that print moss where they cross, photographs pulled through one pass",
+   "file": "references/themes/overprint.md",
+   "photo": "mono con=30",
+   "pictured": "Marquee Hero, Poster hero",
+   "picture": "references/themes/overprint.jpg"
+  },
+  {
+   "name": "Paste-up",
+   "slug": "pasteup",
+   "genre": "playful",
+   "posture": "committed",
+   "paper": {
+    "band": "mid",
+    "L": 73,
+    "hue": 70
+   },
+   "display": {
+    "class": "display-condensed",
+    "face": "League Gothic"
+   },
+   "accent": {
+    "band": "chromatic-yellow",
+    "hue": 112
+   },
+   "keywords": [
+    "zine",
+    "fair",
+    "market",
+    "festival",
+    "print fair",
+    "book fair",
+    "exhibitors",
+    "punk",
+    "diy",
+    "collective",
+    "gig",
+    "poster",
+    "workshop",
+    "night market",
+    "flea",
+    "indie",
+    "community",
+    "launch",
+    "loud",
+    "photocopy",
+    "flyer"
+   ],
+   "material": "kraft board, a fibre wash, near-black toner, League Gothic capitals over a Newsreader galley, white copy paper on paper lifts, hard ink offsets, one sheet of fluorescent yellow",
+   "file": "references/themes/pasteup.md",
+   "photo": "mono con=45",
+   "pictured": "Bento Grid, Stage hero",
+   "picture": "references/themes/pasteup.jpg"
+  },
+  {
+   "name": "Piste",
+   "slug": "piste",
+   "genre": "playful",
+   "posture": "committed",
+   "paper": {
+    "band": "light",
+    "L": 98.5,
+    "hue": 260
+   },
+   "display": {
+    "class": "display-condensed",
+    "face": "Barlow Condensed"
+   },
+   "accent": {
+    "band": "cool",
+    "hue": 265
+   },
+   "keywords": [
+    "ski",
+    "mountain",
+    "resort",
+    "snow",
+    "winter",
+    "outdoor",
+    "sport",
+    "trail",
+    "lift",
+    "race",
+    "alpine",
+    "tickets",
+    "season pass",
+    "conditions",
+    "weather",
+    "club",
+    "active",
+    "bold"
+   ],
+   "material": "snow-white paper, cold near-black ink, Barlow Condensed 800 caps over Barlow, square edges on 2px ink rules, one cobalt for signal and field",
+   "file": "references/themes/piste.md",
+   "photo": "natural con=10 vib=15",
+   "pictured": "Morning Report, Poster hero",
+   "picture": "references/themes/piste.jpg"
+  },
+  {
+   "name": "Ribbon",
+   "slug": "ribbon",
+   "genre": "atmospheric",
+   "posture": "committed",
+   "paper": {
+    "band": "light",
+    "L": 98.5,
+    "hue": 85
+   },
+   "display": {
+    "class": "grotesk-sans",
+    "face": "Instrument Sans"
+   },
+   "accent": {
+    "band": "chromatic-teal",
+    "hue": 190
+   },
+   "keywords": [
+    "sleep",
+    "sound",
+    "soundscape",
+    "audio",
+    "night",
+    "rest",
+    "calm",
+    "wellness",
+    "meditation",
+    "white noise",
+    "ambient",
+    "listen",
+    "headphones",
+    "wind down",
+    "bedtime",
+    "quiet",
+    "breathing",
+    "app",
+    "subscription"
+   ],
+   "material": "warm off-white or blue-black night, Instrument Sans at a quiet weight over Figtree, machined parts lit from above, the hour drawn as light on a generated canvas, one signal",
+   "file": "references/themes/ribbon.md",
+   "photo": "muted sepia=14",
+   "pictured": "Night Notes, Stage hero, in the two-in-the-morning colourway",
+   "picture": "references/themes/ribbon.jpg"
+  },
+  {
+   "name": "Rim",
+   "slug": "rim",
+   "genre": "modern-minimal",
+   "posture": "committed",
+   "paper": {
+    "band": "dark",
+    "L": 9,
+    "hue": 75
+   },
+   "display": {
+    "class": "grotesk-sans",
+    "face": "Switzer"
+   },
+   "accent": {
+    "band": "warm",
+    "hue": 45
+   },
+   "keywords": [
+    "space",
+    "satellite",
+    "earth observation",
+    "orbit",
+    "imagery",
+    "ground station",
+    "telemetry",
+    "hardware",
+    "schedule",
+    "utc",
+    "infrastructure",
+    "mission",
+    "sensor",
+    "monitoring",
+    "instrument",
+    "night",
+    "dark",
+    "measured"
+   ],
+   "material": "warm black paper, warm off-white ink, Switzer 500 with Geist Mono for every measurement, square hairline surfaces, the earth photographed straight down, an orange signal and a sky-blue second",
+   "file": "references/themes/rim.md",
+   "photo": "natural sat=-20 con=10",
+   "pictured": "Map / Diagram, Ledge hero",
+   "picture": "references/themes/rim.jpg"
+  },
+  {
+   "name": "Riso",
+   "slug": "riso",
+   "genre": "editorial",
+   "posture": "committed",
+   "paper": {
+    "band": "light",
+    "L": 97,
+    "hue": 90
+   },
+   "display": {
+    "class": "grotesk-heavy",
+    "face": "Cabinet Grotesk"
+   },
+   "accent": {
+    "band": "chromatic-pink",
+    "hue": 356
+   },
+   "keywords": [
+    "risograph",
+    "riso",
+    "print studio",
+    "print fair",
+    "zine",
+    "small press",
+    "poster",
+    "art book",
+    "spot colour",
+    "two colour",
+    "indie press",
+    "diy",
+    "handmade",
+    "prints",
+    "open studio"
+   ],
+   "material": "bright uncoated stock and no black, a medium blue drum for every word, a fluorescent pink drum for the fills, purple where they cross, Cabinet Grotesk 800 over Literata, grain, one word a hair out of register",
+   "file": "references/themes/riso.md",
+   "photo": "duotone ink paper-2 con=14",
+   "pictured": "Job Sheet, Stage hero",
+   "picture": "references/themes/riso.jpg"
+  },
+  {
+   "name": "Solstice",
+   "slug": "solstice",
+   "genre": "editorial",
+   "posture": "restrained",
+   "paper": {
+    "band": "light",
+    "L": 94,
+    "hue": 80
+   },
+   "display": {
+    "class": "high-contrast-serif",
+    "face": "Yeseva One"
+   },
+   "accent": {
+    "band": "warm",
+    "hue": 24
+   },
+   "keywords": [
+    "farm",
+    "orchard",
+    "cider",
+    "perry",
+    "winery",
+    "harvest",
+    "seasonal",
+    "food",
+    "almanac",
+    "produce",
+    "vineyard",
+    "calendar",
+    "market",
+    "craft drink",
+    "label",
+    "bottle",
+    "rural",
+    "slow",
+    "sun",
+    "midsummer"
+   ],
+   "material": "cream paper, warm brown ink, Yeseva One over Archivo and Archivo Narrow, gold hairlines and hard paper shadows, photographs in low warm light, one vermilion signal",
+   "file": "references/themes/solstice.md",
+   "photo": "warm high=-12",
+   "pictured": "Midsummer, Stage hero",
+   "picture": "references/themes/solstice.jpg"
+  },
+  {
+   "name": "Specimen",
+   "slug": "specimen",
+   "genre": "editorial",
+   "posture": "restrained",
+   "paper": {
+    "band": "light",
+    "L": 96.5,
+    "hue": 82
+   },
+   "display": {
+    "class": "high-contrast-serif",
+    "face": "Bodoni Moda"
+   },
+   "accent": {
+    "band": "cool",
+    "hue": 262
+   },
+   "keywords": [
+    "typography",
+    "type specimen",
+    "foundry",
+    "letterform",
+    "portfolio",
+    "editorial",
+    "magazine",
+    "essay",
+    "type studio",
+    "agency",
+    "brand story",
+    "print",
+    "publication",
+    "craft",
+    "considered",
+    "literary"
+   ],
+   "material": "warm oat paper, warm near-black ink, razor-hairline Bodoni Moda over Geist, square 1px rules, one ink-blue signal that also draws the metric guides",
+   "file": "references/themes/specimen.md",
+   "photo": "duotone ink paper con=8",
+   "pictured": "Specimen Book, Poster hero",
+   "picture": "references/themes/specimen.jpg"
+  },
+  {
+   "name": "Spore",
+   "slug": "spore",
+   "genre": "atmospheric",
+   "posture": "committed",
+   "paper": {
+    "band": "dark",
+    "L": 15,
+    "hue": 60
+   },
+   "display": {
+    "class": "roman-serif",
+    "face": "Young Serif"
+   },
+   "accent": {
+    "band": "warm",
+    "hue": 30
+   },
+   "keywords": [
+    "grower",
+    "mushroom",
+    "fungi",
+    "farm",
+    "food",
+    "producer",
+    "fermentation",
+    "wine",
+    "natural wine",
+    "wine bar",
+    "bottle shop",
+    "cellar",
+    "preserves",
+    "dark",
+    "culture",
+    "night market",
+    "harvest",
+    "subscription",
+    "small batch"
+   ],
+   "material": "coffee-ground black with a warm grain, parchment ink, Young Serif over Instrument Sans, soft pills and grained wells, photographs lit by lamps and candles, one oyster pink",
+   "file": "references/themes/spore.md",
+   "photo": "warm con=6 exp=-4",
+   "pictured": "Photographic, Stage hero",
+   "picture": "references/themes/spore.jpg"
+  },
+  {
+   "name": "Sport",
+   "slug": "sport",
+   "genre": "editorial",
+   "posture": "restrained",
+   "paper": {
+    "band": "light",
+    "L": 98,
+    "hue": 250
+   },
+   "display": {
+    "class": "display-condensed",
+    "face": "Saira Condensed"
+   },
+   "accent": {
+    "band": "chromatic-volt",
+    "hue": 120
+   },
+   "keywords": [
+    "running",
+    "marathon",
+    "race",
+    "training",
+    "fitness",
+    "gym",
+    "team",
+    "league",
+    "fixtures",
+    "standings",
+    "scoreboard",
+    "athletics",
+    "performance",
+    "splits",
+    "sportswear",
+    "club",
+    "match",
+    "tournament"
+   ],
+   "material": "cool concrete paper, blue-black ink, uppercase Saira Condensed over Albert Sans, condensed figures and mono times, two-weight rules, one volt fill",
+   "file": "references/themes/sport.md",
+   "photo": "duotone ink paper con=20",
+   "pictured": "Stat-Led, Poster hero",
+   "picture": "references/themes/sport.jpg"
+  },
+  {
+   "name": "Squeeze",
+   "slug": "squeeze",
+   "genre": "playful",
+   "posture": "drenched",
+   "paper": {
+    "band": "mid",
+    "L": 41,
+    "hue": 154
+   },
+   "display": {
+    "class": "geometric-sans",
+    "face": "Gabarito"
+   },
+   "accent": {
+    "band": "warm",
+    "hue": 56
+   },
+   "keywords": [
+    "fruit",
+    "food box",
+    "grocer",
+    "market",
+    "delivery",
+    "weekly",
+    "seasonal",
+    "farm shop",
+    "subscription",
+    "produce",
+    "veg box",
+    "cheerful",
+    "family",
+    "treats",
+    "stall",
+    "orchard",
+    "local",
+    "fresh"
+   ],
+   "material": "forest-green paper with real chroma, warm white ink, Gabarito 800 heads and figures over Manrope, soft rounded tiles a step lighter or deeper, fruit photographed bright and close, juicy peach controls",
+   "file": "references/themes/squeeze.md",
+   "photo": "natural vib=12 con=4",
+   "pictured": "Bento Grid, Stage hero",
+   "picture": "references/themes/squeeze.jpg"
+  },
+  {
+   "name": "Sticker",
+   "slug": "sticker",
+   "genre": "playful",
+   "posture": "full-palette",
+   "paper": {
+    "band": "light",
+    "L": 95.7,
+    "hue": 82
+   },
+   "display": {
+    "class": "display-heavy",
+    "face": "Bowlby One SC"
+   },
+   "accent": {
+    "band": "chromatic-magenta",
+    "hue": 2
+   },
+   "keywords": [
+    "stickers",
+    "print",
+    "merch",
+    "shop",
+    "maker",
+    "creator",
+    "diy",
+    "craft",
+    "vinyl",
+    "packaging",
+    "labels",
+    "small business",
+    "ecommerce",
+    "fun",
+    "loud",
+    "pink",
+    "cut",
+    "ship",
+    "order"
+   ],
+   "material": "warm off-white paper, warm black ink, Bowlby One SC over Sofia Sans, white die-cut borders on hard offset shadows, hot pink, lime and ink fills set with type",
+   "file": "references/themes/sticker.md",
+   "photo": "natural vib=15 con=5",
+   "pictured": "Bento Grid, Stage hero",
+   "picture": "references/themes/sticker.jpg"
+  },
+  {
+   "name": "Studio",
+   "slug": "studio",
+   "genre": "editorial",
+   "posture": "restrained",
+   "paper": {
+    "band": "light",
+    "L": 97.2,
+    "hue": 215
+   },
+   "display": {
+    "class": "roman-serif",
+    "face": "Hedvig Letters Serif"
+   },
+   "accent": {
+    "band": "warm",
+    "hue": 52
+   },
+   "keywords": [
+    "design studio",
+    "creative studio",
+    "branding",
+    "brand identity",
+    "art direction",
+    "agency",
+    "portfolio",
+    "case study",
+    "selected work",
+    "editorial design",
+    "typography",
+    "creative direction",
+    "graphic design",
+    "considered",
+    "curatorial"
+   ],
+   "material": "cool studio-white proof paper with an ink dot grid and grain, blue-black ink, Hedvig Letters Serif heads over Geist, crop marks on every printed piece, orange construction guides, the work photographed in true colour, one cadmium-orange signal",
+   "file": "references/themes/studio.md",
+   "photo": "natural",
+   "pictured": "Portfolio Index, Ledge hero",
+   "picture": "references/themes/studio.jpg"
+  },
+  {
+   "name": "Terminal",
+   "slug": "terminal",
+   "genre": "atmospheric",
+   "posture": "committed",
+   "paper": {
+    "band": "dark",
+    "L": 12.5,
+    "hue": 150
+   },
+   "display": {
+    "class": "mono",
+    "face": "Martian Mono"
+   },
+   "accent": {
+    "band": "chromatic-green",
+    "hue": 142
+   },
+   "keywords": [
+    "cli",
+    "terminal",
+    "shell",
+    "command-line",
+    "tui",
+    "self-hosted",
+    "open-source",
+    "binary",
+    "ssh",
+    "sysadmin",
+    "devops",
+    "homelab",
+    "install script",
+    "package manager",
+    "repl",
+    "dotfiles",
+    "developer tool",
+    "phosphor"
+   ],
+   "material": "a near-black ground with a green cast in three lightness steps, pale phosphor ink and one bright phosphor signal with a dim wash of itself, every glyph Martian Mono with heads wide and text narrow, and pictures printed in the page's own glyphs: a photograph rendered as a grid of characters taken from the product's own text, dim cells small, bright cells full, stirred by the cursor",
+   "file": "references/themes/terminal.md",
+   "photo": "duotone paper accent con=20",
+   "pictured": "Session, Split hero",
+   "picture": "references/themes/terminal.jpg"
+  },
+  {
+   "name": "Terrazzo",
+   "slug": "terrazzo",
+   "genre": "modern-minimal",
+   "posture": "restrained",
+   "paper": {
+    "band": "light",
+    "L": 96,
+    "hue": 82
+   },
+   "display": {
+    "class": "geometric-sans",
+    "face": "Syne"
+   },
+   "accent": {
+    "band": "warm",
+    "hue": 38
+   },
+   "keywords": [
+    "materials",
+    "library",
+    "architects",
+    "samples",
+    "catalogue",
+    "surfaces",
+    "stone",
+    "timber",
+    "terrazzo",
+    "ceramic",
+    "tile",
+    "interiors",
+    "interiors studio",
+    "showroom",
+    "specification",
+    "swatches",
+    "supplier",
+    "drawer",
+    "photography",
+    "tactile"
+   ],
+   "material": "off-white paper, white card surfaces ruled in ink over a hard offset, wide Syne heads over Onest, JetBrains Mono for codes and millimetres, surfaces photographed flat-on in true colour, rust the one signal",
+   "file": "references/themes/terrazzo.md",
+   "photo": "natural con=4",
+   "pictured": "Sample Drawer, Ledge hero",
+   "picture": "references/themes/terrazzo.jpg"
+  },
+  {
+   "name": "Ultraviolet",
+   "slug": "ultraviolet",
+   "genre": "modern-minimal",
+   "posture": "committed",
+   "paper": {
+    "band": "light",
+    "L": 95,
+    "hue": 300
+   },
+   "display": {
+    "class": "geometric-sans",
+    "face": "Outfit"
+   },
+   "accent": {
+    "band": "cool",
+    "hue": 290
+   },
+   "keywords": [
+    "music",
+    "audio",
+    "stems",
+    "remix",
+    "dj",
+    "producer",
+    "player",
+    "streaming",
+    "tempo",
+    "playlist",
+    "creator",
+    "app",
+    "consumer",
+    "lowercase",
+    "violet",
+    "sound",
+    "beats",
+    "recording studio"
+   ],
+   "material": "lavender paper or a violet-black night, Outfit set lowercase over Onest, hairline pills, one saturated violet in two strengths, photographs pulled into the violet",
+   "file": "references/themes/ultraviolet.md",
+   "photo": "tint accent con=10",
+   "pictured": "Workbench, Stage hero, in the night colourway",
+   "picture": "references/themes/ultraviolet.jpg"
+  },
+  {
+   "name": "Vellum",
+   "slug": "vellum",
+   "genre": "editorial",
+   "posture": "committed",
+   "paper": {
+    "band": "light",
+    "L": 94,
+    "hue": 82
+   },
+   "display": {
+    "class": "blackletter",
+    "face": "Grenze Gotisch"
+   },
+   "accent": {
+    "band": "cool",
+    "hue": 268
+   },
+   "keywords": [
+    "roastery",
+    "coffee",
+    "bakery",
+    "wine",
+    "cellar",
+    "apothecary",
+    "bookshop",
+    "press",
+    "letterpress",
+    "guild",
+    "heritage",
+    "artisan",
+    "manuscript",
+    "parchment",
+    "edition",
+    "tasting",
+    "vintage",
+    "craft",
+    "old world",
+    "slow"
+   ],
+   "material": "parchment paper, a long tan fibre wash on bands, umber ink, Grenze Gotisch heads over Hanken Grotesk with Grenze roman for statements, hairline and double rules, one ultramarine pigment",
+   "file": "references/themes/vellum.md",
+   "photo": "warm con=6",
+   "pictured": "Trade Ledger, Poster hero",
+   "picture": "references/themes/vellum.jpg"
+  },
+  {
+   "name": "Wayfind",
+   "slug": "wayfind",
+   "genre": "modern-minimal",
+   "posture": "committed",
+   "paper": {
+    "band": "light",
+    "L": 95.5,
+    "hue": 250
+   },
+   "display": {
+    "class": "mono",
+    "face": "Chivo Mono"
+   },
+   "accent": {
+    "band": "cool",
+    "hue": 264
+   },
+   "keywords": [
+    "transit",
+    "metro",
+    "rail",
+    "station",
+    "wayfinding",
+    "departures",
+    "timetable",
+    "live",
+    "map",
+    "commute",
+    "city",
+    "platform",
+    "signage",
+    "logistics",
+    "status",
+    "operations",
+    "schedule",
+    "mobility",
+    "travel",
+    "trip",
+    "journey",
+    "itinerary",
+    "booking",
+    "flights",
+    "airport"
+   ],
+   "material": "cool grey paper, blue-black ink, Chivo Mono throughout, square 2px ink borders, ink plates, cobalt for what is live, amber for figures on ink",
+   "file": "references/themes/wayfind.md",
+   "photo": "natural sat=-12 con=10",
+   "pictured": "Station Sequence, Stage hero",
+   "picture": "references/themes/wayfind.jpg"
+  },
+  {
+   "name": "Werkstatt",
+   "slug": "werkstatt",
+   "genre": "playful",
+   "posture": "full-palette",
+   "paper": {
+    "band": "mid",
+    "L": 84,
+    "hue": 82
+   },
+   "display": {
+    "class": "geometric-sans",
+    "face": "Jost"
+   },
+   "accent": {
+    "band": "cool",
+    "hue": 264
+   },
+   "keywords": [
+    "school",
+    "programme",
+    "workshop",
+    "maker",
+    "course",
+    "bootcamp",
+    "academy",
+    "apply",
+    "admissions",
+    "tuition",
+    "timetable",
+    "bauhaus",
+    "craft",
+    "design education",
+    "design school",
+    "residency",
+    "cohort",
+    "prospectus"
+   ],
+   "material": "warm putty ground with a lighter well, near-black ink, Jost 700 capitals and numerals over Karla, square 2px and 3px ink rules that box cells, flat ultramarine, vermilion and yellow primaries",
+   "file": "references/themes/werkstatt.md",
+   "photo": "mono",
+   "pictured": "Catalogue, Settled hero",
+   "picture": "references/themes/werkstatt.jpg"
+  }
+ ]
+}

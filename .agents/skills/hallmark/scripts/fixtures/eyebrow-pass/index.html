@@ -1,0 +1,137 @@
+<!doctype html>
+<!--
+  Gate 54 fixture: MUST NOT FAIL.
+
+  Ten shapes that look like an eyebrow to a naive detector and are not one.
+  Each carries a fact, a destination, or an identifier the reader would
+  otherwise lack: the exceptions gate 54 lists in references/gates.md.
+
+  Assertion (run from this directory):
+
+    node ../../sloplint.mjs . --json | node -e "let s='';process.stdin.on('data',d=>s+=d).on('end',()=>console.log(JSON.parse(s).findings.filter(f=>f.gate==='54').length))"
+    # expected: 0
+
+  Scoped to gate 54: this file makes no claim to be clean on the other gates.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gate 54 carve-out fixture (must pass)</title>
+<meta name="description" content="Fragments that sit near a heading without announcing it; gate 54 must stay quiet on every one.">
+<style>
+/* Hallmark · shape: fixture · genre: editorial · theme: fixture (by request)
+ * hero: Settled · nav: none · footer: none · enrichment: none · signature: none, this is a gate 54 fixture
+ * axes: light/roman-serif/cool · posture: restrained · contrast: pass · fold: n/a · v2.0.0 */
+/* Hallmark · pre-emit critique: P3 H3 E3 S3 R3 V3 · weakest: all, this is a fixture */
+/* Hallmark · answered F21 · unrelated fragments in one file, not a single document outline */
+:root {
+  --color-paper: oklch(97% 0.006 250); --color-ink: oklch(20% 0.02 250);
+  --color-muted: oklch(52% 0.015 250); --color-accent: oklch(52% 0.14 250); --color-accent-ink: oklch(98% 0.005 250);
+  --font-display: "Fraunces", serif; --font-body: "Public Sans", sans-serif;
+  --font-label: var(--font-body);
+  --text-xs: 0.8125rem;
+}
+html, body { overflow-x: clip; }
+html { scrollbar-color: var(--color-muted) var(--color-paper); }
+body { background: var(--color-paper); color: var(--color-ink); font-family: var(--font-body); caret-color: var(--color-accent); }
+::selection { background: color-mix(in oklab, var(--color-accent) 22%, transparent); color: var(--color-ink); }
+:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+a:active, button:active { transform: translateY(1px); }
+button:disabled { opacity: 0.55; cursor: not-allowed; }
+h1, h2, h3, h4 { font-family: var(--font-display); text-wrap: balance; }
+.label { font-family: var(--font-label); font-size: var(--text-xs); color: var(--color-muted); }
+.steps { list-style: none; counter-reset: step; padding: 0; }
+.steps li { counter-increment: step; }
+.steps li h3::before { content: counter(step, decimal-leading-zero) "  "; color: var(--color-muted); }
+</style>
+</head>
+<body>
+
+<!-- 1 · figcaption. Identifier, and it names something that is present. -->
+<figure>
+  <figcaption class="label">Plate 4 · letterpress proof</figcaption>
+  <h3>Off the grid</h3>
+</figure>
+
+<!-- 2 · table column header. Identifier. -->
+<table>
+  <thead><tr><th class="label">Weight</th><th class="label">Optical size</th></tr></thead>
+  <tbody><tr><td>240</td><td>14 pt</td></tr></tbody>
+</table>
+
+<!-- 3 · form field label. Identifier, bound to its control. -->
+<form>
+  <div>
+    <label class="label" for="email">Email</label>
+    <h3>Where should the proofs go?</h3>
+    <input id="email" type="email">
+  </div>
+</form>
+
+<!-- 4 · nav label. Destination. -->
+<nav>
+  <div>
+    <span class="label">Sections</span>
+    <h2 hidden>Navigation</h2>
+    <a href="/work">Work</a>
+  </div>
+</nav>
+
+<!-- 5 · dateline. Fact: the date appears nowhere else. -->
+<article>
+  <p class="label"><time datetime="2026-03-14">14 March 2026</time> · Marta Silveira</p>
+  <h2>Notes from the second crossing</h2>
+</article>
+
+<!-- 6 · unit label AFTER the figure it labels. Order is the discriminator. -->
+<section>
+  <div>
+    <p class="stat__num">42B</p>
+    <p class="label">events metered</p>
+  </div>
+  <h3>Throughput</h3>
+</section>
+
+<!-- 7 · code filename tab. Identifier: a real path. -->
+<section>
+  <div>
+    <span class="label">server.ts</span>
+    <h4>Wire the handler</h4>
+  </div>
+  <pre><code>export default handler;</code></pre>
+</section>
+
+<!-- 8 · linked announcement chip. Destination, and it goes somewhere real. -->
+<header>
+  <div>
+    <a class="label" href="/changelog/v2">Read the launch post</a>
+    <h1>Ship the whole crossing</h1>
+  </div>
+</header>
+
+<!-- 9 · live telemetry above a headline. Fact, and the digits prove it. -->
+<section>
+  <div>
+    <p class="label">Live · 2,318 watching the drop</p>
+    <h1>Winter capsule, one hour left</h1>
+  </div>
+</section>
+
+<!-- 10 · a real <ol>. The numbers come from counter(), not from typed labels;
+         a genuine per-step identifier rides along without becoming a kicker. -->
+<ol class="steps">
+  <li>
+    <span class="label">Tue</span>
+    <h3>Arrive</h3>
+    <p>Collect the key from the harbour office.</p>
+  </li>
+  <li>
+    <span class="label">Wed</span>
+    <h3>Cross</h3>
+    <p>Six hours under sail, weather permitting.</p>
+  </li>
+</ol>
+
+</body>
+</html>

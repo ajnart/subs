@@ -1,0 +1,58 @@
+html:not([data-magicui-theme-vt]) .subs-page {
+  view-transition-name: subs-page;
+}
+
+html:not([data-magicui-theme-vt]) .subs-header {
+  view-transition-name: subs-header;
+}
+
+html:not([data-magicui-theme-vt])::view-transition-old(root),
+html:not([data-magicui-theme-vt])::view-transition-new(root),
+::view-transition-old(subs-header),
+::view-transition-new(subs-header) {
+  animation: none;
+}
+
+::view-transition-group(subs-page),
+::view-transition-group(subs-header) {
+  animation: none;
+}
+
+::view-transition-old(subs-page) {
+  animation: subs-page-out min(var(--dur-micro), 150ms) var(--ease-out) both;
+}
+
+::view-transition-new(subs-page) {
+  animation: subs-page-in min(var(--dur-short), 220ms) var(--ease-out) both;
+}
+
+@keyframes subs-page-out {
+  to {
+    opacity: 0;
+    transform: translateY(calc(var(--spacing) * -1));
+  }
+}
+
+@keyframes subs-page-in {
+  from {
+    opacity: 0;
+    transform: translateY(calc(var(--spacing) * 1.5));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .subs-page,
+  .subs-header {
+    view-transition-name: none;
+  }
+
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none;
+  }
+}

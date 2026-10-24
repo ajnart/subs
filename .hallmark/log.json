@@ -1,0 +1,21 @@
+[
+  {
+    "date": "2026-10-24",
+    "mode": "redesign",
+    "depth": "full within existing app wiring",
+    "scope": "app",
+    "genre": "modern-minimal",
+    "shape": "app screen",
+    "theme": "Bold Wikipedia (by request)",
+    "nav": "compact horizontal workbench navigation",
+    "footer": "none",
+    "signature": "Service ledger with native-currency monthly totals and on-demand domain previews",
+    "motion": "calm, 150-220ms state feedback; no page-load reveal, no repeating decorative animation",
+    "preEmitCritique": {"P": 4, "H": 4, "E": 3, "S": 4, "R": 5, "V": 3, "weakest": "Execution requires browser verification after concurrent registry and demo work"},
+    "stampLocation": "Metadata JSON instead of CSS comments, respecting the repository no-comments requirement",
+    "themeExceptions": ["Keep requested Inter and exact theme tokens, including neutral surfaces and the .dark token block"],
+    "droppedCopy": ["Everything, in perspective.", "Less noise. More clarity.", "A little awareness goes a long way.", "Thoughtfully tracked. Entirely yours.", "Workspace eyebrow", "Marketing footer", "Under-stat explanatory paragraphs"],
+    "proof": "Collection-derived figures only. Demo content is marked Demo. No invented metrics, photography, testimonials, or payment history.",
+    "verification": {"static": "42 static FAIL remain explicitly classified; not a clean tool pass", "typecheck": "passed", "biome": "passed", "tests": "27/27 passed", "builds": "private, static and Docker passed", "render": "5 production-demo captures; zero rendered FAIL, one waived REFLEX, two dismissed WARN", "freshContextReview": "fix verdict; three P2 and one P3 findings resolved and recaptured", "details": "qa.json"}
+  }
+]
