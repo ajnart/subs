@@ -1,0 +1,24 @@
+.hallmark/qa.json
+  h_d6e478ca18e517 9
+.scratch/rewrite/issues/27-demo-deployment.md
+  h_d6e478ca18e517 27-30
+docs/agents/architecture.md
+  h_d6e478ca18e517 43-44
+package.json
+  h_d6e478ca18e517 18-19
+vercel.json
+  h_d6e478ca18e517 1-4
+vite.demo.config.ts
+  h_d6e478ca18e517 1-3,7,9,11,19
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "ac144c28d60b2bb4e5e61d5f1c6ecb924185f920",
+  "prompts": {},
+  "humans": {
+    "h_d6e478ca18e517": {
+      "author": "Thomas Camlong <thomas@ajnart.fr>"
+    }
+  }
+}
