@@ -1,20 +1,11 @@
-import {
-  AmazonLogoIcon,
-  AppleLogoIcon,
-  DropboxLogoIcon,
-  FigmaLogoIcon,
-  GithubLogoIcon,
-  GoogleLogoIcon,
-  NotionLogoIcon,
-  OpenAiLogoIcon,
-  SpotifyLogoIcon,
-  WarningCircleIcon,
-  YoutubeLogoIcon,
-} from '@phosphor-icons/react'
+import { WarningCircleIcon } from '@phosphor-icons/react'
+import { useState } from 'react'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { LinkPreview } from '@/components/ui/link-preview'
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { serviceIcon } from '@/lib/service-icons'
 import { cn } from '@/lib/utils'
+import './service-cards.css'
 
 export const currencies = [
   'USD',
@@ -65,7 +56,7 @@ function canPreview(url: string): boolean {
   const hostname = new URL(url).hostname.toLowerCase().replace(/\.$/, '')
   if (!hostname.includes('.') || hostname.includes(':') || hostname.includes('[') || /^[\d.]+$/.test(hostname))
     return false
-  return !/(^|\.)(localhost|local|localdomain|internal|lan|home|corp|test|invalid|onion)$|\.(nip\.io|sslip\.io)$/.test(
+  return !/(^|\.)(localhost|local|localdomain|internal|lan|home|corp|test|invalid|onion|arpa|example)$|\.(nip\.io|sslip\.io)$/.test(
     hostname,
   )
 }
@@ -136,27 +127,37 @@ export function Notice({
   )
 }
 
-export function ServiceMark({ name }: { name: string }) {
-  const logos = [
-    { match: /spotify/i, icon: SpotifyLogoIcon },
-    { match: /youtube/i, icon: YoutubeLogoIcon },
-    { match: /github/i, icon: GithubLogoIcon },
-    { match: /notion/i, icon: NotionLogoIcon },
-    { match: /chatgpt|openai/i, icon: OpenAiLogoIcon },
-    { match: /icloud|apple/i, icon: AppleLogoIcon },
-    { match: /figma/i, icon: FigmaLogoIcon },
-    { match: /google/i, icon: GoogleLogoIcon },
-    { match: /amazon|prime/i, icon: AmazonLogoIcon },
-    { match: /dropbox/i, icon: DropboxLogoIcon },
-  ]
-  const logo = logos.find((item) => item.match.test(name))
-  const Icon = logo?.icon
+export function ServiceMark({
+  name,
+  domain = '',
+  size = 'default',
+}: {
+  name: string
+  domain?: string
+  size?: 'default' | 'large'
+}) {
+  const [failedSource, setFailedSource] = useState('')
+  const localIcon = serviceIcon(name, domain)
+  const url = serviceUrl(domain)
+  let source = localIcon
+  if (!source && url && canPreview(url)) source = `${new URL(url).origin}/favicon.ico`
+  const initials = name.trim().slice(0, 2).toUpperCase()
   return (
-    <span
-      aria-hidden="true"
-      className="flex size-10 shrink-0 items-center justify-center rounded-md bg-muted text-sm font-semibold"
-    >
-      {Icon ? <Icon weight="fill" className="size-5" /> : name.trim().slice(0, 2).toUpperCase()}
+    <span aria-hidden="true" className="subs-service-mark" data-size={size} data-branded={Boolean(localIcon)}>
+      {source && source !== failedSource ? (
+        <img
+          src={source}
+          alt=""
+          width={32}
+          height={32}
+          loading="lazy"
+          decoding="async"
+          referrerPolicy="no-referrer"
+          onError={() => setFailedSource(source)}
+        />
+      ) : (
+        initials
+      )}
     </span>
   )
 }

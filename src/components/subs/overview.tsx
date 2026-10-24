@@ -18,6 +18,7 @@ import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTi
 import { Input } from '@/components/ui/input'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
+import { useCollectionDate } from '@/lib/bootstrap'
 import { isDemo } from '@/lib/mode'
 import {
   convertAmount,
@@ -31,9 +32,9 @@ import { templates } from '@/lib/templates'
 import type { ExchangeRates, Subscription } from '@/lib/types'
 import { Choice, cycles, ServiceLink, ServiceMark } from './shared'
 
-function paymentLabel(subscription: Subscription): string {
+function paymentLabel(subscription: Subscription, today: Date): string {
   if (subscription.status !== 'active') return subscription.status
-  const date = nextPaymentDate(subscription)
+  const date = nextPaymentDate(subscription, today)
   if (!date) return 'No payment date'
   return `Next ${dateLabel(date)}`
 }
@@ -47,11 +48,14 @@ export function Summary({
   currency: string
   rates?: ExchangeRates
 }) {
+  const today = useCollectionDate()
   const active = subscriptions.filter((item) => item.status === 'active')
   const amounts = active.map((item) => convertAmount(monthlyAmount(item), item.currency, currency, rates))
   const missing = amounts.some((item) => item === null)
   const monthly = amounts.reduce<number>((sum, item) => sum + (item ?? 0), 0)
-  const next = upcomingPayments(subscriptions, 366)[0]
+  const next = upcomingPayments(subscriptions, 366, today).sort(
+    (a, b) => a.daysUntil - b.daysUntil || a.name.localeCompare(b.name, 'en-US') || a.id.localeCompare(b.id, 'en-US'),
+  )[0]
   const nativeCurrencies = [...new Set(active.map((item) => item.currency))].sort()
   if (!nativeCurrencies.length) nativeCurrencies.push(currency)
   const nativeTotals = nativeCurrencies.map((code) => ({
@@ -95,11 +99,7 @@ export function Summary({
       <div className="flex flex-col gap-1">
         <p className="text-xs text-muted-foreground">Active subscriptions</p>
         <p className="text-2xl font-semibold tracking-tight tabular-nums sm:text-3xl">
-          <NumberTicker
-            value={active.length}
-            locale={new Intl.NumberFormat().resolvedOptions().locale}
-            aria-live="polite"
-          />
+          <NumberTicker value={active.length} locale="en-US" aria-live="polite" />
           <span className="ml-2 text-sm font-normal text-muted-foreground">of {subscriptions.length}</span>
         </p>
       </div>
@@ -117,7 +117,7 @@ export function Summary({
       )}
       {converted && !isDemo && rates?.updatedAt && (
         <p className="col-span-2 text-xs text-muted-foreground sm:col-span-3">
-          FX estimates: Frankfurter, {new Date(rates.updatedAt).toLocaleDateString()}
+          FX estimates: Frankfurter, {new Date(rates.updatedAt).toLocaleDateString('en-US', { timeZone: 'UTC' })}
           {rates.stale && ' (saved rates)'}
         </p>
       )}
@@ -150,6 +150,7 @@ export function Overview({
   onPause: (ids: string[]) => Promise<void>
   searchRef: React.RefObject<HTMLInputElement | null>
 }) {
+  const today = useCollectionDate()
   const [search, setSearch] = useState('')
   const [status, setStatus] = useState('all')
   const [category, setCategory] = useState('all')
@@ -169,24 +170,25 @@ export function Overview({
             (cycle === 'all' || cycle === item.billingCycle),
         )
         .sort((a, b) => {
-          if (sort === 'Name') return a.name.localeCompare(b.name) || a.id.localeCompare(b.id)
+          if (sort === 'Name') return a.name.localeCompare(b.name, 'en-US') || a.id.localeCompare(b.id, 'en-US')
           if (sort === 'Price: high to low') {
             const first = convertAmount(monthlyAmount({ ...a, status: 'active' }), a.currency, currency, rates)
             const second = convertAmount(monthlyAmount({ ...b, status: 'active' }), b.currency, currency, rates)
-            if (first === null && second === null) return a.currency.localeCompare(b.currency) || b.price - a.price
+            if (first === null && second === null)
+              return a.currency.localeCompare(b.currency, 'en-US') || b.price - a.price
             if (first === null) return 1
             if (second === null) return -1
-            return second - first || a.name.localeCompare(b.name) || a.id.localeCompare(b.id)
+            return second - first || a.name.localeCompare(b.name, 'en-US') || a.id.localeCompare(b.id, 'en-US')
           }
-          if (!nextPaymentDate(a) && nextPaymentDate(b)) return 1
-          if (nextPaymentDate(a) && !nextPaymentDate(b)) return -1
+          if (!nextPaymentDate(a, today) && nextPaymentDate(b, today)) return 1
+          if (nextPaymentDate(a, today) && !nextPaymentDate(b, today)) return -1
           return (
-            nextPaymentDate(a).localeCompare(nextPaymentDate(b)) ||
-            a.name.localeCompare(b.name) ||
-            a.id.localeCompare(b.id)
+            nextPaymentDate(a, today).localeCompare(nextPaymentDate(b, today), 'en-US') ||
+            a.name.localeCompare(b.name, 'en-US') ||
+            a.id.localeCompare(b.id, 'en-US')
           )
         }),
-    [subscriptions, search, status, category, cycle, sort, currency, rates],
+    [subscriptions, search, status, category, cycle, sort, currency, rates, today],
   )
   const selectedVisible = selected.filter((id) => filtered.some((item) => item.id === id))
   const toggle = (id: string) =>
@@ -200,7 +202,11 @@ export function Overview({
       setBusy(false)
     }
   }
-  const upcoming = upcomingPayments(subscriptions, 30).slice(0, 4)
+  const upcoming = upcomingPayments(subscriptions, 30, today)
+    .sort(
+      (a, b) => a.daysUntil - b.daysUntil || a.name.localeCompare(b.name, 'en-US') || a.id.localeCompare(b.id, 'en-US'),
+    )
+    .slice(0, 4)
   return (
     <div className="flex flex-col gap-7">
       <section className="flex flex-col gap-5">
@@ -334,7 +340,7 @@ export function Overview({
                       className="h-auto min-h-24 flex-col gap-2 px-2 py-3"
                       onClick={() => onTemplate(template)}
                     >
-                      <ServiceMark name={template.name} />
+                      <ServiceMark name={template.name} domain={template.domain} />
                       <span className="max-w-full truncate text-xs">{template.name}</span>
                     </Button>
                   ))}
@@ -359,15 +365,20 @@ export function Overview({
             {filtered.map((item) => (
               <MagicCard
                 key={item.id}
+                role="group"
+                tabIndex={0}
+                aria-label={`${item.name} subscription`}
+                data-subscription-item={item.id}
+                data-status={item.status}
                 gradientOpacity={0.035}
                 gradientSize={180}
-                className="subs-service-card group/card min-w-0 rounded-lg [--card-spacing:--spacing(4)] [&>div:last-child]:h-full"
+                className="subs-service-card group/card min-w-0 rounded-lg [--card-spacing:--spacing(5)] [&>div:last-child]:h-full"
               >
-                <div className="flex h-full flex-col gap-4 pt-4">
+                <div className="flex h-full flex-col gap-6 pt-5">
                   <CardHeader>
                     <div className="flex items-start justify-between gap-3">
                       <div className="flex min-w-0 items-center gap-3">
-                        <ServiceMark name={item.name} />
+                        <ServiceMark name={item.name} domain={item.domain} size="large" />
                         <div className="min-w-0">
                           <CardTitle className="truncate">
                             <ServiceLink name={item.name} domain={item.domain} />
@@ -380,7 +391,7 @@ export function Overview({
                   </CardHeader>
                   <CardContent>
                     <div className="flex items-baseline gap-1">
-                      <span className="text-2xl font-semibold tracking-tight tabular-nums">
+                      <span className="text-3xl font-semibold tracking-tight tabular-nums">
                         {formatMoney(item.price, item.currency)}
                       </span>
                       <span className="text-xs text-muted-foreground">/ {item.billingCycle}</span>
@@ -392,8 +403,14 @@ export function Overview({
                     )}
                   </CardContent>
                   <CardFooter className="mt-auto flex items-center justify-between gap-2">
-                    <span className="text-xs text-muted-foreground">{paymentLabel(item)}</span>
-                    <Button size="sm" variant="ghost" onClick={() => onEdit(item)}>
+                    <span className="text-xs text-muted-foreground">{paymentLabel(item, today)}</span>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      data-subscription-manage
+                      data-keyhint="Enter"
+                      onClick={() => onEdit(item)}
+                    >
                       Manage
                     </Button>
                   </CardFooter>
@@ -435,9 +452,16 @@ export function Overview({
               </TableHeader>
               <TableBody>
                 {filtered.map((item) => (
-                  <TableRow key={item.id}>
+                  <TableRow
+                    key={item.id}
+                    tabIndex={0}
+                    aria-label={`${item.name} subscription`}
+                    data-subscription-item={item.id}
+                    className="subs-service-row"
+                  >
                     <TableCell>
                       <Checkbox
+                        data-subscription-select
                         checked={selected.includes(item.id)}
                         onCheckedChange={() => toggle(item.id)}
                         aria-label={`Select ${item.name}`}
@@ -445,7 +469,7 @@ export function Overview({
                     </TableCell>
                     <TableCell>
                       <div className="flex items-center gap-3">
-                        <ServiceMark name={item.name} />
+                        <ServiceMark name={item.name} domain={item.domain} />
                         <div>
                           <p className="font-medium">
                             <ServiceLink name={item.name} domain={item.domain} />
@@ -461,12 +485,18 @@ export function Overview({
                       {formatMoney(item.price, item.currency)}
                       <p className="text-xs text-muted-foreground">{item.billingCycle}</p>
                     </TableCell>
-                    <TableCell>{item.status === 'active' ? dateLabel(nextPaymentDate(item)) : '—'}</TableCell>
+                    <TableCell>{item.status === 'active' ? dateLabel(nextPaymentDate(item, today)) : '—'}</TableCell>
                     <TableCell>
                       <Badge variant="outline">{item.status}</Badge>
                     </TableCell>
                     <TableCell className="text-right">
-                      <Button variant="ghost" size="sm" onClick={() => onEdit(item)}>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        data-subscription-manage
+                        data-keyhint="Enter"
+                        onClick={() => onEdit(item)}
+                      >
                         Edit
                       </Button>
                       <Button
@@ -504,7 +534,7 @@ export function Overview({
                   <div className="flex size-10 shrink-0 flex-col items-center justify-center rounded-md bg-muted text-xs">
                     <span className="font-semibold">{item.dueDate.slice(8)}</span>
                     <span className="text-xs text-foreground">
-                      {new Date(`${item.dueDate}T12:00:00`).toLocaleDateString(undefined, { month: 'short' })}
+                      {new Date(`${item.dueDate}T12:00:00`).toLocaleDateString('en-US', { month: 'short' })}
                     </span>
                   </div>
                   <div className="min-w-0">

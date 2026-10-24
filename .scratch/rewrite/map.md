@@ -6,6 +6,8 @@ Status: ready-for-agent
 
 The [Private Collection specification](spec.md) defines the target release, not a list of shipped capabilities. The [Domain glossary](../../GLOSSARY.md) names the concepts; the [Architecture decisions](../../docs/adr/0001-start-nitro-sqlite.md), [Installation access decision](../../docs/adr/0002-single-installation-pin.md), and [Visual authority decision](../../docs/adr/0003-design-authority.md) capture the major trade-offs.
 
+The subsequent [keyboard-first experience](../keyboard-first/spec.md) is now active in five coordinated implementation lanes and eight user-requested OpenChamber todos. Completion evidence below describes the preceding release snapshot, not completion of this new scope. The single-container, private-Collection, exact-theme and backend-free-demo constraints continue to apply.
+
 ## Explicit execution override
 
 The user delegated remaining product details, testing seams, planning, implementation, and eventual commit to the coordinating agent. They explicitly requested no further interview: write the spec, then fully implement. This overrides the to-spec seam-approval pause and any planning workflow's interview/approval gates for this effort; it does not authorize weakening the selected release or reporting unfinished behavior as shipped.

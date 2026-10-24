@@ -117,7 +117,7 @@ Replace the running application with a responsive, service-centered Subs experie
 - Provide cards/table, search, Category/Lifecycle State filters, stable sort, bulk selection, upcoming list, calendar, insights, Budget, and Savings Scenarios. Clearly distinguish Collection-wide summaries from filtered results; selections track visible identifiers and destructive actions name their scope.
 - Build keyboard-accessible dialogs, focus restoration, meaningful empty/loading/error states, retryable failed saves, and narrow-screen layouts. Shortcuts ignore editable controls and respect modal focus.
 - Start empty. Starter Templates are explicitly opted into and always reviewed before save; the user supplies their own price rather than relying on an unverified current provider price.
-- Use bundled/local assets, initials, or neutral fallbacks by default. Service URLs are user-activated safe external links; do not request remote favicons, URL previews, or telemetry that discloses the Collection by default.
+- Use bundled/local assets, initials, or neutral fallbacks by default. Service URLs are user-activated safe external links. The later [keyboard-first request](../keyboard-first/spec.md) explicitly permits verified service marks and safe public-origin favicon fallbacks; lazy URL previews remain separate and no server arbitrary-URL fetcher is introduced.
 
 ### Migration, imports, and history
 
@@ -153,7 +153,7 @@ Replace the running application with a responsive, service-centered Subs experie
 ## Out of Scope
 
 - Bank or email scraping, credential harvesting, provider-side cancellation, payment execution, invoices, SaaS billing, account registration, multiple users/Collections, hosted cloud sync, or horizontal scaling.
-- Background push, reliable scheduled notifications, automatic trial cancellation, provider price monitoring, URL previews, or third-party favicon telemetry by default.
+- Background push, reliable alarms after the browser is closed, automatic trial cancellation and provider price monitoring. The later [keyboard-first request](../keyboard-first/spec.md) adds opt-in open-browser reminders and safe service-icon fallbacks; URL previews still require user activation.
 - New FX-provider infrastructure, invented historical transactions, forced demo data, speculative new unit-test suites, or an Astro runtime.
 
 ## Further Notes

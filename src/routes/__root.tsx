@@ -1,3 +1,4 @@
+import interLatin from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url'
 import { createRootRoute, HeadContent, Outlet, Scripts } from '@tanstack/react-router'
 import { ThemeProvider } from 'next-themes'
 import type { ReactNode } from 'react'
@@ -14,6 +15,7 @@ export const Route = createRootRoute({
       { name: 'description', content: 'A clear view of your subscriptions, spending, and upcoming renewals.' },
     ],
     links: [
+      { rel: 'preload', href: interLatin, as: 'font', type: 'font/woff2', crossOrigin: 'anonymous' },
       { rel: 'stylesheet', href: appCss },
       { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
     ],
@@ -40,7 +42,7 @@ function RootDocument({ children }: { children: ReactNode }) {
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <TooltipProvider>
             {children}
-            <Toaster richColors />
+            <Toaster />
           </TooltipProvider>
         </ThemeProvider>
         <Scripts />

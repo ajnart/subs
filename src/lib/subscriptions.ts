@@ -21,7 +21,7 @@ function anchoredMonth(anchor: Date, months: number): Date {
 }
 
 export function formatMoney(price: number, currency: string): string {
-  return new Intl.NumberFormat(undefined, { style: 'currency', currency }).format(price)
+  return new Intl.NumberFormat('en-US', { style: 'currency', currency }).format(price)
 }
 
 export function monthlyAmount(sub: Subscription): number {
@@ -98,5 +98,5 @@ export function convertAmount(
 
 export function dateLabel(date: string): string {
   if (!date) return 'No date set'
-  return new Intl.DateTimeFormat(undefined, { month: 'short', day: 'numeric', year: 'numeric' }).format(localDate(date))
+  return new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).format(localDate(date))
 }

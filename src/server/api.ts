@@ -15,6 +15,7 @@ const importCommitSchema = z.object({ data: z.unknown(), mode: z.enum(['merge', 
 function json(data: unknown, statusCode = 200, headers?: HeadersInit): Response {
   const response = Response.json(data, { status: statusCode, headers })
   response.headers.set('Cache-Control', 'no-store')
+  response.headers.set('Vary', 'Cookie')
   response.headers.set('X-Content-Type-Options', 'nosniff')
   return response
 }
@@ -59,6 +60,7 @@ export async function handleApiRequest(request: Request): Promise<Response> {
             'Content-Type': 'application/json; charset=utf-8',
             'Content-Disposition': 'attachment; filename="subs-backup.json"',
             'Cache-Control': 'no-store',
+            Vary: 'Cookie',
             'X-Content-Type-Options': 'nosniff',
           },
         })

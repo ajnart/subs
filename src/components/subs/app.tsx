@@ -7,6 +7,7 @@ import {
   HouseIcon,
   KeyboardIcon,
   LockKeyIcon,
+  MagnifyingGlassIcon,
   PlusIcon,
   StackIcon,
 } from '@phosphor-icons/react'
@@ -25,25 +26,31 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { Skeleton } from '@/components/ui/skeleton'
+import { useKeyboard } from '@/hooks/use-keyboard'
 import { useSubs } from '@/hooks/use-subs'
 import { useTheme } from '@/hooks/use-theme'
 import { api, errorMessage, isRevisionConflict } from '@/lib/api'
 import { isDemo } from '@/lib/mode'
+import { playFeedback, useInteractionFeedback } from '@/lib/sounds'
 import { convertAmount, monthlyAmount } from '@/lib/subscriptions'
 import { templates } from '@/lib/templates'
 import type { Subscription, SubscriptionInput } from '@/lib/types'
+import { transitionView } from '@/lib/view-transitions'
+import '@/styles/keyboard.css'
 import { Auth } from './auth'
 import { CalendarView } from './calendar-view'
+import { type AppPage, CommandPalette } from './command-palette'
 import { Insights } from './insights'
 import { Overview, Summary } from './overview'
+import { ReminderController } from './reminders'
 import { Settings } from './settings'
 import { Notice, ServiceMark } from './shared'
+import { SoundToggle } from './sound-toggle'
 import { SubscriptionForm } from './subscription-form'
 
-type Page = 'Overview' | 'Calendar' | 'Insights' | 'Settings'
 type Editor =
   | { kind: 'new'; template?: (typeof templates)[number] }
-  | { kind: 'edit'; subscription: Subscription }
+  | { kind: 'edit'; subscription: Subscription; revision: string | null }
   | null
 const navigation = [
   { name: 'Overview', icon: HouseIcon },
@@ -55,10 +62,13 @@ const resetDemo = () => window.dispatchEvent(new Event('subs:demo-reset'))
 
 export function SubsApp() {
   const store = useSubs()
-  const [page, setPage] = useState<Page>('Overview')
+  const [hydrated, setHydrated] = useState(false)
+  const [page, setPage] = useState<AppPage>('Overview')
+  const requestedPage = useRef<AppPage>('Overview')
   const [editor, setEditor] = useState<Editor>(null)
   const [starters, setStarters] = useState(false)
   const [shortcuts, setShortcuts] = useState(false)
+  const [command, setCommand] = useState(false)
   const [deleting, setDeleting] = useState<string[]>([])
   const [deleteBusy, setDeleteBusy] = useState(false)
   const [deleteError, setDeleteError] = useState('')
@@ -67,50 +77,71 @@ export function SubsApp() {
   const [locking, setLocking] = useState(false)
   const searchRef = useRef<HTMLInputElement>(null)
   useTheme(store.data?.preferences.theme)
+  useInteractionFeedback()
+  useEffect(() => setHydrated(true), [])
   const unlocked = Boolean(store.data && (store.status?.authenticated || store.status?.authDisabled))
   useEffect(() => {
     if (!unlocked) {
       setEditor(null)
       setStarters(false)
       setDeleting([])
+      setShortcuts(false)
+      setCommand(false)
     }
   }, [unlocked])
-  useEffect(() => {
-    const handler = (event: KeyboardEvent) => {
-      if (
-        !unlocked ||
-        event.metaKey ||
-        event.ctrlKey ||
-        event.altKey ||
-        editor ||
-        starters ||
-        shortcuts ||
-        deleting.length
-      )
-        return
-      const target = event.target
-      if (
-        target instanceof HTMLElement &&
-        (target.isContentEditable || target.closest('input, textarea, select, [role="combobox"], [role="dialog"]'))
-      )
-        return
-      if (event.key === 'a' || event.key === 'n') {
-        event.preventDefault()
-        setEditor({ kind: 'new' })
-      }
-      if (event.key === '/') {
-        event.preventDefault()
-        setPage('Overview')
-        setTimeout(() => searchRef.current?.focus(), 0)
-      }
-      if (event.key === '?') {
-        event.preventDefault()
-        setShortcuts(true)
-      }
+  const navigate = (next: AppPage, after?: () => void) => {
+    if (next === page && next === requestedPage.current) {
+      after?.()
+      return
     }
-    window.addEventListener('keydown', handler)
-    return () => window.removeEventListener('keydown', handler)
-  }, [unlocked, editor, starters, shortcuts, deleting.length])
+    requestedPage.current = next
+    playFeedback('navigate')
+    transitionView(() => {
+      setPage(next)
+      if (after) setTimeout(after, 0)
+    })
+  }
+  const add = () => setEditor({ kind: 'new' })
+  const edit = (subscription: Subscription) => setEditor({ kind: 'edit', subscription, revision: store.revision })
+  const editCurrent = (id: string) => {
+    const subscription = store.data?.subscriptions.find((item) => item.id === id)
+    if (subscription) edit(subscription)
+    else toast.error('This subscription is no longer in your collection.')
+  }
+  const importBackup = () => {
+    navigate('Settings', () => document.getElementById('backup-import')?.click())
+  }
+  const focusSearch = () => {
+    navigate('Overview', () => searchRef.current?.focus())
+  }
+  const hints = useKeyboard({
+    enabled: hydrated && unlocked,
+    modal: Boolean(editor || starters || shortcuts || command || deleting.length),
+    commandOpen: command,
+    onCommand: () => setCommand((open) => !open),
+    actions: [
+      { key: 'n', run: add },
+      { key: 'a', run: add },
+      { key: '/', run: focusSearch },
+      { key: '?', run: () => setShortcuts(true) },
+      ...navigation.map((item, index) => ({ key: `mod+${index + 1}`, run: () => navigate(item.name) })),
+      { key: 'mod+,', run: () => navigate('Settings') },
+      { key: 't', run: () => setStarters(true) },
+      { key: 'i', run: importBackup },
+      {
+        key: 'r',
+        run: () => {
+          if (!store.loading) void store.refresh()
+        },
+      },
+      {
+        key: 'l',
+        run: () => {
+          if (!store.status?.authDisabled && !locking) void lock()
+        },
+      },
+    ],
+  })
   const lock = async () => {
     setLocking(true)
     try {
@@ -201,7 +232,7 @@ export function SubsApp() {
       </main>
     )
   if (!store.status.authenticated && !store.status.authDisabled)
-    return <Auth setup={store.status.setupRequired} onSuccess={store.refresh} />
+    return <Auth setup={store.status.setupRequired} onSuccess={store.refresh} ready={hydrated} />
   if (!store.data)
     return (
       <main className="mx-auto max-w-xl p-8">
@@ -225,14 +256,26 @@ export function SubsApp() {
       convertAmount(monthlyAmount(item), item.currency, preferences.currency, store.rates) === null,
   )
   const save = async (input: SubscriptionInput, id?: string, revision?: string | null) => {
-    await store.save(input, id, revision)
+    try {
+      await store.save(input, id, revision)
+      playFeedback('confirm')
+    } catch (cause) {
+      playFeedback('error')
+      throw cause
+    }
   }
   return (
-    <div className="subs-app min-h-svh bg-background">
+    <div
+      className="subs-app min-h-svh bg-background"
+      data-keyboard-hints={hints}
+      data-hydrated={hydrated}
+      inert={!hydrated}
+    >
+      <ReminderController subscriptions={subscriptions} />
       <a href="#main" className="subs-skip">
         Skip to content
       </a>
-      <header className="border-b bg-background/95">
+      <header className="subs-header border-b bg-background/95">
         <div className="subs-container flex flex-wrap items-center gap-x-3 gap-y-2 py-3 sm:gap-x-8">
           <a
             href="/"
@@ -246,12 +289,14 @@ export function SubsApp() {
             aria-label="Main navigation"
             className="order-3 flex min-w-0 w-full items-center gap-1 sm:order-none sm:w-auto"
           >
-            {navigation.map((item) => (
+            {navigation.map((item, index) => (
               <Button
                 key={item.name}
                 variant={page === item.name ? 'secondary' : 'ghost'}
                 size="sm"
-                onClick={() => setPage(item.name)}
+                onClick={() => navigate(item.name)}
+                data-keyhint={`⌘/Ctrl ${index + 1}`}
+                aria-keyshortcuts={`Meta+${index + 1} Control+${index + 1}`}
                 aria-current={page === item.name ? 'page' : undefined}
                 className="min-w-0 flex-1 gap-1 px-1.5 text-xs sm:flex-none sm:px-2.5 sm:text-sm"
               >
@@ -274,7 +319,7 @@ export function SubsApp() {
                   onClick={() => {
                     setEditor(null)
                     setDeleting([])
-                    setPage('Overview')
+                    navigate('Overview')
                     window.dispatchEvent(new Event('subs:demo-reset'))
                   }}
                 >
@@ -283,10 +328,26 @@ export function SubsApp() {
               </>
             )}
             <Button
+              variant="outline"
+              size="sm"
+              aria-label="Search commands and subscriptions"
+              aria-keyshortcuts="Meta+k Control+k"
+              title="Search commands and subscriptions (⌘/Ctrl K)"
+              data-keyhint="⌘/Ctrl K"
+              onClick={() => setCommand(true)}
+            >
+              <MagnifyingGlassIcon data-icon="inline-start" />
+              <span className="hidden lg:inline">Search</span>
+              <kbd className="hidden text-xs text-muted-foreground lg:inline">⌘/Ctrl K</kbd>
+            </Button>
+            <SoundToggle />
+            <Button
               variant="ghost"
               size="icon"
               aria-label="Refresh"
               title="Refresh"
+              data-keyhint="R"
+              aria-keyshortcuts="r"
               onClick={() => void store.refresh()}
               disabled={store.loading}
             >
@@ -297,6 +358,8 @@ export function SubsApp() {
               size="icon"
               aria-label="Keyboard shortcuts"
               title="Keyboard shortcuts (?)"
+              data-keyhint="?"
+              aria-keyshortcuts="Shift+/"
               onClick={() => setShortcuts(true)}
               className="hidden sm:inline-flex"
             >
@@ -308,6 +371,8 @@ export function SubsApp() {
                 size="icon"
                 aria-label="Lock workspace"
                 title="Lock workspace"
+                data-keyhint="L"
+                aria-keyshortcuts="l"
                 onClick={() => void lock()}
                 disabled={locking}
               >
@@ -318,12 +383,12 @@ export function SubsApp() {
         </div>
       </header>
       <div>
-        <main id="main" className="subs-container flex flex-col gap-7 py-7 sm:py-10">
+        <main id="main" tabIndex={-1} className="subs-page subs-container flex flex-col gap-7 py-7 sm:py-10">
           <div className="flex items-center justify-between gap-3">
             <h1 className="min-w-0 break-words text-2xl font-semibold tracking-tight">
               {page === 'Overview' ? 'Subscriptions' : page}
             </h1>
-            <Button aria-label="Add subscription" onClick={() => setEditor({ kind: 'new' })}>
+            <Button aria-label="Add subscription" data-keyhint="N / A" aria-keyshortcuts="n a" onClick={add}>
               <PlusIcon data-icon="inline-start" />
               <span className="hidden sm:inline">Add subscription</span>
               <span className="sm:hidden">Add</span>
@@ -361,25 +426,18 @@ export function SubsApp() {
               onAdd={() => setEditor({ kind: 'new' })}
               onTemplates={() => setStarters(true)}
               onTemplate={(template) => setEditor({ kind: 'new', template })}
-              onImport={() => {
-                setPage('Settings')
-                setTimeout(() => document.getElementById('backup-import')?.click(), 0)
-              }}
-              onEdit={(subscription) => setEditor({ kind: 'edit', subscription })}
+              onImport={importBackup}
+              onEdit={edit}
               onDelete={requestDelete}
               onPause={pause}
               searchRef={searchRef}
             />
           )}
-          {page === 'Calendar' && (
-            <CalendarView
-              subscriptions={subscriptions}
-              onEdit={(subscription) => setEditor({ kind: 'edit', subscription })}
-            />
-          )}
+          {page === 'Calendar' && <CalendarView subscriptions={subscriptions} onEdit={edit} />}
           {page === 'Insights' && <Insights data={store.data} rates={store.rates} />}
           {page === 'Settings' && (
             <Settings
+              subscriptions={subscriptions}
               preferences={preferences}
               onSave={store.preferences}
               onReview={store.review}
@@ -390,6 +448,22 @@ export function SubsApp() {
           )}
         </main>
       </div>
+      <CommandPalette
+        open={command}
+        onOpenChange={setCommand}
+        subscriptions={subscriptions}
+        onNavigate={navigate}
+        onAdd={add}
+        onTemplates={() => setStarters(true)}
+        onTemplate={(template) => setEditor({ kind: 'new', template })}
+        onRefresh={() => void store.refresh()}
+        refreshing={store.loading}
+        onLock={store.status.authDisabled ? undefined : () => void lock()}
+        locking={locking}
+        onImport={importBackup}
+        onShortcuts={() => setShortcuts(true)}
+        onEdit={editCurrent}
+      />
       {editor && (
         <SubscriptionForm
           currency={preferences.currency}
@@ -397,7 +471,7 @@ export function SubsApp() {
           template={editor.kind === 'new' ? editor.template : undefined}
           onClose={() => setEditor(null)}
           onSave={save}
-          revision={store.revision}
+          revision={editor.kind === 'edit' ? editor.revision : store.revision}
           onReview={store.review}
           onDelete={(id, revision) => {
             setEditor(null)
@@ -423,7 +497,7 @@ export function SubsApp() {
                     setEditor({ kind: 'new', template: item })
                   }}
                 >
-                  <ServiceMark name={item.name} />
+                  <ServiceMark name={item.name} domain={item.domain} />
                   <span className="min-w-0 truncate">{item.name}</span>
                   <ArrowUpRightIcon data-icon="inline-end" className="ml-auto" />
                 </Button>
@@ -441,10 +515,20 @@ export function SubsApp() {
             </DialogHeader>
             <dl className="flex flex-col gap-4">
               {[
+                ['⌘ / Ctrl K', 'Search commands and subscriptions'],
+                ['⌘ / Ctrl 1–4', 'Navigate pages'],
+                ['T', 'Choose a starter template'],
+                ['I', 'Import backup'],
+                ['R', 'Refresh collection'],
+                ...(!store.status.authDisabled ? [['L', 'Lock collection']] : []),
                 ['N or A', 'Add subscription'],
                 ['/', 'Search subscriptions'],
+                ['↑ ↓ ← → / J K', 'Move between subscriptions'],
+                ['Enter', 'Manage focused subscription'],
+                ['Space', 'Select focused subscription when available'],
                 ['?', 'Show keyboard shortcuts'],
                 ['Esc', 'Close dialog'],
+                ['Hold ⌘ or Ctrl', 'Reveal keyboard hints'],
               ].map(([key, description]) => (
                 <div key={key} className="flex items-center justify-between gap-3">
                   <dt className="text-sm">{description}</dt>

@@ -12,7 +12,7 @@ createRoot(root).render(
   <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
     <TooltipProvider>
       <SubsApp />
-      <Toaster richColors />
+      <Toaster />
     </TooltipProvider>
   </ThemeProvider>,
 )

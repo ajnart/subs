@@ -14,6 +14,20 @@ Track subscriptions, renewals, and recurring costs.
 
 </details>
 
+<details>
+<summary>Keyboard search and private unlock</summary>
+
+![Search commands and subscriptions](docs/screenshots/command-palette.png)
+![Masked private unlock](docs/screenshots/unlock.png)
+
+</details>
+
+## Keyboard first
+
+Press **⌘/Ctrl K** to search subscriptions, starter templates, and commands. Hold **⌘ or Ctrl** to reveal shortcuts; use arrows or J/K between subscriptions and Enter to manage one. **?** shows the full shortcut list. The speaker button controls TIKS interaction sounds on this device.
+
+**Settings → Browser reminders** enables renewal and trial notifications on this device. Reminders need HTTPS or localhost and run best effort while Subs is open and unlocked, not after the browser is closed. Sound and reminder settings stay local and are not included in backups.
+
 ## Docker
 
 ```sh
@@ -62,7 +76,7 @@ CI deploys successful `main` builds automatically. Set the repository's `CLOUDFL
 
 Export from Subs 2 or preserve `data/config.json`, then restore through **Settings → Import**. Legacy arrays and browser/server storage envelopes are supported. Review the preview before replacing anything; keep the original backup. `USE_LOCAL_STORAGE` and the old storage API are retired.
 
-JSON backups contain subscriptions and preferences, not PINs, sessions, or recorded price history. Collections are bounded to a restorable 2 MiB backup. Hovering or focusing a public service link requests a preview from Microlink; previews do not load automatically.
+JSON backups contain subscriptions and preferences, not PINs, sessions, or recorded price history. Collections are bounded to a restorable 2 MiB backup. Known service icons are bundled; other public service origins may receive a direct favicon request without a referrer. Hovering or focusing a public service link requests a preview from Microlink; previews do not load automatically.
 
 ## Lost PIN
 

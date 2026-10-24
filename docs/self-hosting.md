@@ -8,6 +8,14 @@ Put exposed installations behind HTTPS. Add `SUBS_ORIGIN` with the exact public 
 
 Six-digit PINs are not accounts or enterprise authentication. Sessions are HttpOnly, SameSite Strict, Secure on HTTPS, and expire after seven days; persistent throttling limits guesses. Only exactly `DISABLE_AUTH=true` bypasses protection, exposing the whole collection. Keep origin checks even on trusted networks. The PIN recovery command in the [README](../README.md#lost-pin) requires operator filesystem access.
 
+Authorized pages render the Collection on the server and reuse its data/revision during hydration. Private HTML and API responses are not cacheable; keep those headers intact at the reverse proxy. Unlock entry masks the PIN; initial setup and confirmation show the digits.
+
+## Browser reminders
+
+Enable reminders explicitly in Settings on each browser/device. HTTPS or localhost and notification permission are required. Delivery is best effort while Subs remains open and unlocked; wake or focus refreshes the schedule. Closed-browser alarms are not supported, and no second service or push provider is required.
+
+Notifications use generic text rather than service names or prices. Only device preferences and hashed delivery identifiers are saved locally; the notification worker does not cache private data. Locking or disabling reminders stops scheduling. Sound and reminder preferences are not portable backup data.
+
 ## Back up and restore
 
 - **Settings → Export backup** creates a portable versioned JSON collection, including preferences but excluding PINs, sessions, throttles, and recorded price history. Canonical exports are bounded to 2 MiB. **Import backup** previews changes before confirmation; Replace removes the current collection and its history. Keep the original file.

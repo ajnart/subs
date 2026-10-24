@@ -1,21 +1,35 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { api, collectionApi, errorMessage, revisionHeaders } from '@/lib/api'
+import { useSubsBootstrap } from '@/lib/bootstrap'
 import { isDemo } from '@/lib/mode'
 import type { AppData, ExchangeRates, Preferences, Status, Subscription, SubscriptionInput } from '@/lib/types'
 
 export function useSubs() {
-  const [status, setStatus] = useState<Status | null>(null)
-  const [data, setData] = useState<AppData | null>(null)
+  const bootstrap = useRef(useSubsBootstrap()).current
+  const [status, setStatus] = useState<Status | null>(bootstrap?.status ?? null)
+  const [data, setData] = useState<AppData | null>(bootstrap?.data ?? null)
   const [rates, setRates] = useState<ExchangeRates>()
-  const [error, setError] = useState('')
+  const [error, setError] = useState(bootstrap?.error ?? '')
   const [ratesError, setRatesError] = useState('')
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(!bootstrap)
   const generation = useRef(0)
-  const revisionRef = useRef<string | null>(null)
-  const [revision, setRevision] = useState<string | null>(null)
+  const revisionRef = useRef<string | null>(bootstrap?.revision ?? null)
+  const [revision, setRevision] = useState<string | null>(bootstrap?.revision ?? null)
   const updateRevision = useCallback((value: string | null) => {
     revisionRef.current = value
     setRevision(value)
+  }, [])
+
+  const refreshRates = useCallback(async (current: number, signal?: AbortSignal) => {
+    try {
+      const nextRates = await api<ExchangeRates>('/rates', { signal })
+      if (!signal?.aborted && current === generation.current) {
+        setRates(nextRates)
+        setRatesError('')
+      }
+    } catch (cause) {
+      if (!signal?.aborted && current === generation.current) setRatesError(errorMessage(cause))
+    }
   }, [])
 
   const refresh = useCallback(
@@ -37,22 +51,14 @@ export function useSubs() {
         setData(nextData.data)
         updateRevision(nextData.revision)
         setLoading(false)
-        try {
-          const nextRates = await api<ExchangeRates>('/rates', { signal })
-          if (current === generation.current) {
-            setRates(nextRates)
-            setRatesError('')
-          }
-        } catch (cause) {
-          if (!signal?.aborted && current === generation.current) setRatesError(errorMessage(cause))
-        }
+        await refreshRates(current, signal)
       } catch (cause) {
         if (!signal?.aborted && current === generation.current) setError(errorMessage(cause))
       } finally {
         if (!signal?.aborted && current === generation.current) setLoading(false)
       }
     },
-    [updateRevision],
+    [refreshRates, updateRevision],
   )
 
   useEffect(() => {
@@ -66,12 +72,13 @@ export function useSubs() {
       setLoading(false)
     }
     window.addEventListener('subs:locked', lock)
-    void refresh(controller.signal)
+    if (!bootstrap) void refresh(controller.signal)
+    else if (bootstrap.kind === 'ready') void refreshRates(generation.current, controller.signal)
     return () => {
       controller.abort()
       window.removeEventListener('subs:locked', lock)
     }
-  }, [refresh, updateRevision])
+  }, [bootstrap, refresh, refreshRates, updateRevision])
 
   useEffect(() => {
     if (!isDemo) return

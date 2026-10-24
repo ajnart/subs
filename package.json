@@ -26,10 +26,12 @@
   "dependencies": {
     "@fontsource-variable/inter": "latest",
     "@phosphor-icons/react": "^2.1.10",
+    "@rexa-developer/tiks": "0.3.0",
     "@tanstack/react-query": "latest",
     "@tanstack/react-router": "latest",
     "@tanstack/react-start": "1.169.3",
     "class-variance-authority": "^0.7.1",
+    "cmdk": "1.1.1",
     "cn": "^0.5.0",
     "date-fns": "latest",
     "db0": "latest",

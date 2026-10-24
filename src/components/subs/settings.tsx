@@ -21,6 +21,7 @@ import { mergeImportTargets } from '@/lib/import'
 import { MAX_BACKUP_BYTES } from '@/lib/limits'
 import { isDemo } from '@/lib/mode'
 import type { AppData, ImportMatch, ImportPreview, Preferences, Subscription } from '@/lib/types'
+import { ReminderSettings } from './reminders'
 import { Choice, currencies, Notice } from './shared'
 
 type ImportState = {
@@ -38,6 +39,7 @@ export function Settings({
   revision,
   authDisabled,
   onLock,
+  subscriptions,
 }: {
   preferences: Preferences
   onSave: (preferences: Preferences, revision: string | null) => Promise<string>
@@ -45,6 +47,7 @@ export function Settings({
   revision: string | null
   authDisabled: boolean
   onLock: () => Promise<void>
+  subscriptions?: Subscription[]
 }) {
   const [currency, setCurrency] = useState(preferences.currency)
   const [budget, setBudget] = useState(String(preferences.monthlyBudget))
@@ -375,6 +378,7 @@ export function Settings({
           </p>
         </CardContent>
       </Card>
+      <ReminderSettings subscriptions={subscriptions} />
       {!isDemo && (
         <Card>
           <CardHeader>
