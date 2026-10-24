@@ -1,0 +1,15 @@
+/* Hallmark · fixture: tailwind-pass · theme: fixture (by request) · posture: restrained · nav: N1 · footer: none · hero: Settled */
+@import "tailwindcss";
+
+@theme {
+  --color-paper: oklch(97.5% 0.006 240);
+  --color-well: oklch(93% 0.012 240);
+  --color-line: oklch(86% 0.015 240);
+  --color-ink: oklch(22% 0.025 250);
+  --color-muted: oklch(46% 0.02 250);
+  --color-accent: oklch(48% 0.15 255);
+  --color-accent-strong: oklch(42% 0.15 255);
+  --color-accent-ink: oklch(98.5% 0.005 255);
+  --font-display: "Fraunces", serif;
+  --font-body: "Public Sans", sans-serif;
+}

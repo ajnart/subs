@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fenwick and Daughters, coffee roasted in York since 1921</title>
+<meta name="description" content="Fenwick and Daughters roasts six coffees a week in York, sold in 250 g bags or by subscription.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@600&family=Hanken+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+/* Hallmark · job: buy · shape: Trade Ledger (custom: the roast as a Poster, the house's day book set as its own ledger, the cup as a pair, the order on the pigment) · genre: editorial · theme: Vellum (by request)
+ * hero: Poster · nav: masthead, the blackletter wordmark centred over a double rule, one link at each end · footer: letter close · imagery: photographs, library 3, warm con=6 · signature: the roast itself, beans swept round the cooling tray full-bleed under a parchment plate · vellum: parchment
+ * axes: light/blackletter/cool · posture: committed · contrast: pass · fold: pass · v2.0.0 */
+/* Hallmark · pre-emit critique: P4 H5 E4 S5 R4 V4 · weakest: E, the plate must not bury the hand and the falling beans; it rests on the tray's far side and the plain wall, so the stream and the lever stay clear */
+/* Hallmark · hero-review: in-thread · fix · 1 finding · 1 resolved (the head breaks after York) */
+/* Hallmark · finish-review: in-thread (the subagent limit was reached) · fix · 3 findings · 1 resolved (the order head failed the swap test, then its blackletter I read as J: now 250 g bags, or a subscription) · 2 answered (the pair's captions are card facts, imagery.md 5; the pair are the closest honest frames the library holds) · gap: none */
+/* Hallmark · answered F4 · the order field inverts the primary to parchment on pigment, as the theme's own hint sets it for its one field */
+:root {
+  color-scheme: light;
+  --space-3xs: 2px; --space-2xs: 4px; --space-xs: 8px; --space-sm: 12px; --space-md: 16px; --space-lg: 24px; --space-xl: 40px; --space-2xl: 64px; --space-3xl: 96px; --space-4xl: 144px;
+  --text-xs: 0.8125rem; --text-sm: 0.875rem; --text-md: 1rem; --text-lg: 1.25rem; --text-xl: 1.5625rem; --text-2xl: 1.953rem; --text-3xl: 2.441rem;
+  --text-display-s: clamp(2.25rem, 4vw + 0.5rem, 3.75rem); --text-display: clamp(2.75rem, 5vw + 1rem, 5.25rem);
+  --text-section: clamp(2rem, 2.5vw + 1rem, 3.5rem); --text-title: clamp(1.25rem, 0.75vw + 0.875rem, 1.625rem); --text-lead: clamp(1.125rem, 0.35vw + 1rem, 1.375rem);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1); --ease-in: cubic-bezier(0.7, 0, 0.84, 0); --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-micro: 120ms; --dur-short: 220ms; --dur-long: 420ms;
+  --color-error: oklch(52% 0.19 27); --color-success: oklch(50% 0.12 150);
+  --container: 1440px; --gutter: 64px; --gap-columns: 32px; --section-gap-s: 120px; --section-gap: 144px; --section-gap-l: 176px;
+  --z-base: 1; --z-raised: 10; --z-dropdown: 100; --z-sticky: 200; --z-sticky-nav: 300; --z-modal: 400; --z-toast: 500; --z-tooltip: 600;
+  --color-paper: oklch(93% 0.025 80); --color-paper-2: oklch(89% 0.03 78); --color-paper-3: oklch(85% 0.032 76);
+  --color-ink: oklch(22% 0.02 60); --color-ink-2: oklch(30% 0.02 60); --color-muted: oklch(46% 0.02 65);
+  --color-rule: oklch(74% 0.03 75);
+  --color-accent: oklch(42% 0.16 275); --color-accent-deep: oklch(34% 0.15 275); --color-accent-ink: oklch(94% 0.02 80);
+  --color-focus: oklch(50% 0.17 275); --color-field: var(--color-accent);
+  --font-display: "Grenze Gotisch", ui-serif, Georgia, serif; --font-body: "Hanken Grotesk", ui-sans-serif, sans-serif;
+  --font-outlier: "IBM Plex Mono", ui-monospace, monospace;
+  --radius-card: 2px; --radius-pill: 2px; --rule-hair: 1px; --shadow-card: none;
+  --tracking-display: -0.01em; --fibre: 0.5;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html, body { overflow-x: clip; }
+html { scrollbar-color: var(--color-muted) var(--color-paper); scroll-padding-top: var(--space-3xl); }
+body { margin: 0; background: var(--color-paper); color: var(--color-ink); font-family: var(--font-body); font-size: var(--text-md); line-height: 1.55; -webkit-font-smoothing: antialiased; caret-color: var(--color-accent); }
+::selection { background: color-mix(in oklab, var(--color-accent) 22%, transparent); color: var(--color-ink); }
+:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 0.16em; }
+h1, h2, h3 { margin: 0; font-family: var(--font-display); font-weight: var(--display-weight, 700); font-synthesis: none; letter-spacing: var(--tracking-display); line-height: 1.05; overflow-wrap: break-word; min-width: 0; text-wrap: balance; }
+h1 { max-width: 20ch; font-size: var(--text-display); } h2 { max-width: 30ch; font-size: var(--text-section); } h3 { max-width: 40ch; font-size: var(--text-title); line-height: 1.2; }
+.lead { font-size: var(--text-lead); line-height: 1.45; max-width: 52ch; }
+p { margin: 0; text-wrap: pretty; }
+p:not([class]) { max-width: 65ch; }
+img, video { max-width: 100%; height: auto; display: block; }
+svg { display: block; }
+[hidden] { display: none !important; }
+button, input, select, textarea { font: inherit; }
+.container { width: 100%; max-width: var(--container); margin-inline: auto; padding-inline: var(--gutter); box-sizing: border-box; }
+.num, .figure, td.num { font-variant-numeric: tabular-nums; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+[data-slot] { position: relative; overflow: hidden; background: linear-gradient(160deg, var(--color-paper-2, var(--color-paper)), var(--color-paper-3, var(--color-paper))); }
+[data-slot] > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; }
+[data-slot]:has(> img) > :not(img):not([data-keep]) { display: none !important; }
+@media (max-width: 60rem) { :root { --gutter: 24px; --section-gap-s: 80px; --section-gap: 96px; --section-gap-l: 120px; } }
+@media (max-width: 40rem) { :root { --gutter: 16px; --section-gap-s: 56px; --section-gap: 72px; --section-gap-l: 96px; --gap-columns: 16px; } }
+@media (prefers-reduced-motion: reduce) { *:not(.keep-motion), *:not(.keep-motion)::before, *:not(.keep-motion)::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; } }
+/* photographs: warm con=6 */
+[data-slot] > img { filter: sepia(0.28) saturate(0.94) contrast(1.06); }
+:root {
+  --mast-h: 80px;
+  --plate-w: 37rem;
+  --color-field: var(--color-accent);
+}
+
+/* The fibre wash: long tan fibres, stitched so they never tile (texture.md, the low-frequency wash) */
+.fibre { position: relative; isolation: isolate; }
+.fibre::before { content: ""; position: absolute; inset: 0; z-index: -1; opacity: var(--fibre); mix-blend-mode: multiply; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='p' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.004 0.02' numOctaves='4' seed='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.62 0 0 0 0 0.52 0 0 0 0 0.36 0 0 0 0.3 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E"); }
+
+/* Type */
+h1, h2 { font-weight: 600; line-height: 0.92; color: var(--color-ink); }
+h3 { font-family: var(--font-body); font-weight: 600; }
+.lead { color: var(--color-ink-2); }
+
+/* Controls */
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 var(--space-lg); border: var(--rule-hair) solid var(--color-ink); border-radius: var(--radius-card); background: transparent; color: var(--color-ink); font: 500 var(--text-md)/1 var(--font-body); text-decoration: none; white-space: nowrap; cursor: pointer;
+  transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out); }
+.btn:hover { background: var(--color-paper-2); }
+.btn:active { transform: translateY(1px); }
+.btn:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+.btn:disabled, .btn[aria-disabled="true"] { opacity: 0.55; cursor: not-allowed; transform: none; }
+.btn--primary { background: var(--color-accent); border-color: var(--color-accent); color: var(--color-accent-ink); }
+.btn--primary:hover { background: var(--color-accent-deep); border-color: var(--color-accent-deep); }
+
+.skip { position: absolute; left: var(--space-md); top: calc(-1 * var(--space-3xl)); z-index: var(--z-toast); padding: var(--space-xs) var(--space-md); background: var(--color-ink); color: var(--color-paper); }
+.skip:focus-visible { top: var(--space-md); }
+
+/* Masthead */
+.mast__bar { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; min-height: calc(var(--mast-h) - 4px); border-bottom: 4px double var(--color-ink); }
+.wordmark { font: 600 2rem/1 var(--font-display); letter-spacing: var(--tracking-display); color: var(--color-ink); text-decoration: none; white-space: nowrap; padding-block: var(--space-sm); }
+.mast__link { justify-self: start; font: 600 var(--text-sm)/1 var(--font-body); color: var(--color-ink); padding-block: var(--space-sm); text-decoration: underline 1px; text-decoration-color: transparent; text-underline-offset: 0.3em;
+  transition: text-decoration-color var(--dur-short) var(--ease-out), color var(--dur-micro) var(--ease-out); }
+.mast__link--end { justify-self: end; }
+.mast__link:hover { text-decoration-color: var(--color-accent); color: var(--color-accent); }
+.wordmark:focus-visible, .mast__link:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 4px; }
+
+/* Hero: the roast, full-bleed, under a parchment plate */
+.hero { position: relative; height: calc(100dvh - var(--mast-h)); min-height: 36rem; overflow: hidden; background: var(--color-ink); color: var(--color-paper); }
+.hero__photo { position: absolute; inset: 0; margin: 0; }
+.hero__photo > img { object-position: 50% 62%; }
+.hero__inner { position: relative; z-index: var(--z-raised); height: 100%; display: flex; align-items: flex-end; justify-content: flex-end; padding-bottom: var(--space-2xl); box-sizing: border-box; }
+.plate { width: min(100%, var(--plate-w)); box-sizing: border-box; padding: var(--space-xl); background: var(--color-paper); color: var(--color-ink); border-top: 4px double var(--color-ink); border-radius: var(--radius-card); }
+.plate h1 { font-size: var(--text-display); max-width: 16ch; }
+.plate .lead { margin-top: var(--space-lg); max-width: 30ch; }
+.actions { display: flex; flex-wrap: wrap; gap: var(--space-sm); margin-top: var(--space-xl); }
+
+@media (max-width: 60rem) {
+  .hero { height: auto; min-height: 0; background: none; color: var(--color-ink); overflow: visible; }
+  .hero__photo { position: relative; aspect-ratio: 4 / 3; }
+  .hero__inner { height: auto; padding-bottom: 0; }
+  .plate { width: 100%; padding: var(--space-xl) 0 0; background: none; border-top: 0; }
+  .plate.fibre::before { display: none; }
+  .wordmark { font-size: 1.875rem; }
+}
+@media (max-width: 40rem) {
+  .mast__bar { grid-template-columns: auto; justify-items: center; row-gap: var(--space-2xs); padding-block: var(--space-xs); }
+  .mast__link { display: none; }
+}
+
+/* Shared section grid: one container, twelve columns, one column gap */
+.split { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap-columns); }
+.band { background: var(--color-paper-2); padding-block: var(--section-gap-s); }
+.photo { margin: 0; border-radius: var(--radius-card); }
+.photo > img { outline: var(--rule-hair) solid var(--color-rule); outline-offset: -1px; }
+figcaption { margin-top: var(--space-sm); font: 500 var(--text-sm)/1.4 var(--font-body); color: var(--color-muted); }
+
+/* The day book: the house's ledger on the fibre band, the entries kept in the hand of the wordmark */
+.ledger__grid { align-items: start; }
+.ledger__text { grid-column: 1 / span 4; position: sticky; top: var(--space-2xl); }
+.ledger__text h2 { font-size: var(--text-display); max-width: 9ch; }
+.ledger .lead { margin-top: var(--space-lg); max-width: 22ch; }
+.ledger__book { grid-column: 6 / span 7; }
+.book { width: 100%; border-collapse: collapse; font-size: var(--text-lg); line-height: 1.35; }
+.book thead th { padding: 0 0 var(--space-sm); border-bottom: 4px double var(--color-ink); font: 500 var(--text-sm)/1.3 var(--font-body); color: var(--color-muted); text-align: left; }
+.book td, .book tbody th { padding: var(--space-lg) 0; border-top: var(--rule-hair) solid var(--color-rule); vertical-align: baseline; }
+.book tbody tr:first-child > * { border-top: 0; }
+.book tbody tr:last-child > * { border-bottom: var(--rule-hair) solid var(--color-ink); }
+.book tbody th { font-weight: 500; text-align: left; color: var(--color-ink); }
+.book .idx { width: 3.5rem; font-weight: 600; color: var(--color-accent); }
+.book .r, .book thead th.r { text-align: right; }
+.book td.r { font: 600 var(--text-2xl)/1 var(--font-display); letter-spacing: var(--tracking-display); color: var(--color-ink); }
+.book td.r .unit { font: 500 var(--text-md)/1 var(--font-body); color: var(--color-ink-2); }
+.book .num { font-variant-numeric: lining-nums tabular-nums; }
+
+/* The cup: one wide frame, then a pair, each with its fact */
+.cup { padding-top: var(--section-gap-l); }
+.cup__head { align-items: end; }
+.cup__head h2 { grid-column: 1 / span 6; }
+.cup__head .lead { grid-column: 8 / span 5; }
+.cup__pair { margin-top: var(--space-2xl); }
+.cup__pair > figure { margin: 0; }
+.cup__note { grid-column: 1 / span 7; }
+.cup__cup { grid-column: 8 / span 5; }
+.cup__pair .photo { height: 34rem; }
+
+/* The order, on the one pigment field */
+.order-band { margin-top: var(--section-gap-s); padding-block: var(--section-gap-s); background: var(--color-field); color: var(--color-accent-ink); }
+.order-band h2 { color: var(--color-accent-ink); }
+.order-band .lead { margin-top: var(--space-md); color: var(--color-accent-ink); }
+.order-band :focus-visible { outline-color: var(--color-accent-ink); }
+.order { align-items: center; }
+.order__text { grid-column: 1 / span 6; }
+.order__fields { grid-column: 8 / span 5; display: grid; gap: var(--space-lg); }
+.seg { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-xs); margin: var(--space-xl) 0 0; padding: 0; border: 0; }
+.field label { font: 500 var(--text-sm)/1.3 var(--font-body); color: var(--color-accent-ink); }
+.seg input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+.seg label { display: flex; align-items: center; justify-content: center; min-height: 52px; padding: 0 var(--space-md); border: var(--rule-hair) solid var(--color-accent-ink); border-radius: var(--radius-card); font-weight: 500; cursor: pointer;
+  transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out); }
+.seg label:hover { background: var(--color-accent-deep); }
+.seg input:checked + label { background: var(--color-accent-ink); color: var(--color-accent); }
+.seg input:focus-visible + label { outline: 2px solid var(--color-accent-ink); outline-offset: 2px; }
+.field { display: grid; gap: var(--space-xs); }
+.field input { min-height: 48px; padding: 0 var(--space-md); border: var(--rule-hair) solid var(--color-accent-ink); border-radius: var(--radius-card); background: var(--color-paper); color: var(--color-ink); outline: 2px solid transparent; outline-offset: 2px; }
+.field input:focus-visible { outline-color: var(--color-accent-ink); }
+.field input[aria-invalid] { border-color: var(--color-error); box-shadow: inset 0 0 0 1px var(--color-error); }
+.field input:disabled { opacity: 0.55; cursor: not-allowed; }
+.btn--on-field { width: 100%; background: var(--color-accent-ink); border-color: var(--color-accent-ink); color: var(--color-accent); }
+.btn--on-field:hover { background: var(--color-paper-2); border-color: var(--color-paper-2); }
+.help { min-height: 1lh; font-size: var(--text-sm); color: var(--color-accent-ink); }
+
+/* The letter close */
+.letter { padding-block: var(--space-3xl) var(--space-2xl); }
+.letter__inner { padding-top: var(--space-2xl); border-top: var(--rule-hair) solid var(--color-ink); }
+.letter__sign { font-size: var(--text-lead); color: var(--color-ink-2); }
+.letter__name { margin-top: var(--space-xs); font: 600 var(--text-display-s)/0.92 var(--font-display); letter-spacing: var(--tracking-display); color: var(--color-ink); }
+.letter__foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: var(--space-md) var(--space-xl); margin-top: var(--space-2xl); }
+.letter__nav { display: flex; flex-wrap: wrap; gap: var(--space-lg); }
+.letter__nav a { font-size: var(--text-sm); color: var(--color-ink); text-decoration-color: var(--color-rule); text-underline-offset: 0.25em; transition: text-decoration-color var(--dur-short) var(--ease-out); }
+.letter__nav a:hover { text-decoration-color: var(--color-accent); }
+.letter__nav a:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+.legal { font-size: var(--text-sm); color: var(--color-muted); }
+.letter__credit { flex: 1 0 100%; max-width: 88ch; font-size: var(--text-sm); line-height: 1.6; color: var(--color-muted); }
+.letter__credit a { color: inherit; text-decoration-color: var(--color-rule); text-underline-offset: 0.25em; }
+.letter__credit a:hover { color: var(--color-ink); text-decoration-color: var(--color-accent); }
+
+@media (max-width: 60rem) {
+  .ledger__text, .ledger__book, .cup__head h2, .cup__head .lead, .cup__note, .cup__cup, .order__text, .order__fields { grid-column: 1 / -1; }
+  .ledger__text { position: static; }
+  .ledger__book { margin-top: var(--space-2xl); }
+  .book td.r { font-size: var(--text-xl); }
+  .cup__head .lead { margin-top: var(--space-md); }
+  .cup__pair { row-gap: var(--space-xl); }
+  .cup__pair .photo { height: auto; aspect-ratio: 4 / 3; }
+  .order__fields { margin-top: var(--space-xl); }
+}
+@media (max-width: 40rem) {
+  .book { font-size: var(--text-md); }
+  .book .idx { width: 2rem; }
+}
+</style>
+<script>document.documentElement.classList.add('js');</script>
+</head>
+<body id="top">
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="mast">
+  <div class="container mast__bar">
+    <a class="mast__link" href="#daybook">The day book</a>
+    <a class="wordmark" href="#top" aria-label="Fenwick and Daughters, back to the top">Fenwick and Daughters</a>
+    <a class="mast__link mast__link--end" href="#order">Order</a>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero" aria-labelledby="hero-h">
+    <figure class="hero__photo" data-slot="roaster" data-alt="The York roaster at work, a fresh roast tipping into the cooling tray">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Cooling_time_for_coffee.jpg/1280px-Cooling_time_for_coffee.jpg" width="1920" height="1348" fetchpriority="high"
+           alt="A fresh roast swept round the cooling tray by its paddle arm" style="object-position: 50% 55%">
+    </figure>
+    <div class="container hero__inner">
+      <div class="plate fibre">
+        <h1 id="hero-h">Roasted in York<br> since 1921</h1>
+        <p class="lead">Six coffees a week, sold by the bag or by subscription.</p>
+        <div class="actions">
+          <a class="btn btn--primary" href="#order" data-kind="subscription">Start a subscription</a>
+          <a class="btn" href="#order" data-kind="bag">Buy a bag</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ledger band fibre" id="daybook" aria-labelledby="ledger-h">
+    <div class="container split ledger__grid">
+      <div class="ledger__text">
+        <h2 id="ledger-h">Written in the day book</h2>
+        <p class="lead">Five lines the roastery keeps to.</p>
+      </div>
+      <div class="ledger__book">
+        <table class="book">
+          <thead>
+            <tr><th scope="col">No.</th><th scope="col">Entry</th><th scope="col" class="r">Kept</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="idx">1</td><th scope="row">Coffees roasted each week</th><td class="r"><span class="num">6</span></td></tr>
+            <tr><td class="idx">2</td><th scope="row">Weight of each bag</th><td class="r"><span class="num">250</span>&nbsp;<span class="unit">g</span></td></tr>
+            <tr><td class="idx">3</td><th scope="row">Ways to buy</th><td class="r">By the bag, or by subscription</td></tr>
+            <tr><td class="idx">4</td><th scope="row">Roastery</th><td class="r">York</td></tr>
+            <tr><td class="idx">5</td><th scope="row">Roasting since</th><td class="r"><span class="num">1921</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="cup" id="cup" aria-labelledby="cup-h">
+    <div class="container">
+      <div class="split cup__head">
+        <h2 id="cup-h">From a York drum to your kettle</h2>
+        <p class="lead">Fenwick and Daughters roasts the coffee. The cup is yours to make.</p>
+      </div>
+      <div class="split cup__pair">
+        <figure class="cup__note">
+          <div class="photo" data-slot="desk" data-alt="The York roaster between roasts, the drum over its cooling tray">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Coffee_roasting_machine%2C_The_Roastery%2C_Coaltown_Coffee%2C_Ammanford%2C_Wales.jpg/1280px-Coffee_roasting_machine%2C_The_Roastery%2C_Coaltown_Coffee%2C_Ammanford%2C_Wales.jpg" width="1920" height="2560" loading="lazy"
+                 alt="A drum coffee roaster above its copper cooling tray in a roastery" style="object-position: 50% 69%">
+          </div>
+          <figcaption>Six coffees a week</figcaption>
+        </figure>
+        <figure class="cup__cup">
+          <div class="photo" data-slot="cup" data-alt="A cup of Fenwick and Daughters coffee on the shop counter">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Espresso_coffee_pouring_from_retro_espresso_machine.jpg/1280px-Espresso_coffee_pouring_from_retro_espresso_machine.jpg" width="1920" height="2876" loading="lazy"
+                 alt="Espresso streaming from a chrome machine into two glass cups" style="object-position: 50% 62%">
+          </div>
+          <figcaption>Sold in 250&nbsp;g bags</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="order-band" id="order" aria-labelledby="order-h">
+    <div class="container">
+      <form class="split order" data-endpoint="" novalidate>
+        <div class="order__text">
+          <h2 id="order-h">250&nbsp;g bags, or a subscription</h2>
+          <p class="lead">Tell the roastery which you would like, and where to reach you.</p>
+          <fieldset class="seg">
+            <legend class="visually-hidden">How would you like it?</legend>
+            <input type="radio" name="kind" id="kind-bag" value="bag" checked><label for="kind-bag">One 250&nbsp;g bag</label>
+            <input type="radio" name="kind" id="kind-sub" value="subscription"><label for="kind-sub">A subscription</label>
+          </fieldset>
+        </div>
+        <div class="order__fields">
+          <div class="field">
+            <label for="order-name">Full name</label>
+            <input id="order-name" name="name" type="text" autocomplete="name" required>
+          </div>
+          <div class="field">
+            <label for="order-email">Email address</label>
+            <input id="order-email" name="email" type="email" autocomplete="email" inputmode="email" required>
+          </div>
+          <button class="btn btn--on-field" type="submit">Send the order</button>
+          <p class="help" id="order-help" aria-live="polite"></p>
+        </div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="letter">
+  <div class="container letter__inner">
+    <p class="letter__sign">With thanks from the roastery,</p>
+    <p class="letter__name">Fenwick and Daughters</p>
+    <div class="letter__foot">
+      <nav class="letter__nav" aria-label="Footer">
+        <a href="#daybook">The day book</a>
+        <a href="#cup">The cup</a>
+        <a href="#order">Order</a>
+      </nav>
+      <p class="legal">&copy; 2026 Fenwick and Daughters</p>
+      <p class="letter__credit" data-credits>Photographs: <a href="https://commons.wikimedia.org/wiki/File:Cooling_time_for_coffee.jpg">Jameswasswa</a> (CC&nbsp;BY-SA&nbsp;4.0), <a href="https://commons.wikimedia.org/wiki/File:Coffee_roasting_machine,_The_Roastery,_Coaltown_Coffee,_Ammanford,_Wales.jpg">Vouliagmeni</a> (CC&nbsp;BY-SA&nbsp;4.0), <a href="https://commons.wikimedia.org/wiki/File:Espresso_coffee_pouring_from_retro_espresso_machine.jpg">Shixart1985</a> (CC&nbsp;BY&nbsp;2.0), all on Wikimedia Commons.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.hallmarkSlots = (m) => { for (const [k, v] of Object.entries(m)) { const s = document.querySelector(`[data-slot="${k}"]`); if (!s) continue; const im = new Image(); im.src = typeof v === 'string' ? v : v.src; im.alt = (typeof v === 'object' && v.alt) || s.dataset.alt || ''; s.querySelectorAll(':scope > img').forEach((o) => o.remove()); s.prepend(im); } };
+document.querySelectorAll('[data-slot] > img').forEach((i) => { if (i.complete && !i.naturalWidth) i.remove(); else i.addEventListener('error', () => i.remove(), { once: true }); });
+document.querySelectorAll('[data-kind]').forEach((a) => a.addEventListener('click', () => { const r = document.getElementById(a.dataset.kind === 'subscription' ? 'kind-sub' : 'kind-bag'); if (r) r.checked = true; }));
+document.querySelectorAll('form[data-endpoint]').forEach((form) => {
+  const help = form.querySelector('[aria-live]');
+  const fields = [...form.querySelectorAll('input[required]')];
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const bad = fields.filter((i) => !i.checkValidity());
+    fields.forEach((i) => { i.toggleAttribute('aria-invalid', bad.includes(i)); if (bad.includes(i)) i.setAttribute('aria-describedby', help.id); else i.removeAttribute('aria-describedby'); });
+    if (bad.length) { help.textContent = bad[0].type === 'email' ? 'That email address looks incomplete. Write it as name@example.com.' : 'Add your name, so the roastery knows who the coffee is for.'; bad[0].focus(); return; }
+    if (!form.dataset.endpoint) { help.textContent = 'Nothing was sent: this form is not connected yet.'; return; }
+    fetch(form.dataset.endpoint, { method: 'POST', body: new FormData(form) })
+      .then((r) => { help.textContent = r.ok ? 'The roastery has your order and will write to ' + form.elements.email.value.trim() + '.' : 'That did not go through. Try again in a minute.'; })
+      .catch(() => { help.textContent = 'That did not go through. Try again in a minute.'; });
+  });
+});
+</script>
+</body>
+</html>

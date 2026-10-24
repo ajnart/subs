@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kept fixture, the page before</title>
+<meta name="description" content="The page a redesign starts from; after.html drops one of everything the record holds.">
+<style>
+body { font-family: sans-serif; }
+</style>
+</head>
+<body>
+<nav id="site-nav"><a href="#rates">Rates</a> <a href="rooms.html">Rooms</a> <a href="mailto:desk@example.com">Email the desk</a> <button id="nav-toggle" type="button">Menu</button></nav>
+<h1>Rooms by the harbour</h1>
+<h2 id="rates">Rates</h2>
+<p>From $120 a night. Breakfast until 10:30.</p>
+<form action="https://example.com/api/book" method="post">
+  <input name="email" type="email">
+  <input name="nights" type="number">
+  <button type="submit" onclick="track('book')" data-testid="book-button">Book</button>
+</form>
+<script>
+document.getElementById('nav-toggle').addEventListener('click', function () { document.querySelector('#site-nav').classList.toggle('is-open'); });
+</script>
+</body>
+</html>

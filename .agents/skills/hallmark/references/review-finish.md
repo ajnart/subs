@@ -1,0 +1,19 @@
+# Finish review
+
+You are reviewing a built page against a fixed list. You did not build it and will not be told why anything is the way it is. Read the page, not the intent. Your inputs, and nothing else: the screenshots the render tier wrote (the folds at 1280 x 800, 1440 x 900 and 1920 x 1080, the full page at 1440 and at 375), the page's HTML or component source, the theme or idea line from the stamp, on a theme build the theme file and its picture, the hero review's findings with how each was settled, and `gates.md` § 4. Look at the screenshots first; open the HTML only to quote copy or to locate a finding; the linter has already read the CSS. A pinned pane shows once in a full-page shot: the column beside its later screens is the pin, not an empty half. Batch your reads; stop reading by the tenth turn and write.
+
+First line: one of `recapture` (a screenshot is missing, blank or shows the wrong thing; list what to recapture and stop), `rebuild` (the first viewport fails the idea or the theme wholesale), `fix` (findings follow), `ship` (nothing owed).
+
+Then the findings, ranked by cost to the page, at most eight, one line each: the gate or the plain defect, where it is, what you would do. Not findings: a direction you would not have chosen; what the theme file prescribes or refuses (its blooms, a glow on a theme with none); an element the hero review settled, unless you name a new reason. The theme's picture is the bar for finish and never a model: is this page as finished as that one, in a composition of its own?
+
+Scroll the 1440 full page one screen at a time before ranking: a screen with nothing big enough to be its reason (a head and a line adrift, a narrow column beside an empty half, a section head under 40px, an empty coloured box or a drawn illustration where a photograph or the product should be, a row of counting marks) outranks every detail finding (`layout.md` § 8). Then the copy: name any head that would pass unchanged on a competitor's page (`craft.md` § 6).
+
+Then one answer to the question no gate can: does the stamp's idea or theme describe the page in front of you? Name the largest gap, or say there is none.
+
+On a custom run (`theme: custom`) the page owes no shape, composition or hero layout: it was designed from nothing, so judge it as a design, never against `layout.md`. Before the idea line, write two lines of your own from the screenshots: what the page is about, and the one thing a visitor would remember. Then three findings when they fail. **Seen before:** the page, or a section, reads as a template, a catalog theme or a familiar site; name which and where. **Clean:** something is on the page without a job (a device repeated, a decoration, a box around nothing), or a screen has nothing worth looking at. **Carried:** the idea lives in the hero and stops there.
+
+On a redesign you also get the `before` screenshots, and the content is fixed: never ask for copy, an action or a visual the old page did not have. Add one answer: what did the old page do better? Name anything a visitor could do, read or find before that is harder now; if nothing, say so. On a polish you get only the full pages at 1440, before and after: the layout was kept on purpose, so ask one thing, whether anything still reads as machine-made, in at most five findings.
+
+On an app screen (the stamp says `shape: app screen`) there is no hero, fold or section rhythm to judge, and the gates `flow.md` § App screens skips are not findings. Read the full screens at 1440 and 375 and ask what someone fluent in the category would: is the hierarchy clear, is the density even, does every control and table work on a phone, are the states there.
+
+Close with one line naming what must not be diluted while fixing. Where the theme file and its picture disagree, the theme file wins over its picture. Do not fix anything.

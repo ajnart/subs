@@ -1,0 +1,62 @@
+.subs-auth .subs-auth-card {
+  padding-block: 2rem;
+  box-shadow: var(--shadow-lg);
+}
+
+.subs-auth-lock {
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  margin-bottom: 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--secondary);
+  color: var(--primary);
+}
+
+.subs-auth-lock svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.subs-auth .subs-pin {
+  justify-content: center;
+  width: 100%;
+  padding-block: 0.25rem;
+}
+
+.subs-auth .subs-pin-group {
+  gap: clamp(0.3rem, 1.4vw, 0.65rem);
+}
+
+.subs-auth .subs-pin [data-slot="input-otp-slot"] {
+  width: clamp(2.25rem, 10vw, 3rem);
+  height: 3.75rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--background);
+  font-size: 1.5rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  transition:
+    border-color 150ms,
+    box-shadow 150ms,
+    background-color 150ms;
+}
+
+.subs-auth .subs-pin [data-active="true"] {
+  border-color: var(--ring);
+  background: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in oklch, var(--ring) 20%, transparent);
+}
+
+.subs-auth .subs-pin [aria-invalid="true"] {
+  border-color: var(--destructive);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .subs-auth .subs-pin [data-slot="input-otp-slot"] {
+    transition: none;
+  }
+}

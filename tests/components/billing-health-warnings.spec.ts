@@ -1,139 +1,60 @@
-import { expect, test } from '@playwright/test'
+import { collection, createSubscription, expect, revisionHeaders, test } from '../helpers'
 
-// ---------------------------------------------------------------------------
-// Helpers
-// ---------------------------------------------------------------------------
-
-const CARD = '[data-testid="subscription-card"]'
-
-/** Clear all storage and reload to a known clean state. */
-async function freshPage(page: import('@playwright/test').Page) {
+test('trial deadlines and lifecycle details remain visible without treating trials as automatic cancellations', async ({
+  page,
+}) => {
+  await page.clock.setFixedTime(new Date('2030-02-01T12:00:00Z'))
+  await createSubscription(page.request, { name: 'Trial plan', trialEndsAt: '2030-02-01', status: 'active' })
+  await createSubscription(page.request, { name: 'Paused trial plan', trialEndsAt: '2030-02-01', status: 'paused' })
   await page.goto('/')
-  await page.evaluate(() => localStorage.clear())
-  await page.reload()
-  await page.waitForSelector('main', { timeout: 15_000 })
-}
+  await expect(page.getByText('Trial ends Feb 1, 2030', { exact: true })).toHaveCount(2)
+  await page.locator('summary').filter({ hasText: 'Collection tools' }).click()
+  const summary = page.getByRole('region', { name: 'Spending summary' })
+  await expect(summary).toContainText('$12.00')
+  await expect(summary).not.toContainText('$24.00')
+  const records = (await collection(page.request)).subscriptions
+  expect(records.find((item) => item.name === 'Trial plan')?.status).toBe('active')
+  expect(records.find((item) => item.name === 'Paused trial plan')?.status).toBe('paused')
+  await page.getByRole('navigation', { name: 'Main navigation' }).getByRole('button', { name: 'Calendar' }).click()
+  await page.getByRole('button', { name: 'Feb 1, 2030, 1 payments and trial deadlines', exact: true }).click()
+  await expect(
+    page.getByRole('button').filter({ hasText: 'Trial plan' }).filter({ hasText: 'Trial ends' }),
+  ).toHaveCount(1)
+  await expect(page.getByText('Paused trial plan', { exact: true })).not.toBeVisible()
+})
 
-/** Upload a JSON payload to the hidden file input. */
-async function importSubscriptions(page: import('@playwright/test').Page, data: unknown) {
-  const fileInput = page.locator('input[type="file"]')
-  await fileInput.setInputFiles({
-    name: 'import.json',
-    mimeType: 'application/json',
-    buffer: Buffer.from(JSON.stringify(data)),
-  })
-}
+test('invalid money, unsafe links and dates reject writes without changing committed state', async ({ context }) => {
+  const saved = await createSubscription(context.request)
+  for (const data of [
+    { price: -1 },
+    { price: 1.234 },
+    { price: 1.1, currency: 'JPY' },
+    { price: 1.2345, currency: 'KWD' },
+    { currency: 'ZZZ' },
+    { domain: 'javascript:alert(1)' },
+    { nextPaymentDate: '2030-02-30' },
+    { status: 'deleted' },
+  ]) {
+    const response = await context.request.patch(`/api/subscriptions/${saved.id}`, {
+      headers: await revisionHeaders(context.request),
+      data,
+    })
+    expect(response.status()).toBe(400)
+    expect(await response.json()).toEqual({ error: expect.any(String) })
+    expect((await collection(context.request)).subscriptions).toEqual([saved])
+  }
+})
 
-// ---------------------------------------------------------------------------
-// Tests
-// ---------------------------------------------------------------------------
-
-test.describe('Billing Health Warnings', () => {
-  test.beforeEach(async ({ page }) => {
-    await freshPage(page)
-  })
-
-  test('no warning icon for a subscription with no billing cycle', async ({ page }) => {
-    // Import a subscription that has NO billingCycle
-    await importSubscriptions(page, [
-      { id: 'h1', name: 'No Cycle Sub', price: 10, currency: 'USD', domain: 'https://nocycle.com' },
-    ])
-    // Wait for the card to appear
-    await page.waitForSelector(CARD, { timeout: 5_000 })
-
-    const card = page.locator(CARD).filter({ hasText: 'No Cycle Sub' })
-    // AlertTriangle icon should NOT be present
-    await expect(card.locator('svg.lucide-triangle-alert')).not.toBeVisible()
-  })
-
-  test('warning shown when billingCycle is set but showNextPayment is false', async ({ page }) => {
-    await importSubscriptions(page, [
-      {
-        id: 'h2',
-        name: 'Has Cycle No Date',
-        price: 10,
-        currency: 'USD',
-        domain: 'https://warnme.com',
-        billingCycle: 'monthly',
-        showNextPayment: false,
-      },
-    ])
-    await page.waitForSelector(CARD, { timeout: 5_000 })
-
-    const card = page.locator(CARD).filter({ hasText: 'Has Cycle No Date' })
-    // Billing cycle badge should be visible
-    await expect(card.getByText('Monthly')).toBeVisible()
-    // Warning triangle must appear
-    await expect(card.locator('svg').filter({ has: page.locator('[class*="yellow"]') })).toBeVisible()
-  })
-
-  test('tooltip for cycle-set-but-hidden warning describes the issue correctly', async ({ page }) => {
-    await importSubscriptions(page, [
-      {
-        id: 'h3',
-        name: 'Cycle Warning Tooltip',
-        price: 15,
-        currency: 'USD',
-        domain: 'https://tooltip.com',
-        billingCycle: 'yearly',
-        showNextPayment: false,
-      },
-    ])
-    await page.waitForSelector(CARD, { timeout: 5_000 })
-
-    const card = page.locator(CARD).filter({ hasText: 'Cycle Warning Tooltip' })
-    // Hover the warning icon to trigger the tooltip
-    const warningIcon = card.locator('[class*="yellow"]').first()
-    await warningIcon.hover()
-
-    await expect(page.getByRole('tooltip')).toContainText(/billing cycle set but next payment date is not shown/i)
-  })
-
-  test('no warning when billingCycle and showNextPayment are both set with a future date', async ({ page }) => {
-    const futureDate = new Date()
-    futureDate.setMonth(futureDate.getMonth() + 1)
-    const futureDateStr = futureDate.toISOString().split('T')[0]
-
-    await importSubscriptions(page, [
-      {
-        id: 'h4',
-        name: 'Healthy Sub',
-        price: 20,
-        currency: 'USD',
-        domain: 'https://healthy.com',
-        billingCycle: 'monthly',
-        showNextPayment: true,
-        nextPaymentDate: futureDateStr,
-      },
-    ])
-    await page.waitForSelector(CARD, { timeout: 5_000 })
-
-    const card = page.locator(CARD).filter({ hasText: 'Healthy Sub' })
-    // No triangle warning should appear
-    await expect(card.locator('[class*="yellow"]')).not.toBeVisible()
-  })
-
-  test('warning shown when stored nextPaymentDate is in the past', async ({ page }) => {
-    await importSubscriptions(page, [
-      {
-        id: 'h5',
-        name: 'Past Date Sub',
-        price: 8,
-        currency: 'USD',
-        domain: 'https://pastdate.com',
-        billingCycle: 'monthly',
-        showNextPayment: true,
-        nextPaymentDate: '2020-01-01',
-      },
-    ])
-    await page.waitForSelector(CARD, { timeout: 5_000 })
-
-    const card = page.locator(CARD).filter({ hasText: 'Past Date Sub' })
-    // Warning triangle should appear (raw stored date is in the past)
-    await expect(card.locator('[class*="yellow"]')).toBeVisible()
-
-    // Tooltip should mention "past"
-    await card.locator('[class*="yellow"]').first().hover()
-    await expect(page.getByRole('tooltip')).toContainText(/past/i)
-  })
+test('zero- and three-decimal currencies retain exact supported prices in exports', async ({ context }) => {
+  await createSubscription(context.request, { name: 'Yen plan', currency: 'JPY', price: 500 })
+  await createSubscription(context.request, { name: 'Dinar plan', currency: 'KWD', price: 1.234 })
+  await createSubscription(context.request, { name: 'Free plan', price: 0 })
+  const response = await context.request.get('/api/export')
+  expect((await response.json()).subscriptions).toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({ currency: 'JPY', price: 500 }),
+      expect.objectContaining({ currency: 'KWD', price: 1.234 }),
+      expect.objectContaining({ name: 'Free plan', price: 0 }),
+    ]),
+  )
 })

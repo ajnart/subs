@@ -1,0 +1,74 @@
+name: Checks
+
+on:
+  pull_request:
+  push:
+    branches: ["**"]
+  workflow_dispatch:
+    inputs:
+      deploy_demo:
+        description: Deploy the validated static demo
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.3
+      - run: bun install --frozen-lockfile --linker hoisted
+      - run: bun run lint
+      - run: bun run typecheck
+      - run: bun run build
+      - run: bunx playwright install --with-deps chromium --only-shell
+      - run: bun run test
+      - uses: actions/upload-artifact@v7.0.2
+        with:
+          name: subs-demo
+          path: dist/demo
+          retention-days: 7
+
+  docker:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - run: docker compose config --quiet
+      - run: docker build --progress=plain -t subs:check .
+
+  deploy-demo:
+    if: github.ref == 'refs/heads/main' || (github.event_name == 'workflow_dispatch' && inputs.deploy_demo)
+    needs: [check, docker]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    concurrency:
+      group: subs-demo-production
+      cancel-in-progress: false
+    environment:
+      name: demo
+      url: https://sub.ajnart.dev
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.3
+      - run: bun install --frozen-lockfile --linker hoisted
+      - name: Verify deployment credential
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          if [ -z "$CLOUDFLARE_API_TOKEN" ]; then
+            echo "::error::Set the CLOUDFLARE_API_TOKEN Actions secret with scoped Cloudflare deployment permissions."
+            exit 1
+          fi
+      - name: Deploy static demo
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: bun run deploy:demo

@@ -1,0 +1,54 @@
+<!doctype html>
+<!--
+  Waiver fixture. Five waivers are claimed on a deliberately expressive page:
+  four are honoured, one is refused because it names a Floor gate, and the build
+  ships. There is no cap, so the page is not blocked for being expressive; what
+  it gets instead is a NOTE saying four waivers is a house style, not exceptions.
+
+  Assertion (run from this directory):
+
+    node ../../sloplint.mjs . --json | node -e "let s='';process.stdin.on('data',d=>s+=d).on('end',()=>{const j=JSON.parse(s);console.log(JSON.stringify(j.summary))})"
+    # expected: fails 0, reflex 0, waived 5, rejected 2, answered 1, notes 1
+    # (waived counts findings, not gates: gate 1 fires on both the token and the
+    #  h1 rule, and gate 7 on both the token and the body background)
+
+  Case by case:
+    waive 40  -> refused, Floor is never waivable, and gate 40 still binds
+    waive 7b  -> honoured; the guard (surface: absolute in the stamp) holds
+    waive 22  -> honoured
+    waive 25  -> honoured (no finding to downgrade on this page)
+    waive 1   -> honoured, and trips the >3 house-style NOTE
+    answered F3  -> honoured; the Finish finding reports ANSWERED instead of WARN
+    answered 40  -> refused; 40 is Floor, and Floor findings are fixed, not answered
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Waiver fixture</title>
+<style>
+/* Hallmark · macrostructure: Manifesto · tone: austere · anchor hue: 250 · surface: absolute · nav: N9 · footer: Ft2 · hero: Poster/H1 */
+/* Hallmark · pre-emit critique: P5 H4 E5 S4 R5 V4 · weakest: E - fixture, not a real build */
+/* Hallmark · waive 40 · contrast measured on the stage · the manifesto is printed white on black */
+/* Hallmark · waive 7b · surface: absolute declared, 40-41 pass · the manifesto stage is printed on black paper */
+/* Hallmark · waive 22 · neutrals achromatic throughout · the manifesto rules are pure grey by intent */
+/* Hallmark · waive 25 · measure runs to 96ch · the manifesto sets long declarative lines */
+/* Hallmark · waive 1 · two families declared · the manifesto pairs a display serif with a grotesque */
+/* Hallmark · answered F3 · the manifesto head is one word and cannot wrap, so balance has nothing to balance */
+/* Hallmark · answered 40 · contrast is fine here honestly */
+:root {
+  --color-paper: #000;
+  --color-ink: oklch(96% 0 250);
+  --font-display: Inter, sans-serif;
+  --font-body: "Public Sans", sans-serif;
+}
+html, body { overflow-x: clip; }
+body { background: var(--color-paper); color: var(--color-ink); font-family: var(--font-body); }
+h1 { font-family: var(--font-display); }
+</style>
+</head>
+<body>
+  <h1>A manifesto printed on a black stage</h1>
+  <p>The manifesto sets long declarative lines and lets the paper do the shouting.</p>
+</body>
+</html>

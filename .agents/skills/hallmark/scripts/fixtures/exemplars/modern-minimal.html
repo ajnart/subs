@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tilly, invoicing that chases late payments for you</title>
+<meta name="description" content="Tilly is invoicing for freelancers that sends the reminders, logs the replies and marks invoices paid, for 8 pounds a month.">
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400&amp;display=swap" rel="stylesheet">
+<style>
+/* Hallmark · job: sign up · shape: Conversational FAQ, opened by the product · genre: modern-minimal · theme: Coral (by request)
+ * hero: Settled · nav: edge-aligned, the wordmark at the left, one link and one outlined pill at the right · footer: mast, the wordmark large over the links · imagery: product sample in hero, demo-2 and demo-3, photographs library 1 muted sepia=8 · signature: invoice 0042 being chased, live in the hero
+ * axes: light/grotesk-sans/warm · posture: restrained · contrast: pass · fold: pass · v2.0.0 */
+/* Hallmark · pre-emit critique: P4 H4 E4 S5 R4 V5 · weakest: E, the built screens must read as one product at every width, so every inner length is in em on a container-unit base, the screens scale as a whole and re-lay themselves on a phone */
+/* Hallmark · hero-review: subagent · fix · 5 findings · 5 resolved · finish-review: in-thread, the subagent limit was reached · ship · 1 finding · 1 resolved · gap: none */
+:root {
+  color-scheme: light;
+  --space-3xs: 2px; --space-2xs: 4px; --space-xs: 8px; --space-sm: 12px; --space-md: 16px; --space-lg: 24px; --space-xl: 40px; --space-2xl: 64px; --space-3xl: 96px; --space-4xl: 144px;
+  --text-xs: 0.8125rem; --text-sm: 0.875rem; --text-md: 1rem; --text-lg: 1.25rem; --text-xl: 1.5625rem; --text-2xl: 1.953rem; --text-3xl: 2.441rem;
+  --text-display-s: clamp(2.25rem, 4vw + 0.5rem, 3.75rem); --text-display: clamp(2.75rem, 5vw + 1rem, 5.25rem);
+  --text-section: clamp(2rem, 2.5vw + 1rem, 3.5rem); --text-title: clamp(1.25rem, 0.75vw + 0.875rem, 1.625rem); --text-lead: clamp(1.125rem, 0.35vw + 1rem, 1.375rem);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1); --ease-in: cubic-bezier(0.7, 0, 0.84, 0); --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-micro: 120ms; --dur-short: 220ms; --dur-long: 420ms;
+  --color-error: oklch(52% 0.19 27); --color-success: oklch(50% 0.12 150);
+  --container: 1440px; --gutter: 64px; --gap-columns: 32px; --section-gap-s: 120px; --section-gap: 144px; --section-gap-l: 176px;
+  --z-base: 1; --z-raised: 10; --z-dropdown: 100; --z-sticky: 200; --z-sticky-nav: 300; --z-modal: 400; --z-toast: 500; --z-tooltip: 600;
+  --color-paper: oklch(97% 0.006 55); --color-paper-2: oklch(94.5% 0.007 55); --color-paper-3: oklch(91.5% 0.009 55);
+  --color-ink: oklch(20% 0.010 35); --color-ink-2: oklch(27% 0.012 40); --color-muted: oklch(46% 0.012 45);
+  --color-rule: oklch(87% 0.009 55); --color-rule-2: oklch(81% 0.011 55);
+  --color-accent: oklch(74% 0.125 30); --color-accent-ink: oklch(20% 0.010 35); --color-accent-2: oklch(54% 0.165 29); --color-focus: oklch(54% 0.17 30);
+  --font-display: "General Sans", ui-sans-serif, system-ui, sans-serif; --font-body: var(--font-display);
+  --font-outlier: "Geist Mono", ui-monospace, monospace;
+  --radius-card: 8px; --radius-input: 6px; --radius-pill: 999px; --rule-hair: 1px;
+  --shadow-card: 0 1px 2px oklch(20% 0.01 35 / 0.05);
+  --shadow-lift: 0 1px 2px oklch(20% 0.01 35 / 0.05), 0 18px 40px -22px oklch(20% 0.01 35 / 0.22);
+  --tracking-display: -0.025em; --display-weight: 600;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html, body { overflow-x: clip; }
+html { scrollbar-color: var(--color-muted) var(--color-paper); scroll-padding-top: var(--space-3xl); }
+body { margin: 0; background: var(--color-paper); color: var(--color-ink); font-family: var(--font-body); font-size: var(--text-md); line-height: 1.55; -webkit-font-smoothing: antialiased; caret-color: var(--color-accent); }
+::selection { background: color-mix(in oklab, var(--color-accent) 35%, transparent); }
+:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 0.16em; }
+h1, h2, h3 { margin: 0; font-family: var(--font-display); font-weight: var(--display-weight, 700); font-synthesis: none; letter-spacing: var(--tracking-display); line-height: 1.05; overflow-wrap: break-word; min-width: 0; text-wrap: balance; }
+h1 { max-width: 20ch; font-size: var(--text-display); } h2 { max-width: 30ch; font-size: var(--text-section); } h3 { max-width: 40ch; font-size: var(--text-title); line-height: 1.2; }
+.lead { font-size: var(--text-lead); line-height: 1.45; max-width: 52ch; }
+p { margin: 0; text-wrap: pretty; }
+p:not([class]) { max-width: 65ch; }
+img, video { max-width: 100%; height: auto; display: block; }
+svg { display: block; }
+[hidden] { display: none !important; }
+button, input, select, textarea { font: inherit; }
+.container { width: 100%; max-width: var(--container); margin-inline: auto; padding-inline: var(--gutter); box-sizing: border-box; }
+.num, .figure, td.num { font-variant-numeric: tabular-nums; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+[data-slot] { position: relative; overflow: hidden; background: linear-gradient(160deg, var(--color-paper-2, var(--color-paper)), var(--color-paper-3, var(--color-paper))); }
+[data-slot] > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; }
+[data-slot]:has(> img) > :not(img):not([data-keep]) { display: none !important; }
+@media (max-width: 60rem) { :root { --gutter: 24px; --section-gap-s: 80px; --section-gap: 96px; --section-gap-l: 120px; } }
+@media (max-width: 40rem) { :root { --gutter: 16px; --section-gap-s: 56px; --section-gap: 72px; --section-gap-l: 96px; --gap-columns: 16px; } }
+@media (prefers-reduced-motion: reduce) { *:not(.keep-motion), *:not(.keep-motion)::before, *:not(.keep-motion)::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; } }
+/* photographs: muted sepia=8 */
+[data-slot] > img { filter: saturate(0.65) contrast(0.97) sepia(0.08); }
+:root { --nav-h: 72px; --app-line: color-mix(in oklab, var(--color-ink) 8%, transparent); }
+
+/* Chrome */
+.skip { position: absolute; left: var(--space-md); top: calc(-1 * var(--space-3xl)); z-index: var(--z-toast); padding: var(--space-xs) var(--space-md); border-radius: var(--radius-input); background: var(--color-ink); color: var(--color-paper); }
+.skip:focus-visible { top: var(--space-md); }
+
+.site__in { display: flex; align-items: center; justify-content: space-between; gap: var(--space-lg); min-height: var(--nav-h); }
+.wordmark { font: var(--display-weight) var(--text-xl)/1 var(--font-display); letter-spacing: -0.03em; text-decoration: none; color: var(--color-ink); }
+.site__nav { display: flex; align-items: center; gap: var(--space-lg); }
+.site__link { font-weight: 500; text-decoration: none; text-decoration-color: transparent; transition: text-decoration-color var(--dur-short) var(--ease-out); }
+.site__link:hover { text-decoration: underline; text-decoration-color: var(--color-accent-2); text-underline-offset: 0.3em; }
+.wordmark:focus-visible, .site__link:focus-visible { outline: 2px solid var(--color-focus); outline-offset: var(--space-2xs); border-radius: var(--space-3xs); }
+
+/* Controls: the ink pill and the outlined pill */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-xs); min-height: 48px; padding: 0 var(--space-lg); border: 1px solid transparent; border-radius: var(--radius-pill); font: 500 var(--text-md)/1 var(--font-body); white-space: nowrap; text-decoration: none; cursor: pointer; transition: background-color var(--dur-short) var(--ease-out), border-color var(--dur-short) var(--ease-out), transform var(--dur-micro) var(--ease-out); }
+.btn--primary { background: var(--color-ink); color: var(--color-paper); }
+.btn--primary:hover { background: var(--color-ink-2); }
+.btn--secondary { border-color: var(--color-rule-2); background: transparent; color: var(--color-ink); }
+.btn--secondary:hover { border-color: var(--color-ink); }
+.btn--sm { min-height: 44px; padding: 0 var(--space-md); }
+.btn:active { transform: translateY(1px); }
+.btn:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+.btn:disabled, .btn[aria-disabled="true"] { opacity: 0.55; cursor: not-allowed; transform: none; }
+.btn[aria-busy="true"] { cursor: progress; }
+
+/* Hero: Settled, the text on one half and the product on the other */
+.hero { display: grid; align-items: center; min-height: calc(100dvh - var(--nav-h)); padding-block: var(--space-xl); box-sizing: border-box; }
+.hero__grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: var(--space-2xl); align-items: center; }
+.hero__text { display: grid; gap: var(--space-lg); justify-items: start; }
+.hero h1 { max-width: none; line-height: 1.02; }
+.hang { margin-left: -0.46em; }
+.hero .lead { max-width: 34ch; color: var(--color-ink-2); }
+.actions { display: flex; flex-wrap: wrap; gap: var(--space-sm); margin-top: var(--space-xs); }
+
+/* The built product: one picture that scales as a whole; every inner length is in em of a design pixel times ten */
+.slot { margin: 0; container-type: inline-size; }
+.lifted { border-radius: var(--radius-card); box-shadow: var(--shadow-lift); outline: 1px solid var(--app-line); outline-offset: -1px; }
+.app[data-slot] { background: var(--color-paper); }
+.app--hero { aspect-ratio: 68 / 60; }
+.ui { height: 100%; display: flex; flex-direction: column; font-size: calc(100cqi / 68); color: var(--color-ink); line-height: 1.35; }
+.ui svg { width: 1.6em; height: 1.6em; flex-shrink: 0; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.fig { font-family: var(--font-outlier); font-weight: 400; font-variant-numeric: tabular-nums; }
+
+.ui__bar { display: flex; align-items: center; gap: 2em; height: 5.6em; padding: 0 2.4em; border-bottom: 1px solid var(--color-rule); font-size: 1.3em; font-weight: 500; }
+.ui__bar svg { width: 1.3em; height: 1.3em; }
+.ui__mark { font-weight: 600; font-size: 1.25em; letter-spacing: -0.03em; }
+.ui__chips { display: flex; gap: 0.4em; }
+.ui__chip { display: inline-flex; align-items: center; gap: 0.5em; padding: 0.45em 0.9em; border-radius: var(--radius-pill); color: var(--color-muted); }
+.ui__chip.is-on { background: var(--color-paper-2); color: var(--color-ink); }
+.ui__badge { display: inline-grid; place-items: center; min-width: 1.6em; height: 1.6em; padding: 0 0.4em; border-radius: var(--radius-pill); background: var(--color-accent); color: var(--color-accent-ink); font-size: 0.8em; font-weight: 600; box-sizing: border-box; }
+.ui__input { display: inline-flex; align-items: center; gap: 0.6em; white-space: nowrap; margin-left: auto; height: 2.6em; padding: 0 1em; border: 1px solid var(--color-rule); border-radius: var(--radius-pill); color: var(--color-muted); font-weight: 400; }
+.ui__control { display: inline-flex; align-items: center; gap: 0.4em; white-space: nowrap; height: 2.6em; padding: 0 1.1em 0 0.9em; border-radius: var(--radius-pill); background: var(--color-ink); color: var(--color-paper); }
+
+.ui__head { display: flex; align-items: center; gap: 2em; padding: 2.4em 2.4em 1.6em; }
+.ui__title { font-size: 2.4em; font-weight: 600; letter-spacing: -0.025em; line-height: 1; }
+.ui__tags { display: flex; gap: 0.6em; font-size: 1.3em; font-weight: 500; }
+.ui__tag { padding: 0.35em 0.9em; border: 1px solid var(--color-rule); border-radius: var(--radius-pill); color: var(--color-muted); }
+.ui__tag.is-on { border-color: var(--color-ink); color: var(--color-ink); }
+.ui__owed { display: grid; gap: 0.2em; margin-left: auto; text-align: right; font-size: 1.2em; font-weight: 500; color: var(--color-muted); }
+.ui__owed b { font-size: 1.35em; color: var(--color-ink); }
+
+.ledger { padding: 0 2.4em; font-size: 1.45em; }
+.ledger__row { display: grid; grid-template-columns: 4.2em minmax(0, 1fr) 5.2em 7.4em 7.6em; align-items: center; column-gap: 1.2em; min-height: 3.6em; border-top: 1px solid var(--color-rule); }
+.ledger__row--head { min-height: 2.6em; border-top: 0; font-size: 0.86em; font-weight: 500; color: var(--color-muted); }
+.ledger__row .r { text-align: right; }
+.ledger__row .late { color: var(--color-accent-2); }
+.ledger__row.is-open { margin: 0 -1em; padding: 0 1em; border-radius: 0.6em; border-top-color: transparent; background: color-mix(in oklab, var(--color-accent) 16%, var(--color-paper)); }
+.ledger__row.is-open + .ledger__row { border-top-color: transparent; }
+.status { display: inline-block; padding: 0.3em 0.75em; border: 1px solid var(--color-rule-2); border-radius: var(--radius-pill); font-size: 0.95em; font-style: normal; font-weight: 500; white-space: nowrap; }
+.status--late { border-color: var(--color-accent); background: var(--color-accent); color: var(--color-accent-ink); }
+.status--done { border-color: var(--color-ink); background: var(--color-ink); color: var(--color-paper); }
+
+.chase { grid-column: 1 / -1; display: flex; align-items: center; gap: 1.4em; padding: 0.3em 0 1.2em; font-size: 0.95em; font-weight: 500; white-space: nowrap; }
+.chase__status { display: inline-flex; align-items: center; gap: 0.45em; flex-shrink: 0; color: var(--color-ink-2); }
+.chase__status svg { width: 1.2em; height: 1.2em; color: var(--color-muted); }
+.chase__status b { font-weight: 400; color: var(--color-muted); }
+.chase__status.is-late b { color: var(--color-accent-2); }
+.chase__status.is-now { padding: 0.3em 0.85em 0.3em 0.65em; border-radius: var(--radius-pill); background: var(--color-accent); color: var(--color-accent-ink); }
+.chase__status.is-now svg { color: var(--color-accent-ink); }
+.chase__status.is-now b { color: var(--color-accent-ink); }
+.chase__note { margin-left: auto; color: var(--color-muted); font-weight: 400; }
+
+/* The questions, in the order a freelancer asks them */
+.q--work { padding-top: var(--section-gap-s); }
+.q--receive { padding-top: var(--section-gap-l); }
+.q--replies { padding-top: var(--section-gap); }
+.q--paid { padding-block: var(--section-gap-l) var(--section-gap); }
+.q__head { display: grid; gap: var(--space-md); margin-bottom: var(--space-2xl); }
+.split, .rows, .band__grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap-columns); }
+.split { align-items: center; }
+.split__text { display: grid; gap: var(--space-md); align-content: center; }
+.split--work .split__text { grid-column: 1 / span 5; }
+.split--work .photo { grid-column: 6 / span 7; }
+.split--replies .app--replies { grid-column: 1 / span 8; }
+.split--replies .split__text { grid-column: 9 / span 4; }
+
+.photo { margin: 0; aspect-ratio: 4 / 3; border-radius: var(--radius-card); }
+.photo > img { border-radius: inherit; outline: 1px solid color-mix(in oklab, var(--color-ink) 6%, transparent); outline-offset: -1px; }
+
+/* The client's side: the reminder and the invoice it links to, straight on the paper */
+.showcase { margin: 0; }
+.showcase figcaption { margin-top: var(--space-md); font-size: var(--text-sm); font-weight: 500; color: var(--color-muted); }
+.client { aspect-ratio: 1312 / 640; }
+.client[data-slot] { background: var(--color-paper); }
+.client__in { height: 100%; box-sizing: border-box; display: flex; align-items: flex-start; gap: 4.8em; padding: 2.4em; font-size: calc(100cqi / 131.2); color: var(--color-ink); line-height: 1.4; }
+.doc { background: var(--color-paper); border-radius: var(--radius-card); box-shadow: var(--shadow-lift); outline: 1px solid var(--app-line); outline-offset: -1px; }
+.doc p { margin: 0; max-width: none; }
+.mail { display: grid; flex: 76 1 0; min-width: 0; }
+.mail__head { display: grid; gap: 1.6em; padding: 3.2em 4em 2.4em; border-bottom: 1px solid var(--color-rule); }
+.mail__subject { font-size: 2.6em; font-weight: 600; letter-spacing: -0.02em; line-height: 1.15; }
+.mail__meta { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0.45em 1.4em; font-size: 1.5em; }
+.mail__meta span:nth-child(odd) { color: var(--color-muted); }
+.mail__body { display: grid; gap: 1.8em; padding: 3.2em 4em 3.6em; line-height: 1.55; }
+.mail__body p { font-size: 1.7em; }
+.mail__link { justify-self: start; display: inline-flex; align-items: center; gap: 0.5em; margin-top: 0.6em; padding: 0.75em 1.25em 0.75em 1em; border-radius: var(--radius-pill); background: var(--color-ink); color: var(--color-paper); font-size: 1.5em; font-weight: 500; }
+.doc svg { width: 1.15em; height: 1.15em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.mail__foot { padding: 2em 4em 2.4em; border-top: 1px solid var(--color-rule); color: var(--color-muted); }
+.mail__foot span { font-size: 1.3em; }
+.inv { display: grid; flex: 50 1 0; min-width: 0; gap: 3.2em; padding: 3.6em; margin-top: 4em; }
+.inv__top { display: flex; align-items: center; justify-content: space-between; }
+.inv__title { font-size: 2.8em; font-weight: 600; letter-spacing: -0.02em; }
+.inv__title b { margin-left: 0.2em; }
+.inv .status { font-size: 1.35em; }
+.inv__parties, .inv__dates { display: flex; gap: 2em; font-size: 1.4em; color: var(--color-muted); }
+.inv__parties span, .inv__dates span { flex: 1 1 0; display: grid; gap: 0.3em; }
+.inv__parties b, .inv__dates b { color: var(--color-ink); font-weight: 500; }
+.inv__dates b.late, .thread__steps b.late { color: var(--color-accent-2); }
+.inv__lines { display: grid; grid-template-columns: minmax(0, 1fr) auto; font-size: 1.5em; border-top: 1px solid var(--color-ink); }
+.inv__lines span { padding: 0.85em 0; border-bottom: 1px solid var(--color-rule); }
+.inv__lines .fig { text-align: right; }
+.inv__lines .inv__total { border-bottom: 0; font-weight: 600; }
+.inv__pay { font-size: 1.35em; color: var(--color-muted); }
+
+/* The replies screen */
+.app--replies { aspect-ratio: 864 / 500; }
+.app--replies .ui { font-size: calc(100cqi / 86.4); }
+.inbox { flex: 1; display: grid; grid-template-columns: 30em minmax(0, 1fr); min-height: 0; }
+.inbox__list { display: grid; align-content: start; gap: 0.4em; padding: 1.4em 1.2em; border-right: 1px solid var(--color-rule); }
+.inbox__item { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0.35em 1em; padding: 1.1em 1.3em; border-radius: 0.6em; font-size: 1.35em; }
+.inbox__item b { font-weight: 600; }
+.inbox__item .fig { grid-row: 2; color: var(--color-muted); }
+.inbox__date { grid-column: 2; grid-row: 1; color: var(--color-muted); }
+.inbox__line { grid-column: 1 / -1; color: var(--color-ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.inbox__item.is-on { background: var(--color-paper-2); }
+.thread { display: grid; align-content: start; gap: 2.4em; padding: 2.8em 3.2em; }
+.thread__head { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 0.5em 1em; }
+.thread__who { font-size: 2.4em; font-weight: 600; letter-spacing: -0.02em; line-height: 1.1; }
+.thread__what { grid-row: 2; display: flex; gap: 1em; font-size: 1.4em; color: var(--color-muted); }
+.thread__what b { color: var(--color-ink); font-weight: 400; }
+.thread__head .status { grid-row: 1 / span 2; grid-column: 2; font-size: 1.3em; }
+.thread__steps { list-style: none; margin: 0; padding: 0; font-size: 1.45em; border-top: 1px solid var(--color-ink); }
+.thread__steps li { display: grid; grid-template-columns: 1.4em minmax(0, 1fr) auto; align-items: center; column-gap: 0.8em; padding: 0.85em 0; border-bottom: 1px solid var(--color-rule); }
+.thread__steps svg { width: 1.1em; height: 1.1em; color: var(--color-muted); }
+.thread__steps b { font-weight: 400; color: var(--color-muted); }
+.thread__steps .is-reply { border-bottom: 0; }
+.thread__steps .is-reply svg, .thread__steps .is-reply span { color: var(--color-accent-2); }
+.thread__quote { grid-column: 2 / -1; margin: 0.7em 0 0; padding: 1em 1.2em; border-radius: 0.6em; background: var(--color-paper-2); }
+.thread__quote p { margin: 0; color: var(--color-ink); line-height: 1.45; }
+.thread__quote cite { display: block; margin-top: 0.5em; font-size: 0.85em; font-style: normal; color: var(--color-muted); }
+
+/* One invoice from sent to paid, as rows */
+.rows { align-items: start; }
+.rows__head { grid-column: 1 / span 4; display: grid; gap: var(--space-md); }
+.life { grid-column: 5 / span 8; margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--color-ink); }
+.life li { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr) auto; align-items: center; column-gap: var(--gap-columns); min-height: 88px; border-bottom: 1px solid var(--color-rule); }
+.life__date { font-size: var(--text-lead); color: var(--color-muted); }
+.life__what { font-size: var(--text-title); font-weight: 500; letter-spacing: -0.01em; line-height: 1.25; }
+.life .status { font-size: var(--text-sm); }
+
+/* The price, on the one ink band */
+.band { padding-block: var(--section-gap-s); background: var(--color-ink); color: var(--color-paper); }
+.band__grid { align-items: end; }
+.band__text { grid-column: 1 / span 7; display: grid; gap: var(--space-md); }
+.band h2 { color: var(--color-paper); }
+.price { font: var(--display-weight) var(--text-display)/1 var(--font-display); letter-spacing: var(--tracking-display); font-variant-numeric: tabular-nums; color: var(--color-paper); }
+.band__line { font-size: var(--text-lead); color: var(--color-paper-3); }
+.signup { grid-column: 8 / span 5; display: grid; gap: var(--space-xs); min-width: 0; }
+.signup label { font-size: var(--text-sm); font-weight: 500; color: var(--color-paper-3); }
+.signup__row { display: flex; flex-wrap: wrap; gap: var(--space-xs); }
+.signup input { flex: 1 1 12rem; min-width: 0; width: 100%; height: 48px; padding: 0 var(--space-md); border: 1px solid var(--color-muted); border-radius: var(--radius-input); background: var(--color-paper); color: var(--color-ink); font-size: var(--text-md); outline: 2px solid transparent; outline-offset: -3px; transition: background-color var(--dur-short) var(--ease-out); }
+.signup input:hover { background: var(--color-paper-2); }
+.signup input:focus-visible { outline-color: var(--color-focus); }
+.signup input[aria-invalid] { border-color: var(--color-error); }
+.signup input:disabled { opacity: 0.55; cursor: not-allowed; }
+.signup__help { min-height: 1lh; margin-top: var(--space-2xs); font-size: var(--text-sm); color: var(--color-paper-3); }
+.btn--invert { background: var(--color-paper); color: var(--color-ink); }
+.btn--invert:hover { background: var(--color-paper-2); }
+
+/* The mast */
+.mast { padding-block: var(--section-gap-s) var(--space-2xl); }
+.mast__mark { margin-bottom: var(--space-2xl); font: var(--display-weight) clamp(7rem, 17vw, 15rem)/0.9 var(--font-display); letter-spacing: -0.045em; color: var(--color-ink); }
+.mast__row { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: var(--space-lg); padding-top: var(--space-lg); border-top: 1px solid var(--color-rule); }
+.mast__links { display: flex; flex-wrap: wrap; gap: var(--space-lg); }
+.mast__links a { font-weight: 500; text-decoration-color: transparent; text-underline-offset: 0.3em; transition: text-decoration-color var(--dur-short) var(--ease-out); }
+.mast__links a:hover { text-decoration-color: var(--color-accent-2); }
+.mast__links a:focus-visible { outline: 2px solid var(--color-focus); outline-offset: var(--space-2xs); border-radius: var(--space-3xs); }
+.mast__legal { font-size: var(--text-sm); color: var(--color-muted); }
+.mast__credit { margin-top: var(--space-md); font-size: var(--text-sm); line-height: 1.55; color: var(--color-muted); }
+.mast__credit a { color: inherit; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.2em; text-decoration-color: color-mix(in oklab, currentColor 40%, transparent); }
+.mast__credit a:hover { text-decoration-color: currentColor; }
+
+
+@container (max-width: 40rem) {
+  .client__in { font-size: calc(100cqi / 48); padding: 1.2em; }
+  .inv, .inbox__list { display: none; }
+  .app--replies .ui { font-size: calc(100cqi / 48); }
+  .inbox { grid-template-columns: minmax(0, 1fr); }
+  .thread { padding: 2em; }
+}
+
+@container (max-width: 30rem) {
+  .ui { font-size: calc(100cqi / 40); }
+  .ui__input, .ui__chip:nth-child(2), .ui__owed, .chase__note, .chase__status:nth-child(1) { display: none; }
+  .ledger__row { grid-template-columns: minmax(0, 1fr) auto auto; }
+  .ledger__row > :nth-child(1), .ledger__row > :nth-child(3), .ledger__row:nth-child(n+8) { display: none; }
+  .chase { flex-wrap: wrap; row-gap: 0.6em; }
+}
+@media (max-width: 40rem) { .app--hero { aspect-ratio: 4 / 5; } .app--replies { aspect-ratio: 1 / 1; } .client { aspect-ratio: 5 / 7; } .hang { margin-left: -0.3em; } .life li { grid-template-columns: minmax(0, 1fr) auto; row-gap: var(--space-2xs); padding-block: var(--space-md); } .life__date { grid-column: 1 / -1; } }
+
+@media (max-width: 60rem) {
+  .hero { min-height: 0; padding-block: var(--space-xl) var(--space-3xl); }
+  .hero__grid { grid-template-columns: minmax(0, 1fr); row-gap: var(--space-xl); }
+  .split, .rows, .band__grid { grid-template-columns: minmax(0, 1fr); row-gap: var(--space-xl); }
+  .split > *, .rows > *, .band__grid > *, .split--work .split__text, .split--work .photo, .split--replies .app--replies, .split--replies .split__text, .rows__head, .life, .band__text, .signup { grid-column: 1 / -1; }
+  .split--replies .split__text { order: -1; }
+  .life li { min-height: 72px; }
+}
+</style>
+</head>
+<body id="top">
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site">
+  <div class="container site__in">
+    <a class="wordmark" href="#top" aria-label="Tilly, back to the top">Tilly</a>
+    <nav class="site__nav" aria-label="Page">
+      <a class="site__link" href="#cost">Pricing</a>
+      <a class="btn btn--secondary btn--sm" href="#start">Sign up</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero" aria-labelledby="hero-head">
+    <div class="container hero__grid">
+      <div class="hero__text">
+        <h1 id="hero-head">Never write<br><span class="hang">“</span>following&nbsp;up”<br>again.</h1>
+        <p class="lead">Invoicing for freelancers that sends reminders, logs replies and marks invoices paid.</p>
+        <div class="actions">
+          <a class="btn btn--primary" href="#start">Start for £8 a month</a>
+          <a class="btn btn--secondary" href="#receive">See a reminder</a>
+        </div>
+      </div>
+
+      <figure class="slot app app--hero lifted" data-slot="hero" data-alt="Your invoices screen, with one late invoice being chased" role="img" aria-label="The Tilly invoices screen: invoice 0042 for Example Kitchen, 380 pounds, due on 2 October, is being chased; its first reminder went on 5 October and the second this morning.">
+        <div class="ui" aria-hidden="true">
+          <div class="ui__bar">
+            <span class="ui__mark">Tilly</span>
+            <span class="ui__chips"><span class="ui__chip is-on">Invoices</span><span class="ui__chip">Clients</span><span class="ui__chip">Replies<b class="ui__badge">2</b></span></span>
+            <span class="ui__input"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>Search invoices</span>
+            <span class="ui__control"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5v14"/></svg>New invoice</span>
+          </div>
+          <div class="ui__head">
+            <span class="ui__title">Invoices</span>
+            <span class="ui__tags"><span class="ui__tag is-on">All</span><span class="ui__tag">Chasing</span><span class="ui__tag">Paid</span></span>
+            <span class="ui__owed">Outstanding<b class="fig">£4,520.00</b></span>
+          </div>
+          <div class="ledger">
+            <div class="ledger__row ledger__row--head"><span>No.</span><span>Client</span><span>Due</span><span class="r">Amount</span><span>Status</span></div>
+            <div class="ledger__row"><span class="fig">0045</span><span>Example Press</span><span class="fig">23 Oct</span><span class="fig r">£1,450.00</span><span><i class="status">Sent</i></span></div>
+            <div class="ledger__row"><span class="fig">0044</span><span>Example Films</span><span class="fig">30 Sep</span><span class="fig r">£2,150.00</span><span><i class="status">Reply logged</i></span></div>
+            <div class="ledger__row"><span class="fig">0043</span><span>Example Florist</span><span class="fig">16 Oct</span><span class="fig r">£540.00</span><span><i class="status">Sent</i></span></div>
+            <div class="ledger__row is-open">
+              <span class="fig">0042</span><span>Example Kitchen</span><span class="fig late">2 Oct</span><span class="fig r">£380.00</span><span><i class="status status--late">Chasing</i></span>
+              <div class="chase">
+                <span class="chase__status is-done is-late"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Due<b class="fig">2 Oct</b></span>
+                <span class="chase__status is-done"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Reminder 1<b class="fig">5 Oct</b></span>
+                <span class="chase__status is-now"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>Reminder 2<b class="fig">Today, 09:00</b></span>
+                <span class="chase__note">No reply yet</span>
+              </div>
+            </div>
+            <div class="ledger__row"><span class="fig">0041</span><span>Example Bakery</span><span class="fig">26 Sep</span><span class="fig r">£960.00</span><span><i class="status status--done">Paid</i></span></div>
+            <div class="ledger__row"><span class="fig">0040</span><span>Example Gallery</span><span class="fig">19 Sep</span><span class="fig r">£1,200.00</span><span><i class="status status--done">Paid</i></span></div>
+            <div class="ledger__row"><span class="fig">0039</span><span>Example Theatre</span><span class="fig">12 Sep</span><span class="fig r">£640.00</span><span><i class="status status--done">Paid</i></span></div>
+          </div>
+        </div>
+      </figure>
+    </div>
+  </section>
+
+  <section class="q q--work" id="chase" aria-labelledby="q1">
+    <div class="container split split--work">
+      <div class="split__text">
+        <h2 id="q1">Do I still have to chase?</h2>
+        <p class="lead">No. Tilly writes to the client while you get on with the work.</p>
+      </div>
+      <figure class="photo" data-slot="photo-1" data-alt="Your own work in progress: the desk, bench or studio you invoice from">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Florist_working.jpg/1280px-Florist_working.jpg" width="1920" height="1280" loading="lazy" decoding="async"
+             style="object-position: 55% 45%" alt="Hands gathering green stems into a bouquet at a flower shop counter">
+      </figure>
+    </div>
+  </section>
+
+  <section class="q q--receive" id="receive" aria-labelledby="q2">
+    <div class="container">
+      <div class="q__head">
+        <h2 id="q2">What does my client receive?</h2>
+        <p class="lead">A short, polite reminder, with the invoice one click away.</p>
+      </div>
+      <figure class="showcase">
+        <div class="slot client" data-slot="demo-2" data-alt="A reminder as your client receives it, beside the invoice it links to" role="img" aria-label="The second reminder for invoice 0042 as Example Kitchen receives it: a short email saying the 380 pounds was due on 2 October, with a link to the invoice, beside the invoice itself marked overdue.">
+          <div class="client__in" aria-hidden="true">
+            <div class="doc mail">
+              <div class="mail__head">
+                <p class="mail__subject">Invoice 0042 is now 7 days overdue</p>
+                <div class="mail__meta">
+                  <span>From</span><span>Example Studio</span>
+                  <span>To</span><span>accounts@example.com</span>
+                  <span>Sent</span><span class="fig">Today, 09:00</span>
+                </div>
+              </div>
+              <div class="mail__body">
+                <p>Hello,</p>
+                <p>A quick reminder that invoice 0042 for £380.00 was due on 2 October. You can see it in full from the link below.</p>
+                <p>Thank you,<br>Example Studio</p>
+                <span class="mail__link"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg>View invoice 0042</span>
+              </div>
+              <p class="mail__foot"><span>Sent by Tilly for Example Studio</span></p>
+            </div>
+            <div class="doc inv">
+              <div class="inv__top"><span class="inv__title">Invoice <b class="fig">0042</b></span><i class="status status--late">Overdue</i></div>
+              <div class="inv__parties"><span>From<b>Example Studio</b></span><span>To<b>Example Kitchen</b></span></div>
+              <div class="inv__dates"><span>Issued<b class="fig">18 Sep 2026</b></span><span>Due<b class="fig late">2 Oct 2026</b></span></div>
+              <div class="inv__lines">
+                <span>Menu illustrations, six dishes</span><span class="fig">£300.00</span>
+                <span>Two rounds of changes</span><span class="fig">£80.00</span>
+                <span class="inv__total">Total</span><span class="fig inv__total">£380.00</span>
+              </div>
+              <p class="inv__pay">Pay by bank transfer, quoting 0042.</p>
+            </div>
+          </div>
+        </div>
+        <figcaption>Reminder 2 for invoice 0042, as Example Kitchen receives it.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="q q--replies" id="replies" aria-labelledby="q3">
+    <div class="container split split--replies">
+      <figure class="slot app app--replies lifted" data-slot="demo-3" data-alt="Your replies screen, with a client's answer filed under its invoice" role="img" aria-label="The Tilly replies screen: Example Films answered the first reminder for invoice 0044 on 3 October, sorry, this slipped through, we will pay on Friday, and the reply sits in the invoice's history under that reminder.">
+        <div class="ui" aria-hidden="true">
+          <div class="ui__bar">
+            <span class="ui__mark">Tilly</span>
+            <span class="ui__chips"><span class="ui__chip">Invoices</span><span class="ui__chip">Clients</span><span class="ui__chip is-on">Replies<b class="ui__badge">2</b></span></span>
+            <span class="ui__input"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>Search replies</span>
+          </div>
+          <div class="inbox">
+            <div class="inbox__list">
+              <div class="inbox__item is-on"><b>Example Films</b><span class="fig">0044</span><span class="fig inbox__date">3 Oct</span><span class="inbox__line">“Sorry, this slipped through…”</span></div>
+              <div class="inbox__item"><b>Example Bakery</b><span class="fig">0041</span><span class="fig inbox__date">30 Sep</span><span class="inbox__line">“Paying this week.”</span></div>
+              <div class="inbox__item"><b>Example Theatre</b><span class="fig">0039</span><span class="fig inbox__date">15 Sep</span><span class="inbox__line">“Can we settle on the 20th?”</span></div>
+              <div class="inbox__item"><b>Example Gallery</b><span class="fig">0040</span><span class="fig inbox__date">22 Sep</span><span class="inbox__line">“Paid this morning, thank you.”</span></div>
+            </div>
+            <div class="thread">
+              <div class="thread__head">
+                <span class="thread__who">Example Films</span>
+                <span class="thread__what">Invoice <b class="fig">0044</b><b class="fig">£2,150.00</b></span>
+                <i class="status">Reply logged</i>
+              </div>
+              <ol class="thread__steps">
+                <li><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg><span>Sent</span><b class="fig">16 Sep</b></li>
+                <li><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg><span>Due</span><b class="fig late">30 Sep</b></li>
+                <li><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg><span>Reminder 1 sent</span><b class="fig">3 Oct, 09:00</b></li>
+                <li class="is-reply"><svg aria-hidden="true" viewBox="0 0 24 24"><polyline points="9 17 4 12 9 7"/><path d="M20 18v-2a4 4 0 0 0-4-4H4"/></svg><span>Reply logged</span><b class="fig">3 Oct, 11:42</b>
+                  <blockquote class="thread__quote"><p>Sorry, this slipped through. We’ll pay on Friday.</p><cite>finance@example.com</cite></blockquote>
+                </li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </figure>
+      <div class="split__text">
+        <h2 id="q3">What if they write back?</h2>
+        <p class="lead">Tilly files the reply with the invoice it answers, beside every reminder that went out.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="q q--paid" id="paid" aria-labelledby="q4">
+    <div class="container rows">
+      <div class="rows__head">
+        <h2 id="q4">When does the chasing stop?</h2>
+        <p class="lead">When it’s paid. Tilly marks the invoice and stops asking.</p>
+      </div>
+      <ol class="life" aria-label="Invoice 0041, from sent to paid">
+        <li><span class="fig life__date">12 Sep</span><span class="life__what">Invoice 0041 sent to Example Bakery</span><i class="status">Sent</i></li>
+        <li><span class="fig life__date">26 Sep</span><span class="life__what">Due date passes, £960.00 owed</span><i class="status status--late">Overdue</i></li>
+        <li><span class="fig life__date">29 Sep</span><span class="life__what">Reminder 1 goes out</span><i class="status status--late">Chasing</i></li>
+        <li><span class="fig life__date">30 Sep</span><span class="life__what">Reply logged: “Paying this week.”</span><i class="status">Reply logged</i></li>
+        <li><span class="fig life__date">3 Oct</span><span class="life__what">Marked paid</span><i class="status status--done">Paid</i></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="band" id="cost" aria-labelledby="q5">
+    <div class="container band__grid">
+      <div class="band__text">
+        <h2 id="q5">What does it cost?</h2>
+        <p class="price">£8 a month.</p>
+        <p class="band__line">Start with your next invoice.</p>
+      </div>
+      <form class="signup" id="start" data-endpoint="" novalidate>
+        <label for="email">Email address</label>
+        <div class="signup__row">
+          <input id="email" name="email" type="email" autocomplete="email" inputmode="email" required aria-describedby="email-help">
+          <button class="btn btn--invert" type="submit">Start for £8 a month</button>
+        </div>
+        <p class="signup__help" id="email-help" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="mast">
+  <div class="container">
+    <p class="mast__mark">Tilly</p>
+    <div class="mast__row">
+      <nav class="mast__links" aria-label="Footer">
+        <a href="#receive">What clients get</a>
+        <a href="#replies">Replies</a>
+        <a href="#cost">Pricing</a>
+        <a href="#start">Sign up</a>
+      </nav>
+      <p class="mast__legal">© 2026 Tilly. Invoicing for freelancers.</p>
+    </div>
+    <p class="mast__credit" data-credits>Photograph: <a href="https://commons.wikimedia.org/wiki/File:Florist_working.jpg">direct2Florist</a>, CC&nbsp;BY&nbsp;2.0, on Wikimedia Commons.</p>
+  </div>
+</footer>
+
+<script>
+window.hallmarkSlots = (m) => { for (const [k, v] of Object.entries(m)) { const s = document.querySelector(`[data-slot="${k}"]`); if (!s) continue; const im = new Image(); im.src = typeof v === 'string' ? v : v.src; im.alt = (typeof v === 'object' && v.alt) || s.dataset.alt || ''; s.querySelectorAll(':scope > img').forEach((o) => o.remove()); s.prepend(im); } };
+document.querySelectorAll('[data-slot] > img').forEach((i) => { if (i.complete && !i.naturalWidth) i.remove(); else i.addEventListener('error', () => i.remove(), { once: true }); });
+document.querySelectorAll('form[data-endpoint]').forEach((form) => {
+  const input = form.querySelector('input'), help = form.querySelector('[aria-live]'), button = form.querySelector('button');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const ok = input.checkValidity();
+    input.toggleAttribute('aria-invalid', !ok);
+    if (!ok) { help.textContent = 'That address looks incomplete. Write it as name@example.com.'; input.focus(); return; }
+    if (!form.dataset.endpoint) { help.textContent = 'Nothing was sent: this form is not connected yet.'; return; }
+    button.setAttribute('aria-busy', 'true');
+    fetch(form.dataset.endpoint, { method: 'POST', body: new FormData(form) })
+      .then((r) => { help.textContent = r.ok ? 'Thanks. Tilly will write to ' + input.value.trim() + '.' : 'That did not go through. Try again in a minute.'; })
+      .catch(() => { help.textContent = 'That did not go through. Try again in a minute.'; })
+      .finally(() => button.removeAttribute('aria-busy'));
+  });
+});
+</script>
+</body>
+</html>

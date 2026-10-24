@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Night Cellar: natural wine after five, Thursday to Sunday</title>
+<meta name="description" content="Night Cellar is a natural wine shop and bar with 140 bottles on the list, open Thursday to Sunday from 5pm, with a tasting once a month.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Hallmark · job: visit · shape: Photographic · genre: atmospheric · theme: Spore (by request)
+ * hero: Settled · nav: floating pill · footer: statement · imagery: photographs, library 3, warm con=6 exp=-4 · signature: a pour into the decanter after five beside the head, with tonight's door in the nav · spore: cellar
+ * axes: dark/roman-serif/warm · posture: committed · contrast: pass · fold: pass · v2.0.0 */
+/* Hallmark · pre-emit critique: P4 H4 E4 S4 R5 V4 · weakest: S, the photographs are a stand-in bar; every head carries a fact from the brief, the pour is pink like the one signal, and the nav reads tonight's door from the brief's hours */
+/* Hallmark · hero-review: in-thread · ship · 0 findings · finish-review: subagent · fix · 5 findings · 5 resolved · gap: the maker's-log voice can name no bottle until the user gives the list */
+:root {
+  color-scheme: dark;
+  --space-3xs: 2px; --space-2xs: 4px; --space-xs: 8px; --space-sm: 12px; --space-md: 16px; --space-lg: 24px; --space-xl: 40px; --space-2xl: 64px; --space-3xl: 96px; --space-4xl: 144px;
+  --text-xs: 0.8125rem; --text-sm: 0.875rem; --text-md: 1rem; --text-lg: 1.25rem; --text-xl: 1.5625rem; --text-2xl: 1.953rem; --text-3xl: 2.441rem;
+  --text-display-s: clamp(2.25rem, 4vw + 0.5rem, 3.75rem); --text-display: clamp(2.75rem, 5vw + 1rem, 5.25rem);
+  --text-section: clamp(2rem, 2.5vw + 1rem, 3.5rem); --text-title: clamp(1.25rem, 0.75vw + 0.875rem, 1.625rem); --text-lead: clamp(1.125rem, 0.35vw + 1rem, 1.375rem);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1); --ease-in: cubic-bezier(0.7, 0, 0.84, 0); --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-micro: 120ms; --dur-short: 220ms; --dur-long: 420ms;
+  --color-error: oklch(72% 0.15 27); --color-success: oklch(76% 0.13 150);
+  --container: 1440px; --gutter: 64px; --gap-columns: 32px; --section-gap-s: 120px; --section-gap: 144px; --section-gap-l: 176px;
+  --z-base: 1; --z-raised: 10; --z-dropdown: 100; --z-sticky: 200; --z-sticky-nav: 300; --z-modal: 400; --z-toast: 500; --z-tooltip: 600;
+  --color-paper: oklch(15% 0.01 60); --color-paper-2: oklch(19% 0.012 60); --color-paper-3: oklch(24% 0.02 50);
+  --color-ink: oklch(93% 0.02 85); --color-ink-2: oklch(88% 0.02 120); --color-muted: oklch(64% 0.02 70);
+  --color-rule: oklch(30% 0.015 60);
+  --color-accent: oklch(77% 0.09 30); --color-accent-2: oklch(86% 0.06 30); --color-accent-ink: oklch(15% 0.01 60); --color-focus: oklch(86% 0.06 30);
+  --font-display: "Young Serif", Georgia, serif; --font-body: "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-outlier: "DM Mono", ui-monospace, monospace;
+  --radius-card: 12px; --radius-pill: 999px; --rule-hair: 1px;
+  --shadow-card: 0 12px 32px oklch(8% 0.01 60 / 0.35);
+  --tracking-display: -0.01em;
+  --grain: 0.15; --display-weight: 400;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html, body { overflow-x: clip; }
+html { scrollbar-color: var(--color-muted) var(--color-paper); scroll-padding-top: var(--space-3xl); }
+body { margin: 0; background: var(--color-paper); color: var(--color-ink); font-family: var(--font-body); font-size: var(--text-md); line-height: 1.55; -webkit-font-smoothing: antialiased; caret-color: var(--color-accent); }
+::selection { background: color-mix(in oklab, var(--color-accent) 22%, transparent); color: var(--color-ink); }
+:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 0.16em; }
+h1, h2, h3 { margin: 0; font-family: var(--font-display); font-weight: var(--display-weight, 700); font-synthesis: none; letter-spacing: var(--tracking-display); line-height: 1.05; overflow-wrap: break-word; min-width: 0; text-wrap: balance; }
+h1 { max-width: 20ch; font-size: var(--text-display); } h2 { max-width: 30ch; font-size: var(--text-section); } h3 { max-width: 40ch; font-size: var(--text-title); line-height: 1.2; }
+.lead { font-size: var(--text-lead); line-height: 1.45; max-width: 52ch; }
+p { margin: 0; text-wrap: pretty; }
+p:not([class]) { max-width: 65ch; }
+img, video { max-width: 100%; height: auto; display: block; }
+svg { display: block; }
+[hidden] { display: none !important; }
+button, input, select, textarea { font: inherit; }
+.container { width: 100%; max-width: var(--container); margin-inline: auto; padding-inline: var(--gutter); box-sizing: border-box; }
+.num, .figure, td.num { font-variant-numeric: tabular-nums; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+[data-slot] { position: relative; overflow: hidden; background: linear-gradient(160deg, var(--color-paper-2, var(--color-paper)), var(--color-paper-3, var(--color-paper))); }
+[data-slot] > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; }
+[data-slot]:has(> img) > :not(img):not([data-keep]) { display: none !important; }
+@media (max-width: 60rem) { :root { --gutter: 24px; --section-gap-s: 80px; --section-gap: 96px; --section-gap-l: 120px; } }
+@media (max-width: 40rem) { :root { --gutter: 16px; --section-gap-s: 56px; --section-gap: 72px; --section-gap-l: 96px; --gap-columns: 16px; } }
+@media (prefers-reduced-motion: reduce) { *:not(.keep-motion), *:not(.keep-motion)::before, *:not(.keep-motion)::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; } }
+/* photographs: warm con=6 exp=-4 */
+[data-slot] > img { filter: sepia(0.28) saturate(0.94) contrast(1.06) brightness(0.96); }
+/* Page */
+*, *::before, *::after { box-sizing: border-box; }
+.skip { position: absolute; left: var(--space-md); top: calc(-1 * var(--space-3xl)); z-index: var(--z-toast); padding: var(--space-xs) var(--space-md); border-radius: var(--radius-pill); background: var(--color-ink); color: var(--color-paper); }
+.skip:focus-visible { top: var(--space-md); }
+
+/* Controls: the theme's pair */
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 var(--space-lg); border: 0; border-radius: var(--radius-pill); font: 600 var(--text-md)/1 var(--font-body); white-space: nowrap; text-decoration: none; cursor: pointer; transition: background-color var(--dur-micro) var(--ease-out), box-shadow var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out); }
+.btn--primary { background: var(--color-accent); color: var(--color-accent-ink); }
+.btn--primary:hover { background: var(--color-accent-2); }
+.btn--secondary { background: transparent; color: var(--color-ink); box-shadow: inset 0 0 0 1.5px var(--color-ink-2); }
+.btn--secondary:hover { background: var(--color-paper-3); }
+.btn:active { transform: translateY(1px); }
+.btn:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 3px; }
+.btn:disabled, .btn[aria-disabled="true"] { opacity: 0.55; cursor: not-allowed; transform: none; }
+.btn[aria-busy="true"] { cursor: progress; }
+.actions { display: flex; flex-wrap: wrap; gap: var(--space-sm); }
+
+/* Nav: a floating pill on a blur, the genre's one glass */
+.nav { position: fixed; top: var(--space-md); left: 0; right: 0; z-index: var(--z-sticky-nav); display: flex; justify-content: center; padding-inline: var(--gutter); pointer-events: none; }
+.nav__pill { pointer-events: auto; display: flex; align-items: center; gap: var(--space-xl); min-height: 56px; padding: var(--space-2xs) var(--space-2xs) var(--space-2xs) var(--space-lg); border-radius: var(--radius-pill); background: color-mix(in oklab, var(--color-paper-2) 74%, transparent); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--color-ink) 9%, transparent); }
+.wordmark { font: 400 var(--text-lg)/1 var(--font-display); letter-spacing: var(--tracking-display); color: var(--color-ink); text-decoration: none; white-space: nowrap; }
+.nav__links { display: flex; gap: var(--space-lg); margin: 0; padding: 0; list-style: none; }
+.nav__links a { font-size: var(--text-sm); font-weight: 500; color: var(--color-ink-2); text-decoration: none; text-underline-offset: 0.3em; white-space: nowrap; }
+.nav__links a:hover { color: var(--color-ink); text-decoration: underline; text-decoration-color: var(--color-accent); }
+.nav__links a:active { color: var(--color-accent-2); }
+.wordmark:focus-visible, .nav__links a:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 4px; border-radius: var(--radius-pill); }
+.nav__door { margin: 0; padding-right: var(--space-lg); font-size: var(--text-sm); color: var(--color-muted); white-space: nowrap; }
+
+/* Photographs */
+.photo { position: relative; margin: 0; border-radius: var(--radius-card); }
+.photo > img { border-radius: inherit; outline: var(--rule-hair) solid color-mix(in oklab, var(--color-ink) 8%, transparent); outline-offset: -1px; }
+
+/* Hero: Settled, the pour standing beside the head */
+.hero { display: grid; align-items: center; min-height: 100dvh; padding-block: calc(56px + var(--space-xl)) var(--space-lg); box-sizing: border-box; }
+.hero__grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, min(35rem, 42%)); column-gap: var(--space-3xl); align-items: center; }
+.hero__text { display: grid; gap: var(--space-lg); }
+.hero__text h1 { max-width: 13ch; }
+.hero__text .lead { color: var(--color-ink-2); max-width: 34ch; }
+.hero__text .actions { margin-top: var(--space-md); }
+.hero__photo { aspect-ratio: 5 / 6; max-height: calc(100dvh - 56px - var(--space-3xl) - var(--space-xl)); }
+
+@media (max-width: 60rem) {
+  .nav { padding-inline: var(--space-md); }
+  .nav__pill { gap: var(--space-md); padding-left: var(--space-md); }
+  .nav__links { display: none; }
+  .hero { min-height: 0; padding-block: calc(56px + var(--space-3xl)) var(--space-2xl); }
+  .hero__grid { grid-template-columns: minmax(0, 1fr); row-gap: var(--space-xl); }
+  .hero__photo { max-height: none; }
+}
+
+/* Grain: the theme's speck, on a band or a panel, never on a photograph */
+.grained { position: relative; isolation: isolate; }
+.grained::after { content: ""; position: absolute; inset: 0; z-index: var(--z-base); border-radius: inherit; pointer-events: none; opacity: var(--grain); mix-blend-mode: screen;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0.6 0 0 0 0 0.55 0 0 0 0 0.45 0 0 0 0.35 0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E"); }
+.grained > * { position: relative; z-index: var(--z-raised); }
+
+/* The list: the racks edge to edge, the head on a grained plate across its foot */
+.list { padding-top: var(--section-gap); }
+.list__photo { aspect-ratio: 21 / 9; }
+.plate { display: grid; gap: var(--space-md); width: min(100%, 37rem); margin: calc(-1 * var(--space-4xl)) 0 0 var(--space-2xl); padding: var(--space-xl); border-radius: var(--radius-card); background: var(--color-paper-2); box-shadow: var(--shadow-card); z-index: var(--z-raised); }
+.plate__more { color: var(--color-ink-2); }
+
+/* Four nights: the week set in type, the open nights lit, the dark ones left dim */
+.nights { margin-top: var(--section-gap); }
+.statement { max-width: 18ch; font-size: var(--text-display); line-height: 1.02; }
+.week { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); margin: var(--space-3xl) 0 0; padding: 0; list-style: none; border-top: var(--rule-hair) solid var(--color-rule); }
+.week__day { display: grid; gap: var(--space-xs); padding: var(--space-lg) var(--space-md) 0 0; }
+.week__name { font: 400 var(--text-xl)/1.1 var(--font-display); letter-spacing: var(--tracking-display); }
+.week__hours { font-size: var(--text-sm); color: var(--color-ink-2); }
+.week__day.is-open { box-shadow: inset 0 2px 0 var(--color-ink); }
+.week__day.is-shut .week__name, .week__day.is-shut .week__hours { color: var(--color-muted); }
+.ways { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--gap-columns); margin-top: var(--space-3xl); }
+.way { display: grid; gap: var(--space-sm); padding-top: var(--space-lg); border-top: var(--rule-hair) solid var(--color-rule); }
+.way h3 { font-size: var(--text-section); max-width: none; }
+.way p { font-size: var(--text-lead); color: var(--color-ink-2); }
+
+/* Tastings: the one band, grained, the price in pink */
+.tastings { margin-top: var(--section-gap-s); padding-block: var(--section-gap-s); background: var(--color-paper-3); }
+.tastings__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--gap-columns); align-items: center; }
+.tastings__text { display: grid; gap: var(--space-lg); padding-right: var(--space-2xl); }
+.tastings__text > p:not([class]) { color: var(--color-ink-2); }
+.price { display: flex; align-items: baseline; gap: var(--space-sm); margin-top: var(--space-xs); color: var(--color-ink-2); font-size: var(--text-lead); }
+.price__figure { font: 400 var(--text-display-s)/1 var(--font-display); letter-spacing: var(--tracking-display); color: var(--color-accent); font-variant-numeric: lining-nums tabular-nums; }
+.tastings__photo { aspect-ratio: 5 / 4; min-height: 440px; }
+.fill { padding: 0 0.25em; border: 1px dashed color-mix(in oklch, var(--color-muted) 70%, transparent); border-radius: 3px; color: var(--color-muted); -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+
+.signup { display: grid; gap: var(--space-xs); margin-top: var(--space-xs); }
+.signup label { font-size: var(--text-sm); font-weight: 500; color: var(--color-ink-2); }
+.signup__row { display: flex; gap: var(--space-xs); }
+.signup input { flex: 1; min-width: 0; min-height: 48px; padding: 0 var(--space-md); border: 1.5px solid var(--color-ink-2); border-radius: 0; background: var(--color-paper-2); color: var(--color-ink); outline: 2px solid transparent; outline-offset: -4px; }
+.signup input:hover { background: var(--color-paper); }
+.signup input:focus-visible { outline-color: var(--color-focus); }
+.signup input[aria-invalid] { border-color: var(--color-error); }
+.signup input:disabled { opacity: 0.55; cursor: not-allowed; }
+.signup__help { min-height: 1lh; font-size: var(--text-sm); color: var(--color-muted); }
+
+/* Footer: a statement, then the facts and links */
+.footer { padding-block: var(--section-gap-l) var(--space-2xl); }
+.footer__line { max-width: 16ch; font-size: var(--text-display); line-height: 1.02; }
+.footer__row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: var(--space-lg); margin-top: var(--space-2xl); padding-top: var(--space-lg); border-top: var(--rule-hair) solid var(--color-rule); }
+.footer__where { color: var(--color-ink-2); }
+.footer__links { display: flex; flex-wrap: wrap; gap: var(--space-lg); margin: 0; padding: 0; list-style: none; }
+.footer__links a { color: var(--color-ink); text-decoration-color: var(--color-muted); white-space: nowrap; }
+.footer__links a:hover { text-decoration-color: var(--color-accent); }
+.footer__links a:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 3px; }
+.legal { margin-top: var(--space-xl); font-size: var(--text-sm); color: var(--color-muted); }
+.credits { max-width: 80ch; margin-top: var(--space-xs); font-size: var(--text-sm); line-height: 1.6; color: var(--color-muted); }
+.credits span { white-space: nowrap; }
+.credits a { color: inherit; text-decoration-color: color-mix(in oklab, var(--color-muted) 50%, transparent); text-underline-offset: 0.2em; }
+.credits a:hover { text-decoration-color: var(--color-accent); }
+
+@media (max-width: 60rem) {
+  .plate { margin: calc(-1 * var(--space-2xl)) 0 0; padding: var(--space-lg); }
+  .list__photo { aspect-ratio: 4 / 3; }
+  .week { grid-template-columns: minmax(0, 1fr); margin-top: var(--space-2xl); border-top: 0; }
+  .week__day { grid-template-columns: minmax(0, 1fr) auto; align-items: baseline; padding: var(--space-sm) 0; border-top: var(--rule-hair) solid var(--color-rule); }
+  .week__day.is-open { box-shadow: none; }
+  .week__name { font-size: var(--text-lg); }
+  .ways { grid-template-columns: minmax(0, 1fr); row-gap: var(--space-xl); margin-top: var(--space-3xl); }
+  .statement, .footer__line { font-size: var(--text-section); }
+  .tastings__grid { grid-template-columns: minmax(0, 1fr); row-gap: var(--space-xl); }
+  .tastings__text { padding-right: 0; }
+  .tastings__photo { min-height: 0; }
+}
+@media (max-width: 40rem) {
+  .signup__row { flex-direction: column; }
+}
+</style>
+<script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav">
+  <nav class="nav__pill" aria-label="Main">
+    <a class="wordmark" href="#top" aria-label="Night Cellar, home">Night Cellar</a>
+    <ul class="nav__links" role="list">
+      <li><a href="#list">The list</a></li>
+      <li><a href="#tastings">Tastings</a></li>
+      <li><a href="#find">Find us</a></li>
+    </ul>
+    <p class="nav__door" role="status" id="door">Open Thursday to Sunday</p>
+  </nav>
+</header>
+
+<main id="main">
+  <section class="hero" id="top" aria-labelledby="hero-title">
+    <div class="container hero__grid">
+      <div class="hero__text">
+        <h1 id="hero-title">Natural wine after five.</h1>
+        <p class="lead">A shop and bar with 140 bottles on the list.</p>
+        <div class="actions">
+          <a class="btn btn--primary" href="#tastings">Get the tasting date</a>
+          <a class="btn btn--secondary" href="#find">Find us</a>
+        </div>
+      </div>
+      <figure class="photo hero__photo" data-slot="hero" data-alt="A glass being poured at the bar after five">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Pouring_wine_into_a_decanter.jpg/1280px-Pouring_wine_into_a_decanter.jpg" width="3872" height="2592" fetchpriority="high" alt="Wine poured from a bottle into a glass decanter in low light" style="object-position: 42% 50%">
+      </figure>
+    </div>
+  </section>
+
+  <section class="list" id="list" aria-labelledby="list-title">
+    <div class="container">
+      <figure class="photo list__photo" data-slot="photo-1" data-alt="The bottles on the list, racked in the shop">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Schramsberg_Vineyards%2C_July_2019-7579%2B7580.jpg/1280px-Schramsberg_Vineyards%2C_July_2019-7579%2B7580.jpg" width="6244" height="3903" loading="lazy" alt="A long cellar aisle between racks of bottles laid neck down" style="object-position: 50% 60%">
+      </figure>
+      <div class="plate grained">
+        <h2 id="list-title">Every bottle here is natural.</h2>
+        <p class="plate__more">The full list: <span class="fill" data-fill="list">link to come</span>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="nights" aria-labelledby="nights-title">
+    <div class="container">
+      <h2 id="nights-title" class="statement">Four nights a week, Thursday to Sunday.</h2>
+      <ol class="week" role="list" aria-label="Opening hours">
+        <li class="week__day is-shut"><span class="week__name">Monday</span><span class="week__hours">Closed</span></li>
+        <li class="week__day is-shut"><span class="week__name">Tuesday</span><span class="week__hours">Closed</span></li>
+        <li class="week__day is-shut"><span class="week__name">Wednesday</span><span class="week__hours">Closed</span></li>
+        <li class="week__day is-open"><span class="week__name">Thursday</span><span class="week__hours">From 5pm</span></li>
+        <li class="week__day is-open"><span class="week__name">Friday</span><span class="week__hours">From 5pm</span></li>
+        <li class="week__day is-open"><span class="week__name">Saturday</span><span class="week__hours">From 5pm</span></li>
+        <li class="week__day is-open"><span class="week__name">Sunday</span><span class="week__hours">From 5pm</span></li>
+      </ol>
+      <div class="ways">
+        <div class="way">
+          <h3>The bar</h3>
+          <p>Open a bottle and stay.</p>
+        </div>
+        <div class="way">
+          <h3>The shop</h3>
+          <p>Take one home.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tastings grained" id="tastings" aria-labelledby="tastings-title">
+    <div class="container tastings__grid">
+      <div class="tastings__text">
+        <h2 id="tastings-title">A tasting, once a month.</h2>
+        <p class="price"><span class="price__figure">£25</span> a place</p>
+        <p>The next date is <span class="fill" data-fill="date">to be announced</span>.</p>
+        <form class="signup" data-endpoint="" novalidate>
+          <label for="email">Email for the date</label>
+          <div class="signup__row">
+            <input id="email" name="email" type="email" autocomplete="email" inputmode="email" required>
+            <button class="btn btn--primary" type="submit">Send me the date</button>
+          </div>
+          <p class="signup__help" id="email-help" aria-live="polite"></p>
+        </form>
+      </div>
+      <figure class="photo tastings__photo" data-slot="photo-2" data-alt="Glasses poured for a tasting">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Wine_being_poured_into_a_glass.jpg/1280px-Wine_being_poured_into_a_glass.jpg" width="1955" height="1300" loading="lazy" alt="A taste of red wine poured into a glass held by its stem" style="object-position: 62% 50%">
+      </figure>
+    </div>
+  </section>
+</main>
+
+<footer class="footer" id="find" aria-labelledby="find-title">
+  <div class="container">
+    <h2 id="find-title" class="footer__line">Find us after five.</h2>
+    <div class="footer__row">
+      <p class="footer__where"><span class="fill" data-fill="address">Address to be announced</span></p>
+      <ul class="footer__links" role="list">
+        <li><a href="#list">The list</a></li>
+        <li><a href="#tastings">Tastings</a></li>
+      </ul>
+    </div>
+    <p class="legal">&copy; 2026 Night Cellar</p>
+    <p class="credits" data-credits>Photographs: <a href="https://commons.wikimedia.org/wiki/File:Pouring_wine_into_a_decanter.jpg">suksim</a> <span>(CC BY 2.0)</span>, <a href="https://commons.wikimedia.org/wiki/File:Schramsberg_Vineyards,_July_2019-7579%2B7580.jpg">Frank Schulenburg</a> <span>(CC BY-SA 4.0)</span>, <a href="https://commons.wikimedia.org/wiki/File:Wine_being_poured_into_a_glass.jpg">Fabio Ingrosso</a> <span>(CC BY 2.0)</span>, via Wikimedia Commons.</p>
+  </div>
+</footer>
+
+<script>window.hallmarkSlots = (m) => { for (const [k, v] of Object.entries(m)) { const s = document.querySelector(`[data-slot="${k}"]`); if (!s) continue; const im = new Image(); im.src = typeof v === 'string' ? v : v.src; im.alt = (typeof v === 'object' && v.alt) || s.dataset.alt || ''; s.querySelectorAll(':scope > img').forEach((o) => o.remove()); s.prepend(im); } };
+document.querySelectorAll('[data-slot] > img').forEach((i) => { if (i.complete && !i.naturalWidth) i.remove(); else i.addEventListener('error', () => i.remove(), { once: true }); });</script>
+<script>
+  (() => {
+    const door = document.getElementById('door');
+    if (door) door.textContent = [4, 5, 6, 0].includes(new Date().getDay()) ? 'Open tonight from 5pm' : 'Opens Thursday at 5pm';
+    document.querySelectorAll('form[data-endpoint]').forEach((form) => {
+      const input = form.querySelector('input'), help = form.querySelector('[aria-live]');
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const ok = input.checkValidity();
+        input.toggleAttribute('aria-invalid', !ok);
+        if (!ok) { input.setAttribute('aria-describedby', help.id); help.textContent = 'That address looks incomplete. Write it as name@example.com.'; input.focus(); return; }
+        if (!form.dataset.endpoint) { help.textContent = 'Nothing was sent: this form is not connected yet.'; return; }
+        fetch(form.dataset.endpoint, { method: 'POST', body: new FormData(form) })
+          .then((r) => { help.textContent = r.ok ? 'The date goes to ' + input.value.trim() + '.' : 'That did not go through. Try again in a minute.'; })
+          .catch(() => { help.textContent = 'That did not go through. Try again in a minute.'; });
+      });
+    });
+  })();
+</script>
+</body>
+</html>
