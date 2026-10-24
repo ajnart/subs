@@ -40,6 +40,7 @@ test('typing shortcut characters in search and notes never opens another dialog'
   await createSubscription(page.request)
   await page.goto('/')
   await expect(page.locator('.subs-app')).toHaveAttribute('data-hydrated', 'true')
+  await page.keyboard.press('/')
   const search = page.getByRole('textbox', { name: 'Search subscriptions' })
   await search.fill('')
   await search.pressSequentially('na/?')

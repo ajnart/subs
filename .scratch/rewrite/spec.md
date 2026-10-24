@@ -80,7 +80,7 @@ Replace the running application with a responsive, service-centered Subs experie
 66. As a user, I want the previous interactive link-preview experience restored, so that I can inspect a public Service link on demand.
 67. As a visitor, I want a working public demo without a PIN or backend, so that I can try Subs immediately.
 68. As a demo user, I want local edits, import/export, and an explicit reset, so that I can explore without affecting another visitor or private Installation.
-69. As an Operator, I want the static demo deployed automatically with Wrangler at subs.ajnart.dev, so that the public version follows successful release builds.
+69. As an Operator, I want the static demo deployed automatically with Wrangler at sub.ajnart.dev, retaining subs.ajnart.dev as a compatibility alias, so that the public version follows successful release builds.
 70. As a contributor, I want current application screenshots and a short README, so that setup and the product are clear without excessive documentation.
 
 ## Implementation Decisions
@@ -136,7 +136,7 @@ Replace the running application with a responsive, service-centered Subs experie
 - Restore lazy, user-activated link previews for safe public HTTP(S) URLs. Never request previews on page mount, preview local/private addresses, or add server-side arbitrary URL fetching.
 - The static demo reuses the app UI with isolated browser persistence and clearly identified sample data. No API, database, PIN, or live exchange-rate service is required. Demo rates are explicitly illustrative, not current market rates.
 - Private Docker installations still start empty with authentication enabled. Demo flags must not change the private runtime's defaults or include server modules and secrets in static assets.
-- Build and validate both targets. Deploy the static artifact using Wrangler at subs.ajnart.dev after successful checks; do not make ordinary local builds or Docker builds publish remotely. Keep automated deployment credentials scoped and outside the repository.
+- Build and validate both targets. Deploy the static artifact using Wrangler at sub.ajnart.dev after successful checks, retaining subs.ajnart.dev as a compatibility alias; do not make ordinary local builds or Docker builds publish remotely. Keep automated deployment credentials scoped and outside the repository.
 - Refresh real application screenshots and keep the public README short. Detailed release evidence belongs in these internal tickets rather than lengthy product copy.
 
 ## Testing Decisions

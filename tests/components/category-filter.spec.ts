@@ -9,6 +9,7 @@ test('category, lifecycle, cycle and text filters compose and can be cleared', a
     status: 'paused',
   })
   await page.goto('/')
+  await page.locator('summary').filter({ hasText: 'Collection tools' }).click()
   await page.getByRole('radio', { name: 'Table view' }).click()
   const rows = page.getByRole('row').filter({ has: page.getByRole('cell') })
   await expect(rows).toHaveCount(2)

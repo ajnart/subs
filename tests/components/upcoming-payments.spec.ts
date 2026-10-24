@@ -8,6 +8,7 @@ test('upcoming charges are ordered, include today and exclude paused and cancell
   await createSubscription(page.request, { name: 'Cancelled plan', status: 'cancelled', nextPaymentDate: '2030-01-30' })
   await createSubscription(page.request, { name: 'Undated plan', nextPaymentDate: '' })
   await page.goto('/')
+  await page.locator('summary').filter({ hasText: 'Collection tools' }).click()
   const upcoming = page.locator('section').filter({ has: page.getByRole('heading', { name: 'Coming up next' }) })
   const payments = upcoming.getByRole('button')
   await expect(payments).toHaveCount(2)

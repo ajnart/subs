@@ -62,3 +62,4 @@ data/*.db-*
 /.tanstack/
 /dist/
 /.wrangler/
+.slim/deepwork/

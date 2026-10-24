@@ -58,9 +58,11 @@ export function CommandPalette(props: CommandPaletteProps) {
       frame.current = null
     }
     window.addEventListener('subs:locked', cancel)
+    window.addEventListener('subs:demo-reset', cancel)
     return () => {
       cancel()
       window.removeEventListener('subs:locked', cancel)
+      window.removeEventListener('subs:demo-reset', cancel)
     }
   }, [])
   const run = (action: (current: CommandPaletteProps) => void) => {
@@ -108,10 +110,10 @@ export function CommandPalette(props: CommandPaletteProps) {
                 <PlusIcon aria-hidden="true" /> Add subscription <CommandShortcut>N / A</CommandShortcut>
               </CommandItem>
               <CommandItem
-                value="Choose starter templates service"
+                value="Quick setup add several subscriptions choose starter templates service"
                 onSelect={() => run((current) => current.onTemplates())}
               >
-                <StackIcon aria-hidden="true" /> Choose a starter template <CommandShortcut>T</CommandShortcut>
+                <StackIcon aria-hidden="true" /> Quick setup: add several <CommandShortcut>T</CommandShortcut>
               </CommandItem>
               <CommandItem value="Import backup collection" onSelect={() => run((current) => current.onImport())}>
                 <FileArrowUpIcon aria-hidden="true" /> Import backup <CommandShortcut>I</CommandShortcut>
@@ -172,10 +174,10 @@ export function CommandPalette(props: CommandPaletteProps) {
               {templates.map((template) => (
                 <CommandItem
                   key={template.name}
-                  value={`Add ${template.name} starter template`}
+                  value={`Add ${template.name} starter template quick setup`}
                   onSelect={() => run((current) => current.onTemplate(template))}
                 >
-                  <PlusIcon aria-hidden="true" /> {template.name} <CommandShortcut>New plan</CommandShortcut>
+                  <PlusIcon aria-hidden="true" /> {template.name} <CommandShortcut>Quick setup</CommandShortcut>
                 </CommandItem>
               ))}
             </CommandGroup>

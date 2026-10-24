@@ -2,7 +2,7 @@
 
 Track subscriptions, renewals, and recurring costs.
 
-[Try the demo](https://subs.ajnart.dev) · [Self-host](#docker)
+[Try the demo](https://sub.ajnart.dev) · [Self-host](#docker)
 
 ![Subs overview](docs/screenshots/overview-dark.png)
 
@@ -21,6 +21,16 @@ Track subscriptions, renewals, and recurring costs.
 ![Masked private unlock](docs/screenshots/unlock.png)
 
 </details>
+
+## Collection first
+
+Home opens with your subscriptions. Expand **Collection tools** for totals, search, filters, sorting, and bulk actions; press **/** to open search directly. Calendar, Insights, and Settings stay available when you need more detail.
+
+## Quick setup
+
+Choose several service presets or paste website links, then enter each plan's price and billing cycle in one review. Nothing is saved until you confirm the batch; prices start empty, and zero-cost plans are supported. Possible duplicates stay visible so separate plans are never silently merged.
+
+Use **Add subscription** for a single plan, with a service preview and optional custom icon URL. You can move a new draft into quick setup without losing its details.
 
 ## Keyboard first
 
@@ -57,9 +67,9 @@ bun run dev:demo
 bun run deploy:demo
 ```
 
-The demo uses sample data stored only in your browser, illustrative exchange rates, and no backend or PIN. Reset restores the samples. Wrangler builds and publishes `dist/demo` at `subs.ajnart.dev`; ordinary local and Docker builds never publish.
+The demo uses sample data stored only in your browser, illustrative exchange rates, and no backend or PIN. Reset restores the samples. Wrangler builds and publishes `dist/demo` at `sub.ajnart.dev`; `subs.ajnart.dev` remains a compatibility alias. Ordinary local and Docker builds never publish.
 
-CI deploys successful `main` builds automatically. Set the repository's `CLOUDFLARE_API_TOKEN` Actions secret with scoped Workers deployment permissions. The Checks workflow also supports an explicit manual demo deployment.
+The Checks workflow is configured for automatic `main` deployments and explicit manual demo deployments after application and Docker checks pass. Both require the repository's `CLOUDFLARE_API_TOKEN` Actions secret with scoped Cloudflare deployment permissions; without it, deployment stops at the credential preflight.
 
 ## Configuration
 
@@ -76,7 +86,7 @@ CI deploys successful `main` builds automatically. Set the repository's `CLOUDFL
 
 Export from Subs 2 or preserve `data/config.json`, then restore through **Settings → Import**. Legacy arrays and browser/server storage envelopes are supported. Review the preview before replacing anything; keep the original backup. `USE_LOCAL_STORAGE` and the old storage API are retired.
 
-JSON backups contain subscriptions and preferences, not PINs, sessions, or recorded price history. Collections are bounded to a restorable 2 MiB backup. Known service icons are bundled; other public service origins may receive a direct favicon request without a referrer. Hovering or focusing a public service link requests a preview from Microlink; previews do not load automatically.
+JSON backups contain subscriptions and preferences, including custom icon URLs, not PINs, sessions, or recorded price history. Collections are bounded to a restorable 2 MiB backup. Known service icons are bundled; custom public HTTP(S) icon URLs and other public service favicons load directly in your browser without a referrer, never through a server proxy. Unsafe schemes and recognizable private/local addresses are blocked; DNS and redirects remain browser-controlled. Hovering or focusing a public service link requests a preview from Microlink; previews do not load automatically.
 
 ## Lost PIN
 

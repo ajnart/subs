@@ -3,6 +3,7 @@ import { collection, createSubscription, expect, test } from '../helpers'
 test('cancel deletion keeps the record and confirmed deletion persists an empty collection', async ({ page }) => {
   await createSubscription(page.request, { name: 'Last remaining plan' })
   await page.goto('/')
+  await page.locator('summary').filter({ hasText: 'Collection tools' }).click()
   await page.getByRole('radio', { name: 'Table view' }).click()
   await page.getByRole('button', { name: 'Delete Last remaining plan' }).click()
   const confirmation = page.getByRole('alertdialog')
@@ -21,6 +22,7 @@ test('cancel deletion keeps the record and confirmed deletion persists an empty 
 test('failed deletion leaves the server record intact and exposes a retryable error', async ({ page }) => {
   const saved = await createSubscription(page.request)
   await page.goto('/')
+  await page.locator('summary').filter({ hasText: 'Collection tools' }).click()
   await page.getByRole('radio', { name: 'Table view' }).click()
   await page.route(`**/api/subscriptions/${saved.id}`, (route) =>
     route.fulfill({ status: 503, json: { error: 'Temporary storage failure' } }),

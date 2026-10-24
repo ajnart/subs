@@ -29,6 +29,7 @@ The coordinator claims this release through completion. GPT-6.1 Sol implementati
 - Data-only versioned Backups, explicit Import Preview and duplicate choices, all three legacy storage sources supported. Empty means empty; templates are opt-in.
 - Highest existing seams are HTTP/auth/persistence and Playwright user flows; no new unit-test files. Parent owns final lint/typecheck and baseline reporting.
 - Latest user scope adds Hallmark-led UI polish, purposeful Magic UI/Aceternity components, lazy link previews, and a browser-only static demo deployed with Wrangler at subs.ajnart.dev. The private Docker target remains separate and protected by default.
+- Subsequent release steering selects `sub.ajnart.dev` as primary and retains the plural hostname as a compatibility alias. Publish a new major, `v3.0.0`, because v2 already exists; stop obsolete Vercel Git deployments without deleting the external project. Current release work and validation are tracked in `.scratch/v3-release/spec.md`.
 
 ## Execution order
 

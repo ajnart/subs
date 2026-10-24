@@ -8,6 +8,7 @@ test('trial deadlines and lifecycle details remain visible without treating tria
   await createSubscription(page.request, { name: 'Paused trial plan', trialEndsAt: '2030-02-01', status: 'paused' })
   await page.goto('/')
   await expect(page.getByText('Trial ends Feb 1, 2030', { exact: true })).toHaveCount(2)
+  await page.locator('summary').filter({ hasText: 'Collection tools' }).click()
   const summary = page.getByRole('region', { name: 'Spending summary' })
   await expect(summary).toContainText('$12.00')
   await expect(summary).not.toContainText('$24.00')

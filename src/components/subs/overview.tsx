@@ -4,6 +4,7 @@ import {
   PauseIcon,
   PlusIcon,
   SquaresFourIcon,
+  StackIcon,
   TrashIcon,
   UploadSimpleIcon,
 } from '@phosphor-icons/react'
@@ -30,7 +31,7 @@ import {
 } from '@/lib/subscriptions'
 import { templates } from '@/lib/templates'
 import type { ExchangeRates, Subscription } from '@/lib/types'
-import { Choice, cycles, ServiceLink, ServiceMark } from './shared'
+import { Choice, cycles, Notice, ServiceLink, ServiceMark } from './shared'
 
 function paymentLabel(subscription: Subscription, today: Date): string {
   if (subscription.status !== 'active') return subscription.status
@@ -73,6 +74,22 @@ export function Summary({
       aria-label="Spending summary"
       className="subs-summary grid grid-cols-2 gap-x-6 gap-y-5 border-y py-5 sm:grid-cols-[minmax(0,1.4fr)_minmax(0,.7fr)_minmax(0,1fr)]"
     >
+      {converted && missing && (
+        <div className="col-span-2 sm:col-span-3">
+          <Notice title="Some currencies cannot be converted">
+            Converted estimates are partial. Native-currency totals are shown below.
+          </Notice>
+        </div>
+      )}
+      {converted && rates?.stale && !missing && !isDemo && (
+        <div className="col-span-2 sm:col-span-3">
+          <Notice title={rates.updatedAt ? 'Using saved exchange rates' : 'Exchange rates unavailable'}>
+            {rates.updatedAt
+              ? 'Converted estimates use older rates.'
+              : 'Native-currency totals are shown without conversion.'}
+          </Notice>
+        </div>
+      )}
       <div className="col-span-2 flex min-w-0 flex-col gap-2 sm:col-span-1">
         <p className="text-xs text-muted-foreground">Monthly totals</p>
         <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
@@ -159,6 +176,8 @@ export function Overview({
   const [view, setView] = useState('cards')
   const [selected, setSelected] = useState<string[]>([])
   const [busy, setBusy] = useState(false)
+  const [toolsOpen, setToolsOpen] = useState(false)
+  const hasFilters = Boolean(search || status !== 'all' || category !== 'all' || cycle !== 'all')
   const filtered = useMemo(
     () =>
       subscriptions
@@ -210,15 +229,34 @@ export function Overview({
   return (
     <div className="flex flex-col gap-7">
       <section className="flex flex-col gap-5">
-        {subscriptions.length > 0 && (
-          <>
+        <details
+          className="subs-disclosure"
+          hidden={!subscriptions.length}
+          onToggle={(event) => setToolsOpen(event.currentTarget.open)}
+        >
+          <summary>
+            <span>Collection tools</span>
+            <span className="ml-2 text-xs font-normal" aria-live="polite">
+              {hasFilters
+                ? `${filtered.length} of ${subscriptions.length} shown · filtered`
+                : `${subscriptions.length} subscriptions`}
+            </span>
+          </summary>
+          <div className="flex flex-col gap-5 pt-4">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div className="flex items-center gap-2">
                 <h2 className="text-sm text-muted-foreground" aria-live="polite">
                   {filtered.length} subscriptions
                 </h2>
               </div>
-              <Button variant="ghost" size="sm" onClick={onTemplates}>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={onTemplates}
+                data-keyhint="T"
+                aria-keyshortcuts="t"
+                title="Quick setup: add several subscriptions"
+              >
                 Choose a service
               </Button>
             </div>
@@ -297,7 +335,7 @@ export function Overview({
                     options={['all', ...cycles]}
                   />
                 </div>
-                {(search || status !== 'all' || category !== 'all' || cycle !== 'all') && (
+                {hasFilters && (
                   <Button
                     variant="ghost"
                     size="sm"
@@ -313,8 +351,9 @@ export function Overview({
                 )}
               </div>
             </div>
-          </>
-        )}
+            <Summary subscriptions={subscriptions} currency={currency} rates={rates} />
+          </div>
+        </details>
         {filtered.length === 0 ? (
           <Empty className="subs-empty min-h-80 py-8">
             <EmptyHeader>
@@ -327,10 +366,16 @@ export function Overview({
               <EmptyDescription>
                 {subscriptions.length
                   ? 'Change your search or clear the filters.'
-                  : 'Choose a service, then add your plan and price.'}
+                  : 'Choose several services or paste website links, then review your plans and prices together.'}
               </EmptyDescription>
             </EmptyHeader>
             <EmptyContent className="w-full max-w-lg">
+              {!subscriptions.length && (
+                <Button size="lg" onClick={onTemplates} data-keyhint="T" aria-keyshortcuts="t">
+                  <StackIcon data-icon="inline-start" />
+                  Quick setup: add several
+                </Button>
+              )}
               {!subscriptions.length && (
                 <div className="grid w-full grid-cols-2 gap-2 sm:grid-cols-4">
                   {templates.slice(0, 8).map((template) => (
@@ -349,7 +394,7 @@ export function Overview({
               <div className="flex flex-wrap justify-center gap-2">
                 <Button variant="outline" onClick={onAdd}>
                   <PlusIcon data-icon="inline-start" />
-                  Add manually
+                  Add one manually
                 </Button>
                 {!subscriptions.length && (
                   <Button variant="outline" onClick={onImport}>
@@ -360,7 +405,7 @@ export function Overview({
               </div>
             </EmptyContent>
           </Empty>
-        ) : view === 'cards' ? (
+        ) : !toolsOpen || view === 'cards' ? (
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
             {filtered.map((item) => (
               <MagicCard
@@ -378,7 +423,7 @@ export function Overview({
                   <CardHeader>
                     <div className="flex items-start justify-between gap-3">
                       <div className="flex min-w-0 items-center gap-3">
-                        <ServiceMark name={item.name} domain={item.domain} size="large" />
+                        <ServiceMark name={item.name} domain={item.domain} icon={item.icon} size="large" />
                         <div className="min-w-0">
                           <CardTitle className="truncate">
                             <ServiceLink name={item.name} domain={item.domain} />
@@ -469,7 +514,7 @@ export function Overview({
                     </TableCell>
                     <TableCell>
                       <div className="flex items-center gap-3">
-                        <ServiceMark name={item.name} domain={item.domain} />
+                        <ServiceMark name={item.name} domain={item.domain} icon={item.icon} />
                         <div>
                           <p className="font-medium">
                             <ServiceLink name={item.name} domain={item.domain} />
@@ -515,7 +560,7 @@ export function Overview({
           </div>
         )}
       </section>
-      {subscriptions.length > 0 && (
+      {toolsOpen && subscriptions.length > 0 && (
         <section className="flex flex-col gap-4">
           <div>
             <h2 className="text-sm font-medium">

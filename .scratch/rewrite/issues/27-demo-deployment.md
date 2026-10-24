@@ -7,7 +7,7 @@ Blocked by: 23, 24, 26
 
 ## Outcome
 
-Publish the validated static demo at subs.ajnart.dev and show the current app in a concise README.
+Publish the validated static demo at sub.ajnart.dev, retain subs.ajnart.dev as a compatibility alias, and show the current app in a concise README.
 
 ## Acceptance criteria
 
@@ -28,3 +28,5 @@ GitHub validated application commit `aa70c375fa7f486410439656460c58a99ac03d89`: 
 Final integration follow-up fixes the demo-development font 403 caused by Bun's linked package cache with a narrowly scoped Vite filesystem allowance. `vercel.json` disables the obsolete Vercel Git auto-deployment, which otherwise attempts the retired hosting target and reports a failed external check. This does not delete the Vercel project or replace application/Docker validation; supported release targets remain Docker and Cloudflare.
 
 The final development browser confirms Inter loads with HTTP 200 and no backend requests; unrelated files outside the workspace/font package remain blocked with HTTP 403. Both production builds and lint/typecheck pass after this configuration change. CodeRabbit skipped its review because the broad rewrite exceeds its file-count limit; its passing status is not treated as a review approval.
+
+Subsequent user steering requests the singular primary hostname and a major release. `.scratch/v3-release/spec.md` tracks that publication. The earlier deployment URLs and version IDs above are historical evidence, not proof of the new release or automatic deployment. The credential blocker remains open until an actual Actions deployment succeeds.

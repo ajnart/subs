@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { api, collectionApi, errorMessage, revisionHeaders } from '@/lib/api'
+import { api, apiResponse, collectionApi, errorMessage, revisionHeaders } from '@/lib/api'
 import { useSubsBootstrap } from '@/lib/bootstrap'
 import { isDemo } from '@/lib/mode'
 import type { AppData, ExchangeRates, Preferences, Status, Subscription, SubscriptionInput } from '@/lib/types'
@@ -76,6 +76,7 @@ export function useSubs() {
     else if (bootstrap.kind === 'ready') void refreshRates(generation.current, controller.signal)
     return () => {
       controller.abort()
+      generation.current += 1
       window.removeEventListener('subs:locked', lock)
     }
   }, [bootstrap, refresh, refreshRates, updateRevision])
@@ -149,6 +150,17 @@ export function useSubs() {
     return result.revision
   }
 
+  const saveBatch = async (inputs: SubscriptionInput[], expectedRevision: string | null) => {
+    const current = generation.current
+    await apiResponse<{ imported: number }>('/import', {
+      method: 'POST',
+      headers: revisionHeaders(expectedRevision),
+      body: JSON.stringify({ data: { version: 3, subscriptions: inputs }, mode: 'new' }),
+    })
+    if (current !== generation.current) return
+    void refresh()
+  }
+
   const preferences = async (input: Preferences, expectedRevision: string | null) => {
     const current = generation.current
     const result = await collectionApi<Preferences>('/preferences', {
@@ -173,5 +185,19 @@ export function useSubs() {
     return result
   }
 
-  return { status, data, revision, rates, error, ratesError, loading, refresh, review, save, remove, preferences }
+  return {
+    status,
+    data,
+    revision,
+    rates,
+    error,
+    ratesError,
+    loading,
+    refresh,
+    review,
+    save,
+    saveBatch,
+    remove,
+    preferences,
+  }
 }

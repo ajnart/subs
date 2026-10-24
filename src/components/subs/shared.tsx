@@ -1,9 +1,9 @@
 import { WarningCircleIcon } from '@phosphor-icons/react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { LinkPreview } from '@/components/ui/link-preview'
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { serviceIcon } from '@/lib/service-icons'
+import { safeIconUrl, serviceIcon } from '@/lib/service-icons'
 import { cn } from '@/lib/utils'
 import './service-cards.css'
 
@@ -56,9 +56,7 @@ function canPreview(url: string): boolean {
   const hostname = new URL(url).hostname.toLowerCase().replace(/\.$/, '')
   if (!hostname.includes('.') || hostname.includes(':') || hostname.includes('[') || /^[\d.]+$/.test(hostname))
     return false
-  return !/(^|\.)(localhost|local|localdomain|internal|lan|home|corp|test|invalid|onion|arpa|example)$|\.(nip\.io|sslip\.io)$/.test(
-    hostname,
-  )
+  return safeIconUrl(url) !== null
 }
 
 export function ServiceLink({ name, domain, className }: { name: string; domain: string; className?: string }) {
@@ -127,25 +125,29 @@ export function Notice({
   )
 }
 
-export function ServiceMark({
-  name,
-  domain = '',
-  size = 'default',
+function ServiceMarkContent({
+  sources,
+  localIcon,
+  initials,
+  size,
 }: {
-  name: string
-  domain?: string
-  size?: 'default' | 'large'
+  sources: (string | null)[]
+  localIcon: string | null
+  initials: string
+  size: 'default' | 'large'
 }) {
-  const [failedSource, setFailedSource] = useState('')
-  const localIcon = serviceIcon(name, domain)
-  const url = serviceUrl(domain)
-  let source = localIcon
-  if (!source && url && canPreview(url)) source = `${new URL(url).origin}/favicon.ico`
-  const initials = name.trim().slice(0, 2).toUpperCase()
+  const [failedSources, setFailedSources] = useState<string[]>([])
+  const source = sources.find((candidate) => candidate && !failedSources.includes(candidate))
   return (
-    <span aria-hidden="true" className="subs-service-mark" data-size={size} data-branded={Boolean(localIcon)}>
-      {source && source !== failedSource ? (
+    <span
+      aria-hidden="true"
+      className="subs-service-mark"
+      data-size={size}
+      data-branded={Boolean(localIcon && source === localIcon)}
+    >
+      {source ? (
         <img
+          key={source}
           src={source}
           alt=""
           width={32}
@@ -153,11 +155,46 @@ export function ServiceMark({
           loading="lazy"
           decoding="async"
           referrerPolicy="no-referrer"
-          onError={() => setFailedSource(source)}
+          onError={() =>
+            setFailedSources((failed) => {
+              if (failed.includes(source)) return failed
+              return [...failed, source]
+            })
+          }
         />
       ) : (
         initials
       )}
     </span>
+  )
+}
+
+export function ServiceMark({
+  name,
+  domain = '',
+  icon = '',
+  size = 'default',
+}: {
+  name: string
+  domain?: string
+  icon?: string
+  size?: 'default' | 'large'
+}) {
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => setMounted(true), [])
+  const customIcon = safeIconUrl(icon)
+  const localIcon = serviceIcon(name, domain)
+  const url = serviceUrl(domain)
+  let favicon: string | null = null
+  if (url && canPreview(url)) favicon = `${new URL(url).origin}/favicon.ico`
+  const sources = [customIcon, localIcon, favicon]
+  return (
+    <ServiceMarkContent
+      key={JSON.stringify(sources)}
+      sources={sources.filter((source) => mounted || source === localIcon)}
+      localIcon={localIcon}
+      initials={name.trim().slice(0, 2).toUpperCase()}
+      size={size}
+    />
   )
 }

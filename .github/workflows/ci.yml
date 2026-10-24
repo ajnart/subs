@@ -53,7 +53,7 @@ jobs:
       cancel-in-progress: false
     environment:
       name: demo
-      url: https://subs.ajnart.dev
+      url: https://sub.ajnart.dev
     steps:
       - uses: actions/checkout@v7.0.1
       - uses: oven-sh/setup-bun@v2

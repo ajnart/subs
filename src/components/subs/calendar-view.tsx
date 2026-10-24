@@ -134,7 +134,7 @@ export function CalendarView({
                   onClick={() => onEdit(subscription)}
                   className="flex items-center gap-3 rounded-md p-2 text-left hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 >
-                  <ServiceMark name={subscription.name} />
+                  <ServiceMark name={subscription.name} domain={subscription.domain} icon={subscription.icon} />
                   <div className="min-w-0 flex-1">
                     <p className="truncate text-sm font-medium">{subscription.name}</p>
                     <p className="text-xs text-muted-foreground">{dateLabel(date)}</p>
