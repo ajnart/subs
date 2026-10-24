@@ -106,4 +106,4 @@ Future exploratory candidates, not release commitments: provider price monitorin
 - [24 — Release verification](issues/24-release-verification.md): final lint/typecheck, 27/27 existing tests and both builds pass; review findings fixed.
 - [25 — Visual polish](issues/25-visual-polish.md): all three P2 review findings plus footer nit fixed and recaptured; Hallmark static exceptions remain explicit.
 - [26 — Static demo](issues/26-static-demo.md): API-blocked persistence, isolated reset/corrupt recovery and static build pass.
-- [27 — Deployment/screenshots](issues/27-demo-deployment.md): final demo published and HTTPS assets verified; automatic deployment remains blocked on the scoped Actions secret. CI outcome follows after push.
+- [27 — Deployment/screenshots](issues/27-demo-deployment.md): final demo published and HTTPS assets verified. GitHub application and Docker checks passed for implementation commit `aa70c37` on push and PR #50; automatic production deployment remains blocked on the scoped Actions secret.
