@@ -1,7 +1,7 @@
 # 07 — Authenticated Collection contract
 
 Status: ready-for-agent
-Progress: open
+Progress: claimed
 Type: task
 Blocked by: 04, 05
 

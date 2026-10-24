@@ -1,7 +1,7 @@
 # 10 — Lifecycle, notes, and trials
 
 Status: ready-for-agent
-Progress: open
+Progress: claimed
 Type: task
 Blocked by: 09
 

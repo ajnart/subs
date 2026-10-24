@@ -1,7 +1,7 @@
 # 05 — Money and recurrence rules
 
 Status: ready-for-agent
-Progress: open
+Progress: claimed
 Type: task
 Blocked by: 03
 

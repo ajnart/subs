@@ -1,7 +1,7 @@
 # 22 — Accessibility, keyboard, and resilience
 
 Status: ready-for-agent
-Progress: open
+Progress: claimed
 Type: task
 Blocked by: 13, 15, 17, 19, 20, 21
 

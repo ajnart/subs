@@ -37,7 +37,7 @@ The denomination of a Price or Budget, with its own minor-unit precision.
 _Avoid_: Display symbol alone
 
 **Billing Cycle**:
-The daily, weekly, monthly, or yearly recurrence of a Subscription's Price.
+The daily, weekly, monthly, quarterly, or yearly recurrence of a Subscription's Price.
 _Avoid_: Payment frequency, plan length
 
 **Billing Anchor**:

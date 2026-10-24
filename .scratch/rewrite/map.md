@@ -14,6 +14,8 @@ These are implementation tickets, not unresolved wayfinding questions. Preserve 
 
 The documentation/skills worker owns planning, domain docs, and copied skills only; the coordinating and implementation agents own application changes, final validation, staging, and commits. No full lint/typecheck run is expected from the documentation worker while those application edits are concurrent.
 
+The coordinator claims this release through completion. GPT-6.1 Sol implementation lanes cover framework/design-system integration, server/domain behavior, frontend workflows, and existing regression flows; the coordinator owns container operations, integration review, and final validation. Parallel implementation is coordinated against the shared HTTP contract; tickets remain claimed until their acceptance evidence is recorded.
+
 ## Decisions-so-far
 
 - One Installation, one private Collection, no account system or cloud synchronization. PIN protection defaults on; initial setup requires an Operator token.

@@ -1,7 +1,7 @@
 # 01 — Framework and runtime foundation
 
 Status: ready-for-agent
-Progress: open
+Progress: claimed
 Type: task
 Blocked by: none
 

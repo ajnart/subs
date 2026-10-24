@@ -1,0 +1,15 @@
+services:
+  subs:
+    build: .
+    image: ghcr.io/ajnart/subs:latest
+    ports:
+      - "7574:7574"
+    volumes:
+      - ./data:/data
+    environment:
+      DISABLE_AUTH: "false"
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL

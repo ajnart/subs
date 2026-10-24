@@ -1,7 +1,7 @@
 # 13 — Bulk management
 
 Status: ready-for-agent
-Progress: open
+Progress: claimed
 Type: task
 Blocked by: 12
 

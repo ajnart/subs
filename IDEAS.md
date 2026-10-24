@@ -1,14 +1,18 @@
 # Subs Ideas and Roadmap
 
+Historical Subs 2 roadmap and implementation notes. The current rewrite is tracked in [the rewrite spec](.scratch/rewrite/spec.md) and its individual Markdown tickets; implementation paths below describe the previous Remix application.
+
 This document lists possible product and engineering improvements for Subs.
 
 Priority legend:
+
 - P0: high impact and low effort
 - P1: high impact and medium effort
 - P2: medium impact
 - P3: exploratory or long-term
 
 Size legend:
+
 - XS: 0.5 to 1 day
 - S: 1 to 3 days
 - M: 3 to 7 days
@@ -28,6 +32,7 @@ Size legend:
 ## XS Features (Tiny Improvements)
 
 ### ~~1) Empty State with Quick Add Templates~~
+
 - ~~Priority: P0~~
 - ~~Why: New users need a faster first success.~~
 - ~~Scope:~~
@@ -41,13 +46,16 @@ Size legend:
 <summary>✅ Implementation details</summary>
 
 **Files changed:**
+
 - `app/store/subscriptionStore.ts` — Added `SubscriptionTemplate` interface with `label`, `name`, `domain`, `billingCycle`, `price`, `currency`, `category` fields.
 - `app/components/SubscriptionGrid.tsx` — Exported `QUICK_ADD_TEMPLATES` array (6 templates: Netflix, Spotify, ChatGPT Plus, Google One, GitHub Copilot, Adobe CC). New props `onAddWithTemplate` and `totalCount`; empty state renders template chip buttons when `totalCount === 0`.
 - `app/components/EditSubscriptionModal.tsx` — Added `templateValues?: SubscriptionTemplate | null` prop; a `useEffect` resets the form with template values when a template is provided.
 - `app/routes/_index.tsx` — Added `pendingTemplate` state, `handleAddWithTemplate` handler that sets the pending template and opens the modal; wired `onAddWithTemplate` and `totalCount` props on `SubscriptionGrid`; wired `templateValues={pendingTemplate}` on `EditSubscriptionModal`; `onClose` clears the pending template.
+
 </details>
 
 ### ~~2) Inline Currency Symbol Preview~~
+
 - ~~Priority: P0~~
 - ~~Why: Users can confuse amount scale when switching currencies.~~
 - ~~Scope:~~
@@ -58,11 +66,14 @@ Size legend:
 <summary>✅ Implementation details</summary>
 
 **Files changed:**
+
 - `app/components/EditSubscriptionModal.tsx` — Added `getCurrencySymbol(currency)` helper (uses `Intl.NumberFormat` with `style: 'currency'`). Price input is wrapped in a `relative` div with an absolute-positioned currency symbol span (using `pl-7` on the input). A conversion hint paragraph appears below when price > 0 and the entered currency differs from the selected summary currency, showing the approximate converted amount.
 - `app/components/AddSubscriptionPopover.tsx` — Same `getCurrencySymbol` helper added locally. Imported `usePreferencesStore` for `selectedCurrency`. Added `watch('price')` and `watch('currency')` watchers. Price input now uses the same relative/absolute symbol layout and the same conversion hint logic.
+
 </details>
 
 ### ~~3) "Last Imported" Metadata~~
+
 - ~~Priority: P0~~
 - ~~Why: Helps users trust and debug data import behavior.~~
 - ~~Scope:~~
@@ -73,11 +84,14 @@ Size legend:
 <summary>✅ Implementation details</summary>
 
 **Files changed:**
+
 - `app/store/subscriptionStore.ts` — Added `lastImportedAt?: string` (ISO string) to the store interface. `importSubscriptions` action sets it to `new Date().toISOString()`. `partialize` includes `lastImportedAt` so it is persisted.
 - `app/routes/_index.tsx` — Imported `lastImportedAt` from the store. The Import button is wrapped in a `TooltipProvider/Tooltip`; when `lastImportedAt` is set a green pulsing dot (`bg-green-500`) appears on the button and the tooltip content shows the formatted date/time via `toLocaleString({ dateStyle: 'medium', timeStyle: 'short' })`.
+
 </details>
 
 ### ~~4) Keyboard Shortcut Improvements~~
+
 - ~~Priority: P1~~
 - ~~Why: Existing keyboard support is good, but can be stronger.~~
 - ~~Scope:~~
@@ -88,12 +102,15 @@ Size legend:
 <summary>✅ Implementation details (April 8, 2026)</summary>
 
 **Files changed:**
+
 - `app/routes/_index.tsx` — Added `C` key shortcut to cycle the category filter (matching the existing `S` for sort and `F` for billing cycle). Added `A` key shortcut as an explicit alias for opening the Add Subscription popover and focusing its first input field (the popover already auto-focuses the name field via a `useEffect` when it opens).
 - `app/components/KeyboardShortcutsDialog.tsx` — Added `A` ("Focus Add Subscription form (first field)") and `C` ("Cycle category filter") entries to the displayed shortcuts list.
 - `app/hooks/useKeyboard.ts` — Added `a` (focus add form) and `c` (cycle category filter) entries to `useKeyboardShortcuts()` for discoverability.
+
 </details>
 
 ### ~~5) Safer Delete UX~~
+
 - ~~Priority: P0~~
 - ~~Why: Avoid accidental deletion while keeping speed.~~
 - ~~Scope:~~
@@ -104,6 +121,7 @@ Size legend:
 <summary>✅ Implementation details (April 8, 2026)</summary>
 
 **Modified files:**
+
 - `app/store/subscriptionStore.ts` — added `restoreSubscription(subscription, index?)` which re-inserts a deleted subscription at its original position in the array.
 - `app/routes/_index.tsx` — replaced the confirm-dialog delete flow with an immediate delete + undo toast pattern:
   - `handleDeleteSubscription` records the deleted item and its index in a `pendingDeletion` ref, calls `deleteSubscription` immediately, then shows a sonner toast with an **Undo** action for 5 seconds.
@@ -118,6 +136,7 @@ Size legend:
 ## S Features (Small, High-Value)
 
 ### ~~6) Upcoming Payments Panel~~
+
 - ~~Priority: P0~~
 - ~~Why: Total spend is useful, but upcoming charges are more actionable.~~
 - ~~Scope:~~
@@ -132,6 +151,7 @@ Size legend:
 <summary>✅ Implementation details (April 8, 2026)</summary>
 
 **New files:**
+
 - `app/components/UpcomingPaymentsPanel.tsx` — card rendered between the `Summary` and the filter bar. Hidden completely when nothing is due within 30 days.
   - `getUpcomingSubscriptions(subscriptions, withinDays)` filters to subscriptions where `showNextPayment` is true and the computed next payment date falls within the window from now, returning items sorted by date ascending.
   - Renders two columns: **Next 7 days** and **Next 8–30 days**. Items in the 7-day bucket are excluded from the 30-day bucket to avoid duplicates.
@@ -139,6 +159,7 @@ Size legend:
   - `advanceByOneCycle(dateStr, cycle)` rolls the date forward by exactly one billing cycle and passes the new ISO date string to the `onMarkPaid` callback.
 
 **Modified files:**
+
 - `app/routes/_index.tsx` — mounts `<UpcomingPaymentsPanel>` with the full subscription list, loader rates, and an `onMarkPaid` handler that calls `editSubscription(id, { nextPaymentDate })` to persist the rolled-forward date.
 
 **Tests:** `tests/components/upcoming-payments.spec.ts` — covers panel visibility, correct bucketing of 7-day vs 30-day items, "Mark paid" advancing the date by one cycle, and panel hiding when no payments are due.
@@ -146,6 +167,7 @@ Size legend:
 </details>
 
 ### ~~7) Duplicate Detection on Save and Import~~
+
 - ~~Priority: P0~~
 - ~~Why: Duplicate records are a common source of bad totals.~~
 - ~~Scope:~~
@@ -157,6 +179,7 @@ Size legend:
 <summary>✅ Implementation details (April 8, 2026)</summary>
 
 **New files:**
+
 - `app/utils/duplicates.ts` — pure utility with two exports:
   - `getSubscriptionFingerprint(sub)` builds a string key `normalizedDomain:price:CURRENCY`. Domain normalization strips `https?://`, `www.`, trailing slashes, and path segments, then lowercases — so `https://www.netflix.com/` and `netflix.com` produce the same fingerprint.
   - `findDuplicates(incoming, existing, excludeId?)` matches each incoming subscription against the existing list, returning `{ incoming, existing }` pairs. `excludeId` skips the subscription currently being edited so self-comparison is avoided.
@@ -166,6 +189,7 @@ Size legend:
   - Three resolution buttons: **Skip duplicates** (imports only new entries), **Keep both** (imports all incoming with fresh IDs), **Replace existing** (removes the matched existing entries and imports all incoming).
 
 **Modified files:**
+
 - `app/store/subscriptionStore.ts` — added `replaceSubscriptions(subscriptions)` to atomically swap the full list (used by all three import resolution paths).
 - `app/routes/_index.tsx`:
   - `handleSaveSubscription` runs `findDuplicates` before saving; if a match is found, a `window.confirm` dialog describes the conflict and lets the user proceed or cancel.
@@ -178,6 +202,7 @@ Size legend:
 </details>
 
 ### ~~8) Import Validation Report~~
+
 - ~~Priority: P0~~
 - ~~Why: Current errors are too opaque for non-technical users.~~
 - ~~Scope:~~
@@ -189,20 +214,22 @@ Size legend:
 <summary>✅ Implementation details (April 8, 2026)</summary>
 
 **New files:**
-- `app/utils/importValidation.ts` — pure validation utility.  
-  - `validateImportData(jsonText)` parses the JSON string and validates every element of the array independently, returning an `ImportValidationReport` with per-row `{ index, raw, valid, errors[], subscription? }` entries plus aggregate `validCount` / `invalidCount`.  
-  - `getValidSubscriptions(report)` extracts the already-parsed `Subscription` objects from all valid rows.  
+
+- `app/utils/importValidation.ts` — pure validation utility.
+  - `validateImportData(jsonText)` parses the JSON string and validates every element of the array independently, returning an `ImportValidationReport` with per-row `{ index, raw, valid, errors[], subscription? }` entries plus aggregate `validCount` / `invalidCount`.
+  - `getValidSubscriptions(report)` extracts the already-parsed `Subscription` objects from all valid rows.
   - Each field is checked separately (`name`, `price`, `currency`, `domain`, optional `billingCycle`, `nextPaymentDate`, `showNextPayment`, `icon`, `category`) so every error surfaced has a human-readable message pointing to the specific field.
 
-- `app/components/ImportValidationReportDialog.tsx` — modal dialog shown when any row fails validation.  
-  - Header summarises how many rows are valid vs invalid.  
-  - Scrollable list shows every row with a green ✓ or red ✗ icon; invalid rows expand their field-level error bullets.  
+- `app/components/ImportValidationReportDialog.tsx` — modal dialog shown when any row fails validation.
+  - Header summarises how many rows are valid vs invalid.
+  - Scrollable list shows every row with a green ✓ or red ✗ icon; invalid rows expand their field-level error bullets.
   - Footer has **Cancel** and **Import N valid rows** (disabled when `validCount === 0`).
 
 **Modified files:**
-- `app/routes/_index.tsx` — `handleImport` was replaced with a two-path flow:  
-  - All rows valid → call `replaceSubscriptions(validRows)` directly and show a success toast (no dialog).  
-  - Any invalid row → show the `ImportValidationReportDialog`; user can review and choose partial import or cancel.  
+
+- `app/routes/_index.tsx` — `handleImport` was replaced with a two-path flow:
+  - All rows valid → call `replaceSubscriptions(validRows)` directly and show a success toast (no dialog).
+  - Any invalid row → show the `ImportValidationReportDialog`; user can review and choose partial import or cancel.
   - File input value is reset after each read so the same file can be re-selected.
 
 **Tests:** `tests/utils/import-validation.spec.ts` — Playwright tests covering valid full import, per-row error reporting, partial import via the dialog, disabled import button when all rows are invalid, and dialog cancel leaving subscriptions unchanged.
@@ -210,6 +237,7 @@ Size legend:
 </details>
 
 ### ~~9) Billing Health Warnings~~
+
 - ~~Priority: P1~~
 - ~~Why: Missing billing data creates hidden risk.~~
 - ~~Scope:~~
@@ -220,6 +248,7 @@ Size legend:
 <summary>✅ Implementation details (April 8, 2026)</summary>
 
 **Modified files:**
+
 - `app/components/SubscriptionCard.tsx` — two health checks are computed per card and rendered as a shared `AlertTriangle` icon (yellow) in the top-left area, next to the billing cycle badge:
   - `hasBillingHealthWarning`: `billingCycle` is set but `showNextPayment` is `false` — the user configured a cycle but opted not to display the payment date, which hides billing risk.
   - `isDateInPast`: `showNextPayment` is `true` and the stored `nextPaymentDate` (the raw base date, before rolling) is older than today — typically indicates data imported from an external source where date roll-forward didn't happen automatically.
@@ -231,6 +260,7 @@ Size legend:
 </details>
 
 ### ~~10) Category Field (Single Select)~~
+
 - ~~Priority: P1~~
 - ~~Why: Users often want budget by area.~~
 - ~~Scope:~~
@@ -242,6 +272,7 @@ Size legend:
 <summary>✅ Implementation details (April 8, 2026)</summary>
 
 **Modified files:**
+
 - `app/store/subscriptionStore.ts` — `SUBSCRIPTION_CATEGORIES` constant (18 categories: Streaming, Music, Cloud, AI Tools, Productivity, Gaming, News & Media, Health & Fitness, Education, Finance, Developer Tools, Other, …) and `SubscriptionCategory` type derived from it. `category?: SubscriptionCategory` added to the `Subscription` interface.
 - `app/components/SubscriptionCard.tsx` — renders a `Badge` (outline variant) in the bottom-right corner of each card when `category` is set; badge text is the category label.
 - `app/components/EditSubscriptionModal.tsx` — category `Select` control added to the form (optional). The card live-preview in the modal now includes `category` so the badge appears in real time as you pick a category. Template pre-fill also carries the category (linked to **Feature 1** quick-add templates).
@@ -257,6 +288,7 @@ Size legend:
 ## M Features (Medium Scope)
 
 ### ~~11) Spending Insights Page~~
+
 - ~~Priority: P1~~
 - ~~Why: A static total does not show trend direction.~~
 - ~~Scope:~~
@@ -271,14 +303,17 @@ Size legend:
 <summary>✅ Implementation details (April 8, 2026)</summary>
 
 **Files changed:**
+
 - `app/routes/insights.tsx` — Enhanced the existing insights page with two new sections:
   - **Spending Over Time chart** (`data-testid="spending-chart"`): an `AreaChart` (recharts via `ChartContainer`) showing the last 30 daily spending snapshots in the selected currency. Renders only when ≥ 2 snapshots exist for the selected currency.
   - **Top Subscriptions by Cost** (`data-testid="top-subscriptions"`): ranks the top 5 most expensive subscriptions by their monthly equivalent cost, showing each rank, icon, name, cost, and a relative progress bar. This surfaces the "fastest-growing / highest-cost segment" at a per-subscription level.
   - Also fixed a pre-existing non-null assertion lint error (`monthlyBudget!` → null-safe comparison).
 - `app/stores/preferences.ts` — No changes needed; `spendingSnapshots` (daily rollup, pruned to 365 days, per-currency) was already persisted and used as the chart data source.
+
 </details>
 
 ### 12) Budget and Overspend Alerts
+
 - Priority: P1
 - Why: Users need a target, not only a report.
 - Scope:
@@ -287,6 +322,7 @@ Size legend:
   - Trigger warning style when crossing thresholds (80%, 100%).
 
 ### 13) Subscription Lifecycle Metadata
+
 - Priority: P2
 - Why: Users need context when managing churn.
 - Scope:
@@ -296,6 +332,7 @@ Size legend:
   - Optional "contract end" date for annual plans.
 
 ### 14) Saved Views
+
 - Priority: P2
 - Why: Power users repeatedly apply the same filters.
 - Scope:
@@ -304,6 +341,7 @@ Size legend:
   - Include default views (All, Upcoming, Annual).
 
 ### 15) Notification System (Browser)
+
 - Priority: P1
 - Why: Prevent surprise charges.
 - Scope:
@@ -316,6 +354,7 @@ Size legend:
 ## L and XL Features (Large Initiatives)
 
 ### 16) Team or Family Shared Workspace
+
 - Priority: P3
 - Size: L to XL
 - Why: Households and teams share subscriptions.
@@ -325,6 +364,7 @@ Size legend:
   - Activity history (who changed what and when).
 
 ### 17) Storage Backend Abstraction
+
 - Priority: P2
 - Size: L
 - Why: Current JSON storage is simple but limits advanced use cases.
@@ -334,6 +374,7 @@ Size legend:
   - Add migration utility from file to DB.
 
 ### 18) Public API and Integrations
+
 - Priority: P3
 - Size: L
 - Why: Enable automation with external tools.
@@ -343,6 +384,7 @@ Size legend:
   - Integration starter set: Google Sheets, Notion, Slack.
 
 ### 19) CSV Statement Assist
+
 - Priority: P3
 - Size: XL
 - Why: Discovery of forgotten subscriptions is high value.
@@ -354,27 +396,32 @@ Size legend:
 ## Domain Classification (Cross-Cutting)
 
 ## Core UX
+
 - Upcoming payments panel.
 - Better empty state and templates.
 - Undo delete.
 - Saved views.
 
 ## Data Quality
+
 - Duplicate detection.
 - Row-level import validation.
 - Billing health warnings.
 
 ## Finance Intelligence
+
 - Insights/trends page.
 - Budgets and overspend alerts.
 - Category-level analysis.
 
 ## Reliability and Safety
+
 - Export reminders.
 - Import preview and dry run.
 - Optional encrypted backup export.
 
 ## Growth and Ecosystem
+
 - Team workspace.
 - Public API and webhooks.
 - Integrations.
@@ -382,6 +429,7 @@ Size legend:
 ## Engineering and Delivery Tracks
 
 ## Testing
+
 - Add unit tests for date roll-forward edge cases:
   - month-end transitions
   - leap year behavior
@@ -392,39 +440,46 @@ Size legend:
   - upcoming payments interactions
 
 ## Performance
+
 - Memoize derived filtered/sorted lists.
 - Add optional virtualization for very large subscription lists.
 - Defer heavy chart code to route-level lazy load.
 
 ## Accessibility
+
 - Add ARIA labels for icon-only actions.
 - Ensure full keyboard path for all dialogs and popovers.
 - Add color contrast checks in CI.
 
 ## Observability
+
 - Add lightweight telemetry hooks for local diagnostics (disabled by default).
 - Add client-side error boundaries with actionable recovery message.
 
 ## Suggested Milestones
 
 ### Milestone 1 (1 to 2 weeks)
+
 - Upcoming payments panel
 - Duplicate detection
 - Import validation report
 - Undo delete
 
 ### Milestone 2 (2 to 3 weeks)
+
 - Categories
 - Budget alerts
 - Notification settings
 - Billing health warnings
 
 ### Milestone 3 (3 to 5 weeks)
+
 - Insights page
 - Saved views
 - Lifecycle metadata
 
 ### Milestone 4 (later)
+
 - Team workspace exploration
 - Storage abstraction
 - API and integrations

@@ -1,158 +1,118 @@
 # Subs
 
-Open source subscription tracker built for people who want a fast, simple way to understand recurring costs.
+A private home for your recurring spending. See what you pay, what renews next, and what you could save—without connecting a bank account.
 
-Subs helps you log your subscriptions, view totals across currencies, and keep track of upcoming payments without sending your data to third-party services.
+Subs is a single-instance subscription tracker built with TanStack Start, React, shadcn/ui, Nitro, and an embedded SQLite database. One Bun process serves the application and its API; there is no separate database service.
 
-## Live Demo
+## Run locally
 
-Try it now: [subs.ajnart.fr](https://subs.ajnart.fr)
+Install [Bun](https://bun.sh/) 1.4.3 or newer, then:
 
-![Demo GIF](https://github.com/user-attachments/assets/ffb88333-6c4d-46c9-9ca7-49602106e5f1)
-
-## What You Can Do
-
-- Add, edit, and delete subscriptions
-- Track billing cycles (daily, weekly, monthly, yearly)
-- Show next payment date with automatic future-date calculation
-- Search, sort, and filter subscriptions
-- View totals in multiple currencies with conversion rates
-- Import and export your subscriptions as JSON
-- Use keyboard shortcuts for common actions
-- Use a responsive interface on desktop and mobile
-
-## Tech Stack
-
-- Remix + React
-- Tailwind CSS + shadcn/ui
-- Zustand for client-side state
-- Playwright for end-to-end tests
-- Biome for linting/formatting
-
-## Storage Options
-
-Subs supports two persistence modes:
-
-1. Browser storage
-2. Server-side JSON file storage
-
-The mode is controlled by `USE_LOCAL_STORAGE`.
-
-- `USE_LOCAL_STORAGE=true`: use browser local storage
-- `USE_LOCAL_STORAGE=false` (default): use server endpoint storage in `data/config.json`
-
-## Quick Start
-
-### Requirements
-
-- Node.js 20+
-- npm or Bun
-
-### Install
-
-Using npm:
-
-```bash
-npm install
-```
-
-Using Bun:
-
-```bash
+```sh
 bun install
-```
-
-### Run Development Server
-
-Using npm:
-
-```bash
-npm run dev
-```
-
-Using Bun:
-
-```bash
 bun run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+Open http://localhost:5173. On first use, copy the setup token from the server terminal and choose a six-digit PIN. The setup token proves that you control the server; it is not a default PIN. Subsequent visits use your PIN.
 
-## Scripts
-
-- `npm run dev` - start local development server
-- `npm run build` - create production build
-- `npm run start` - run production build
-- `npm run test` - run Playwright tests
-- `npm run test:ui` - open Playwright UI mode
-- `npm run typecheck` - TypeScript type checking
-- `npm run lint` - lint with Biome
-- `npm run format` - format with Biome
+Data is stored under `./data`. Never expose that directory as static files or commit its database to Git.
 
 ## Docker
 
-Run with Docker:
+Build this branch locally until the rewrite is published:
 
-```bash
-docker run -p 7574:7574 -v ./data:/app/data --name subs --rm ghcr.io/ajnart/subs
+```sh
+docker compose up --build -d
+docker compose logs subs
 ```
 
-Then open [http://localhost:7574](http://localhost:7574).
+Open http://localhost:7574 and complete setup with the token in the logs. The Compose file mounts `./data` at `/data`, keeping the database across container updates. The runtime runs as an unprivileged user and supports amd64 and arm64.
 
-### Docker Compose
+To build and run without Compose:
 
-```yaml
-services:
-  subs:
-    image: ghcr.io/ajnart/subs
-    container_name: subs
-    ports:
-      - "7574:7574"
-    restart: unless-stopped
-    volumes:
-      - ./data:/app/data
-    # environment:
-    #   - USE_LOCAL_STORAGE=true
+```sh
+docker build -t subs:local .
+docker run -d --name subs -p 7574:7574 -v "$(pwd)/data:/data" subs:local
+docker logs subs
 ```
 
-Start it:
+Use HTTPS through a reverse proxy before exposing Subs outside your trusted network. A short PIN is a lightweight access barrier, not a replacement for transport security or network access controls.
 
-```bash
-docker compose up -d
+## Your subscriptions
+
+- Add and edit subscriptions, billing cycles, renewal dates, categories, notes, and trial deadlines.
+- Pause or cancel tracking without deleting your records.
+- Search, filter, sort, and switch between cards and a table.
+- See upcoming renewals, a calendar, spending breakdowns, and a monthly budget.
+- Explore potential savings without changing your real subscriptions.
+- Export a portable backup and preview an import before changing existing data.
+- Choose a light, dark, or system theme.
+
+Starter services are optional shortcuts, not automatically added demo subscriptions. Their prices are yours to enter; Subs does not claim to know live service pricing.
+
+Monthly and yearly figures are normalized estimates, not a payment ledger. Paused and cancelled subscriptions are excluded from active spending. Currency conversion depends on public exchange-rate data; unavailable conversion must not be mistaken for zero spending.
+
+## Upgrade from Remix / Subs 2
+
+Back up your data before upgrading. This is a framework and persistence rewrite, not an in-place change to the old JSON storage service.
+
+1. Export JSON from the old application, or keep a copy of `data/config.json` from its mounted volume.
+2. Build and start the new application with a persistent data volume.
+3. Set your PIN, then use the import workflow to preview and restore your subscriptions.
+4. Verify your subscriptions, currency, and budget before removing the old installation.
+
+The importer accepts legacy subscription arrays and Zustand storage envelopes as well as the new versioned backup format. Browser-only data belongs to the old browser and origin; export it before changing domains or ports. The new server cannot reach another browser's local storage.
+
+The old `USE_LOCAL_STORAGE` setting and unrestricted `/api/storage/:key` endpoint are replaced by authenticated server persistence. New backups do not contain your PIN or login sessions. Retain your original backup until you have verified the migration.
+
+## Configuration
+
+| Variable           | Default                                  | Purpose                                                                     |
+| ------------------ | ---------------------------------------- | --------------------------------------------------------------------------- |
+| `DATA_DIR`         | `./data` (`/data` in Docker)             | Database directory, resolved when starting development or building Nitro    |
+| `PORT`             | `5173` in development, `7574` in Docker  | HTTP listening port                                                         |
+| `SUBS_SETUP_TOKEN` | Generated and logged for first-use setup | Optional operator-supplied setup token                                      |
+| `SUBS_ORIGIN`      | Request origin                           | Explicit public origin when required behind a proxy                         |
+| `DISABLE_AUTH`     | `false`                                  | Set to exactly `true` to disable PIN authentication on a trusted deployment |
+
+Authentication is enabled by default and applies to private API reads, writes, and backups—not just the interface. Treat setup tokens, session cookies, backups, and the database volume as sensitive. Do not put a real setup token into a committed Compose file.
+
+The supplied image uses `/data/subs.sqlite`. Mount your chosen host directory at `/data`; a runtime `DATA_DIR` or `SQLITE_PATH` override can select another writable database location.
+
+Set `SUBS_ORIGIN` to your public HTTPS origin when using a reverse proxy. Session cookies are HttpOnly and SameSite Strict, with Secure enabled for HTTPS; `SUBS_COOKIE_SECURE=true` explicitly enforces Secure cookies.
+
+## Recover a lost PIN
+
+PIN recovery is an operator-only maintenance command, not a public reset endpoint. Stop Subs and back up the entire data directory first. This clears access credentials and sessions, but leaves subscriptions and preferences intact:
+
+```sh
+docker compose stop subs
+docker compose run --rm --no-deps subs bun scripts/reset-pin.ts --confirm
+docker compose up -d subs
+docker compose logs subs
 ```
 
-## Keyboard Shortcuts
+Complete setup again using the operator token and choose a new PIN. For a local installation, stop the server and use `bun run reset-pin --confirm` with the same database environment settings as the server.
 
-- `n` - open Add Subscription
-- `/` - focus Search
-- `Ctrl/Cmd + e` - export JSON
-- `Ctrl/Cmd + i` - import JSON
-- `?` - open keyboard shortcuts dialog
-- `Escape` - close open dialog/popover
+## Privacy
 
-## Project Structure
+Subs does not connect to banks, scan email, execute payments, or send your subscription list to an AI service. The application does not automatically send subscription URLs to screenshot or favicon services. Public exchange-rate requests do not contain your subscription data.
 
-- `app/routes/_index.tsx` - main dashboard view
-- `app/components/` - UI and feature components
-- `app/store/subscriptionStore.ts` - subscription state and persistence
-- `app/utils/nextPaymentDate.ts` - billing cycle date logic
-- `tests/` - Playwright test suite
+## Development
 
-## Contributing
-
-Contributions are welcome.
-
-1. Fork and clone the repository.
-2. Create a feature branch.
-3. Run checks before opening a PR:
-
-```bash
-npm run typecheck
-npm run test
+```sh
+bun run lint
+bun run typecheck
+bun run build
+bun run test
 ```
 
-4. Open a pull request with a clear description of changes.
+The existing Playwright flows exercise the authenticated application and API against an isolated temporary database. They do not use your `data` directory. The production build starts with:
 
-## License
+```sh
+bun run start
+```
 
-MIT
+The exact shadcn preset is `b3rmZdYMye` (Nova, Phosphor icons, pointer cursors). The [Bold Wikipedia tweakcn theme](https://tweakcn.com/r/themes/cmlmpb3qp000004l5go47hzsv) is authoritative for the final colors, typography, radius, and chart tokens. Retained UI primitives are regenerated for this design system rather than copied from the old Remix application.
+
+The rewrite spec and individual tickets live in [`.scratch/rewrite/`](.scratch/rewrite/). Agent workflow configuration lives in [`docs/agents/`](docs/agents/), with project instructions in [`AGENTS.md`](AGENTS.md).

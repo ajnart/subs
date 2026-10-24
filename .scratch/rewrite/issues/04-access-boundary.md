@@ -1,7 +1,7 @@
 # 04 — Installation access boundary
 
 Status: ready-for-agent
-Progress: open
+Progress: claimed
 Type: task
 Blocked by: 03
 

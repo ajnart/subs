@@ -1,7 +1,7 @@
 # 23 — Container persistence and operations
 
 Status: ready-for-agent
-Progress: open
+Progress: claimed
 Type: task
 Blocked by: 06, 18, 22
 

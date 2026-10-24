@@ -1,7 +1,7 @@
 # 24 — Release verification and retirement
 
 Status: ready-for-agent
-Progress: open
+Progress: claimed
 Type: task
 Blocked by: 23
 

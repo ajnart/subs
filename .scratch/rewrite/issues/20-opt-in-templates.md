@@ -1,7 +1,7 @@
 # 20 — Opt-in Starter Templates
 
 Status: ready-for-agent
-Progress: open
+Progress: claimed
 Type: task
 Blocked by: 09, 19
 

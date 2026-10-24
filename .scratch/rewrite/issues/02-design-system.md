@@ -1,7 +1,7 @@
 # 02 — Regenerated design system
 
 Status: ready-for-agent
-Progress: open
+Progress: claimed
 Type: task
 Blocked by: 01
 

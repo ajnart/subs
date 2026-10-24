@@ -1,7 +1,7 @@
 # 15 — Upcoming commitments and calendar
 
 Status: ready-for-agent
-Progress: open
+Progress: claimed
 Type: task
 Blocked by: 10, 14
 

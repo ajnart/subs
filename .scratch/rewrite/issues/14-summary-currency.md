@@ -1,7 +1,7 @@
 # 14 — Spending summary and Currency honesty
 
 Status: ready-for-agent
-Progress: open
+Progress: claimed
 Type: task
 Blocked by: 05, 11
 

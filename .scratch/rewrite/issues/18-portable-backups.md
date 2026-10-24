@@ -1,7 +1,7 @@
 # 18 — Portable versioned Backups
 
 Status: ready-for-agent
-Progress: open
+Progress: claimed
 Type: task
 Blocked by: 06, 07
 

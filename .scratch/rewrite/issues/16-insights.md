@@ -1,7 +1,7 @@
 # 16 — Spending and Category insights
 
 Status: ready-for-agent
-Progress: open
+Progress: claimed
 Type: task
 Blocked by: 12, 14
 

@@ -1,7 +1,7 @@
 # 03 — Durable Collection schema
 
 Status: ready-for-agent
-Progress: open
+Progress: claimed
 Type: task
 Blocked by: 01
 

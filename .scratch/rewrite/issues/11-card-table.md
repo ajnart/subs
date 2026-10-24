@@ -1,7 +1,7 @@
 # 11 — Service cards and table
 
 Status: ready-for-agent
-Progress: open
+Progress: claimed
 Type: task
 Blocked by: 08, 10
 

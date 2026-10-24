@@ -1,7 +1,7 @@
 # 06 — Legacy migration boundary
 
 Status: ready-for-agent
-Progress: open
+Progress: claimed
 Type: task
 Blocked by: 04, 05
 

@@ -1,7 +1,7 @@
 # 08 — Private responsive shell
 
 Status: ready-for-agent
-Progress: open
+Progress: claimed
 Type: task
 Blocked by: 02, 04, 07
 

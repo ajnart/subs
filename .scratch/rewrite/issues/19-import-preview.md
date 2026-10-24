@@ -1,7 +1,7 @@
 # 19 — Import Preview and duplicate decisions
 
 Status: ready-for-agent
-Progress: open
+Progress: claimed
 Type: task
 Blocked by: 08, 18
 

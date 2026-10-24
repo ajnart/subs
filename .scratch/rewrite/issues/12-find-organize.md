@@ -1,7 +1,7 @@
 # 12 — Search, filters, and sort
 
 Status: ready-for-agent
-Progress: open
+Progress: claimed
 Type: task
 Blocked by: 11
 

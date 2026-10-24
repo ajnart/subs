@@ -1,7 +1,7 @@
 # 17 — Budget and Savings Scenarios
 
 Status: ready-for-agent
-Progress: open
+Progress: claimed
 Type: task
 Blocked by: 16
 

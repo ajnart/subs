@@ -95,7 +95,7 @@ Replace the running application with a responsive, service-centered Subs experie
 ### Money, lifecycle, and recurrence
 
 - Persist Price as integer minor units plus Currency; reject invalid precision, negative or non-finite values, unsupported currencies, and unsafe integer ranges. Zero-cost Subscriptions are allowed. Currency metadata handles zero-, two-, and three-decimal denominations correctly.
-- Daily and weekly Monthly Equivalents use 365/12 and 52/12; yearly uses 1/12 and monthly uses 1. Annual Equivalents use 365, 52, 1, and 12 respectively. Retain precision during calculation and round only at the displayed/exported denomination boundary; label these as estimates, not actual transactions.
+- Daily and weekly Monthly Equivalents use 365/12 and 52/12; quarterly uses 1/3, yearly uses 1/12, and monthly uses 1. Annual Equivalents use 365, 52, 4, 1, and 12 respectively. Retain precision during calculation and round only at the displayed/exported denomination boundary; label these as estimates, not actual transactions.
 - Ongoing projections include active records only. Paused and cancelled records remain searchable and editable; lifecycle changes do not contact providers or execute payments. Trial Deadline is optional and does not implicitly advance lifecycle.
 - Due Dates are date-only values. Monthly and yearly recurrence retain the original Billing Anchor and clamp invalid dates to the last day of the target month, restoring the anchor when possible. Daily and weekly recurrence advances calendar days, not elapsed UTC milliseconds. Missing dates remain missing.
 - Distinguish overdue tracked dates from upcoming projections; display recurrence-derived dates honestly and use the same recurrence rules for cards, upcoming lists, and calendar.
@@ -108,7 +108,7 @@ Replace the running application with a responsive, service-centered Subs experie
 - Apply the Bold Wikipedia theme after the preset, with its tokens authoritative over colors, fonts, radius, charts, and supplied ancillary tokens in both modes. Retain preset structure and APIs. Keep the Subs name and service-centered quick entry, not the old layout pixel for pixel.
 - Provide cards/table, search, Category/Lifecycle State filters, stable sort, bulk selection, upcoming list, calendar, insights, Budget, and Savings Scenarios. Clearly distinguish Collection-wide summaries from filtered results; selections track visible identifiers and destructive actions name their scope.
 - Build keyboard-accessible dialogs, focus restoration, meaningful empty/loading/error states, retryable failed saves, and narrow-screen layouts. Shortcuts ignore editable controls and respect modal focus.
-- Start empty. Starter Templates are explicitly opted into and always reviewed before save; template pricing is a suggested starting value, not a verified current provider price.
+- Start empty. Starter Templates are explicitly opted into and always reviewed before save; the user supplies their own price rather than relying on an unverified current provider price.
 - Use bundled/local assets, initials, or neutral fallbacks by default. Service URLs are user-activated safe external links; do not request remote favicons, URL previews, or telemetry that discloses the Collection by default.
 
 ### Migration, imports, and history

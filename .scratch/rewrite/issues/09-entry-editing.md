@@ -1,7 +1,7 @@
 # 09 — Quick entry and editing
 
 Status: ready-for-agent
-Progress: open
+Progress: claimed
 Type: task
 Blocked by: 08
 

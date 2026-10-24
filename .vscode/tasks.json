@@ -2,15 +2,15 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"type": "npm",
-			"script": "build",
+			"type": "shell",
+			"command": "bun run build",
 			"group": {
 				"kind": "build",
 				"isDefault": true
 			},
 			"problemMatcher": [],
 			"label": "bun: build",
-			"detail": "remix vite:build"
+			"detail": "Build the TanStack Start and Nitro application"
 		}
 	]
 }
