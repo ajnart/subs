@@ -10,7 +10,7 @@ A new private Collection runtime, a simpler subscription-first home, and a brows
 - Search commands and subscriptions with ⌘/Ctrl K, navigate cards by keyboard, and use opt-in interaction sounds and best-effort open-browser reminders.
 - Private self-hosting uses one Bun container and a durable SQLite volume, with six-digit PIN protection, expiring sessions, guarded writes and explicit import previews.
 - Exact currency precision, anchored renewal dates, lifecycle tracking, calendar, budgets, savings scenarios and recorded price changes.
-- The static demo uses only browser storage, with import/export and reset; Cloudflare Pages direct upload through Wrangler is the supported demo deployment path. Repository configuration disables legacy Vercel Git deployments without deleting the external project.
+- The static demo uses only browser storage, with import/export and reset; manual Cloudflare MCP/Wrangler Pages publishing is the supported demo deployment path. Repository configuration disables legacy Vercel Git deployments without deleting the external project.
 
 See the [feature overview, shortcuts, and limits](https://github.com/ajnart/subs/blob/v3.0.0/docs/features.md).
 
@@ -20,7 +20,7 @@ Try the verified Cloudflare Pages demo at [subs.ajnart.dev](https://subs.ajnart.
 
 This PIN-free demo is a separate `DEMO_MODE` browser build, not a private installation with `DISABLE_AUTH`. It needs no Pages Functions, backend, or bindings. Ordinary local and Docker builds never publish.
 
-Manual Pages publication is verified. Automated Pages deployment remains blocked because repository Actions secrets are empty; CI requires a scoped `CLOUDFLARE_API_TOKEN` with **Account → Cloudflare Pages → Edit** permission. Working local OAuth or MCP authentication does not supply that CI credential.
+Publishing the demo is a manual, credentialed operation: the supported flow is the Cloudflare MCP Pages deployment, with `bun run deploy:demo` as the local Wrangler fallback. The Checks workflow validates only and does not deploy, so no `CLOUDFLARE_API_TOKEN` Actions secret is required.
 
 ### Upgrade from Subs 2
 

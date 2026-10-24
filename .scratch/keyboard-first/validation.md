@@ -54,4 +54,4 @@ Disposable validation artifacts live in the approved OpenCode temporary director
 
 ## Remaining external prerequisite
 
-Automatic demo deployment still needs the repository `CLOUDFLARE_API_TOKEN` Actions secret. `gh secret list --repo ajnart/subs --json name` returned an empty list. The existing OpenChamber todo `7e649a52-0cbb-4d23-b06a-d9c4e702f8a1` remains open; local Wrangler OAuth is not copied into CI. See [rewrite issue 27](../rewrite/issues/27-demo-deployment.md).
+Demo publishing is manual and credentialed: the supported flow is a Cloudflare MCP/Wrangler Pages operation and the Checks workflow validates only, so no repository `CLOUDFLARE_API_TOKEN` Actions secret is required. See [rewrite issue 27](../rewrite/issues/27-demo-deployment.md).

@@ -67,7 +67,7 @@ The coordinator claims this release through completion. GPT-6.1 Sol implementati
 
 ## Release versus exploration
 
-Mandatory release work is tickets 01–20 and 22–27. Ticket 21 resolves the conditional Price Change enhancement: ship it only with actual persisted backend support, otherwise document deferral and omit its controls. Tickets 01–26 are now resolved with implementation evidence; 21 is implemented, not deferred. Ticket 27 remains claimed because automatic production deployment needs an external Actions secret. The dependency map alone is never proof of completion.
+Mandatory release work is tickets 01–20 and 22–27. Ticket 21 resolves the conditional Price Change enhancement: ship it only with actual persisted backend support, otherwise document deferral and omit its controls. Tickets 01–26 are now resolved with implementation evidence; 21 is implemented, not deferred. Ticket 27 is resolved: the demo is published manually through the supported Cloudflare MCP/Wrangler flow, and no automatic Actions deployment is configured. The dependency map alone is never proof of completion.
 
 Future exploratory candidates, not release commitments: provider price monitoring, a verified FX feed, background reminders/push, offline mutation synchronization, bank/email integration, multiple Collections or users, and distributed deployment. These require separate scoping and security decisions. Marketing and empty states must not imply they run today.
 
@@ -79,7 +79,7 @@ Future exploratory candidates, not release commitments: provider price monitorin
 - Historical legacy records can contain ambiguous money precision or missing dates. Preview rather than silently infer unsupported history.
 - Actual recorded Price Changes are delivered and survive restart; portable JSON excludes that history and full-volume snapshots retain it.
 - Theme endpoint and upstream guidance are live documents; record selected package versions and retain reviewed skill contents rather than treating latest as a reproducible build.
-- Automatic demo deployment is configured but not activated: `CLOUDFLARE_API_TOKEN` was absent from repository Actions secrets at final verification. Local OAuth successfully publishes, but is not suitable as a durable CI secret.
+- Demo publishing is manual and credentialed by design: the supported flow is a Cloudflare MCP/Wrangler Pages deployment, and the Checks workflow validates only. No `CLOUDFLARE_API_TOKEN` Actions secret is required or configured.
 
 ## Completion evidence
 
@@ -111,7 +111,7 @@ Future exploratory candidates, not release commitments: provider price monitorin
 - [24 — Release verification](issues/24-release-verification.md): final lint/typecheck, 27/27 existing tests and both builds pass; review findings fixed.
 - [25 — Visual polish](issues/25-visual-polish.md): all three P2 review findings plus footer nit fixed and recaptured; Hallmark static exceptions remain explicit.
 - [26 — Static demo](issues/26-static-demo.md): API-blocked persistence, isolated reset/corrupt recovery and static build pass.
-- [27 — Deployment/screenshots](issues/27-demo-deployment.md): final demo published and HTTPS assets verified. GitHub application and Docker checks passed for implementation commit `aa70c37` on push and PR #50; automatic production deployment remains blocked on the scoped Actions secret.
+- [27 — Deployment/screenshots](issues/27-demo-deployment.md): demo published and HTTPS assets verified; publishing is the supported manual Cloudflare MCP/Wrangler flow and Checks validates only. GitHub application and Docker checks passed for implementation commit `aa70c37` on push and PR #50.
 
 ### Historical pre-cutover Pages release follow-up
 
@@ -125,4 +125,4 @@ Future exploratory candidates, not release commitments: provider price monitorin
 - Registered `subs.ajnart.dev` as a Pages domain (ID prefix `9dfced2f`), detached only its old Worker custom-domain binding (ID prefix `3a37d7`), and created the CNAME (record ID prefix `4877c624`) to `subs-demo.pages.dev`, proxied with TTL 1. Unrelated Worker resources were not removed.
 - https://subs.ajnart.dev is live with a valid certificate. HTML, favicon, JS, CSS, and adapter bytes match the tested build. The live browser showed nine cards, no PIN, and zero API requests; adding two plans priced at zero and 12.34 produced eleven cards and persisted after reload.
 - The earlier 17:46 pending-validation snapshot is superseded: Pages domain status, verification and validation are all active; canonical HTTPS and the published artifact are verified.
-- Repository Actions secrets remain `[]`. Manual Pages publication is verified; automated Pages CI remains blocked on the scoped token. Publish the requested `v3.0.0` against the exact merged commit after the final PR merges, without claiming automatic deployment.
+- Demo publishing is intentionally manual: the supported flow is a Cloudflare MCP/Wrangler Pages deployment, and the Checks workflow validates without deploying. No scoped Actions token is required. `v3.0.0` was published against the exact merged commit without claiming automatic deployment.

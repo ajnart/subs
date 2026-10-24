@@ -77,11 +77,11 @@ bun run preview:demo
 
 Preview the built static site with Wrangler Pages at http://127.0.0.1:4174. Use `bun run dev:demo` for Vite development at http://127.0.0.1:5174.
 
-`bun run deploy:demo` builds the demo and directly uploads `dist/demo` to Cloudflare Pages with `--branch main`. Root `wrangler.jsonc` sets `pages_build_output_dir`; there are no Pages Functions, backend, or bindings. Ordinary local and Docker builds never publish.
+Publishing the demo is a manual, credentialed step. The supported flow is the Cloudflare MCP Pages deployment against the `subs-demo` project; `bun run deploy:demo` remains as a local Wrangler fallback that builds the demo and directly uploads `dist/demo` to Cloudflare Pages with `--branch main`. Root `wrangler.jsonc` sets `pages_build_output_dir`; there are no Pages Functions, backend, or bindings. Ordinary local and Docker builds never publish.
 
 The Cloudflare Pages demo is live at [subs.ajnart.dev](https://subs.ajnart.dev), its only canonical hostname, with verified HTTPS and no PIN or backend. It is also available at [subs-demo.pages.dev](https://subs-demo.pages.dev). Browser data is separate for each hostname; export/import a backup to move demo edits.
 
-The Checks workflow gates `main` and explicit manual Pages deployments on application and Docker checks. It requires a `CLOUDFLARE_API_TOKEN` Actions secret scoped to the configured account with **Account → Cloudflare Pages → Edit** permission. Manual Pages publication is verified, but repository Actions secrets remain empty: automatic deployment is blocked, and missing credentials fail before publishing. Local Wrangler OAuth and authenticated MCP access do not enable CI deployment.
+The Checks workflow validates `main` and every push or pull request on application and Docker checks. It does not deploy: publishing the demo is a manual, credentialed Cloudflare MCP operation, so no Actions secret or automatic upload is configured. Local Wrangler OAuth and MCP authentication are the supported publishing credentials.
 
 ## Configuration
 

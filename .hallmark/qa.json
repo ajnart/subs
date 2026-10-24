@@ -58,7 +58,7 @@
     "Automated accessibility checks and focused keyboard/contrast review are not a complete WCAG conformance certification"
   ],
   "remainingExternalWork": [
-    "Automatic production demo deployment requires the repository CLOUDFLARE_API_TOKEN Actions secret; it was absent at final verification"
+    "Demo publishing is a manual, credentialed Cloudflare MCP/Wrangler Pages operation; the Checks workflow validates only, so no CLOUDFLARE_API_TOKEN Actions secret is required"
   ],
   "browserChecklist": [
     "320px and 375px: header/nav, demo reset, search/filter controls, card action targets, PIN slots and form disclosures fit without page overflow",

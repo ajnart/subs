@@ -1,11 +1,11 @@
-# 27 — Automatic demo deployment and screenshots
+# 27 — Demo deployment and screenshots
 
-Status: ready-for-agent
+Status: resolved
 Progress: claimed
 Type: task
 Blocked by: 23, 24, 26
 
-Current blocker: scoped Cloudflare Pages Edit Actions token. Domain access and manual publication are verified; automatic publication is not yet proven.
+Resolution: the demo is published manually through the supported Cloudflare MCP/Wrangler Pages flow. Automatic token-dependent CI deployment was removed as an obsolete publishing mode; Checks now validates only. Domain access and manual publication are verified.
 
 ## Outcome
 
@@ -13,9 +13,8 @@ Publish the validated static demo at subs.ajnart.dev as its only canonical hostn
 
 ## Acceptance criteria
 
-- Wrangler deploys the static artifact at the requested domain without a backend.
-- Successful release builds automatically deploy with scoped credentials kept out of Git; local and Docker builds do not publish.
-- CI validates lint, typecheck, both builds, and relevant existing regression flows; Docker builds and persists data across restart.
+- Wrangler or the Cloudflare MCP deploys the static artifact at the requested domain without a backend; publishing is a manual credentialed step and ordinary local and Docker builds do not publish.
+- CI validates lint, typecheck, both builds, and relevant existing regression flows without deploying; Docker builds and persists data across restart.
 - Current desktop/mobile screenshots accompany a short README with practical setup, migration, and demo instructions.
 - Record actual deployment URL, CI outcome, runtime memory, and any credential blocker honestly.
 
@@ -45,4 +44,4 @@ Latest user correction supersedes the earlier singular-primary request: only `su
 
 MCP authentication now works and verified account `71a8e70b7b1e301fca750fd6c6ae1f1d`, project `subs-demo`, main `328902e`, and deployment `b2da0cfb` returning HTTP 200. The Pages domain was registered, only its old Worker binding was detached, and a proxied CNAME with TTL 1 now points `subs.ajnart.dev` to `subs-demo.pages.dev`. Canonical HTTPS has a valid certificate; HTML, favicon, JS, CSS, and adapter bytes match the tested build. The browser showed nine cards, no PIN, and zero API requests. Adding two plans priced at zero and 12.34 produced eleven cards, and reload preserved them.
 
-The 17:46 pending-validation snapshot is superseded: Pages domain status, verification and validation are now all active, with live HTTPS verified. Repository Actions secrets remain empty: manual Pages publication is verified, while automated deployment remains blocked by the absent scoped token. This ticket remains claimed only for that automation requirement; the user requested `v3.0.0` publication after the final PR merges.
+The 17:46 pending-validation snapshot is superseded: Pages domain status, verification and validation are now all active, with live HTTPS verified. Manual Pages publication is verified. This ticket is resolved by the user-directed publication-mode change: the supported flow is a manual Cloudflare MCP/Wrangler Pages deployment, the automatic token-dependent `deploy-demo` job and its `deploy_demo` input were removed from Checks, and no scoped Actions token is required. `v3.0.0` was published against the exact merged commit `76eb47ca7d5df8778b69d0f78cf479dc63da19d5`.
