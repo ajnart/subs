@@ -1,32 +1,13 @@
 import { CalendarCheck, CalendarClock } from 'lucide-react'
 import { Button } from '~/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card'
-import type { BillingCycle, Subscription } from '~/store/subscriptionStore'
-import { calculateNextPaymentDate } from '~/utils/nextPaymentDate'
+import type { Subscription } from '~/store/subscriptionStore'
+import { advancePaymentDate, calculateNextPaymentDate } from '~/utils/nextPaymentDate'
 
 interface UpcomingPaymentsPanelProps {
   subscriptions: Subscription[]
   rates: Record<string, number> | null
   onMarkPaid: (id: string, nextDate: string) => void
-}
-
-function advanceByOneCycle(dateStr: string, cycle: BillingCycle): string {
-  const d = new Date(dateStr)
-  switch (cycle) {
-    case 'daily':
-      d.setDate(d.getDate() + 1)
-      break
-    case 'weekly':
-      d.setDate(d.getDate() + 7)
-      break
-    case 'monthly':
-      d.setMonth(d.getMonth() + 1)
-      break
-    case 'yearly':
-      d.setFullYear(d.getFullYear() + 1)
-      break
-  }
-  return d.toISOString().split('T')[0]
 }
 
 function getUpcomingSubscriptions(
@@ -42,7 +23,7 @@ function getUpcomingSubscriptions(
   for (const sub of subscriptions) {
     if (!sub.showNextPayment || !sub.billingCycle) continue
 
-    const dateStr = calculateNextPaymentDate(sub.billingCycle, sub.nextPaymentDate)
+    const dateStr = calculateNextPaymentDate(sub.billingCycle, sub.nextPaymentDate, sub.renewalDayOfMonth)
     if (!dateStr) continue
 
     const nextDate = new Date(dateStr)
@@ -70,7 +51,7 @@ function PaymentRow({
   const handleMarkPaid = () => {
     if (!sub.billingCycle) return
     const currentDateStr = nextDate.toISOString().split('T')[0]
-    const advanced = advanceByOneCycle(currentDateStr, sub.billingCycle)
+    const advanced = advancePaymentDate(currentDateStr, sub.billingCycle, sub.renewalDayOfMonth)
     onMarkPaid(sub.id, advanced)
   }
 

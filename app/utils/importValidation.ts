@@ -72,6 +72,16 @@ function validateRow(raw: unknown, index: number): RowValidationResult {
     }
   }
 
+  // renewalDayOfMonth – optional original monthly schedule day
+  if (
+    row.renewalDayOfMonth !== undefined &&
+    (!Number.isInteger(row.renewalDayOfMonth) ||
+      (row.renewalDayOfMonth as number) < 1 ||
+      (row.renewalDayOfMonth as number) > 31)
+  ) {
+    errors.push('renewalDayOfMonth must be an integer from 1 to 31')
+  }
+
   // showNextPayment – optional boolean
   if (row.showNextPayment !== undefined && typeof row.showNextPayment !== 'boolean') {
     errors.push('showNextPayment must be a boolean')
@@ -103,6 +113,7 @@ function validateRow(raw: unknown, index: number): RowValidationResult {
     ...(row.icon !== undefined ? { icon: row.icon as string } : {}),
     ...(row.billingCycle !== undefined ? { billingCycle: row.billingCycle as Subscription['billingCycle'] } : {}),
     ...(row.nextPaymentDate !== undefined ? { nextPaymentDate: row.nextPaymentDate as string } : {}),
+    ...(row.renewalDayOfMonth !== undefined ? { renewalDayOfMonth: row.renewalDayOfMonth as number } : {}),
     ...(row.showNextPayment !== undefined ? { showNextPayment: row.showNextPayment as boolean } : {}),
     ...(row.category !== undefined ? { category: row.category as Subscription['category'] } : {}),
   }

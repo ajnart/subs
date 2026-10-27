@@ -30,6 +30,7 @@ export interface Subscription {
   icon?: string
   billingCycle?: BillingCycle
   nextPaymentDate?: string // ISO date string
+  renewalDayOfMonth?: number // Original day for monthly renewals after a month-end clamp
   showNextPayment?: boolean
   category?: SubscriptionCategory
 }

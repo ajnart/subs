@@ -21,6 +21,7 @@ import useSubscriptionStore, {
   type BillingCycle,
   type Subscription,
 } from '~/store/subscriptionStore'
+import { getRenewalDayOfMonth } from '~/utils/nextPaymentDate'
 
 export const meta: MetaFunction = () => {
   return [
@@ -174,7 +175,15 @@ const SubscriptionRow = memo(function SubscriptionRow({
               <Label htmlFor={`billingCycle-${draft.id}`}>Billing Cycle (optional)</Label>
               <Select
                 value={draft.billingCycle ?? ''}
-                onValueChange={(v) => onChange({ billingCycle: (v || undefined) as BillingCycle | undefined })}
+                onValueChange={(v) => {
+                  const billingCycle = (v || undefined) as BillingCycle | undefined
+                  onChange({
+                    billingCycle,
+                    ...(billingCycle === 'monthly' && draft.renewalDayOfMonth === undefined
+                      ? { renewalDayOfMonth: getRenewalDayOfMonth(draft.nextPaymentDate) }
+                      : {}),
+                  })
+                }}
               >
                 <SelectTrigger id={`billingCycle-${draft.id}`} className="mt-1">
                   <SelectValue placeholder="Select billing cycle" />
@@ -242,7 +251,13 @@ const SubscriptionRow = memo(function SubscriptionRow({
                           mode="single"
                           selected={draft.nextPaymentDate ? new Date(draft.nextPaymentDate) : undefined}
                           onSelect={(date) => {
-                            onChange({ nextPaymentDate: date?.toISOString().split('T')[0] })
+                            const nextDate = date?.toISOString().split('T')[0]
+                            onChange({
+                              nextPaymentDate: nextDate,
+                              ...(draft.billingCycle === 'monthly'
+                                ? { renewalDayOfMonth: getRenewalDayOfMonth(nextDate) }
+                                : {}),
+                            })
                             setCalendarOpen(false)
                           }}
                           initialFocus
@@ -310,6 +325,7 @@ export default function Manage() {
       'icon',
       'billingCycle',
       'nextPaymentDate',
+      'renewalDayOfMonth',
       'showNextPayment',
       'category',
     ]

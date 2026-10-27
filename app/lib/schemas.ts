@@ -8,6 +8,7 @@ export const subscriptionSchema = z.object({
   icon: z.string().optional(),
   billingCycle: z.enum(['monthly', 'yearly', 'weekly', 'daily']).optional(),
   nextPaymentDate: z.string().optional(),
+  renewalDayOfMonth: z.number().int().min(1).max(31).optional(),
   showNextPayment: z.boolean().optional(),
   category: z.string().optional(),
 })

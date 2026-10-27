@@ -11,7 +11,9 @@ export type CycleOption = (typeof CYCLE_OPTIONS)[number]
 
 function getNextPaymentTimestamp(sub: Subscription): number {
   if (!sub.billingCycle) return Number.MAX_SAFE_INTEGER
-  const date = new Date(calculateNextPaymentDate(sub.billingCycle, sub.nextPaymentDate) ?? Number.MAX_SAFE_INTEGER)
+  const date = new Date(
+    calculateNextPaymentDate(sub.billingCycle, sub.nextPaymentDate, sub.renewalDayOfMonth) ?? Number.MAX_SAFE_INTEGER,
+  )
   const ts = date.getTime()
   return Number.isNaN(ts) ? Number.MAX_SAFE_INTEGER : ts
 }

@@ -61,7 +61,7 @@ const SubscriptionCard = memo(function SubscriptionCard({
       return null
     }
 
-    const calculatedDate = calculateNextPaymentDate(billingCycle, nextPaymentDate)
+    const calculatedDate = calculateNextPaymentDate(billingCycle, nextPaymentDate, subscription.renewalDayOfMonth)
     if (!calculatedDate) {
       return null
     }

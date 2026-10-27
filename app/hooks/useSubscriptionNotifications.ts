@@ -48,13 +48,13 @@ function checkAndNotify(subscriptions: Subscription[], leadTimes: number[], dige
 
   for (const sub of subscriptions) {
     if (!sub.showNextPayment || !sub.billingCycle) continue
-    const nextDate = calculateNextPaymentDate(sub.billingCycle, sub.nextPaymentDate)
+    const nextDate = calculateNextPaymentDate(sub.billingCycle, sub.nextPaymentDate, sub.renewalDayOfMonth)
     if (!nextDate) continue
     const next = new Date(nextDate)
     next.setHours(0, 0, 0, 0)
     const daysUntil = Math.ceil((next.getTime() - today.getTime()) / (1000 * 60 * 60 * 24))
 
-    if (leadTimes.includes(daysUntil as any)) {
+    if (leadTimes.includes(daysUntil)) {
       upcomingPayments.push({ name: sub.name, daysUntil, date: nextDate })
     }
   }

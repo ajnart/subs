@@ -22,7 +22,7 @@ import {
   type Subscription,
   type SubscriptionTemplate,
 } from '~/store/subscriptionStore'
-import { initializeNextPaymentDate } from '~/utils/nextPaymentDate'
+import { getRenewalDayOfMonth, initializeNextPaymentDate } from '~/utils/nextPaymentDate'
 import { IconUrlInput } from './IconFinder'
 import SubscriptionCard from './SubscriptionCard'
 
@@ -58,9 +58,12 @@ const subscriptionSchema = z.object({
   icon: z.string().optional(),
   billingCycle: z.enum(['monthly', 'yearly', 'weekly', 'daily']).optional(),
   nextPaymentDate: z.string().optional(),
+  renewalDayOfMonth: z.number().int().min(1).max(31).optional(),
   showNextPayment: z.boolean().optional(),
-  category: z.string().optional(),
+  category: z.enum(SUBSCRIPTION_CATEGORIES).optional(),
 })
+
+type SubscriptionFormValues = z.infer<typeof subscriptionSchema>
 
 const EditSubscriptionModal: React.FC<EditSubscriptionModalProps> = ({
   isOpen,
@@ -80,7 +83,7 @@ const EditSubscriptionModal: React.FC<EditSubscriptionModalProps> = ({
     reset,
     setValue,
     formState: { errors },
-  } = useForm({
+  } = useForm<SubscriptionFormValues>({
     resolver: zodResolver(subscriptionSchema),
     defaultValues: {
       name: '',
@@ -90,14 +93,22 @@ const EditSubscriptionModal: React.FC<EditSubscriptionModalProps> = ({
       icon: '',
       billingCycle: undefined as BillingCycle | undefined,
       nextPaymentDate: undefined as string | undefined,
+      renewalDayOfMonth: undefined as number | undefined,
       showNextPayment: false,
-      category: undefined as string | undefined,
+      category: undefined as Subscription['category'] | undefined,
     },
   })
 
   useEffect(() => {
     if (editingSubscription) {
-      reset(editingSubscription)
+      reset({
+        ...editingSubscription,
+        renewalDayOfMonth:
+          editingSubscription.renewalDayOfMonth ??
+          (editingSubscription.billingCycle === 'monthly'
+            ? getRenewalDayOfMonth(editingSubscription.nextPaymentDate)
+            : undefined),
+      })
     } else if (templateValues) {
       reset({
         name: templateValues.name,
@@ -107,6 +118,7 @@ const EditSubscriptionModal: React.FC<EditSubscriptionModalProps> = ({
         icon: '',
         billingCycle: templateValues.billingCycle,
         nextPaymentDate: undefined,
+        renewalDayOfMonth: undefined,
         showNextPayment: false,
         category: templateValues.category,
       })
@@ -119,6 +131,7 @@ const EditSubscriptionModal: React.FC<EditSubscriptionModalProps> = ({
         icon: '',
         billingCycle: undefined,
         nextPaymentDate: undefined,
+        renewalDayOfMonth: undefined,
         showNextPayment: false,
         category: undefined,
       })
@@ -132,8 +145,10 @@ const EditSubscriptionModal: React.FC<EditSubscriptionModalProps> = ({
     if (watchedFields.billingCycle && watchedFields.showNextPayment) {
       const currentDate = watchedFields.nextPaymentDate
       if (!currentDate) {
-        const newDate = initializeNextPaymentDate(watchedFields.billingCycle)
+        const now = new Date()
+        const newDate = initializeNextPaymentDate(watchedFields.billingCycle, now)
         setValue('nextPaymentDate', newDate)
+        setValue('renewalDayOfMonth', watchedFields.billingCycle === 'monthly' ? now.getUTCDate() : undefined)
       }
     }
   }, [watchedFields.billingCycle, watchedFields.showNextPayment, setValue])
@@ -147,12 +162,19 @@ const EditSubscriptionModal: React.FC<EditSubscriptionModalProps> = ({
     icon: watchedFields.icon,
     billingCycle: watchedFields.billingCycle,
     nextPaymentDate: watchedFields.nextPaymentDate,
+    renewalDayOfMonth: watchedFields.renewalDayOfMonth,
     showNextPayment: watchedFields.showNextPayment,
     category: (watchedFields.category as Subscription['category']) ?? undefined,
   }
 
   const onSubmit = (data: Omit<Subscription, 'id'>) => {
-    onSave(data)
+    onSave({
+      ...data,
+      renewalDayOfMonth:
+        data.billingCycle === 'monthly'
+          ? (data.renewalDayOfMonth ?? getRenewalDayOfMonth(data.nextPaymentDate))
+          : undefined,
+    })
     onClose()
   }
 
@@ -351,7 +373,14 @@ const EditSubscriptionModal: React.FC<EditSubscriptionModalProps> = ({
                                 mode="single"
                                 selected={field.value ? new Date(field.value) : undefined}
                                 onSelect={(date) => {
-                                  field.onChange(date?.toISOString().split('T')[0])
+                                  const nextDate = date?.toISOString().split('T')[0]
+                                  field.onChange(nextDate)
+                                  setValue(
+                                    'renewalDayOfMonth',
+                                    watchedFields.billingCycle === 'monthly'
+                                      ? getRenewalDayOfMonth(nextDate)
+                                      : undefined,
+                                  )
                                   setCalendarOpen(false)
                                 }}
                                 disabled={(date) => date < new Date(new Date().setHours(0, 0, 0, 0))}

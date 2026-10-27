@@ -17,7 +17,7 @@ import { cn } from '~/lib/utils'
 import type { loader } from '~/routes/_index'
 import { usePreferencesStore } from '~/store/preferences'
 import { type BillingCycle, SUBSCRIPTION_CATEGORIES, type Subscription } from '~/store/subscriptionStore'
-import { initializeNextPaymentDate } from '~/utils/nextPaymentDate'
+import { getRenewalDayOfMonth, initializeNextPaymentDate } from '~/utils/nextPaymentDate'
 import { IconUrlInput } from './IconFinder'
 
 function getCurrencySymbol(currency: string): string {
@@ -50,8 +50,9 @@ const subscriptionSchema = z.object({
   domain: z.string().url('Invalid URL'),
   billingCycle: z.enum(['monthly', 'yearly', 'weekly', 'daily']).optional(),
   nextPaymentDate: z.string().optional(),
+  renewalDayOfMonth: z.number().int().min(1).max(31).optional(),
   showNextPayment: z.boolean().optional(),
-  category: z.string().optional(),
+  category: z.enum(SUBSCRIPTION_CATEGORIES).optional(),
 })
 
 type SubscriptionFormValues = z.infer<typeof subscriptionSchema>
@@ -90,6 +91,7 @@ export const AddSubscriptionPopover: React.FC<AddSubscriptionPopoverProps> = ({
       domain: '',
       billingCycle: undefined,
       nextPaymentDate: undefined,
+      renewalDayOfMonth: undefined,
       showNextPayment: false,
       category: undefined,
     },
@@ -115,14 +117,22 @@ export const AddSubscriptionPopover: React.FC<AddSubscriptionPopoverProps> = ({
     if (billingCycleValue && showNextPaymentValue) {
       const currentDate = nextPaymentDateValue
       if (!currentDate) {
-        const newDate = initializeNextPaymentDate(billingCycleValue)
+        const now = new Date()
+        const newDate = initializeNextPaymentDate(billingCycleValue, now)
         setValue('nextPaymentDate', newDate)
+        setValue('renewalDayOfMonth', billingCycleValue === 'monthly' ? now.getUTCDate() : undefined)
       }
     }
   }, [billingCycleValue, showNextPaymentValue, nextPaymentDateValue, setValue])
 
   const onSubmit = (data: SubscriptionFormValues) => {
-    addSubscription(data)
+    addSubscription({
+      ...data,
+      renewalDayOfMonth:
+        data.billingCycle === 'monthly'
+          ? (data.renewalDayOfMonth ?? getRenewalDayOfMonth(data.nextPaymentDate))
+          : undefined,
+    })
     toast.success(`${data.name} added successfully.`)
     reset()
     setShouldFocus(true)
@@ -248,7 +258,15 @@ export const AddSubscriptionPopover: React.FC<AddSubscriptionPopoverProps> = ({
             </div>
             <div>
               <Label htmlFor="billingCycle">Billing Cycle (optional)</Label>
-              <Select onValueChange={(value) => setValue('billingCycle', value as BillingCycle)}>
+              <Select
+                onValueChange={(value) => {
+                  const cycle = value as BillingCycle
+                  setValue('billingCycle', cycle)
+                  if (cycle === 'monthly' && !watch('renewalDayOfMonth')) {
+                    setValue('renewalDayOfMonth', getRenewalDayOfMonth(nextPaymentDateValue))
+                  }
+                }}
+              >
                 <SelectTrigger id="billingCycle">
                   <SelectValue placeholder="Select billing cycle" />
                 </SelectTrigger>
@@ -300,7 +318,12 @@ export const AddSubscriptionPopover: React.FC<AddSubscriptionPopoverProps> = ({
                               mode="single"
                               selected={field.value ? new Date(field.value) : undefined}
                               onSelect={(date) => {
-                                field.onChange(date?.toISOString().split('T')[0])
+                                const nextDate = date?.toISOString().split('T')[0]
+                                field.onChange(nextDate)
+                                setValue(
+                                  'renewalDayOfMonth',
+                                  billingCycleValue === 'monthly' ? getRenewalDayOfMonth(nextDate) : undefined,
+                                )
                                 setCalendarOpen(false)
                               }}
                               disabled={(date) => date < new Date(new Date().setHours(0, 0, 0, 0))}
