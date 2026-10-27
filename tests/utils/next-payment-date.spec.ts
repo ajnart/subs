@@ -2,7 +2,9 @@ import { expect, test } from '@playwright/test'
 import {
   advancePaymentDate,
   calculateNextPaymentDate,
+  formatLocalCalendarDate,
   initializeNextPaymentDate,
+  normalizePaymentDate,
 } from '../../app/utils/nextPaymentDate'
 
 test.describe('monthly payment dates', () => {
@@ -33,5 +35,20 @@ test.describe('monthly payment dates', () => {
 
     expect(initializeNextPaymentDate('monthly', now)).toBe('2026-04-01')
     expect(calculateNextPaymentDate('monthly', '2026-03-01', undefined, now)).toBe('2026-04-01')
+  })
+
+  test('formats a selected date using its local calendar day', () => {
+    const selectedDate = new Date(2026, 2, 31)
+
+    expect(selectedDate.toISOString().slice(0, 10)).not.toBe('2026-03-31')
+    expect(formatLocalCalendarDate(selectedDate)).toBe('2026-03-31')
+  })
+
+  test('normalizes imported ISO timestamps and accepts legacy timestamps', () => {
+    const march15 = new Date('2026-03-15T12:00:00.000Z')
+
+    expect(normalizePaymentDate('2026-03-31T00:00:00.000Z')).toBe('2026-03-31')
+    expect(calculateNextPaymentDate('monthly', '2026-03-31T00:00:00.000Z', 31, march15)).toBe('2026-03-31')
+    expect(calculateNextPaymentDate('monthly', '2026-01-31T00:00:00.000Z', 31, march15)).toBe('2026-03-31')
   })
 })

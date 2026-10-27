@@ -17,7 +17,7 @@ import { cn } from '~/lib/utils'
 import type { loader } from '~/routes/_index'
 import { usePreferencesStore } from '~/store/preferences'
 import { type BillingCycle, SUBSCRIPTION_CATEGORIES, type Subscription } from '~/store/subscriptionStore'
-import { getRenewalDayOfMonth, initializeNextPaymentDate } from '~/utils/nextPaymentDate'
+import { formatLocalCalendarDate, getRenewalDayOfMonth, initializeNextPaymentDate } from '~/utils/nextPaymentDate'
 import { IconUrlInput } from './IconFinder'
 
 function getCurrencySymbol(currency: string): string {
@@ -318,7 +318,7 @@ export const AddSubscriptionPopover: React.FC<AddSubscriptionPopoverProps> = ({
                               mode="single"
                               selected={field.value ? new Date(field.value) : undefined}
                               onSelect={(date) => {
-                                const nextDate = date?.toISOString().split('T')[0]
+                                const nextDate = formatLocalCalendarDate(date)
                                 field.onChange(nextDate)
                                 setValue(
                                   'renewalDayOfMonth',

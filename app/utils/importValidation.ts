@@ -1,4 +1,5 @@
 import { SUBSCRIPTION_CATEGORIES, type Subscription } from '~/store/subscriptionStore'
+import { normalizePaymentDate } from '~/utils/nextPaymentDate'
 
 export interface RowValidationResult {
   index: number
@@ -112,7 +113,9 @@ function validateRow(raw: unknown, index: number): RowValidationResult {
     domain: (row.domain as string).trim(),
     ...(row.icon !== undefined ? { icon: row.icon as string } : {}),
     ...(row.billingCycle !== undefined ? { billingCycle: row.billingCycle as Subscription['billingCycle'] } : {}),
-    ...(row.nextPaymentDate !== undefined ? { nextPaymentDate: row.nextPaymentDate as string } : {}),
+    ...(row.nextPaymentDate !== undefined
+      ? { nextPaymentDate: normalizePaymentDate(row.nextPaymentDate as string) }
+      : {}),
     ...(row.renewalDayOfMonth !== undefined ? { renewalDayOfMonth: row.renewalDayOfMonth as number } : {}),
     ...(row.showNextPayment !== undefined ? { showNextPayment: row.showNextPayment as boolean } : {}),
     ...(row.category !== undefined ? { category: row.category as Subscription['category'] } : {}),

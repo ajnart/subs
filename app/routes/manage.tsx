@@ -21,7 +21,7 @@ import useSubscriptionStore, {
   type BillingCycle,
   type Subscription,
 } from '~/store/subscriptionStore'
-import { getRenewalDayOfMonth } from '~/utils/nextPaymentDate'
+import { formatLocalCalendarDate, getRenewalDayOfMonth } from '~/utils/nextPaymentDate'
 
 export const meta: MetaFunction = () => {
   return [
@@ -179,9 +179,11 @@ const SubscriptionRow = memo(function SubscriptionRow({
                   const billingCycle = (v || undefined) as BillingCycle | undefined
                   onChange({
                     billingCycle,
-                    ...(billingCycle === 'monthly' && draft.renewalDayOfMonth === undefined
-                      ? { renewalDayOfMonth: getRenewalDayOfMonth(draft.nextPaymentDate) }
-                      : {}),
+                    ...(billingCycle === 'monthly'
+                      ? draft.renewalDayOfMonth === undefined
+                        ? { renewalDayOfMonth: getRenewalDayOfMonth(draft.nextPaymentDate) }
+                        : {}
+                      : { renewalDayOfMonth: undefined }),
                   })
                 }}
               >
@@ -251,7 +253,7 @@ const SubscriptionRow = memo(function SubscriptionRow({
                           mode="single"
                           selected={draft.nextPaymentDate ? new Date(draft.nextPaymentDate) : undefined}
                           onSelect={(date) => {
-                            const nextDate = date?.toISOString().split('T')[0]
+                            const nextDate = formatLocalCalendarDate(date)
                             onChange({
                               nextPaymentDate: nextDate,
                               ...(draft.billingCycle === 'monthly'

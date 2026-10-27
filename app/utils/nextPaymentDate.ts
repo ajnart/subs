@@ -4,13 +4,29 @@ function toCalendarDate(date: Date): Date {
   return new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()))
 }
 
+export function normalizePaymentDate(date: string): string {
+  const dateOnly = /^(\d{4}-\d{2}-\d{2})(?:T.*)?$/.exec(date)?.[1]
+  return dateOnly ?? new Date(date).toISOString().split('T')[0]
+}
+
+export function formatLocalCalendarDate(date: Date | undefined): string | undefined {
+  if (!date) {
+    return undefined
+  }
+
+  const year = date.getFullYear()
+  const month = String(date.getMonth() + 1).padStart(2, '0')
+  const day = String(date.getDate()).padStart(2, '0')
+  return `${year}-${month}-${day}`
+}
+
 function parseCalendarDate(date: string): Date {
-  const [year, month, day] = date.split('-').map(Number)
+  const [year, month, day] = date.slice(0, 10).split('-').map(Number)
   return new Date(Date.UTC(year, month - 1, day))
 }
 
 export function getRenewalDayOfMonth(date: string | undefined): number | undefined {
-  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(date ?? '')
+  const match = /^(\d{4})-(\d{2})-(\d{2})(?:T.*)?$/.exec(date ?? '')
   const day = match ? Number(match[3]) : Number.NaN
   return day >= 1 && day <= 31 ? day : undefined
 }
@@ -43,9 +59,9 @@ export function calculateNextPaymentDate(
   if (currentNextPaymentDate) {
     nextDate = parseCalendarDate(currentNextPaymentDate)
 
-    // If the date is in the future, keep it
+    // If the date is in the future, keep its UTC calendar day and normalize legacy timestamps.
     if (nextDate > today) {
-      return currentNextPaymentDate
+      return nextDate.toISOString().split('T')[0]
     }
 
     // Otherwise, calculate the next occurrence

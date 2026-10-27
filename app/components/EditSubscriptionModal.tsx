@@ -22,7 +22,7 @@ import {
   type Subscription,
   type SubscriptionTemplate,
 } from '~/store/subscriptionStore'
-import { getRenewalDayOfMonth, initializeNextPaymentDate } from '~/utils/nextPaymentDate'
+import { formatLocalCalendarDate, getRenewalDayOfMonth, initializeNextPaymentDate } from '~/utils/nextPaymentDate'
 import { IconUrlInput } from './IconFinder'
 import SubscriptionCard from './SubscriptionCard'
 
@@ -373,7 +373,7 @@ const EditSubscriptionModal: React.FC<EditSubscriptionModalProps> = ({
                                 mode="single"
                                 selected={field.value ? new Date(field.value) : undefined}
                                 onSelect={(date) => {
-                                  const nextDate = date?.toISOString().split('T')[0]
+                                  const nextDate = formatLocalCalendarDate(date)
                                   field.onChange(nextDate)
                                   setValue(
                                     'renewalDayOfMonth',
